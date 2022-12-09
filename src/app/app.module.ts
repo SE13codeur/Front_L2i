@@ -11,6 +11,7 @@ import { AppComponent } from './app.component';
 import { SignPageComponent } from './pages/sign/sign-page.component';
 import { HomePageComponent } from './pages/home/home-page.component';
 import { HeaderComponent } from './components/header/header.component';
+import { NavComponent } from './components/nav/nav.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { HeaderComponent } from './components/header/header.component';
     HeaderComponent,
     HomePageComponent,
     SignPageComponent,
+    NavComponent,
   ],
   imports: [
     BrowserModule,
