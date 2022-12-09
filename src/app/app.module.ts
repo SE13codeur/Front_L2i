@@ -12,6 +12,7 @@ import { SignPageComponent } from './pages/sign/sign-page.component';
 import { HomePageComponent } from './pages/home/home-page.component';
 import { HeaderComponent } from './components/header/header.component';
 import { NavComponent } from './components/nav/nav.component';
+import { SectionComponent } from './components/section/section.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { NavComponent } from './components/nav/nav.component';
     HomePageComponent,
     SignPageComponent,
     NavComponent,
+    SectionComponent,
   ],
   imports: [
     BrowserModule,
