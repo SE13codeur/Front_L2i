@@ -8,10 +8,17 @@ import { MatIconModule } from '@angular/material/icon';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { SignPageComponent } from './pages/sign-page/sign-page.component';
+import { SignPageComponent } from './pages/sign/sign-page.component';
+import { HomePageComponent } from './pages/home/home-page.component';
+import { HeaderComponent } from './components/header/header.component';
 
 @NgModule({
-  declarations: [AppComponent, SignPageComponent],
+  declarations: [
+    AppComponent,
+    HeaderComponent,
+    HomePageComponent,
+    SignPageComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
