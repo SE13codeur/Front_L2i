@@ -13,6 +13,7 @@ import { HomePageComponent } from './pages/home/home-page.component';
 import { HeaderComponent } from './components/header/header.component';
 import { NavComponent } from './components/nav/nav.component';
 import { SectionComponent } from './components/section/section.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { SectionComponent } from './components/section/section.component';
     BrowserAnimationsModule,
     MatButtonModule,
     MatIconModule,
+    HttpClientModule,
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'fr-FR' }],
   bootstrap: [AppComponent],
