@@ -6,7 +6,7 @@ import { SignPageComponent } from './pages/sign/sign-page.component';
 const routes: Routes = [
   { path: 'home', component: HomePageComponent },
   { path: 'sign-in', component: SignPageComponent },
-  { path: '', redirectTo: '/', pathMatch: 'full' },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
   // { path: '**', component: 'pageNotFoundComponent' }
 ];
 
