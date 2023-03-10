@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { IBook } from 'src/app/models/IBook';
-import { BookService } from 'src/app/services/book.service';
+import { ItemService } from 'src/app/services/item.service';
 
 @Component({
   selector: 'app-list-item',
@@ -11,7 +11,7 @@ import { BookService } from 'src/app/services/book.service';
 export class ListItemComponent implements OnInit {
   itemList: IBook[] | undefined;
 
-  constructor(private itemService: BookService, private router: Router) {}
+  constructor(private itemService: ItemService, private router: Router) {}
 
   ngOnInit() {
     this.itemService.getItemList().subscribe((itemList) => {
