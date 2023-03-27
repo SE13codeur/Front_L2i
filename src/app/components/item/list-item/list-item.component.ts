@@ -9,7 +9,7 @@ import { ItemService } from 'src/app/services/item.service';
   styleUrls: ['./list-item.component.css'],
 })
 export class ListItemComponent implements OnInit {
-  itemList: IBook[] = [];
+  itemList: IBook[] | undefined = [];
 
   constructor(private itemService: ItemService, private router: Router) {}
 
@@ -20,7 +20,7 @@ export class ListItemComponent implements OnInit {
     });
   }
 
-  goToItemDetail(item: IBook) {
+  openItemDetails(item: IBook) {
     this.router.navigate(['/item', item.id]);
   }
 }

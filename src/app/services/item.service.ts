@@ -7,7 +7,7 @@ import Item from '../models/IBook';
   providedIn: 'root',
 })
 export class ItemService {
-  private urlItem: string = 'https://api.itbook.store/1.0/new';
+  private urlItem: string = 'https://openlibrary.org/api/books';
 
   constructor(private http: HttpClient) {}
 
@@ -15,7 +15,7 @@ export class ItemService {
     return this.http.get<Item[]>(this.urlItem);
   }
 
-  // getItemById(itemId: Item): Observable<Item | undefined> {
-  //   return this.http.get<Item[]>(this.urlItem);
-  // }
+  getItemById(itemId: string): Observable<Item> {
+    return this.http.get<Item>(`${this.urlItem}/${itemId}.json`);
+  }
 }

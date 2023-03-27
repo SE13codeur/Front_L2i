@@ -1,1 +1,16 @@
-<p>detail-item works!</p>
+<div class="item-details">
+  <div class="item-image">
+    <img src="{{ item.cover_large }}" alt="{{ item.title }}">
+  </div>
+  <div class="item-info">
+    <h2>{{ item.title }}</h2>
+    <h3>{{ item.author_name }}</h3>
+    <p>{{ item.first_publish_year }}</p>
+    <p>{{ item.publisher }}</p>
+    <p>{{ item.number_of_pages }} pages</p>
+    <p>{{ item.language }}</p>
+    <p>{{ item.isbn_13 }}</p>
+    <p>{{ item.subjects }}</p>
+    <p>{{ item.description }}</p>
+  </div>
+</div>
