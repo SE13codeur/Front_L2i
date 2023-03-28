@@ -18,6 +18,7 @@ import { ListItemComponent } from './components/item/list-item/list-item.compone
 import { DetailItemComponent } from './components/item/detail-item/detail-item.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { ItemCategoryNavComponent } from './components/nav/item-category-nav/item-category-nav.component';
+import { ItemPageComponent } from './pages/item/item-page.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { ItemCategoryNavComponent } from './components/nav/item-category-nav/ite
     DetailItemComponent,
     NotFoundComponent,
     ItemCategoryNavComponent,
+    ItemPageComponent,
   ],
   imports: [
     BrowserModule,

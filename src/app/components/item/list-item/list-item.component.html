@@ -1,10 +1,9 @@
 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
   <div *ngFor="let item of itemList$ | async">
     <div class="p-6 bg-white rounded-lg shadow-md">
-      <h2 class="font-bold text-lg mb-2">{{ item.title }}</h2>
       <p class="text-gray-600 text-sm">{{ item.authors }}</p>
       <img [src]="item.image" alt="{{ item.title }} cover image">
-      <a *ngIf="item.isbn13" [routerLink]="['/items', item.isbn13]" class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+      <a *ngIf="item.isbn13" [routerLink]="['/item', item.isbn13]" class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
         Voir les détails
       </a>
     </div>

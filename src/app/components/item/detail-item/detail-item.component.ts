@@ -26,9 +26,6 @@ export class DetailItemComponent implements OnInit {
           catchError((err) => {
             console.error(err);
             this.router.navigate(['/not-found']);
-            setTimeout(() => {
-              this.router.navigate(['/home']);
-            }, 3000);
             return of(undefined);
           })
         )

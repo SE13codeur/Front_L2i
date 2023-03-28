@@ -1,15 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DetailItemComponent } from './components/item/detail-item/detail-item.component';
-import { HomePageComponent } from './pages/home/home-page.component';
 import { SignPageComponent } from './pages/sign/sign-page.component';
+import { HomePageComponent } from './pages/home/home-page.component';
+import { ItemPageComponent } from './pages/item/item-page.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 const routes: Routes = [
-  { path: 'home', component: HomePageComponent },
   { path: 'sign-in', component: SignPageComponent },
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: '', component: HomePageComponent },
+  { path: 'item', component: ItemPageComponent },
   { path: 'item/:isbn13', component: DetailItemComponent },
+  { path: '', redirectTo: '/', pathMatch: 'full' },
   { path: '**', component: NotFoundComponent },
 ];
 
