@@ -17,6 +17,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ListItemComponent } from './components/item/list-item/list-item.component';
 import { DetailItemComponent } from './components/item/detail-item/detail-item.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { ItemCategoryNavComponent } from './components/nav/item-category-nav/item-category-nav.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
     ListItemComponent,
     DetailItemComponent,
     NotFoundComponent,
+    ItemCategoryNavComponent,
   ],
   imports: [
     BrowserModule,

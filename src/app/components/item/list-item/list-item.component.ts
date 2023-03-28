@@ -18,6 +18,9 @@ export class ListItemComponent implements OnInit {
     this.itemList$ = this.itemService
       .getItemList()
       .pipe(map((itemList) => (itemList as any).books));
+    if (this.router.url === '/articles') {
+      this.router.navigate(['/articles/IT']);
+    }
   }
 
   openItemDetails(item: IBook) {

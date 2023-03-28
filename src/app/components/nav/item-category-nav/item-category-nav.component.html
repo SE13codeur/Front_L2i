@@ -1,0 +1,9 @@
+<ul class="nav nav-tabs">
+  <li *ngFor="let category of categories" [class.active]="category === 'IT'">
+    <a (click)="displayBooksByCategory(category)">{{ category }}</a>
+  </li>
+</ul>
+
+<div *ngIf="categories[0] === 'IT'">
+  <app-list-item></app-list-item>
+</div>
