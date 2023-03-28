@@ -15,7 +15,7 @@ export class ItemService {
     return this.http.get<Item[]>(this.urlItem);
   }
 
-  getItemById(itemId: string): Observable<Item> {
-    return this.http.get<Item>(`${this.urlItem}/${itemId}.json`);
+  getItemByIsbn13(isbn13: string): Observable<Item> {
+    return this.http.get<Item>(`${this.urlItem}/${isbn13}`);
   }
 }
