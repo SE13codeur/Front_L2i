@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ItemService } from '../../../services/item.service';
-import Item from '../../../models/IBook';
 import { Observable, of } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
 import { Location } from '@angular/common';
+import { IBook } from 'src/app/models/ICategoryItem';
 
 @Component({
   selector: 'app-detail-item',
@@ -12,7 +12,7 @@ import { Location } from '@angular/common';
   styleUrls: ['./detail-item.component.css'],
 })
 export class DetailItemComponent implements OnInit {
-  item$: Observable<Item | undefined>;
+  item$: Observable<IBook | undefined>;
 
   constructor(
     private route: ActivatedRoute,
@@ -22,7 +22,7 @@ export class DetailItemComponent implements OnInit {
   ) {
     this.item$ = this.route.paramMap.pipe(
       switchMap((params) =>
-        this.itemService.getItemByIsbn13(params.get('isbn13') as string).pipe(
+        this.itemService.getItemByISBN13(params.get('isbn13') as string).pipe(
           catchError((err) => {
             console.error(err);
             this.router.navigate(['/not-found']);

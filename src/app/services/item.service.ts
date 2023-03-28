@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import Item from '../models/IBook';
+import { IBook } from '../models/ICategoryItem';
 
 @Injectable({
   providedIn: 'root',
@@ -11,11 +11,11 @@ export class ItemService {
 
   constructor(private http: HttpClient) {}
 
-  getItemList(): Observable<Item[]> {
-    return this.http.get<Item[]>(this.urlItem);
+  getItemList(): Observable<IBook[]> {
+    return this.http.get<IBook[]>(this.urlItem);
   }
 
-  getItemByIsbn13(isbn13: string): Observable<Item> {
-    return this.http.get<Item>(`${this.urlItem}/${isbn13}`);
+  getItemByISBN13(ISBN13: string): Observable<IBook> {
+    return this.http.get<IBook>(`${this.urlItem}/${ISBN13}`);
   }
 }

@@ -1,4 +1,11 @@
-export default interface IBook {
+export interface ICategoryItem {
+  id: number;
+  name: string;
+  parentId?: number;
+  children?: ICategoryItem[];
+}
+
+export interface IBook {
   id?: string;
   title?: string;
   subtitle?: string;
@@ -11,7 +18,7 @@ export default interface IBook {
   price?: string;
   url?: string;
   image?: string;
-  category?: string;
+  categories?: ICategoryItem[]; // a book can belong to several categories
   published?: string;
   created_at?: Date;
   updated_at?: Date;

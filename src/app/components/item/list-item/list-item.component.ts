@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import IBook from 'src/app/models/IBook';
 import { ItemService } from 'src/app/services/item.service';
 import { map, Observable } from 'rxjs';
+import { IBook } from 'src/app/models/ICategoryItem';
 
 @Component({
   selector: 'app-list-item',
