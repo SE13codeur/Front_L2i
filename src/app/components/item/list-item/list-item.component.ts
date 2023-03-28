@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import IBook from 'src/app/models/IBook';
 import { ItemService } from 'src/app/services/item.service';
+import { map, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-list-item',
@@ -9,15 +10,14 @@ import { ItemService } from 'src/app/services/item.service';
   styleUrls: ['./list-item.component.css'],
 })
 export class ListItemComponent implements OnInit {
-  itemList: IBook[] | undefined = [];
+  itemList$: Observable<IBook[]> | undefined;
 
   constructor(private itemService: ItemService, private router: Router) {}
 
   ngOnInit() {
-    this.itemService.getItemList().subscribe((itemList) => {
-      console.log('🚀 ~ itemList:', itemList);
-      this.itemList = (itemList as any).books;
-    });
+    this.itemList$ = this.itemService
+      .getItemList()
+      .pipe(map((itemList) => (itemList as any).books));
   }
 
   openItemDetails(item: IBook) {
