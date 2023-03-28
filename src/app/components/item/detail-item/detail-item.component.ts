@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ItemService } from '../../services/item.service';
-import Item from '../../models/IBook';
+import { ItemService } from '../../../services/item.service';
+import Item from '../../../models/IBook';
 import { Observable, of } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
 import { Location } from '@angular/common';
