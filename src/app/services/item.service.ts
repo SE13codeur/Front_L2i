@@ -7,7 +7,7 @@ import Item from '../models/IBook';
   providedIn: 'root',
 })
 export class ItemService {
-  private urlItem: string = 'https://openlibrary.org/api/books';
+  private urlItem: string = 'https://api.itbook.store/1.0/new';
 
   constructor(private http: HttpClient) {}
 
