@@ -1,8 +1,18 @@
-<ul class="nav nav-tabs">
-  <li *ngFor="let category of categories" [class.active]="category === 'IT'">
-    <a (click)="displayBooksByCategory(category)">{{ category }}</a>
-  </li>
-</ul>
+<nav class="w-full bg-gray-100">
+  <div class="container mx-auto">
+    <ul class="flex justify-between">
+      <li class="px-4 py-2 bg-white border-b-4 border-indigo-500 font-medium">
+        <a href="#">IT</a>
+      </li>
+      <li class="px-4 py-2 bg-white border-b-4 border-gray-400 font-medium">
+        <a href="#">Science Fiction</a>
+      </li>
+      <li class="px-4 py-2 bg-white border-b-4 border-gray-400 font-medium">
+        <a href="#">Mystery</a>
+      </li>
+    </ul>
+  </div>
+</nav>
 
 <div *ngIf="categories[0] === 'IT'">
   <app-list-item></app-list-item>
