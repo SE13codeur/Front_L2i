@@ -1,0 +1,40 @@
+<div class="flex items-center justify-between px-4 py-3 border-b">
+  <h2 class="text-lg font-medium">Panier</h2>
+  <button (click)="closeCart()" class="text-gray-600 hover:text-gray-800 focus:outline-none focus:text-gray-800">
+    <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
+      <path
+        d="M6.707 19.293a1 1 0 0 0 1.414 0L12 13.414l3.879 3.88a1 1 0 0 0 1.414-1.414L13.414 12l3.88-3.879a1 1 0 0 0-1.414-1.414L12 10.586 8.121 6.707a1 1 0 0 0-1.414 1.414L10.586 12l-3.88 3.879z" />
+    </svg>
+  </button>
+</div>
+
+<div class="flex-1 overflow-y-auto">
+  <ul>
+    <li *ngFor="let item of cartItems" class="flex items-center justify-between px-4 py-3 border-b">
+      <div>
+        <h3 class="text-gray-700">{{ item.title }}</h3>
+        <p class="text-gray-500">{{ item.description }}</p>
+      </div>
+      <div class="flex items-center">
+        <button class="text-gray-500 hover:text-gray-700 focus:outline-none focus:text-gray-700" (click)="decreaseItemQty(item)">
+          <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
+            <path d="M19 13H5v-2h14v2z" />
+          </svg>
+        </button>
+        <p class="mx-4">{{ item.quantity$ }}</p>
+        <button class="text-gray-500 hover:text-gray-700 focus:outline-none focus:text-gray-700" (click)="increaseItemQty(item)">
+          <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
+            <path d="M19 13H5v-2h14v2z" />
+            <path d="M12 4L4 12h4v8h8v-8h4L12 4z" />
+          </svg>
+        </button>
+        <p class="text-gray-700">{{ item.price * item.quantity$.value }} €</p>
+      </div>
+    </li>
+  </ul>
+</div>
+
+<div class="px-4 py-3 border-t">
+  <p class="text-gray-700">Total : {{ getTotalPrice() }} €</p>
+  <button class="bg-green-500 hover:bg-green-600 text-white text-sm font-medium rounded-md px-4 py-2 mt-4" (click)="checkout()">Payer</button>
+</div>

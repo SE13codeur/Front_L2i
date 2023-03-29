@@ -19,6 +19,9 @@ import { DetailItemComponent } from './components/item/detail-item/detail-item.c
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { ItemCategoryNavComponent } from './components/nav/item-category-nav/item-category-nav.component';
 import { ItemPageComponent } from './pages/item/item-page.component';
+import { CartComponent } from './components/aside/cart/cart.component';
+import { AsideComponent } from './components/aside/aside.component';
+import { CartService } from './services/cart.service';
 
 @NgModule({
   declarations: [
@@ -33,6 +36,8 @@ import { ItemPageComponent } from './pages/item/item-page.component';
     NotFoundComponent,
     ItemCategoryNavComponent,
     ItemPageComponent,
+    CartComponent,
+    AsideComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,7 +47,7 @@ import { ItemPageComponent } from './pages/item/item-page.component';
     MatIconModule,
     HttpClientModule,
   ],
-  providers: [{ provide: LOCALE_ID, useValue: 'fr-FR' }],
+  providers: [{ provide: LOCALE_ID, useValue: 'fr-FR' }, CartService],
   bootstrap: [AppComponent],
 })
 export class AppModule {
