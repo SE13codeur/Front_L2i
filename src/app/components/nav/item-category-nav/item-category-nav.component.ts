@@ -1,20 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { ItemService } from 'src/app/services/item.service';
-import { IBook } from 'src/app/models/ICategoryItem';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-item-category-nav',
   templateUrl: './item-category-nav.component.html',
   styleUrls: ['./item-category-nav.component.css'],
 })
-export class ItemCategoryNavComponent implements OnInit {
+export class ItemCategoryNavComponent {
   categories: string[] = ['IT', 'Science Fiction', 'Mystery']; // categories to display
   activeTab: string = 'IT'; // active tab
 
-  constructor(private itemService: ItemService, private router: Router) {}
-
-  ngOnInit() {}
+  constructor() {}
 
   displayBooksByCategory(category: string) {
     this.activeTab = category;
