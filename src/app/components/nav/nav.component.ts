@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { CartService } from 'src/app/services/cart.service';
 
 @Component({
   selector: 'app-nav',
@@ -6,5 +7,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./nav.component.css'],
 })
 export class NavComponent {
-  constructor() {}
+  totalItems = 0;
+
+  constructor(private cartService: CartService) {}
+
+  ngOnInit() {
+    this.cartService.getCartItemCount().subscribe((count) => {
+      this.totalItems = count;
+    });
+  }
 }
