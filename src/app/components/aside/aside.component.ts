@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ICartItem } from 'src/app/models/ICartItem';
+import { Location } from '@angular/common';
 import { CartService } from 'src/app/services/cart.service';
 
 @Component({
@@ -9,22 +9,35 @@ import { CartService } from 'src/app/services/cart.service';
   styleUrls: ['./aside.component.css'],
 })
 export class AsideComponent implements OnInit {
-  cartItems: ICartItem[] = [];
-  isCartOpen = false;
+  totalItems$: number | null = null;
+  isCartPanelOpen$ = this.cartService.toggleCart();
 
-  constructor(private cartService: CartService, private router: Router) {}
+  constructor(
+    private cartService: CartService,
+    private router: Router,
+    private location: Location
+  ) {}
 
-  ngOnInit(): void {
-    this.cartService.cartItems$.subscribe((items) => {
-      this.cartItems = items;
+  ngOnInit() {
+    this.cartService.getTotalCartItemsCount().subscribe((count) => {
+      this.totalItems$ = count;
     });
   }
 
-  toggleCart(): void {
-    this.isCartOpen = !this.isCartOpen;
+  toggleCartDrawer(): void {
+    if (this.isCartPanelOpen$) {
+      this.goToCart();
+    }
   }
 
-  goToCart() {
+  closeCartDrawer(): void {
+    if (this.isCartPanelOpen$) {
+      this.cartService.closeCart();
+      this.location.back();
+    }
+  }
+
+  goToCart(): void {
     this.router.navigate(['/cart']);
   }
 }

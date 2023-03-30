@@ -2,7 +2,7 @@ export interface ICategoryItem {
   id: number;
   name: string;
   parentId?: number;
-  children?: ICategoryItem[];
+  // children?: ICategoryItem[];
 }
 
 export interface IBook {
@@ -18,7 +18,7 @@ export interface IBook {
   price?: string;
   url?: string;
   image?: string;
-  categories?: ICategoryItem[]; // a book can belong to several categories
+  categories?: ICategoryItem;
   published?: string;
   created_at?: Date;
   updated_at?: Date;
