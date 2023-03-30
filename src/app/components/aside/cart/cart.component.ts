@@ -10,26 +10,18 @@ import { ICartItem } from '../../../models/ICartItem';
 })
 export class CartComponent implements OnInit {
   cartItems: ICartItem[] = [];
-  isCartOpen = false;
 
   constructor(private cartService: CartService, private router: Router) {}
+  totalCartItems$ = 0;
 
   ngOnInit(): void {
     this.cartService.cartItems$.subscribe((items) => {
       this.cartItems = items;
     });
-  }
 
-  toggleCart(): void {
-    this.isCartOpen = !this.isCartOpen;
-  }
-
-  goToCart() {
-    this.router.navigate(['/cart']);
-  }
-
-  closeCart(): void {
-    this.isCartOpen = false;
+    this.cartService.getTotalCartItemsCount().subscribe((count) => {
+      this.totalCartItems$ = count;
+    });
   }
 
   getTotalPrice(): number {
