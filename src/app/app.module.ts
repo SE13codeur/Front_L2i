@@ -5,6 +5,7 @@ import { registerLocaleData } from '@angular/common';
 import * as fr from '@angular/common/locales/fr';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -22,6 +23,7 @@ import { ItemPageComponent } from './pages/item/item-page.component';
 import { CartComponent } from './components/aside/cart/cart.component';
 import { AsideComponent } from './components/aside/aside.component';
 import { CartService } from './services/cart.service';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 @NgModule({
   declarations: [
@@ -46,6 +48,8 @@ import { CartService } from './services/cart.service';
     MatButtonModule,
     MatIconModule,
     HttpClientModule,
+    MatSidenavModule,
+    MatToolbarModule,
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'fr-FR' }, CartService],
   bootstrap: [AppComponent],
