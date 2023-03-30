@@ -28,7 +28,9 @@ export class CartComponent implements OnInit {
     this.router.navigate(['/cart']);
   }
 
-  closeCart() {}
+  closeCart(): void {
+    this.isCartOpen = false;
+  }
 
   getTotalPrice(): number {
     return this.cartService.getTotalPrice();

@@ -7,4 +7,5 @@ export interface ICartItem {
   price: number;
   quantity$: BehaviorSubject<number>;
   description?: string;
+  image?: string;
 }
