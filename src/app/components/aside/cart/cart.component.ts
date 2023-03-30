@@ -1,7 +1,6 @@
-import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { CartService } from '../../../services/cart.service';
 import { ICartItem } from '../../../models/ICartItem';
+import { CartService } from '../../../services/cart.service';
 
 @Component({
   selector: 'app-cart',
@@ -11,7 +10,7 @@ import { ICartItem } from '../../../models/ICartItem';
 export class CartComponent implements OnInit {
   cartItems: ICartItem[] = [];
 
-  constructor(private cartService: CartService, private router: Router) {}
+  constructor(private cartService: CartService) {}
   totalCartItems$ = 0;
 
   ngOnInit(): void {

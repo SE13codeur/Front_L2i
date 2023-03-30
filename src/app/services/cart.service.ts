@@ -1,22 +1,30 @@
 import { BehaviorSubject } from 'rxjs';
-
-export interface ICartItem {
-  id: number;
-  isbn13: string;
-  title: string;
-  price: number;
-  quantity$: BehaviorSubject<number>;
-  description?: string;
-}
-
+import { ICartItem } from '../models/ICartItem';
 export class CartService {
   private cartItems: ICartItem[] = [];
   private cartItemsSubject = new BehaviorSubject<ICartItem[]>(this.cartItems);
-  public cartItems$ = this.cartItemsSubject.asObservable();
+  cartItems$: BehaviorSubject<ICartItem[]> = new BehaviorSubject<ICartItem[]>(
+    []
+  );
+  isCartDrawerOpen$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    false
+  );
 
   constructor() {}
 
-  getCartItemCount(): BehaviorSubject<number> {
+  toggleCart(): boolean {
+    const newValue = !this.isCartDrawerOpen$.value;
+    this.isCartDrawerOpen$.next(newValue);
+    return newValue;
+  }
+
+  closeCart(): boolean {
+    const newValue = this.isCartDrawerOpen$.value;
+    this.isCartDrawerOpen$.next(newValue);
+    return newValue;
+  }
+
+  getTotalCartItemsCount(): BehaviorSubject<number> {
     const itemCountSubject = new BehaviorSubject<number>(0);
     this.cartItemsSubject.subscribe((cartItems) => {
       const count = cartItems.reduce(
@@ -30,7 +38,7 @@ export class CartService {
 
   addItem(item: ICartItem): void {
     const itemIndex = this.cartItems.findIndex(
-      (cartItem) => cartItem.id === item.id
+      (cartItem) => cartItem.isbn13 === item.isbn13
     );
     if (itemIndex > -1) {
       this.cartItems[itemIndex].quantity$.next(
@@ -51,7 +59,7 @@ export class CartService {
 
   increaseItemQty(item: ICartItem): void {
     const itemIndex = this.cartItems.findIndex(
-      (cartItem) => cartItem.id === item.id
+      (cartItem) => cartItem.isbn13 === item.isbn13
     );
     if (itemIndex > -1) {
       this.cartItems[itemIndex].quantity$.next(
@@ -63,7 +71,7 @@ export class CartService {
 
   decreaseItemQty(item: ICartItem): void {
     const itemIndex = this.cartItems.findIndex(
-      (cartItem) => cartItem.id === item.id
+      (cartItem) => cartItem.isbn13 === item.isbn13
     );
     if (itemIndex > -1) {
       this.cartItems[itemIndex].quantity$.next(
@@ -78,7 +86,7 @@ export class CartService {
 
   removeItem(item: ICartItem): void {
     const itemIndex = this.cartItems.findIndex(
-      (cartItem) => cartItem.id === item.id
+      (cartItem) => cartItem.isbn13 === item.isbn13
     );
     if (itemIndex > -1) {
       this.cartItems.splice(itemIndex, 1);
