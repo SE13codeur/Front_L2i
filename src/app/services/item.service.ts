@@ -7,15 +7,15 @@ import { IBook } from '../models/ICategoryItem';
   providedIn: 'root',
 })
 export class ItemService {
-  private urlItem: string = 'https://api.itbook.store/1.0/new';
+  private urlBook: string = 'http://localhost:909/ws/dev';
 
   constructor(private http: HttpClient) {}
 
   getItemList(): Observable<IBook[]> {
-    return this.http.get<IBook[]>(this.urlItem);
+    return this.http.get<IBook[]>(this.urlBook);
   }
 
   getItemByISBN13(ISBN13: string): Observable<IBook> {
-    return this.http.get<IBook>(`${this.urlItem}/${ISBN13}`);
+    return this.http.get<IBook>(`${this.urlBook}/${ISBN13}`);
   }
 }
