@@ -1,4 +1,3 @@
-/* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
   "compileOnSave": false,
   "compilerOptions": {
@@ -18,10 +17,16 @@
     "importHelpers": true,
     "target": "es2017",
     "module": "es2020",
-    "lib": [
-      "es2020",
-      "dom"
-    ]
+    "lib": ["es2020", "dom"],
+    "paths": {
+      "@/*": ["src/app/*"],
+      "@c/*": ["src/app/components/*"],
+      "@m/*": ["src/app/models/*"],
+      "@p/*": ["src/app/pages/*"],
+      "@s/*": ["src/app/services/*"],
+      "@a/*": ["src/assets/*"],
+      "@env/*": ["src/environments/*"]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

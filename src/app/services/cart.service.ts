@@ -1,5 +1,5 @@
 import { BehaviorSubject } from 'rxjs';
-import { ICartItem } from '../models/ICartItem';
+import { ICartItem } from '@m/ICartItem';
 export class CartService {
   private cartItems: ICartItem[] = [];
   private cartItemsSubject = new BehaviorSubject<ICartItem[]>(this.cartItems);
