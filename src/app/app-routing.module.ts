@@ -10,8 +10,8 @@ import { CartComponent } from './components/aside/cart/cart.component';
 const routes: Routes = [
   { path: 'sign-in', component: SignPageComponent },
   { path: '', component: HomePageComponent },
-  { path: 'item', component: ItemPageComponent },
-  { path: 'item/:isbn13', component: DetailItemComponent },
+  { path: 'items', component: ItemPageComponent },
+  { path: 'items/:isbn13', component: DetailItemComponent },
   { path: 'cart', component: CartComponent },
   { path: '', redirectTo: '/', pathMatch: 'full' },
   { path: '**', component: NotFoundComponent },
