@@ -2,18 +2,18 @@
   <div class="container mx-auto">
     <ul class="flex justify-between">
       <li class="px-4 py-2 bg-white border-b-4 border-indigo-500 font-medium">
-        <a href="#">IT</a>
+        <a href="#">Livres</a>
       </li>
       <li class="px-4 py-2 bg-white border-b-4 border-gray-400 font-medium">
-        <a href="#">Science Fiction</a>
+        <a href="#">Vidéos</a>
       </li>
       <li class="px-4 py-2 bg-white border-b-4 border-gray-400 font-medium">
-        <a href="#">Mystery</a>
+        <a href="#">Autres</a>
       </li>
     </ul>
   </div>
 </nav>
 
-<div *ngIf="categories[0] === 'IT'">
+<div *ngIf="categories[0] === 'Livres'">
   <app-list-item></app-list-item>
 </div>

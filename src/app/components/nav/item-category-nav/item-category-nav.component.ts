@@ -6,8 +6,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./item-category-nav.component.css'],
 })
 export class ItemCategoryNavComponent {
-  categories: string[] = ['IT', 'Science Fiction', 'Mystery']; // categories to display
-  activeTab: string = 'IT'; // active tab
+  categories: string[] = ['Livres', 'Vidéos', 'Autres']; // categories to display
+  activeTab: string = 'Livres'; // active tab
 
   constructor() {}
 
