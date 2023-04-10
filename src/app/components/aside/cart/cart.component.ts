@@ -9,6 +9,13 @@ import { CartService } from '../../../services/cart.service';
 })
 export class CartComponent implements OnInit {
   cartItems: ICartItem[] = [];
+  displayedColumns: string[] = [
+    'Name',
+    'Description',
+    'Price',
+    'Discounted Price',
+    'Action',
+  ];
 
   constructor(private cartService: CartService) {}
   totalCartItems$ = 0;
@@ -33,6 +40,10 @@ export class CartComponent implements OnInit {
 
   decreaseItemQty(item: ICartItem): void {
     this.cartService.decreaseItemQty(item);
+  }
+
+  removeItem(cartId: ICartItem): void {
+    this.cartService.removeItemFromCart(cartId);
   }
 
   checkout(): void {

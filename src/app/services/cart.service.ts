@@ -28,7 +28,7 @@ export class CartService {
     const itemCountSubject = new BehaviorSubject<number>(0);
     this.cartItemsSubject.subscribe((cartItems) => {
       const count = cartItems.reduce(
-        (total, item) => total + item.quantity$.value,
+        (total, item) => total + (item.quantity$?.value ?? 0),
         0
       );
       itemCountSubject.next(count);
@@ -36,7 +36,7 @@ export class CartService {
     return itemCountSubject;
   }
 
-  addItem(item: ICartItem): void {
+  addItemFromCart(item: ICartItem): void {
     const itemIndex = this.cartItems.findIndex(
       (cartItem) => cartItem.isbn13 === item.isbn13
     );
@@ -84,7 +84,7 @@ export class CartService {
     }
   }
 
-  removeItem(item: ICartItem): void {
+  removeItemFromCart(item: ICartItem): void {
     const itemIndex = this.cartItems.findIndex(
       (cartItem) => cartItem.isbn13 === item.isbn13
     );
