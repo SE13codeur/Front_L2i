@@ -1,41 +1,57 @@
-<div class="cart-slide">
-  <header class="cart-header">
-    <div class="container mx-auto flex justify-between items-center px-4">
-      <h2 class="text-2xl font-medium">Panier</h2>
-      <button class="text-white focus:outline-none">
-        <svg class="h-6 w-6 fill-current" viewBox="0 0 24 24">
-          <path d="M6.707 19.293a1 1 0 0 0 1.414 0L12 13.414l3.879 3.88a1 1 0 0 0 1.414-1.414L13.414 12l3.88-3.879a1 1 0 0 0-1.414-1.414L12 10.586 8.121 6.707a1 1 0 0 0-1.414 1.414L10.586 12l-3.88 3.879z" />
-        </svg>
-      </button>
-    </div>
-  </header>
+<div class="container mt-5">
+  <div align="right" class="mb-3">
+    <button mat-raised-button (click)="checkout()" style="color: gold; padding: 10px 20px;">Checkout</button>
+  </div>
 
-  <main class="p-4">
-    <ul>
-      <li *ngFor="let item of cartItems" class="cart-item">
-        <img [src]="item.image" alt="{{ item.title }}" class="h-16 mr-4">
-        <div>
-          <h3 class="title">{{ item.title }}</h3>
-          <p class="description">{{ item.description }}</p>
-        </div>
-        <div class="flex items-center">
-          <button class="decrease-item-qty-button" (click)="decreaseItemQty(item)">
-            <svg class="h-6 w-6 fill-current" viewBox="0 0 24 24">
-              <path d="M19 13H5v-2h14v2z" />
-            </svg>
+  <table mat-table [dataSource]="cartItems" class="mat-elevation-z8">
+    <ng-container matColumnDef="Name">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.product.productName}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Description">
+      <th mat-header-cell *matHeaderCellDef> Description </th>
+      <td mat-cell *matCellDef="let element"> {{element.product.productDescription}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Price">
+      <th mat-header-cell *matHeaderCellDef> Price </th>
+      <td mat-cell *matCellDef="let element"> {{element.product.productActualPrice}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Discounted Price">
+      <th mat-header-cell *matHeaderCellDef> Discounted Price </th>
+      <td mat-cell *matCellDef="let element"> {{element.product.productDiscountedPrice}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Quantity">
+      <th mat-header-cell *matHeaderCellDef> Quantity </th>
+      <td mat-cell *matCellDef="let element">
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+          <button mat-icon-button color="accent" (click)="decreaseItemQty(element)">
+            <mat-icon>remove</mat-icon>
           </button>
-          <p class="mx-4 quantity">{{ item.quantity$ }}</p>
-          <button class="increase-item-qty-button" (click)="increaseItemQty(item)">
-            <svg class="h-6 w-6 fill-current" viewBox="0 0 24 24">
-              <path d="M19 13H5v-2h14v2z" />
-              <path d="M12 4L4 12h4v8h8v-8h4L12 4z" />
-            </svg>
+          <span>{{ element.quantity }}</span>
+          <button mat-icon-button color="accent" (click)="increaseItemQty(element)">
+            <mat-icon>add</mat-icon>
           </button>
-          <p class="price">{{ item.price * item.quantity$.value }} €</p>
         </div>
-      </li>
-    </ul>
-    <p class="total-price">Total : {{ getTotalPrice() }} €</p>
-    <button class="checkout-button" (click)="checkout()">Payer</button>
-  </main>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Total Price">
+      <th mat-header-cell *matHeaderCellDef> Total Price </th>
+      <td mat-cell *matCellDef="let element"> {{ element.quantity * element.product.productDiscountedPrice }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Action">
+      <th mat-header-cell *matHeaderCellDef> Action </th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-raised-button color="warn" (click)="removeItem(element.cartId)">Delete</button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
 </div>
