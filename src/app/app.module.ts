@@ -17,7 +17,7 @@ import { AsideComponent } from '@c/aside/aside.component';
 import { CartComponent } from '@c/aside/cart/cart.component';
 import { HeaderComponent } from '@c/header/header.component';
 import { SectionComponent } from '@c/section/section.component';
-import { SearchItemComponent } from '@c/section/search-item/search-item.component';
+import { SearchItemComponent } from '@/components/item/search-item/search-item.component';
 import { ListItemComponent } from '@c/item/list-item/list-item.component';
 import { DetailItemComponent } from '@c/item/detail-item/detail-item.component';
 

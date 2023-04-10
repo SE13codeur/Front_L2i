@@ -1,0 +1,41 @@
+.mat-toolbar {
+  display: flex;
+  justify-content: space-between;
+}
+
+.nav-wrapper {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.menu {
+  display: flex;
+  gap: 16px;
+}
+
+.logo-search-container {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.nav-logo img {
+  height: 40px;
+  width: auto;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+}
+
+.search-bar-large {
+  flex-grow: 1;
+  margin-left: 16px;
+}
+
+.nav-aside {
+  margin-right: auto;
+}
