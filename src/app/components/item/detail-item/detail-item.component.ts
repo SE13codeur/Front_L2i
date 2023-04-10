@@ -4,7 +4,7 @@ import { ItemService } from '../../../services/item.service';
 import { Observable, of } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
 import { Location } from '@angular/common';
-import { IBook } from 'src/app/models/ICategoryItem';
+import { Item } from '@/models/IMeilisearchItem';
 
 @Component({
   selector: 'app-detail-item',
@@ -12,7 +12,7 @@ import { IBook } from 'src/app/models/ICategoryItem';
   styleUrls: ['./detail-item.component.css'],
 })
 export class DetailItemComponent implements OnInit {
-  item$: Observable<IBook | undefined>;
+  item$: Observable<Item | undefined>;
 
   constructor(
     private route: ActivatedRoute,
