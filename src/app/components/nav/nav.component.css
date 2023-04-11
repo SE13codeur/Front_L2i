@@ -44,3 +44,31 @@
 .nav-aside {
   margin-right: auto;
 }
+
+/* Media Query for mobile devices */
+@media (max-width: 768px) {
+  .nav-container {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .nav-wrapper {
+    flex-direction: column;
+  }
+
+  .menu {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .search-bar-large {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    margin-left: 0;
+  }
+
+  .nav-aside {
+    margin-right: 0;
+  }
+}
