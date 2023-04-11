@@ -1,6 +1,6 @@
 <div class="search-container flex justify-center">
   <label class="relative max-w-full w-2/3">
-    <input matInput #searchInput (input)="search(searchInput.value)" placeholder="Veuillez écrire l'article recherché" class="input-field w-full">
+    <input matInput #searchInput (input)="search(searchInput.value)" placeholder="Rechercher votre article" class="input-field w-full">
     <button mat-icon-button aria-label="Trouver votre article" (click)="searchInput.value = ''" class="search-button">
       <ng-container *ngIf="!searchInput.value">
         <mat-icon>search</mat-icon>
