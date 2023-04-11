@@ -1,6 +1,7 @@
-.mat-toolbar {
+.nav-container {
   display: flex;
   justify-content: space-between;
+  height: 7rem;
 }
 
 .nav-wrapper {
@@ -12,7 +13,11 @@
 
 .menu {
   display: flex;
-  gap: 16px;
+  gap: 3.3rem;
+}
+
+.menu button {
+  font-size: 1.1rem;
 }
 
 .logo-search-container {
@@ -22,7 +27,7 @@
 }
 
 .nav-logo img {
-  height: 40px;
+  height: 2.5rem;
   width: auto;
 }
 
@@ -33,7 +38,7 @@
 
 .search-bar-large {
   flex-grow: 1;
-  margin-left: 16px;
+  margin-left: 1.6rem;
 }
 
 .nav-aside {
