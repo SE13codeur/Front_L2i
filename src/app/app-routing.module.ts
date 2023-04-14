@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DetailItemComponent } from './components/item/detail-item/detail-item.component';
-import { SignPageComponent } from './pages/sign/sign-page.component';
-import { HomePageComponent } from './pages/home/home-page.component';
-import { ItemPageComponent } from './pages/item/item-page.component';
-import { NotFoundComponent } from './pages/not-found/not-found.component';
-import { CartComponent } from './components/aside/cart/cart.component';
+import { DetailItemComponent } from '@c/item/detail-item/detail-item.component';
+import { CartComponent } from '@c/aside/cart/cart.component';
+import { SignPageComponent } from '@p/sign/sign-page.component';
+import { HomePageComponent } from '@p/home/home-page.component';
+import { ItemPageComponent } from '@p/item/item-page.component';
+import { NotFoundComponent } from '@p/not-found/not-found.component';
 
 const routes: Routes = [
   { path: 'sign-in', component: SignPageComponent },

@@ -12,10 +12,11 @@ export class MeiliSearchService {
   private readonly meiliSearchUrl: string;
   private readonly headers: HttpHeaders;
 
-  private searchResultsFromMeilisearch = new BehaviorSubject<
+  private searchResultsFromMeilisearch$ = new BehaviorSubject<
     IMeilisearchItem[]
   >([]);
-  searchResults$ = this.searchResultsFromMeilisearch.asObservable();
+  searchResults$ = this.searchResultsFromMeilisearch$.asObservable();
+  private searchValue$ = new BehaviorSubject<string>('');
 
   constructor(private readonly http: HttpClient) {
     this.meiliSearchUrl = `${environment.meiliSearchApiUrl}/indexes/items/search`;
@@ -24,7 +25,15 @@ export class MeiliSearchService {
     });
   }
 
-  search(
+  getSearchValue(): Observable<string> {
+    return this.searchValue$.asObservable();
+  }
+
+  setSearchValue(value: string): void {
+    this.searchValue$.next(value);
+  }
+
+  updatedSearch(
     query: string,
     filters: string = '',
     options: object = {}
@@ -43,12 +52,12 @@ export class MeiliSearchService {
         map((response) => response.hits),
         tap((results) => {
           // Update with new results
-          this.searchResultsFromMeilisearch.next(results);
+          this.searchResultsFromMeilisearch$.next(results);
         })
       );
   }
 
   getAllBooks(): Observable<IMeilisearchItem[]> {
-    return this.search(''); // params for all books
+    return this.updatedSearch(''); // params for all books
   }
 }

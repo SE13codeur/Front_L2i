@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { BehaviorSubject, of, ReplaySubject, Subject, takeUntil } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ReplaySubject, Subject, takeUntil } from 'rxjs';
 
 import { IMeilisearchItem } from '@m/IMeilisearchItem';
 import { MeiliSearchService } from '@s/meilisearch.service';
@@ -18,15 +18,21 @@ export class ListItemComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private meiliSearchService: MeiliSearchService
   ) {}
 
   ngOnInit() {
-    this.meiliSearchService.searchResults$
+    this.route.queryParams
       .pipe(takeUntil(this.destroy$))
-      .subscribe((searchResults) => {
-        if (searchResults.length > 0) {
-          this.itemList$.next(searchResults);
+      .subscribe((params) => {
+        const query = params['q'];
+        if (query) {
+          this.meiliSearchService
+            .updatedSearch(query)
+            .subscribe((searchResults) => {
+              this.itemList$.next(searchResults);
+            });
         } else {
           this.meiliSearchService.getAllBooks().subscribe((allBooks) => {
             this.itemList$.next(allBooks);

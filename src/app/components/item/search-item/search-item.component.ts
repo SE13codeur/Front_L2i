@@ -1,10 +1,17 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Observable, Subject } from 'rxjs';
-import { MeiliSearchService } from '@s/meilisearch.service';
-import { IMeilisearchItem } from '@m/IMeilisearchItem';
-import { takeUntil, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
+
+import { MeiliSearchService } from '@s/meilisearch.service';
+import { SearchFocusService } from '@s/searchFocus.service';
 
 @Component({
   selector: 'app-search-item',
@@ -12,18 +19,22 @@ import { Router } from '@angular/router';
   styleUrls: ['./search-item.component.css'],
 })
 export class SearchItemComponent implements OnDestroy, OnInit {
-  searchResults$: Observable<IMeilisearchItem[]> | undefined;
-  private readonly destroy$ = new Subject<void>();
   searchInput = new FormControl('');
+  @ViewChild('searchInputElement') searchInputElement!: ElementRef;
+
+  private readonly destroy$ = new Subject<void>();
 
   constructor(
     private readonly meiliSearchService: MeiliSearchService,
-    private router: Router
+    private router: Router,
+    private searchFocusService: SearchFocusService
   ) {}
 
   ngOnInit(): void {
+    this.subscribeToFocusEvents();
+
     this.searchInput.valueChanges
-      .pipe(debounceTime(303), distinctUntilChanged(), takeUntil(this.destroy$))
+      .pipe(debounceTime(11), distinctUntilChanged(), takeUntil(this.destroy$))
       .subscribe((query) => {
         this.search(query);
       });
@@ -34,12 +45,35 @@ export class SearchItemComponent implements OnDestroy, OnInit {
     this.destroy$.complete();
   }
 
-  search(query: string): void {
-    this.meiliSearchService
-      .search(query)
+  private subscribeToFocusEvents(): void {
+    this.searchFocusService.focusSearchInput$
       .pipe(takeUntil(this.destroy$))
-      .subscribe((results) => {
-        this.router.navigate(['/items']);
+      .subscribe((shouldFocus) => {
+        if (shouldFocus) {
+          this.focusSearchInput();
+          this.searchFocusService.resetFocusTrigger();
+        }
       });
+  }
+
+  search(query: string): void {
+    this.meiliSearchService.updatedSearch(query).subscribe((results) => {
+      this.meiliSearchService.setSearchValue(query);
+      this.router
+        .navigate(['/items'], { queryParams: { q: query } })
+        .then(() => {
+          this.searchFocusService.triggerFocus();
+        });
+    });
+  }
+
+  resetSearchInput(): void {
+    this.searchInput.setValue('');
+  }
+
+  focusSearchInput(): void {
+    setTimeout(() => {
+      this.searchInputElement.nativeElement.focus();
+    }, 0);
   }
 }
