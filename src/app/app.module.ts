@@ -18,7 +18,7 @@ import { AsideComponent } from '@c/aside/aside.component';
 import { CartComponent } from '@c/aside/cart/cart.component';
 import { HeaderComponent } from '@c/header/header.component';
 import { SectionComponent } from '@c/section/section.component';
-import { SearchItemComponent } from '@/components/item/search-item/search-item.component';
+import { SearchItemComponent } from '@c/item/search-item/search-item.component';
 import { ListItemComponent } from '@c/item/list-item/list-item.component';
 import { DetailItemComponent } from '@c/item/detail-item/detail-item.component';
 
@@ -32,6 +32,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -62,6 +63,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatToolbarModule,
     MatInputModule,
     MatFormFieldModule,
+    ReactiveFormsModule,
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'fr-FR' }, CartService],
   bootstrap: [AppComponent],

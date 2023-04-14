@@ -2,18 +2,14 @@
   <div class="container mx-auto">
     <ul class="flex justify-between">
       <li class="px-4 py-2 bg-white border-b-4 border-indigo-500 font-medium">
-        <a href="#">Livres</a>
+        <a [routerLink]="['/items']">Livres</a>
       </li>
       <li class="px-4 py-2 bg-white border-b-4 border-gray-400 font-medium">
-        <a href="#">Vidéos</a>
+        <a [routerLink]="['/items']">Vidéos</a>
       </li>
       <li class="px-4 py-2 bg-white border-b-4 border-gray-400 font-medium">
-        <a href="#">Autres</a>
+        <a [routerLink]="['/items']">Autres</a>
       </li>
     </ul>
   </div>
 </nav>
-
-<div *ngIf="categories[0] === 'Livres'">
-  <app-list-item></app-list-item>
-</div>

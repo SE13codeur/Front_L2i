@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./item-page.component.css'],
 })
 export class ItemPageComponent {
+  categories: string[] = ['Livres', 'Vidéos', 'Autres']; // categories to display
   constructor() {}
 }

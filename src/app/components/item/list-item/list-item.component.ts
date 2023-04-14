@@ -1,26 +1,46 @@
-import { Item } from '@/models/IMeilisearchItem';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { map, Observable } from 'rxjs';
-import { ItemService } from 'src/app/services/item.service';
+import { BehaviorSubject, of, ReplaySubject, Subject, takeUntil } from 'rxjs';
+
+import { IMeilisearchItem } from '@m/IMeilisearchItem';
+import { MeiliSearchService } from '@s/meilisearch.service';
 
 @Component({
   selector: 'app-list-item',
   templateUrl: './list-item.component.html',
   styleUrls: ['./list-item.component.css'],
 })
-export class ListItemComponent implements OnInit {
-  itemList$: Observable<Item[]> | undefined;
+export class ListItemComponent implements OnInit, OnDestroy {
+  // itemList$ = new BehaviorSubject<IMeilisearchItem[]>([]);
+  itemList$ = new ReplaySubject<IMeilisearchItem[]>(1);
 
-  constructor(private itemService: ItemService, private router: Router) {}
+  private readonly destroy$ = new Subject<void>();
+
+  constructor(
+    private router: Router,
+    private meiliSearchService: MeiliSearchService
+  ) {}
 
   ngOnInit() {
-    this.itemList$ = this.itemService
-      .getItemList()
-      .pipe(map((itemList) => (itemList as any).books));
+    this.meiliSearchService.searchResults$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((searchResults) => {
+        if (searchResults.length > 0) {
+          this.itemList$.next(searchResults);
+        } else {
+          this.meiliSearchService.getAllBooks().subscribe((allBooks) => {
+            this.itemList$.next(allBooks);
+          });
+        }
+      });
   }
 
-  openItemDetails(item: Item) {
-    this.router.navigate(['/items', item.id]);
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  openItemDetails(item: IMeilisearchItem) {
+    this.router.navigate(['/items', item.isbn13]);
   }
 }

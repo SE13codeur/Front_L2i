@@ -1,3 +1,5 @@
 <app-nav></app-nav>
 <app-item-category-nav></app-item-category-nav>
-<app-list-item></app-list-item>
+<div *ngIf="categories[0] === 'Livres'">
+  <app-list-item></app-list-item>
+</div>
