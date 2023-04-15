@@ -1,6 +1,6 @@
 export interface IMeilisearchItem {
-  uid: string;
-  isbn13: string;
+  id: string;
+  isbn13?: string;
   imageUrl: string;
   title: string;
   subtitle: string;

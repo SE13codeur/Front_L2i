@@ -24,6 +24,7 @@ import { DetailItemComponent } from '@c/item/detail-item/detail-item.component';
 
 import { CartService } from '@s/cart.service';
 
+import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -64,6 +65,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatInputModule,
     MatFormFieldModule,
     ReactiveFormsModule,
+    MatCardModule,
+    MatButtonModule,
+    MatIconModule,
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'fr-FR' }, CartService],
   bootstrap: [AppComponent],

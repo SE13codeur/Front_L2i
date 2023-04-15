@@ -11,7 +11,7 @@ const routes: Routes = [
   { path: 'sign-in', component: SignPageComponent },
   { path: '', component: HomePageComponent },
   { path: 'items', component: ItemPageComponent },
-  { path: 'items/:isbn13', component: DetailItemComponent },
+  { path: 'items/:id', component: DetailItemComponent },
   { path: 'cart', component: CartComponent },
   { path: '', redirectTo: '/', pathMatch: 'full' },
   { path: '**', component: NotFoundComponent },

@@ -57,7 +57,25 @@ export class MeiliSearchService {
       );
   }
 
-  getAllBooks(): Observable<IMeilisearchItem[]> {
+  getAllItems(): Observable<IMeilisearchItem[]> {
     return this.updatedSearch(''); // params for all books
+  }
+
+  getItemById(id: string): Observable<IMeilisearchItem> {
+    const params = new HttpParams().set('q', id);
+    return this.http
+      .get<{ hits: IMeilisearchItem[] }>(this.meiliSearchUrl, {
+        params: params,
+        headers: this.headers,
+      })
+      .pipe(
+        map((response) => {
+          if (response.hits.length > 0) {
+            return response.hits[0];
+          } else {
+            throw new Error(`Book not found with id: ${id}`);
+          }
+        })
+      );
   }
 }

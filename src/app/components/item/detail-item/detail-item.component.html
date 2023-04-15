@@ -1,24 +1,29 @@
-<!-- <div class="container mx-auto p-4" *ngIf="item$ | async as item">
-  <div class="grid grid-cols-2 gap-4">
-    <div class="col-span-1">
-      <img [src]="item.imageUrl" [alt]="item.title" class="w-full">
-    </div>
-    <div class="col-span-1">
-      <h1 class="text-3xl font-bold mb-2">{{ item.title }}</h1>
-      <h2 class="text-xl font-semibold mb-2">{{ item.subtitle }}</h2>
-      <p class="text-lg mb-2"><span class="font-semibold">Authors:</span> {{ item.authors }}</p>
-      <p class="text-lg mb-2"><span class="font-semibold">Publisher:</span> {{ item.editor }}</p>
-      <p class="text-lg mb-2"><span class="font-semibold">Published:</span> {{ item.year }}</p>
-      <p class="text-lg mb-2"><span class="font-semibold">ISBN-13:</span> {{ item.isbn13 }}</p>
-      <p class="text-lg mb-2"><span class="font-semibold">Pages:</span> {{ item.pages }}</p>
-      <p class="text-lg mb-2"><span class="font-semibold">Year:</span> {{ item.year }}</p>
-      <p class="text-lg mb-2"><span class="font-semibold">Price:</span> {{ item.regularPrice }}</p>
-      <p class="text-lg mb-2"><span class="font-semibold">Category:</span> {{ item.category }}</p> -->
-      <!-- <p *ngFor="let category of item.categories">
-        {{ category.name }}
-      </p> -->
-      <!-- <p class="text-lg mb-2"><span class="font-semibold">Description:</span> {{ item.description }}</p>
-      <button class="mt-4 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded" (click)="goBackToListItems()">Retour</button>
-    </div>
-  </div>
-</div> -->
+<div *ngIf="item$ | async as item" class="container">
+  <mat-card class="detail-card">
+    <mat-card-header>
+      <mat-card-title>{{ item.title }}</mat-card-title>
+      <mat-card-subtitle>{{ item.subtitle }}</mat-card-subtitle>
+    </mat-card-header>
+    <img mat-card-image [src]="item.imageUrl" alt="{{ item.title }} cover image">
+    <mat-card-content>
+      <p><strong>Author(s):</strong> {{ item.authors | json }}</p>
+      <p><strong>Editor:</strong> {{ item.editor | json }}</p>
+      <p><strong>Category:</strong> {{ item.categorie | json }}</p>
+      <p><strong>ISBN:</strong> {{ item.isbn13 }}</p>
+      <p><strong>Description:</strong> {{ item.description }}</p>
+      <p><strong>Regular Price:</strong> {{ item.regularPrice }}</p>
+      <p><strong>Rating:</strong> {{ item.rating }}</p>
+      <p><strong>In Stock:</strong> {{ item.inStock }}</p>
+      <p><strong>Quantity In Stock:</strong> {{ item.quantityInStock }}</p>
+      <p><strong>Total Sales:</strong> {{ item.totalSales }}</p>
+      <p><strong>Pages:</strong> {{ item.pages }}</p>
+      <p><strong>Year:</strong> {{ item.year }}</p>
+      <p><strong>Language:</strong> {{ item.language }}</p>
+      <p><strong>Version:</strong> {{ item.version }}</p>
+      <p><strong>New Collection:</strong> {{ item.newCollection }}</p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button (click)="goBackToListItems()">Go Back</button>
+    </mat-card-actions>
+  </mat-card>
+</div>
