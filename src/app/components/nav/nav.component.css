@@ -29,6 +29,9 @@
 .nav-logo img {
   height: 2.5rem;
   width: auto;
+  margin-right: 3.3rem;
+  margin-left: 3.3rem;
+
 }
 
 .nav-actions {
@@ -38,11 +41,10 @@
 
 .search-bar-large {
   flex-grow: 1;
-  margin-left: 1.6rem;
 }
 
 .nav-aside {
-  margin-right: auto;
+  margin-right: 3.3rem;
 }
 
 /* Media Query for mobile devices */
