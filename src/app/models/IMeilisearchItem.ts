@@ -12,7 +12,7 @@ export interface IMeilisearchItem {
   totalSales: number;
   authors?: IAuthor[];
   editor?: IEditor;
-  categorie: ICategoryItem;
+  category: ICategoryItem;
   pages: string;
   year: string;
   language?: string;

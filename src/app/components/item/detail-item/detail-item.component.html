@@ -1,29 +1,58 @@
-<div *ngIf="item$ | async as item" class="container">
-  <mat-card class="detail-card">
-    <mat-card-header>
-      <mat-card-title>{{ item.title }}</mat-card-title>
-      <mat-card-subtitle>{{ item.subtitle }}</mat-card-subtitle>
-    </mat-card-header>
-    <img mat-card-image [src]="item.imageUrl" alt="{{ item.title }} cover image">
-    <mat-card-content>
-      <p><strong>Author(s):</strong> {{ item.authors | json }}</p>
-      <p><strong>Editor:</strong> {{ item.editor | json }}</p>
-      <p><strong>Category:</strong> {{ item.categorie | json }}</p>
-      <p><strong>ISBN:</strong> {{ item.isbn13 }}</p>
-      <p><strong>Description:</strong> {{ item.description }}</p>
-      <p><strong>Regular Price:</strong> {{ item.regularPrice }}</p>
-      <p><strong>Rating:</strong> {{ item.rating }}</p>
-      <p><strong>In Stock:</strong> {{ item.inStock }}</p>
-      <p><strong>Quantity In Stock:</strong> {{ item.quantityInStock }}</p>
-      <p><strong>Total Sales:</strong> {{ item.totalSales }}</p>
-      <p><strong>Pages:</strong> {{ item.pages }}</p>
-      <p><strong>Year:</strong> {{ item.year }}</p>
-      <p><strong>Language:</strong> {{ item.language }}</p>
-      <p><strong>Version:</strong> {{ item.version }}</p>
-      <p><strong>New Collection:</strong> {{ item.newCollection }}</p>
-    </mat-card-content>
-    <mat-card-actions>
-      <button mat-button (click)="goBackToListItems()">Go Back</button>
-    </mat-card-actions>
-  </mat-card>
-</div>
+<div *ngIf="item as item" class="container">
+  <div class="detail-container">
+    <div class="detail-image">
+      <div class="image-wrapper">
+        <img [src]="item.imageUrl" alt="{{ item.title }} cover image" />
+        <div *ngIf="item.newCollection" class="new-banner">New</div>
+      </div>
+      <div class="rating">
+        <mat-icon
+          *ngFor="let star of getRatingStars(item.rating); let i = index"
+          [ngClass]="{ 'yellow-star': star === 1, 'gray-star': star === 0 }"
+          (click)="setRating(i + 1)"
+        >
+          star
+        </mat-icon>
+      </div>
+    </div>
+    <div class="detail-info">
+      <h1><strong>{{ item.title }}</strong></h1>
+      <h2>{{ item.subtitle }}</h2>
+      <p><strong>Autheur(s) :</strong> {{ item.authors | json }}</p>
+      <p><strong>Edition :</strong> {{ item.editor | json }}</p>
+      <p><strong>Description :</strong> {{ item.description }}</p>
+      <p><strong>Prix :</strong> {{ item.regularPrice }} $</p>
+      <p><strong>Pages :</strong> {{ item.pages }}</p>
+      <p><strong>Language :</strong> English</p>
+      <p><strong>Année :</strong> {{ item.year }}</p>
+      <p><strong>Version :</strong> {{ item.version }}</p>
+      <p><strong>ISBN :</strong> {{ item.isbn13 }}</p>
+      <button mat-raised-button color="primary" (click)="goBackToListItems()">Retourner à la liste de {{ item.category }}</button>
+    </div>
+  </div>
+  <h3 class="reviews-title" (click)="toggleShowReviews()">
+    Commentaires
+    <mat-icon>{{ showReviews ? 'expand_less' : 'expand_more' }}</mat-icon>
+  </h3>
+  <div *ngIf="showReviews">
+    <p>
+      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptatibus
+      nobis optio totam. Eius nam nobis soluta provident facilis, pariatur error
+      maiores rem quo odit cum, ab repellendus animi molestias ex.
+    </p>
+    <p>
+      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptatibus
+      nobis optio totam. Eius nam nobis soluta provident facilis, pariatur error
+      maiores rem quo odit cum, ab repellendus animi molestias ex.
+    </p>
+    <p>
+      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptatibus
+      nobis optio totam. Eius nam nobis soluta provident facilis, pariatur error
+      maiores rem quo odit cum, ab repellendus animi molestias ex.
+    </p>
+    <p>
+      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptatibus
+      nobis optio totam. Eius nam nobis soluta provident facilis, pariatur error
+      maiores rem quo odit cum, ab repellendus animi molestias ex.
+    </p>
+  </div>
