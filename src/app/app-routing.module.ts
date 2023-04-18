@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DetailItemComponent } from '@c/item/detail-item/detail-item.component';
+import { DetailItemComponent } from '@c/section/item/detail-item/detail-item.component';
 import { CartComponent } from '@c/aside/cart/cart.component';
 import { SignPageComponent } from '@p/sign/sign-page.component';
 import { HomePageComponent } from '@p/home/home-page.component';
