@@ -34,6 +34,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatListModule } from '@angular/material/list';
 import { MatSliderModule } from '@angular/material/slider';
+import { NgxSliderModule } from '@angular-slider/ngx-slider';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -75,6 +76,7 @@ import { FiltersItemComponent } from '@c/section/filters-item/filters-item.compo
     MatCheckboxModule,
     MatListModule,
     MatSliderModule,
+    NgxSliderModule,
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'fr-FR' }, CartService],
   bootstrap: [AppComponent],
