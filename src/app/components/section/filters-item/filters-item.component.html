@@ -5,7 +5,7 @@
       <mat-divider></mat-divider>
       <mat-list>
         <mat-list-item *ngFor="let category of categories">
-          <mat-checkbox>{{ category }}</mat-checkbox>
+          <mat-checkbox (change)="onCategoryChange(category, $event.checked)">{{ category }}</mat-checkbox>
         </mat-list-item>
       </mat-list>
     </div>
@@ -15,7 +15,7 @@
       <mat-divider></mat-divider>
       <mat-list>
         <mat-list-item *ngFor="let author of authors">
-          <mat-checkbox>{{ author }}</mat-checkbox>
+          <mat-checkbox (change)="onAuthorChange(author, $event.checked)">{{ author }}</mat-checkbox>
         </mat-list-item>
       </mat-list>
     </div>
@@ -23,21 +23,21 @@
     <div class="filter-section">
       <h3>Prix</h3>
       <mat-divider></mat-divider>
-      <mat-slider
-        min="0"
-        max="500"
-        step="1"
-        [value]="price"
-      ></mat-slider>
-      <p>Prix maximum : {{ price }} €</p>
-    </div>
+      <ngx-slider
+        [(value)]="priceMin"
+        [(highValue)]="priceMax"
+        [options]="options"
+        (valueChange)="onPriceMinChange($event)"
+        (highValueChange)="onPriceMaxChange($event)"
+    ></ngx-slider>
+  </div>
 
     <div class="filter-section">
       <h3>Évaluations</h3>
       <mat-divider></mat-divider>
       <mat-list>
         <mat-list-item *ngFor="let rating of ratings">
-          <mat-checkbox>{{ rating }}</mat-checkbox>
+          <mat-checkbox (change)="onRatingChange(ratings.indexOf(rating) + 1, $event.checked)">{{ rating }}</mat-checkbox>
         </mat-list-item>
       </mat-list>
     </div>
