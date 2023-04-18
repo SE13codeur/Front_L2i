@@ -33,8 +33,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatListModule } from '@angular/material/list';
+import { MatSliderModule } from '@angular/material/slider';
+
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
+import { FiltersItemComponent } from '@c/section/filters-item/filters-item.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +54,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     CartComponent,
     AsideComponent,
     SearchItemComponent,
+    FiltersItemComponent,
   ],
   imports: [
     BrowserModule,
@@ -70,6 +74,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatIconModule,
     MatCheckboxModule,
     MatListModule,
+    MatSliderModule,
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'fr-FR' }, CartService],
   bootstrap: [AppComponent],

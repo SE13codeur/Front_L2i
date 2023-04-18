@@ -1,0 +1,49 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #sidenav mode="side" opened>
+    <div class="filter-section">
+      <h3>Catégories</h3>
+      <mat-divider></mat-divider>
+      <mat-list>
+        <mat-list-item *ngFor="let category of categories">
+          <mat-checkbox>{{ category }}</mat-checkbox>
+        </mat-list-item>
+      </mat-list>
+    </div>
+
+    <div class="filter-section">
+      <h3>Auteurs</h3>
+      <mat-divider></mat-divider>
+      <mat-list>
+        <mat-list-item *ngFor="let author of authors">
+          <mat-checkbox>{{ author }}</mat-checkbox>
+        </mat-list-item>
+      </mat-list>
+    </div>
+
+    <div class="filter-section">
+      <h3>Prix</h3>
+      <mat-divider></mat-divider>
+      <mat-slider
+        min="0"
+        max="500"
+        step="1"
+        [value]="price"
+      ></mat-slider>
+      <p>Prix maximum : {{ price }} €</p>
+    </div>
+
+    <div class="filter-section">
+      <h3>Évaluations</h3>
+      <mat-divider></mat-divider>
+      <mat-list>
+        <mat-list-item *ngFor="let rating of ratings">
+          <mat-checkbox>{{ rating }}</mat-checkbox>
+        </mat-list-item>
+      </mat-list>
+    </div>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <app-list-item></app-list-item>
+  </mat-sidenav-content>
+</mat-sidenav-container>

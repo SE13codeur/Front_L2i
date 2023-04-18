@@ -1,0 +1,53 @@
+.sidenav-container {
+  height: 100%;
+}
+
+mat-sidenav {
+  width: 250px;
+  background-color: #f7f7f7;
+  padding: 1rem;
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.filters {
+  font-family: 'Roboto', sans-serif;
+}
+
+.filter-section {
+  margin-bottom: 2rem;
+}
+
+.filter-section h3 {
+  font-weight: 500;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  color: #333;
+  text-transform: uppercase;
+}
+
+.filter-section mat-divider {
+  margin-bottom: 1rem;
+}
+
+.categories,
+.authors,
+.ratings {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 0.5rem 1rem;
+  margin-bottom: 1rem;
+}
+
+mat-checkbox {
+  font-size: 0.8rem;
+}
+
+mat-slider {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+p {
+  font-size: 0.8rem;
+  color: #666;
+}
