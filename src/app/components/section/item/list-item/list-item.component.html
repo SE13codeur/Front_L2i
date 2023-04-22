@@ -3,8 +3,10 @@
     <div *ngFor="let item of itemList$ | async">
       <mat-card class="custom-card" (click)="openItemDetails(item)">
         <img mat-card-image [src]="item.imageUrl" alt="{{ item.title }} cover image">
-        <p>{{ item.subtitle }}</p>
-        <mat-card-actions class="custom-card-actions">
+        <p class="item-description">
+          {{ truncateText(item.subtitle, 77) }}
+        </p>
+                <mat-card-actions class="custom-card-actions">
           <button mat-icon-button color="primary" (click)="addToFavorites(item, $event)">
             <mat-icon>favorite</mat-icon>
           </button>

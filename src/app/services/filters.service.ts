@@ -23,7 +23,7 @@ export class FiltersService {
   );
   yearMax$ = this.yearMaxSource.asObservable();
 
-  ratingsSource = new BehaviorSubject<string[]>([]);
+  ratingsSource = new BehaviorSubject<number[]>([]);
   ratings$ = this.ratingsSource.asObservable();
 
   updateCategory(categories: string[]) {
@@ -44,6 +44,10 @@ export class FiltersService {
 
   updateYearMax(yearMax: number) {
     this.yearMaxSource.next(yearMax.toString());
+  }
+
+  updateRatings(ratings: number[]) {
+    this.ratingsSource.next(ratings);
   }
 
   subscribeToAllFilters(

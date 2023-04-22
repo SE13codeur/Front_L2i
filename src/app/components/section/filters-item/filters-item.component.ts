@@ -92,4 +92,15 @@ export class FiltersItemComponent {
 
     return [...Array(fullStars).fill(1), ...Array(emptyStars).fill(0)];
   }
+
+  onRatingChange(rating: number, checked: boolean) {
+    if (checked) {
+      this.selectedRatings.push(rating);
+    } else {
+      this.selectedRatings = this.selectedRatings.filter(
+        (item) => item !== rating
+      );
+    }
+    this.filtersService.updateRatings(this.selectedRatings);
+  }
 }

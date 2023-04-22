@@ -38,14 +38,15 @@
   <div class="filter-section">
     <h3>Évaluations</h3>
     <mat-divider></mat-divider>
-    <div *ngFor="let rate of [1, 2, 3, 4, 5]">
-      <mat-checkbox>
+    <div class="rating" *ngFor="let rate of [1, 2, 3, 4, 5]">
+      <mat-checkbox (change)="onRatingChange(rate, $event.checked)">
         <ng-container *ngFor="let star of [1, 2, 3, 4, 5]">
           <mat-icon [ngClass]="star <= rate ? 'yellow-star' : 'gray-star'">star</mat-icon>
         </ng-container>
       </mat-checkbox>
     </div>
   </div>
+
   </mat-sidenav>
 
   <mat-sidenav-content>
