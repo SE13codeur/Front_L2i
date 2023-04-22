@@ -18,14 +18,10 @@ export class FiltersItemComponent {
   selectedRatings: number[] = [];
   categories = [
     'Livres IT',
-    'Livres Cuisines',
-    'Livres Coaching',
+    'Nouveaux Livres IT',
     'Vidéos IT',
-    'Vidéos Cuisines',
-    'Vidéos Coaching',
+    'Nouvelles Vidéos IT',
   ];
-
-  authors = ['Auteur 1', 'Auteur 2', 'Auteur 3'];
 
   priceMin: number = 10;
   priceMax: number = 199;
@@ -44,13 +40,22 @@ export class FiltersItemComponent {
     },
   };
 
-  ratings = [
-    '1 étoile et plus',
-    '2 étoiles et plus',
-    '3 étoiles et plus',
-    '4 étoiles et plus',
-    '5 étoiles',
-  ];
+  yearMin: number = 2010;
+  yearMax: number = new Date().getFullYear();
+  optionsYear: Options = {
+    floor: 2010,
+    ceil: new Date().getFullYear(),
+    translate: (value: number, label: LabelType): string => {
+      switch (label) {
+        case LabelType.Low:
+          return '<b>Min :</b> ' + value;
+        case LabelType.High:
+          return '<b>Max :</b> ' + value;
+        default:
+          return value.toString();
+      }
+    },
+  };
 
   constructor(private filtersService: FiltersService) {}
 
@@ -65,17 +70,6 @@ export class FiltersItemComponent {
     this.filtersService.updateCategory(this.selectedCategories);
   }
 
-  onAuthorChange(author: string, checked: boolean) {
-    if (checked) {
-      this.selectedAuthors.push(author);
-    } else {
-      this.selectedAuthors = this.selectedAuthors.filter(
-        (item) => item !== author
-      );
-    }
-    this.filtersService.updateAuthor(this.selectedAuthors);
-  }
-
   onPriceMinChange(newPriceMin: number) {
     this.filtersService.updatePriceMin(newPriceMin);
   }
@@ -84,14 +78,18 @@ export class FiltersItemComponent {
     this.filtersService.updatePriceMax(newPriceMax);
   }
 
-  onRatingChange(rating: number, checked: boolean) {
-    if (checked) {
-      this.selectedRatings.push(rating);
-    } else {
-      this.selectedRatings = this.selectedRatings.filter(
-        (item) => item !== rating
-      );
-    }
-    this.filtersService.updateRating(this.selectedRatings);
+  onYearMinChange(newYearMin: number) {
+    this.filtersService.updateYearMin(newYearMin);
+  }
+
+  onYearMaxChange(newYearMax: number) {
+    this.filtersService.updateYearMax(newYearMax);
+  }
+
+  getRatingStars(rating: number | undefined): number[] {
+    const fullStars = Math.round(rating || 0);
+    const emptyStars = 5 - fullStars;
+
+    return [...Array(fullStars).fill(1), ...Array(emptyStars).fill(0)];
   }
 }

@@ -11,16 +11,6 @@
     </div>
 
     <div class="filter-section">
-      <h3>Auteurs</h3>
-      <mat-divider></mat-divider>
-      <mat-list>
-        <mat-list-item *ngFor="let author of authors">
-          <mat-checkbox (change)="onAuthorChange(author, $event.checked)">{{ author }}</mat-checkbox>
-        </mat-list-item>
-      </mat-list>
-    </div>
-
-    <div class="filter-section">
       <h3>Prix</h3>
       <mat-divider></mat-divider>
       <ngx-slider
@@ -32,15 +22,30 @@
     ></ngx-slider>
   </div>
 
-    <div class="filter-section">
-      <h3>Évaluations</h3>
+  <div class="filter-section">
+      <h3>Années</h3>
       <mat-divider></mat-divider>
-      <mat-list>
-        <mat-list-item *ngFor="let rating of ratings">
-          <mat-checkbox (change)="onRatingChange(ratings.indexOf(rating) + 1, $event.checked)">{{ rating }}</mat-checkbox>
-        </mat-list-item>
-      </mat-list>
+      <ngx-slider
+        [(value)]="yearMin"
+        [(highValue)]="yearMax"
+        [options]="optionsYear"
+        (valueChange)="onYearMinChange($event)"
+        (highValueChange)="onYearMaxChange($event)"
+      ></ngx-slider>
+
+  </div>
+
+  <div class="filter-section">
+    <h3>Évaluations</h3>
+    <mat-divider></mat-divider>
+    <div *ngFor="let rate of [1, 2, 3, 4, 5]">
+      <mat-checkbox>
+        <ng-container *ngFor="let star of [1, 2, 3, 4, 5]">
+          <mat-icon [ngClass]="star <= rate ? 'yellow-star' : 'gray-star'">star</mat-icon>
+        </ng-container>
+      </mat-checkbox>
     </div>
+  </div>
   </mat-sidenav>
 
   <mat-sidenav-content>

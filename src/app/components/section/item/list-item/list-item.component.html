@@ -16,11 +16,12 @@
           </button>
         </mat-card-actions>
         <div class="rating">
-          <ng-container *ngFor="let starIndex of [1, 2, 3, 4, 5]">
-            <ng-container *ngIf="item">
-              <mat-icon>star</mat-icon>
-            </ng-container>
-          </ng-container>
+          <mat-icon
+            *ngFor="let star of getRatingStars(item.rating); let i = index"
+            [ngClass]="{ 'yellow-star': star === 1, 'gray-star': star === 0 }"
+          >
+            star
+          </mat-icon>
         </div>
       </mat-card>
     </div>

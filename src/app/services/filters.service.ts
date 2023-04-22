@@ -9,24 +9,25 @@ export class FiltersService {
   categoriesSource = new BehaviorSubject<string[]>([]);
   categories$ = this.categoriesSource.asObservable();
 
-  authorsSource = new BehaviorSubject<string[]>([]);
-  authors$ = this.authorsSource.asObservable();
-
   priceMinSource = new BehaviorSubject<number>(0);
   priceMin$ = this.priceMinSource.asObservable();
 
   priceMaxSource = new BehaviorSubject<number>(500);
   priceMax$ = this.priceMaxSource.asObservable();
 
-  ratingsSource = new BehaviorSubject<number[]>([]);
+  yearMinSource = new BehaviorSubject<string>('2010');
+  yearMin$ = this.yearMinSource.asObservable();
+
+  yearMaxSource = new BehaviorSubject<string>(
+    new Date().getFullYear().toString()
+  );
+  yearMax$ = this.yearMaxSource.asObservable();
+
+  ratingsSource = new BehaviorSubject<string[]>([]);
   ratings$ = this.ratingsSource.asObservable();
 
   updateCategory(categories: string[]) {
     this.categoriesSource.next(categories);
-  }
-
-  updateAuthor(authors: string[]) {
-    this.authorsSource.next(authors);
   }
 
   updatePriceMin(priceMin: number) {
@@ -37,8 +38,12 @@ export class FiltersService {
     this.priceMaxSource.next(priceMax);
   }
 
-  updateRating(ratings: number[]) {
-    this.ratingsSource.next(ratings);
+  updateYearMin(yearMin: number) {
+    this.yearMinSource.next(yearMin.toString());
+  }
+
+  updateYearMax(yearMax: number) {
+    this.yearMaxSource.next(yearMax.toString());
   }
 
   subscribeToAllFilters(
@@ -47,11 +52,13 @@ export class FiltersService {
   ): void {
     this.categories$.pipe(takeUntil(takeUntil$)).subscribe(() => callback());
 
-    this.authors$.pipe(takeUntil(takeUntil$)).subscribe(() => callback());
-
     this.priceMin$.pipe(takeUntil(takeUntil$)).subscribe(() => callback());
 
     this.priceMax$.pipe(takeUntil(takeUntil$)).subscribe(() => callback());
+
+    this.yearMin$.pipe(takeUntil(takeUntil$)).subscribe(() => callback());
+
+    this.yearMax$.pipe(takeUntil(takeUntil$)).subscribe(() => callback());
 
     this.ratings$.pipe(takeUntil(takeUntil$)).subscribe(() => callback());
   }

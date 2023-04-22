@@ -25,6 +25,11 @@ export class ListItemComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    // Subscribe to the categories changes in FiltersService
+    this.filtersService.categoriesSource
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => this.applyFilters());
+
     this.route.queryParams
       .pipe(takeUntil(this.destroy$))
       .subscribe((params) => {
@@ -63,17 +68,7 @@ export class ListItemComponent implements OnInit, OnDestroy {
     const categories = this.filtersService.categoriesSource.getValue();
     if (categories.length > 0) {
       filteredItems = filteredItems.filter((item) =>
-        categories.includes(item.category.name)
-      );
-    }
-
-    // Apply authors filter
-    const authors = this.filtersService.authorsSource.getValue();
-    if (authors.length > 0) {
-      filteredItems = filteredItems.filter((item) =>
-        item.authors?.some((author) =>
-          authors.includes(`${author.firstName} ${author.lastName}`)
-        )
+        categories.includes(item.category.id.toString())
       );
     }
 
@@ -84,11 +79,18 @@ export class ListItemComponent implements OnInit, OnDestroy {
       (item) => item.regularPrice >= priceMin && item.regularPrice <= priceMax
     );
 
+    // Apply yearMin and yearMax filters
+    const yearMin = Number(this.filtersService.yearMinSource.getValue());
+    const yearMax = Number(this.filtersService.yearMaxSource.getValue());
+    filteredItems = filteredItems.filter(
+      (item) => Number(item.year) >= yearMin && Number(item.year) <= yearMax
+    );
+
     // Apply ratings filter
     const ratings = this.filtersService.ratingsSource.getValue();
     if (ratings.length > 0) {
       filteredItems = filteredItems.filter((item) =>
-        ratings.includes(item.rating ?? 0)
+        ratings.includes(Math.round(item.rating || 0).toString())
       );
     }
 
@@ -98,6 +100,13 @@ export class ListItemComponent implements OnInit, OnDestroy {
 
   openItemDetails(item: IMeilisearchItem) {
     this.router.navigate(['/items', item.id]);
+  }
+
+  getRatingStars(rating: number | undefined): number[] {
+    const fullStars = Math.round(rating || 0);
+    const emptyStars = 5 - fullStars;
+
+    return [...Array(fullStars).fill(1), ...Array(emptyStars).fill(0)];
   }
 
   //TODO
