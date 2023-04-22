@@ -60,6 +60,10 @@ export class ListItemComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
+  truncateText(text: string, maxLength: number): string {
+    return text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
+  }
+
   applyFilters() {
     // Apply all filters to the originalItemList and update itemList$
     let filteredItems = this.originalItemList;
@@ -90,7 +94,7 @@ export class ListItemComponent implements OnInit, OnDestroy {
     const ratings = this.filtersService.ratingsSource.getValue();
     if (ratings.length > 0) {
       filteredItems = filteredItems.filter((item) =>
-        ratings.includes(Math.round(item.rating || 0).toString())
+        ratings.includes(Math.round(item.rating || 0))
       );
     }
 
