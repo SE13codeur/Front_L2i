@@ -3,13 +3,40 @@
     <div class="filter-section">
       <h3>Catégories</h3>
       <mat-divider></mat-divider>
-      <mat-list>
-        <mat-list-item *ngFor="let category of categories">
-          <mat-checkbox (change)="onCategoryChange(category, $event.checked)">{{ category }}</mat-checkbox>
-        </mat-list-item>
-      </mat-list>
-    </div>
+      <div>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <mat-checkbox (change)="onCategoryChange(2, $event.checked)">Livres</mat-checkbox>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-list>
+            <mat-list-item>
+              <mat-checkbox (change)="onCategoryChange(4, $event.checked)">Anciens</mat-checkbox>
+            </mat-list-item>
+            <mat-list-item>
+              <mat-checkbox (change)="onCategoryChange(5, $event.checked)">Récents</mat-checkbox>
+            </mat-list-item>
+          </mat-list>
+        </mat-expansion-panel>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <mat-checkbox (change)="onCategoryChange(3, $event.checked)">Vidéos</mat-checkbox>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-list>
+            <mat-list-item>
+              <mat-checkbox (change)="onCategoryChange(4, $event.checked)">Anciens</mat-checkbox>
+            </mat-list-item>
+            <mat-list-item>
+              <mat-checkbox (change)="onCategoryChange(5, $event.checked)">Récents</mat-checkbox>
+            </mat-list-item>
+          </mat-list>
+        </mat-expansion-panel>
 
+      </div>
+    </div>
     <div class="filter-section">
       <h3>Prix</h3>
       <mat-divider></mat-divider>
@@ -19,10 +46,10 @@
         [options]="options"
         (valueChange)="onPriceMinChange($event)"
         (highValueChange)="onPriceMaxChange($event)"
-    ></ngx-slider>
-  </div>
+      ></ngx-slider>
+    </div>
 
-  <div class="filter-section">
+    <div class="filter-section">
       <h3>Années</h3>
       <mat-divider></mat-divider>
       <ngx-slider
@@ -32,21 +59,19 @@
         (valueChange)="onYearMinChange($event)"
         (highValueChange)="onYearMaxChange($event)"
       ></ngx-slider>
-
-  </div>
-
-  <div class="filter-section">
-    <h3>Évaluations</h3>
-    <mat-divider></mat-divider>
-    <div class="rating" *ngFor="let rate of [1, 2, 3, 4, 5]">
-      <mat-checkbox (change)="onRatingChange(rate, $event.checked)">
-        <ng-container *ngFor="let star of [1, 2, 3, 4, 5]">
-          <mat-icon [ngClass]="star <= rate ? 'yellow-star' : 'gray-star'">star</mat-icon>
-        </ng-container>
-      </mat-checkbox>
     </div>
-  </div>
 
+    <div class="filter-section">
+      <h3>Évaluations</h3>
+      <mat-divider></mat-divider>
+      <div class="rating" *ngFor="let rate of [1, 2, 3, 4, 5]">
+        <mat-checkbox (change)="onRatingChange(rate, $event.checked)">
+          <ng-container *ngFor="let star of [1, 2, 3, 4, 5]">
+            <mat-icon [ngClass]="star <= rate ? 'yellow-star' : 'gray-star'">star</mat-icon>
+          </ng-container>
+        </mat-checkbox>
+      </div>
+    </div>
   </mat-sidenav>
 
   <mat-sidenav-content>

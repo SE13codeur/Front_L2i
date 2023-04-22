@@ -6,7 +6,7 @@ import { takeUntil } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class FiltersService {
-  categoriesSource = new BehaviorSubject<string[]>([]);
+  categoriesSource = new BehaviorSubject<number[]>([]);
   categories$ = this.categoriesSource.asObservable();
 
   priceMinSource = new BehaviorSubject<number>(0);
@@ -26,7 +26,7 @@ export class FiltersService {
   ratingsSource = new BehaviorSubject<number[]>([]);
   ratings$ = this.ratingsSource.asObservable();
 
-  updateCategory(categories: string[]) {
+  updateCategory(categories: number[]) {
     this.categoriesSource.next(categories);
   }
 

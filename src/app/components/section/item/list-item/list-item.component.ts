@@ -41,7 +41,8 @@ export class ListItemComponent implements OnInit, OnDestroy {
               this.originalItemList = searchResults;
               this.applyFilters();
             });
-        } else {
+        }
+        if (!query) {
           this.meiliSearchService.getAllItems().subscribe((allBooks) => {
             this.originalItemList = allBooks;
             this.applyFilters();
@@ -72,7 +73,7 @@ export class ListItemComponent implements OnInit, OnDestroy {
     const categories = this.filtersService.categoriesSource.getValue();
     if (categories.length > 0) {
       filteredItems = filteredItems.filter((item) =>
-        categories.includes(item.category.id.toString())
+        categories.includes(item.category.id)
       );
     }
 

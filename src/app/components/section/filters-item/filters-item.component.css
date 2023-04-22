@@ -18,15 +18,15 @@ mat-sidenav {
 }
 
 .filter-section h3 {
-  font-weight: 500;
-  font-size: 0.9rem;
+  font-weight: 777;
+  font-size: 1.11rem;
   margin-bottom: 0.89rem;
   color: #333;
   text-transform: uppercase;
 }
 
 .filter-section mat-divider {
-  margin-bottom: 1.1rem;
+  margin-bottom: 1.11rem;
 }
 
 .categories,
@@ -82,83 +82,29 @@ p {
 }
 
 
-/* Just some border in the main list: */
+/* CATEGORIES' TREE: */
 
-body > ul{
-  border-left: 5px solid #DDD;
+/* Styles pour mat-expansion-panel */
+.mat-expansion-panel {
+  background-color: #F7F7F7; /* Couleur de fond plus foncée */
 }
 
-
-/* Tree list styles: */
-
-ul.tree-list{
-  font-family: 'Roboto', sans-serif;
+.mat-expansion-panel:hover {
+  background-color: #eaeaea; /* Couleur de fond plus foncée */
 }
 
-ul.tree-list li{
-  list-style: none;
-  padding: 0.2em 0;
+/* Styles pour les div */
+.filter-section {
+  background-color: #F7F7F7; /* Couleur de fond grise */
+  transition: background-color 0.3s; /* Animation de transition pour le hover */
 }
 
-ul.tree-list li label{
-  display: inline-block;
-  margin-left: 0.5em;
-  padding: 0.2em 0.3em;
-  border-radius: 0.2em;
+.filter-section:hover {
+  background-color: #E1E1E1; /* Couleur de fond blanche au hover */
 }
 
-ul.tree-list ul {
-  padding-left: 1.2em;
-  position: relative;
+::ng-deep .mat-expansion-panel-header:not([aria-expanded="true"]) .mat-expansion-indicator::after,
+::ng-deep .mat-expansion-panel-header[aria-expanded="true"] .mat-expansion-indicator::before {
+  border-color: #808080 !important;
 }
 
-
-ul.tree-list ul li{
-  display: none;
-}
-
-ul.tree-list ul:before {
-  content: "\f0da";
-  font-family: "FontAwesome";
-  visibility: visible;
-  font-size: 14px;
-  position: absolute;
-  left: 0;
-  top: -1.45em;
-  transition: transform 0.3s;
-}
-
-
-ul.tree-list input.cb-collapsable{
-  width: 100%;
-  position: absolute;
-  cursor: pointer!important;
-  margin-top: 0.5em;
-  opacity: 0;
-}
-
-ul.tree-list input.cb-collapsable:hover + label{
-  background-color: #EEE;
-}
-ul.tree-list input.cb-collapsable ~ ul:before{
-  content: '\f0da';
-        font-family: 'FontAwesome';
-        visibility: visible;
-        font-size: 14px;
-        position: absolute;
-        left: 0;
-        top: -1.45em;
-        transition: transform 0.3s
-}
-
-ul.tree-list input.cb-collapsable:checked ~ ul:before{
-  transform: rotate(90deg);
-}
-
-ul.tree-list input.cb-collapsable:checked ~ ul li{
-  display: block;
-}
-
-.cb-collapsable{
-  padding: auto;
-}

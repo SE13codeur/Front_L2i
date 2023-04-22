@@ -20,6 +20,7 @@ import { SectionComponent } from '@c/section/section.component';
 import { SearchItemComponent } from '@c/nav/search-item/search-item.component';
 import { ListItemComponent } from '@c/section/item/list-item/list-item.component';
 import { DetailItemComponent } from '@c/section/item/detail-item/detail-item.component';
+import { FiltersItemComponent } from '@c/section/filters-item/filters-item.component';
 
 import { CartService } from '@s/cart.service';
 
@@ -35,10 +36,10 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatListModule } from '@angular/material/list';
 import { MatSliderModule } from '@angular/material/slider';
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
-import { FiltersItemComponent } from '@c/section/filters-item/filters-item.component';
 
 @NgModule({
   declarations: [
@@ -77,6 +78,7 @@ import { FiltersItemComponent } from '@c/section/filters-item/filters-item.compo
     MatListModule,
     MatSliderModule,
     NgxSliderModule,
+    MatExpansionModule,
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'fr-FR' }, CartService],
   bootstrap: [AppComponent],
