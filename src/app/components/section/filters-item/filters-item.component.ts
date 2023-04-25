@@ -13,7 +13,7 @@ import { FiltersService } from '@s/filters.service';
   styleUrls: ['./filters-item.component.css'],
 })
 export class FiltersItemComponent {
-  selectedCategories: number[] = [];
+  selectedCategories: string[] = [];
   selectedAuthors: string[] = [];
   selectedRatings: number[] = [];
   categories = [
@@ -59,7 +59,7 @@ export class FiltersItemComponent {
 
   constructor(private filtersService: FiltersService) {}
 
-  onCategoryChange(categoryId: number, checked: boolean) {
+  onCategoryChange(categoryId: string, checked: boolean) {
     if (checked) {
       this.selectedCategories.push(categoryId);
     }
@@ -68,7 +68,7 @@ export class FiltersItemComponent {
         (item) => item !== categoryId
       );
     }
-    this.filtersService.updateCategory(this.selectedCategories);
+    this.filtersService.updateCategories(this.selectedCategories);
   }
 
   onPriceMinChange(newPriceMin: number) {

@@ -6,7 +6,7 @@
         <p class="item-description">
           {{ truncateText(item.subtitle, 77) }}
         </p>
-                <mat-card-actions class="custom-card-actions">
+        <mat-card-actions class="custom-card-actions">
           <button mat-icon-button color="primary" (click)="addToFavorites(item, $event)">
             <mat-icon>favorite</mat-icon>
           </button>
@@ -19,13 +19,13 @@
         </mat-card-actions>
         <div class="rating">
           <mat-icon
-            *ngFor="let star of getRatingStars(item.rating); let i = index"
-            [ngClass]="{ 'yellow-star': star === 1, 'gray-star': star === 0 }"
+          *ngFor="let star of getRatingStars(item.rating); let i = index"
+          [ngClass]="{ 'yellow-star': star === 1, 'gray-star': star === 0 }"
           >
-            star
-          </mat-icon>
-        </div>
-      </mat-card>
+          star
+        </mat-icon>
+      </div>
+    </mat-card>
     </div>
   </div>
 </div>

@@ -25,11 +25,6 @@ export class ListItemComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    // Subscribe to the categories changes in FiltersService
-    this.filtersService.categoriesSource
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(() => this.applyFilters());
-
     this.route.queryParams
       .pipe(takeUntil(this.destroy$))
       .subscribe((params) => {
@@ -69,12 +64,17 @@ export class ListItemComponent implements OnInit, OnDestroy {
     // Apply all filters to the originalItemList and update itemList$
     let filteredItems = this.originalItemList;
 
+    console.log(
+      'Original categories:',
+      filteredItems.map((item) => item.category)
+    );
+
     // Apply categories filter
     const categories = this.filtersService.categoriesSource.getValue();
     if (categories.length > 0) {
-      filteredItems = filteredItems.filter((item) =>
-        categories.includes(item.category.id)
-      );
+      filteredItems = filteredItems.filter((item) => {
+        return categories.includes(item.category.id);
+      });
     }
 
     // Apply priceMin and priceMax filters
@@ -101,6 +101,7 @@ export class ListItemComponent implements OnInit, OnDestroy {
 
     // Update itemList$ with filteredItems
     this.itemList$.next(filteredItems);
+    console.log('Filtered items:', filteredItems);
   }
 
   openItemDetails(item: IMeilisearchItem) {
