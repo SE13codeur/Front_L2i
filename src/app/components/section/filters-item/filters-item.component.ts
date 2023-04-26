@@ -1,10 +1,6 @@
-import { Component } from '@angular/core';
-import {
-  Options,
-  ChangeContext,
-  PointerType,
-  LabelType,
-} from '@angular-slider/ngx-slider';
+import { LabelType, Options } from '@angular-slider/ngx-slider';
+import { Component, ViewChild } from '@angular/core';
+import { MatCheckbox } from '@angular/material/checkbox';
 import { FiltersService } from '@s/filters.service';
 
 @Component({
@@ -16,6 +12,12 @@ export class FiltersItemComponent {
   selectedCategories: string[] = [];
   selectedAuthors: string[] = [];
   selectedRatings: number[] = [];
+
+  @ViewChild('frenchBooks') frenchBooks: MatCheckbox | undefined;
+  @ViewChild('englishBooks') englishBooks: MatCheckbox | undefined;
+  @ViewChild('englishMovies') englishMovies: MatCheckbox | undefined;
+  @ViewChild('frenchMovies') frenchMovies: MatCheckbox | undefined;
+
   categories = [
     'Livres IT',
     'Nouveaux Livres IT',
@@ -60,10 +62,31 @@ export class FiltersItemComponent {
   constructor(private filtersService: FiltersService) {}
 
   onCategoryChange(categoryId: string, checked: boolean) {
+    if (categoryId === '2') {
+      if (this.frenchBooks) {
+        this.frenchBooks.checked = checked;
+        this.onCategoryChange('4', checked);
+      }
+      if (this.englishBooks) {
+        this.englishBooks.checked = checked;
+        this.onCategoryChange('5', checked);
+      }
+    }
+
+    if (categoryId === '3') {
+      if (this.englishMovies) {
+        this.englishMovies.checked = checked;
+        this.onCategoryChange('6', checked);
+      }
+      if (this.frenchMovies) {
+        this.frenchMovies.checked = checked;
+        this.onCategoryChange('7', checked);
+      }
+    }
+
     if (checked) {
       this.selectedCategories.push(categoryId);
-    }
-    if (!checked) {
+    } else {
       this.selectedCategories = this.selectedCategories.filter(
         (item) => item !== categoryId
       );
@@ -88,7 +111,8 @@ export class FiltersItemComponent {
   }
 
   getRatingStars(rating: number | undefined): number[] {
-    const fullStars = Math.round(rating || 0);
+    const fixedRating = rating === 0 ? 5 : rating || 0;
+    const fullStars = Math.round(fixedRating);
     const emptyStars = 5 - fullStars;
 
     return [...Array(fullStars).fill(1), ...Array(emptyStars).fill(0)];
