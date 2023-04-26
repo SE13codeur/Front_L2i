@@ -1,5 +1,5 @@
 .container {
-  padding: 1.11rem;
+  margin: 1.11rem;
 }
 
 .custom-card {
@@ -7,26 +7,20 @@
   flex-direction: column;
   justify-content: space-between;
   transition: box-shadow 0.3s, transform 0.3s;
-  border-radius: 6px;
+  border-radius: 9px;
   overflow: hidden;
   background-color: #ffffff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   flex-basis: calc(25% - 2rem);
-  margin-bottom: 2rem;
-  margin-right: 1rem;
-  margin-left: 1rem;
   height: 100%;
   cursor: pointer;
+  margin: 0;
 }
 
 .custom-card:hover {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   transform: scale(1.11);
   z-index: 1;
-}
-
-mat-card-header {
-  padding: 1rem;
 }
 
 mat-card-image {
@@ -39,27 +33,31 @@ mat-card-image {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  padding: 0.55rem 1rem;
+}
+
+.item-description {
+  cursor: pointer;
 }
 
 .rating {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 8px;
-  margin-bottom: 8px;
 }
 
 mat-icon {
   font-size: 1.2rem;
   color: rgba(0, 0, 0, 0.4);
-  margin-right: 4px;
 }
 
 .favourite {
   color: red;
 }
 
-.star-filled {
+.yellow-star {
   color: gold;
+}
+
+mat-card-title {
+  margin: 0;
 }

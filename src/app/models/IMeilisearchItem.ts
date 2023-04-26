@@ -34,7 +34,7 @@ export interface IEditor {
 }
 
 export interface ICategoryItem {
-  id: number;
+  id: string;
   name: string;
   parentId?: number;
 }

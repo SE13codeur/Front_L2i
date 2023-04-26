@@ -5,6 +5,4 @@ import { Component } from '@angular/core';
   templateUrl: './item-page.component.html',
   styleUrls: ['./item-page.component.css'],
 })
-export class ItemPageComponent {
-  categories: string[] = ['Livres', 'Vidéos', 'Autres'];
-}
+export class ItemPageComponent {}
