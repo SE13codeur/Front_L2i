@@ -36,29 +36,59 @@ export class MeiliSearchService {
   updatedSearch(
     query: string,
     filters: string = '',
-    options: object = {}
-  ): Observable<IMeilisearchItem[]> {
+    options: { page?: number; itemsPerPage?: number } = {}
+  ): Observable<{ hits: IMeilisearchItem[]; totalItems: number }> {
     let params = new HttpParams().set('q', query);
     if (filters) {
       params = params.set('filters', filters);
     }
 
+    const itemsPerPage = options.itemsPerPage ?? 12;
+
+    if (options.page !== undefined) {
+      params = params.set('offset', String(options.page * itemsPerPage));
+    }
+    if (options.itemsPerPage !== undefined) {
+      params = params.set('limit', String(itemsPerPage));
+    }
+
     return this.http
-      .get<{ hits: IMeilisearchItem[] }>(this.meiliSearchUrl, {
+      .get<{ hits: IMeilisearchItem[]; nbHits: number }>(this.meiliSearchUrl, {
         params: params,
         headers: this.headers,
       })
       .pipe(
-        map((response) => response.hits),
-        tap((results) => {
+        map((response) => ({
+          hits: response.hits,
+          totalItems: response.nbHits,
+        })),
+        tap(({ hits }) => {
           // Update with new results
-          this.searchResultsFromMeilisearch$.next(results);
+          this.searchResultsFromMeilisearch$.next(hits);
         })
       );
   }
 
+  getItemsByPage(
+    page: number,
+    itemsPerPage: number
+  ): Observable<IMeilisearchItem[]> {
+    const offset = page * itemsPerPage;
+    const limit = itemsPerPage;
+
+    const searchParams = new HttpParams()
+      .set('offset', offset.toString())
+      .set('limit', limit.toString());
+
+    return this.http.get<IMeilisearchItem[]>(this.meiliSearchUrl, {
+      params: searchParams,
+    });
+  }
+
   getAllItems(): Observable<IMeilisearchItem[]> {
-    return this.updatedSearch(''); // params for all books
+    return this.updatedSearch('').pipe(
+      map((response) => response.hits) // Récupérez uniquement les hits pour correspondre au type d'Observable<IMeilisearchItem[]>
+    );
   }
 
   getItemById(id: string): Observable<IMeilisearchItem> {

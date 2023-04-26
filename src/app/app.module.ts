@@ -35,6 +35,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatListModule } from '@angular/material/list';
 import { MatSliderModule } from '@angular/material/slider';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { MatExpansionModule } from '@angular/material/expansion';
 
@@ -79,8 +80,15 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatSliderModule,
     NgxSliderModule,
     MatExpansionModule,
+    MatPaginatorModule,
   ],
-  providers: [{ provide: LOCALE_ID, useValue: 'fr-FR' }, CartService],
+  providers: [
+    { provide: LOCALE_ID, useValue: 'fr-FR' },
+    CartService,
+    {
+      provide: MatPaginatorIntl,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {

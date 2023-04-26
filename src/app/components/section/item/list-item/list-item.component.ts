@@ -2,9 +2,10 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
 
+import { MatPaginatorIntl, PageEvent } from '@angular/material/paginator';
 import { IMeilisearchItem } from '@m/IMeilisearchItem';
-import { MeiliSearchService } from '@s/meilisearch.service';
 import { FiltersService } from '@s/filters.service';
+import { MeiliSearchService } from '@s/meilisearch.service';
 
 @Component({
   selector: 'app-list-item',
@@ -16,6 +17,9 @@ export class ListItemComponent implements OnInit, OnDestroy {
   private originalItemList: IMeilisearchItem[] = [];
 
   private readonly destroy$ = new Subject<void>();
+  totalItems$ = new BehaviorSubject<number | null>(null);
+  itemsPerPage = 12;
+  currentPage = 1;
 
   constructor(
     private router: Router,
@@ -33,15 +37,19 @@ export class ListItemComponent implements OnInit, OnDestroy {
           this.meiliSearchService
             .updatedSearch(query)
             .subscribe((searchResults) => {
-              this.originalItemList = searchResults;
+              this.originalItemList = searchResults.hits;
+              this.totalItems$.next(searchResults.totalItems);
               this.applyFilters();
             });
         }
         if (!query) {
-          this.meiliSearchService.getAllItems().subscribe((allBooks) => {
-            this.originalItemList = allBooks;
-            this.applyFilters();
-          });
+          this.meiliSearchService
+            .getItemsByPage(this.currentPage, this.itemsPerPage)
+            .subscribe((allItems) => {
+              this.originalItemList = allItems;
+              this.totalItems$.next(allItems.length);
+              this.applyFilters();
+            });
         }
       });
 
@@ -49,6 +57,7 @@ export class ListItemComponent implements OnInit, OnDestroy {
       () => this.applyFilters(),
       this.destroy$
     );
+    this.loadData();
   }
 
   ngOnDestroy(): void {
@@ -104,15 +113,35 @@ export class ListItemComponent implements OnInit, OnDestroy {
     console.log('Filtered items:', filteredItems);
   }
 
-  openItemDetails(item: IMeilisearchItem) {
-    this.router.navigate(['/items', item.id]);
-  }
-
   getRatingStars(rating: number | undefined): number[] {
     const fullStars = Math.round(rating || 0);
     const emptyStars = 5 - fullStars;
 
     return [...Array(fullStars).fill(1), ...Array(emptyStars).fill(0)];
+  }
+
+  openItemDetails(item: IMeilisearchItem) {
+    this.router.navigate(['/items', item.id]);
+  }
+
+  onPageChange(event: PageEvent) {
+    this.currentPage = event.pageIndex;
+    this.itemsPerPage = event.pageSize;
+
+    this.loadData();
+  }
+
+  loadData() {
+    // Data of current page and quantity of items by page
+    this.meiliSearchService
+      .updatedSearch('', '', {
+        page: this.currentPage,
+        itemsPerPage: this.itemsPerPage,
+      })
+      .subscribe(({ hits, totalItems }) => {
+        this.itemList$.next(hits);
+        this.totalItems$.next(totalItems);
+      });
   }
 
   //TODO
