@@ -12,10 +12,10 @@
           </mat-expansion-panel-header>
           <mat-list>
             <mat-list-item>
-              <mat-checkbox (change)="onCategoryChange('5', $event.checked)">Langue Anglaise</mat-checkbox>
+              <mat-checkbox #englishBooks (change)="onCategoryChange('5', $event.checked)">Langue Anglaise</mat-checkbox>
             </mat-list-item>
             <mat-list-item>
-              <mat-checkbox (change)="onCategoryChange('4', $event.checked)">Langue Française</mat-checkbox>
+              <mat-checkbox #frenchBooks (change)="onCategoryChange('4', $event.checked)">Langue Française</mat-checkbox>
             </mat-list-item>
           </mat-list>
         </mat-expansion-panel>
@@ -27,10 +27,10 @@
           </mat-expansion-panel-header>
           <mat-list>
             <mat-list-item>
-              <mat-checkbox (change)="onCategoryChange('7', $event.checked)">Langue Française</mat-checkbox>
+              <mat-checkbox #frenchMovies (change)="onCategoryChange('7', $event.checked)">Langue Française</mat-checkbox>
             </mat-list-item>
             <mat-list-item>
-              <mat-checkbox (change)="onCategoryChange('6', $event.checked)">Langue Anglaise</mat-checkbox>
+              <mat-checkbox #englishMovies (change)="onCategoryChange('6', $event.checked)">Langue Anglaise</mat-checkbox>
             </mat-list-item>
           </mat-list>
         </mat-expansion-panel>
