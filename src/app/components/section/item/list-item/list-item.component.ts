@@ -33,24 +33,17 @@ export class ListItemComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe((params) => {
         const query = params['q'];
-        if (query) {
-          this.meiliSearchService
-            .updatedSearch(query)
-            .subscribe((searchResults) => {
-              this.originalItemList = searchResults.hits;
-              this.totalItems$.next(searchResults.totalItems);
-              this.applyFilters();
-            });
-        }
-        if (!query) {
-          this.meiliSearchService
-            .getItemsByPage(this.currentPage, this.itemsPerPage)
-            .subscribe((allItems) => {
-              this.originalItemList = allItems;
-              this.totalItems$.next(allItems.length);
-              this.applyFilters();
-            });
-        }
+
+        this.meiliSearchService
+          .updatedSearch(query, '', {
+            page: this.currentPage,
+            itemsPerPage: this.itemsPerPage,
+          })
+          .subscribe((searchResults) => {
+            this.originalItemList = searchResults.hits;
+            this.totalItems$.next(searchResults.totalItems);
+            this.applyFilters();
+          });
       });
 
     this.filtersService.subscribeToAllFilters(
@@ -72,11 +65,6 @@ export class ListItemComponent implements OnInit, OnDestroy {
   applyFilters() {
     // Apply all filters to the originalItemList and update itemList$
     let filteredItems = this.originalItemList;
-
-    console.log(
-      'Original categories:',
-      filteredItems.map((item) => item.category)
-    );
 
     // Apply categories filter
     const categories = this.filtersService.categoriesSource.getValue();
@@ -110,7 +98,6 @@ export class ListItemComponent implements OnInit, OnDestroy {
 
     // Update itemList$ with filteredItems
     this.itemList$.next(filteredItems);
-    console.log('Filtered items:', filteredItems);
   }
 
   getRatingStars(rating: number | undefined): number[] {

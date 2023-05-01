@@ -50,6 +50,38 @@ export class FiltersService {
     this.ratingsSource.next(ratings);
   }
 
+  getFilterString(): string {
+    let filterString = '';
+
+    if (this.categoriesSource.getValue().length > 0) {
+      const categories =
+        `category IN ` +
+        this.categoriesSource
+          .getValue()
+          .map((category) => `category = ${category}`)
+          .join(',');
+      filterString += `[${categories}]`;
+    }
+
+    const priceRange = `price : [${this.priceMinSource.getValue()} TO ${this.priceMaxSource.getValue()}]`;
+    const yearRange = `year : [${this.yearMinSource.getValue()} TO ${this.yearMaxSource.getValue()}]`;
+
+    if (this.ratingsSource.getValue().length > 0) {
+      const ratings =
+        `rating IN ` +
+        this.ratingsSource
+          .getValue()
+          .map((rating) => `rating = ${rating}`)
+          .join(',');
+      filterString += filterString ? ` AND [${ratings}]` : `[${ratings}]`;
+    }
+
+    filterString += filterString ? ` AND ${priceRange}` : priceRange;
+    filterString += filterString ? ` AND ${yearRange}` : yearRange;
+
+    return filterString;
+  }
+
   subscribeToAllFilters(
     callback: () => void,
     takeUntil$: Observable<void>

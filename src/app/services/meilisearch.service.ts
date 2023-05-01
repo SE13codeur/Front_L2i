@@ -38,11 +38,10 @@ export class MeiliSearchService {
     filters: string = '',
     options: { page?: number; itemsPerPage?: number } = {}
   ): Observable<{ hits: IMeilisearchItem[]; totalItems: number }> {
-    let params = new HttpParams().set('q', query);
+    let params = query ? new HttpParams().set('q', query) : new HttpParams();
     if (filters) {
-      params = params.set('filters', filters);
+      params = params.set('filter', filters);
     }
-
     const itemsPerPage = options.itemsPerPage ?? 12;
 
     if (options.page !== undefined) {
@@ -71,24 +70,16 @@ export class MeiliSearchService {
 
   getItemsByPage(
     page: number,
-    itemsPerPage: number
+    itemsPerPage: number,
+    filters: string = ''
   ): Observable<IMeilisearchItem[]> {
-    const offset = page * itemsPerPage;
-    const limit = itemsPerPage;
-
-    const searchParams = new HttpParams()
-      .set('offset', offset.toString())
-      .set('limit', limit.toString());
-
-    return this.http.get<IMeilisearchItem[]>(this.meiliSearchUrl, {
-      params: searchParams,
-    });
+    return this.updatedSearch('', filters, { page, itemsPerPage }).pipe(
+      map((response) => response.hits)
+    );
   }
 
   getAllItems(): Observable<IMeilisearchItem[]> {
-    return this.updatedSearch('').pipe(
-      map((response) => response.hits) // Récupérez uniquement les hits pour correspondre au type d'Observable<IMeilisearchItem[]>
-    );
+    return this.updatedSearch('').pipe(map((response) => response.hits));
   }
 
   getItemById(id: string): Observable<IMeilisearchItem> {
