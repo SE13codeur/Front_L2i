@@ -1,18 +1,18 @@
 <mat-toolbar class="nav-container">
   <div class="nav-wrapper">
-    <!-- Desktop menu -->
+    <a class="nav-logo" routerLink="/">
+      <img src="../../../assets/L2i.ico">
+    </a>
+      <!-- Desktop menu -->
     <div class="menu">
       <button mat-button routerLink="/items">Articles</button>
       <button mat-button routerLink="/promos">Promos</button>
       <button mat-button routerLink="/favorites">Favoris</button>
       <button mat-button routerLink="/comments">Avis</button>
     </div>
-    <!-- Logo and Search bar -->
+    <!-- Search bar -->
     <div class="logo-search-container">
-      <a class="nav-logo" routerLink="/">
-        <img src="../../../assets/L2i.ico">
-      </a>
-      <app-search-item *ngIf="router.url !== '/'" class="search-bar-large"></app-search-item>
+      <app-search-item class="search-bar-large"></app-search-item>
     </div>
     <div class="nav-actions">
       <!-- User button for connection -->

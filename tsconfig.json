@@ -19,7 +19,6 @@
     "module": "es2020",
     "lib": ["es2020", "dom"],
     "paths": {
-      "@/*": ["src/app/*"],
       "@c/*": ["src/app/components/*"],
       "@m/*": ["src/app/models/*"],
       "@p/*": ["src/app/pages/*"],

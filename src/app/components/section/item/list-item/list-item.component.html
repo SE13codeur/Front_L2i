@@ -1,0 +1,31 @@
+<div class="container">
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    <div *ngFor="let item of itemList$ | async">
+      <mat-card class="custom-card" (click)="openItemDetails(item)">
+        <img mat-card-image [src]="item.imageUrl" alt="{{ item.title }} cover image">
+        <p class="item-description">
+          {{ truncateText(item.subtitle, 77) }}
+        </p>
+        <mat-card-actions class="custom-card-actions">
+          <button mat-icon-button color="primary" (click)="addToFavorites(item, $event)">
+            <mat-icon>favorite</mat-icon>
+          </button>
+          <mat-card-header>
+            <mat-card-title>{{ item.regularPrice }} $</mat-card-title>
+          </mat-card-header>
+          <button mat-icon-button color="accent" (click)="addToCart(item, $event)">
+            <mat-icon>shopping_cart</mat-icon>
+          </button>
+        </mat-card-actions>
+        <div class="rating">
+          <mat-icon
+          *ngFor="let star of getRatingStars(item.rating); let i = index"
+          [ngClass]="{ 'yellow-star': star === 1, 'gray-star': star === 0 }"
+          >
+          star
+        </mat-icon>
+      </div>
+    </mat-card>
+    </div>
+  </div>
+</div>

@@ -13,25 +13,33 @@ import { NotFoundComponent } from '@p/not-found/not-found.component';
 import { ItemPageComponent } from '@p/item/item-page.component';
 
 import { NavComponent } from '@c/nav/nav.component';
-import { ItemCategoryNavComponent } from '@c/nav/item-category-nav/item-category-nav.component';
 import { AsideComponent } from '@c/aside/aside.component';
 import { CartComponent } from '@c/aside/cart/cart.component';
 import { HeaderComponent } from '@c/header/header.component';
 import { SectionComponent } from '@c/section/section.component';
-import { SearchItemComponent } from '@/components/item/search-item/search-item.component';
-import { ListItemComponent } from '@c/item/list-item/list-item.component';
-import { DetailItemComponent } from '@c/item/detail-item/detail-item.component';
+import { SearchItemComponent } from '@c/nav/search-item/search-item.component';
+import { ListItemComponent } from '@c/section/item/list-item/list-item.component';
+import { DetailItemComponent } from '@c/section/item/detail-item/detail-item.component';
+import { FiltersItemComponent } from '@c/section/filters-item/filters-item.component';
 
 import { CartService } from '@s/cart.service';
 
+import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { HttpClientModule } from '@angular/common/http';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatListModule } from '@angular/material/list';
+import { MatSliderModule } from '@angular/material/slider';
+import { NgxSliderModule } from '@angular-slider/ngx-slider';
+import { MatExpansionModule } from '@angular/material/expansion';
+
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -44,11 +52,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     ListItemComponent,
     DetailItemComponent,
     NotFoundComponent,
-    ItemCategoryNavComponent,
     ItemPageComponent,
     CartComponent,
     AsideComponent,
     SearchItemComponent,
+    FiltersItemComponent,
   ],
   imports: [
     BrowserModule,
@@ -62,6 +70,15 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatToolbarModule,
     MatInputModule,
     MatFormFieldModule,
+    ReactiveFormsModule,
+    MatCardModule,
+    MatButtonModule,
+    MatIconModule,
+    MatCheckboxModule,
+    MatListModule,
+    MatSliderModule,
+    NgxSliderModule,
+    MatExpansionModule,
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'fr-FR' }, CartService],
   bootstrap: [AppComponent],
