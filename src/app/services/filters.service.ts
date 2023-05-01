@@ -26,28 +26,60 @@ export class FiltersService {
   ratingsSource = new BehaviorSubject<number[]>([]);
   ratings$ = this.ratingsSource.asObservable();
 
-  updateCategories(categories: string[]) {
-    this.categoriesSource.next(categories);
+  updateFilterValue<T>(subject: BehaviorSubject<T>, newValue: T): void {
+    subject.next(newValue);
   }
 
-  updatePriceMin(priceMin: number) {
-    this.priceMinSource.next(priceMin);
+  updateCategories(categories: string[]): void {
+    this.updateFilterValue(this.categoriesSource, categories);
   }
 
-  updatePriceMax(priceMax: number) {
-    this.priceMaxSource.next(priceMax);
+  updatePriceMin(priceMin: number): void {
+    this.updateFilterValue(this.priceMinSource, priceMin);
   }
 
-  updateYearMin(yearMin: number) {
-    this.yearMinSource.next(yearMin.toString());
+  updatePriceMax(priceMax: number): void {
+    this.updateFilterValue(this.priceMaxSource, priceMax);
   }
 
-  updateYearMax(yearMax: number) {
-    this.yearMaxSource.next(yearMax.toString());
+  updateYearMin(yearMin: number): void {
+    this.updateFilterValue(this.yearMinSource, yearMin.toString());
   }
 
-  updateRatings(ratings: number[]) {
-    this.ratingsSource.next(ratings);
+  updateYearMax(yearMax: number): void {
+    this.updateFilterValue(this.yearMaxSource, yearMax.toString());
+  }
+
+  updateRatings(ratings: number[]): void {
+    this.updateFilterValue(this.ratingsSource, ratings);
+  }
+
+  getFilterString(): string {
+    let filterString = '';
+
+    if (this.categoriesSource.getValue().length > 0) {
+      const categories = this.categoriesSource
+        .getValue()
+        .map((category) => `category = ${category}`)
+        .join(' OR ');
+      filterString += `(${categories})`;
+    }
+
+    const priceRange = `price >= ${this.priceMinSource.getValue()} AND price <= ${this.priceMaxSource.getValue()}`;
+    const yearRange = `year >= ${this.yearMinSource.getValue()} AND year <= ${this.yearMaxSource.getValue()}`;
+
+    if (this.ratingsSource.getValue().length > 0) {
+      const ratings = this.ratingsSource
+        .getValue()
+        .map((rating) => `rating = ${rating}`)
+        .join(' OR ');
+      filterString += filterString ? ` AND (${ratings})` : `(${ratings})`;
+    }
+
+    filterString += filterString ? ` AND ${priceRange}` : priceRange;
+    filterString += filterString ? ` AND ${yearRange}` : yearRange;
+
+    return filterString;
   }
 
   subscribeToAllFilters(

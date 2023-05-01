@@ -2,6 +2,7 @@ import { LabelType, Options } from '@angular-slider/ngx-slider';
 import { Component, ViewChild } from '@angular/core';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { FiltersService } from '@s/filters.service';
+import { MeiliSearchService } from '@s/meilisearch.service';
 
 @Component({
   selector: 'app-filters-item',
@@ -51,9 +52,19 @@ export class FiltersItemComponent {
     },
   };
 
-  constructor(private filtersService: FiltersService) {}
+  constructor(
+    private filtersService: FiltersService,
+    private meiliSearchService: MeiliSearchService
+  ) {}
 
-  onSubcategoryChange(parentId: string, subcategoryId: string, isChecked: boolean, parentCheckbox: MatCheckbox, subCheckbox1: MatCheckbox, subCheckbox2: MatCheckbox): void {
+  onSubcategoryChange(
+    parentId: string,
+    subcategoryId: string,
+    isChecked: boolean,
+    parentCheckbox: MatCheckbox,
+    subCheckbox1: MatCheckbox,
+    subCheckbox2: MatCheckbox
+  ): void {
     this.onCategoryChange(subcategoryId, isChecked);
 
     if (!isChecked && !subCheckbox1.checked && !subCheckbox2.checked) {
@@ -96,22 +107,27 @@ export class FiltersItemComponent {
       );
     }
     this.filtersService.updateCategories(this.selectedCategories);
+    this.onFilterChange();
   }
 
   onPriceMinChange(newPriceMin: number) {
     this.filtersService.updatePriceMin(newPriceMin);
+    this.onFilterChange();
   }
 
   onPriceMaxChange(newPriceMax: number) {
     this.filtersService.updatePriceMax(newPriceMax);
+    this.onFilterChange();
   }
 
   onYearMinChange(newYearMin: number) {
     this.filtersService.updateYearMin(newYearMin);
+    this.onFilterChange();
   }
 
   onYearMaxChange(newYearMax: number) {
     this.filtersService.updateYearMax(newYearMax);
+    this.onFilterChange();
   }
 
   onRatingChange(rating: number, checked: boolean) {
@@ -124,5 +140,19 @@ export class FiltersItemComponent {
       );
     }
     this.filtersService.updateRatings(this.selectedRatings);
+    this.onFilterChange();
+  }
+
+  onFilterChange() {
+    const filterString = this.filtersService.getFilterString();
+
+    // Get current page and items per page values
+    const currentPage = 1;
+    const itemsPerPage = 12;
+
+    // Call getItemsByPage with updated filter values
+    this.meiliSearchService
+      .getItemsByPage(currentPage, itemsPerPage, filterString)
+      .subscribe();
   }
 }
