@@ -10,20 +10,12 @@ import { FiltersService } from '@s/filters.service';
 })
 export class FiltersItemComponent {
   selectedCategories: string[] = [];
-  selectedAuthors: string[] = [];
   selectedRatings: number[] = [];
 
   @ViewChild('frenchBooks') frenchBooks: MatCheckbox | undefined;
   @ViewChild('englishBooks') englishBooks: MatCheckbox | undefined;
   @ViewChild('englishMovies') englishMovies: MatCheckbox | undefined;
   @ViewChild('frenchMovies') frenchMovies: MatCheckbox | undefined;
-
-  categories = [
-    'Livres IT',
-    'Nouveaux Livres IT',
-    'Vidéos IT',
-    'Nouvelles Vidéos IT',
-  ];
 
   priceMin: number = 10;
   priceMax: number = 199;
@@ -60,6 +52,18 @@ export class FiltersItemComponent {
   };
 
   constructor(private filtersService: FiltersService) {}
+
+  onSubcategoryChange(parentId: string, subcategoryId: string, isChecked: boolean, parentCheckbox: MatCheckbox, subCheckbox1: MatCheckbox, subCheckbox2: MatCheckbox): void {
+    this.onCategoryChange(subcategoryId, isChecked);
+
+    if (!isChecked && !subCheckbox1.checked && !subCheckbox2.checked) {
+      parentCheckbox.checked = false;
+      this.onCategoryChange(parentId, false);
+    } else if (isChecked && subCheckbox1.checked && subCheckbox2.checked) {
+      parentCheckbox.checked = true;
+      this.onCategoryChange(parentId, true);
+    }
+  }
 
   onCategoryChange(categoryId: string, checked: boolean) {
     if (categoryId === '2') {
@@ -108,14 +112,6 @@ export class FiltersItemComponent {
 
   onYearMaxChange(newYearMax: number) {
     this.filtersService.updateYearMax(newYearMax);
-  }
-
-  getRatingStars(rating: number | undefined): number[] {
-    const fixedRating = rating === 0 ? 5 : rating || 0;
-    const fullStars = Math.round(fixedRating);
-    const emptyStars = 5 - fullStars;
-
-    return [...Array(fullStars).fill(1), ...Array(emptyStars).fill(0)];
   }
 
   onRatingChange(rating: number, checked: boolean) {

@@ -1,5 +1,5 @@
 <mat-sidenav-container class="sidenav-container">
-  <mat-sidenav #sidenav mode="side" opened>
+  <mat-sidenav mode="side" opened>
     <div class="filter-section">
       <h3>Catégories</h3>
       <mat-divider></mat-divider>
@@ -7,30 +7,30 @@
         <mat-expansion-panel>
           <mat-expansion-panel-header>
             <mat-panel-title>
-              <mat-checkbox (change)="onCategoryChange('2', $event.checked)">Livres</mat-checkbox>
+              <mat-checkbox #booksCheckbox (change)="onCategoryChange('2', $event.checked)">Livres</mat-checkbox>
             </mat-panel-title>
           </mat-expansion-panel-header>
           <mat-list>
             <mat-list-item>
-              <mat-checkbox #englishBooks (change)="onCategoryChange('5', $event.checked)">Langue Anglaise</mat-checkbox>
+              <mat-checkbox #englishBooks (change)="onSubcategoryChange('2', '5', $event.checked, booksCheckbox, englishBooks, frenchBooks)">Langue Anglaise</mat-checkbox>
             </mat-list-item>
             <mat-list-item>
-              <mat-checkbox #frenchBooks (change)="onCategoryChange('4', $event.checked)">Langue Française</mat-checkbox>
+              <mat-checkbox #frenchBooks (change)="onSubcategoryChange('2', '4', $event.checked, booksCheckbox, englishBooks, frenchBooks)">Langue Française</mat-checkbox>
             </mat-list-item>
           </mat-list>
         </mat-expansion-panel>
         <mat-expansion-panel>
           <mat-expansion-panel-header>
             <mat-panel-title>
-              <mat-checkbox (change)="onCategoryChange('3', $event.checked)">Vidéos</mat-checkbox>
+              <mat-checkbox #videosCheckbox (change)="onCategoryChange('3', $event.checked)">Vidéos</mat-checkbox>
             </mat-panel-title>
           </mat-expansion-panel-header>
           <mat-list>
             <mat-list-item>
-              <mat-checkbox #frenchMovies (change)="onCategoryChange('7', $event.checked)">Langue Française</mat-checkbox>
+              <mat-checkbox #englishMovies (change)="onSubcategoryChange('3', '7', $event.checked, videosCheckbox, englishMovies, frenchMovies)">Langue Anglaise</mat-checkbox>
             </mat-list-item>
             <mat-list-item>
-              <mat-checkbox #englishMovies (change)="onCategoryChange('6', $event.checked)">Langue Anglaise</mat-checkbox>
+              <mat-checkbox #frenchMovies (change)="onSubcategoryChange('3', '6', $event.checked, videosCheckbox, englishMovies, frenchMovies)">Langue Française</mat-checkbox>
             </mat-list-item>
           </mat-list>
         </mat-expansion-panel>
