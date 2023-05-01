@@ -46,11 +46,34 @@ export class ListItemComponent implements OnInit, OnDestroy {
           });
       });
 
-    this.filtersService.subscribeToAllFilters(
-      () => this.applyFilters(),
-      this.destroy$
-    );
-    this.loadData();
+    this.filtersService.categories$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => this.applyFilters());
+    this.filtersService.priceMin$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => this.applyFilters());
+    this.filtersService.priceMax$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => this.applyFilters());
+    this.filtersService.yearMin$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => this.applyFilters());
+    this.filtersService.yearMax$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => this.applyFilters());
+    this.filtersService.ratings$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => this.applyFilters());
+
+    this.meiliSearchService
+      .updatedSearch('', '', {
+        page: this.currentPage,
+        itemsPerPage: this.itemsPerPage,
+      })
+      .subscribe(({ hits, totalItems }) => {
+        this.itemList$.next(hits);
+        this.totalItems$.next(totalItems);
+      });
   }
 
   ngOnDestroy(): void {
@@ -115,11 +138,6 @@ export class ListItemComponent implements OnInit, OnDestroy {
     this.currentPage = event.pageIndex;
     this.itemsPerPage = event.pageSize;
 
-    this.loadData();
-  }
-
-  loadData() {
-    // Data of current page and quantity of items by page
     this.meiliSearchService
       .updatedSearch('', '', {
         page: this.currentPage,
@@ -131,7 +149,6 @@ export class ListItemComponent implements OnInit, OnDestroy {
       });
   }
 
-  //TODO
   addToFavorites(item: IMeilisearchItem, event: Event) {
     console.log('Item added to favorites:', item);
     event.stopPropagation();

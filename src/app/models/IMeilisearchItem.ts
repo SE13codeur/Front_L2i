@@ -22,8 +22,8 @@ export interface IMeilisearchItem {
 
 export interface IAuthor {
   id: number;
-  firstName: string;
-  lastName: string;
+  firstname: string;
+  lastname: string;
   books?: IMeilisearchItem[];
 }
 

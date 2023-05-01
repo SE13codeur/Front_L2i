@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { IMeilisearchItem } from '@m/IMeilisearchItem';
+import { IAuthor, IMeilisearchItem } from '@m/IMeilisearchItem';
 import { MeiliSearchService } from '@s/meilisearch.service';
 import { Location } from '@angular/common';
 import { Observable, of } from 'rxjs';
@@ -33,6 +33,14 @@ export class DetailItemComponent implements OnInit {
     this.item$.subscribe((item) => {
       this.item = item;
     });
+  }
+
+  getAuthorNames(currentAuthors: IAuthor[] | undefined): string {
+    return this.item && this.item.authors
+      ? this.item.authors
+          .map((author) => `${author.firstname} ${author.lastname}`)
+          .join(', ')
+      : '';
   }
 
   goBackToListItems(): void {
