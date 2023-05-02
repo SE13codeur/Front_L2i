@@ -2,7 +2,8 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
-import { environment } from '@env/environment.dev';
+import { environmentDev as environment } from '@env/environment.dev';
+
 import { IMeilisearchItem } from '@m/IMeilisearchItem';
 
 @Injectable({
@@ -20,6 +21,7 @@ export class MeiliSearchService {
 
   constructor(private readonly http: HttpClient) {
     this.meiliSearchUrl = `${environment.meiliSearchApiUrl}/indexes/items/search`;
+    console.log(this.meiliSearchUrl);
     this.headers = new HttpHeaders({
       Authorization: `Bearer ${environment.meiliSearchApiKey}`,
     });
