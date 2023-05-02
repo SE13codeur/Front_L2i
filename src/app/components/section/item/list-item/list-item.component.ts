@@ -2,9 +2,10 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
 
+import { MatPaginatorIntl, PageEvent } from '@angular/material/paginator';
 import { IMeilisearchItem } from '@m/IMeilisearchItem';
-import { MeiliSearchService } from '@s/meilisearch.service';
 import { FiltersService } from '@s/filters.service';
+import { MeiliSearchService } from '@s/meilisearch.service';
 
 @Component({
   selector: 'app-list-item',
@@ -16,6 +17,9 @@ export class ListItemComponent implements OnInit, OnDestroy {
   private originalItemList: IMeilisearchItem[] = [];
 
   private readonly destroy$ = new Subject<void>();
+  totalItems$ = new BehaviorSubject<number | null>(null);
+  itemsPerPage = 12;
+  currentPage = 1;
 
   constructor(
     private router: Router,
@@ -29,26 +33,47 @@ export class ListItemComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe((params) => {
         const query = params['q'];
-        if (query) {
-          this.meiliSearchService
-            .updatedSearch(query)
-            .subscribe((searchResults) => {
-              this.originalItemList = searchResults;
-              this.applyFilters();
-            });
-        }
-        if (!query) {
-          this.meiliSearchService.getAllItems().subscribe((allBooks) => {
-            this.originalItemList = allBooks;
+
+        this.meiliSearchService
+          .updatedSearch(query, '', {
+            page: this.currentPage,
+            itemsPerPage: this.itemsPerPage,
+          })
+          .subscribe((searchResults) => {
+            this.originalItemList = searchResults.hits;
+            this.totalItems$.next(searchResults.totalItems);
             this.applyFilters();
           });
-        }
       });
 
-    this.filtersService.subscribeToAllFilters(
-      () => this.applyFilters(),
-      this.destroy$
-    );
+    this.filtersService.categories$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => this.applyFilters());
+    this.filtersService.priceMin$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => this.applyFilters());
+    this.filtersService.priceMax$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => this.applyFilters());
+    this.filtersService.yearMin$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => this.applyFilters());
+    this.filtersService.yearMax$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => this.applyFilters());
+    this.filtersService.ratings$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => this.applyFilters());
+
+    this.meiliSearchService
+      .updatedSearch('', '', {
+        page: this.currentPage,
+        itemsPerPage: this.itemsPerPage,
+      })
+      .subscribe(({ hits, totalItems }) => {
+        this.itemList$.next(hits);
+        this.totalItems$.next(totalItems);
+      });
   }
 
   ngOnDestroy(): void {
@@ -63,11 +88,6 @@ export class ListItemComponent implements OnInit, OnDestroy {
   applyFilters() {
     // Apply all filters to the originalItemList and update itemList$
     let filteredItems = this.originalItemList;
-
-    console.log(
-      'Original categories:',
-      filteredItems.map((item) => item.category)
-    );
 
     // Apply categories filter
     const categories = this.filtersService.categoriesSource.getValue();
@@ -101,11 +121,6 @@ export class ListItemComponent implements OnInit, OnDestroy {
 
     // Update itemList$ with filteredItems
     this.itemList$.next(filteredItems);
-    console.log('Filtered items:', filteredItems);
-  }
-
-  openItemDetails(item: IMeilisearchItem) {
-    this.router.navigate(['/items', item.id]);
   }
 
   getRatingStars(rating: number | undefined): number[] {
@@ -115,7 +130,25 @@ export class ListItemComponent implements OnInit, OnDestroy {
     return [...Array(fullStars).fill(1), ...Array(emptyStars).fill(0)];
   }
 
-  //TODO
+  openItemDetails(item: IMeilisearchItem) {
+    this.router.navigate(['/items', item.id]);
+  }
+
+  onPageChange(event: PageEvent) {
+    this.currentPage = event.pageIndex;
+    this.itemsPerPage = event.pageSize;
+
+    this.meiliSearchService
+      .updatedSearch('', '', {
+        page: this.currentPage,
+        itemsPerPage: this.itemsPerPage,
+      })
+      .subscribe(({ hits, totalItems }) => {
+        this.itemList$.next(hits);
+        this.totalItems$.next(totalItems);
+      });
+  }
+
   addToFavorites(item: IMeilisearchItem, event: Event) {
     console.log('Item added to favorites:', item);
     event.stopPropagation();

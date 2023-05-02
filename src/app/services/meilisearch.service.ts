@@ -36,29 +36,50 @@ export class MeiliSearchService {
   updatedSearch(
     query: string,
     filters: string = '',
-    options: object = {}
-  ): Observable<IMeilisearchItem[]> {
-    let params = new HttpParams().set('q', query);
+    options: { page?: number; itemsPerPage?: number } = {}
+  ): Observable<{ hits: IMeilisearchItem[]; totalItems: number }> {
+    let params = query ? new HttpParams().set('q', query) : new HttpParams();
     if (filters) {
-      params = params.set('filters', filters);
+      params = params.set('filter', filters);
+    }
+    const itemsPerPage = options.itemsPerPage ?? 12;
+
+    if (options.page !== undefined) {
+      params = params.set('offset', String(options.page * itemsPerPage));
+    }
+    if (options.itemsPerPage !== undefined) {
+      params = params.set('limit', String(itemsPerPage));
     }
 
     return this.http
-      .get<{ hits: IMeilisearchItem[] }>(this.meiliSearchUrl, {
+      .get<{ hits: IMeilisearchItem[]; nbHits: number }>(this.meiliSearchUrl, {
         params: params,
         headers: this.headers,
       })
       .pipe(
-        map((response) => response.hits),
-        tap((results) => {
+        map((response) => ({
+          hits: response.hits,
+          totalItems: response.nbHits,
+        })),
+        tap(({ hits }) => {
           // Update with new results
-          this.searchResultsFromMeilisearch$.next(results);
+          this.searchResultsFromMeilisearch$.next(hits);
         })
       );
   }
 
+  getItemsByPage(
+    page: number,
+    itemsPerPage: number,
+    filters: string = ''
+  ): Observable<IMeilisearchItem[]> {
+    return this.updatedSearch('', filters, { page, itemsPerPage }).pipe(
+      map((response) => response.hits)
+    );
+  }
+
   getAllItems(): Observable<IMeilisearchItem[]> {
-    return this.updatedSearch(''); // params for all books
+    return this.updatedSearch('').pipe(map((response) => response.hits));
   }
 
   getItemById(id: string): Observable<IMeilisearchItem> {
