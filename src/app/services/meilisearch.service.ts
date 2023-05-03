@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { environmentDev as environment } from '@env/environment.dev';
 
@@ -13,6 +13,7 @@ export class MeiliSearchService {
   private readonly meiliSearchUrl: string;
   private readonly headers: HttpHeaders;
 
+  private items$ = new BehaviorSubject<IMeilisearchItem[]>([]);
   private searchResultsFromMeilisearch$ = new BehaviorSubject<
     IMeilisearchItem[]
   >([]);
@@ -21,36 +22,74 @@ export class MeiliSearchService {
 
   constructor(private readonly http: HttpClient) {
     this.meiliSearchUrl = `${environment.meiliSearchApiUrl}/indexes/items/search`;
-    console.log(this.meiliSearchUrl);
     this.headers = new HttpHeaders({
       Authorization: `Bearer ${environment.meiliSearchApiKey}`,
     });
   }
 
-  getSearchValue(): Observable<string> {
-    return this.searchValue$.asObservable();
+  getAllItems(): Observable<IMeilisearchItem[]> {
+    return this.updatedSearch('', '', { limit: 112, itemsPerPage: 12 }).pipe(
+      map((response) => response.hits)
+    );
   }
 
-  setSearchValue(value: string): void {
-    this.searchValue$.next(value);
+  getItemsByPage(
+    page: number,
+    itemsPerPage: number,
+    filters: string = ''
+  ): Observable<IMeilisearchItem[]> {
+    return this.updatedSearch('', filters, { page, itemsPerPage }).pipe(
+      map((response) => response.hits)
+    );
+  }
+
+  getItemById(id: string): Observable<IMeilisearchItem> {
+    const item = this.items$.getValue().find((item) => item.id === id);
+
+    if (item) {
+      return of(item);
+    } else {
+      const params = new HttpParams().set('q', id);
+      return this.http
+        .get<{ hits: IMeilisearchItem[] }>(this.meiliSearchUrl, {
+          params: params,
+          headers: this.headers,
+        })
+        .pipe(
+          map((response) => {
+            if (response.hits.length > 0) {
+              return response.hits[0];
+            } else {
+              throw new Error(`Book not found with id: ${id}`);
+            }
+          })
+        );
+    }
   }
 
   updatedSearch(
     query: string,
     filters: string = '',
-    options: { page?: number; itemsPerPage?: number } = {}
+    options: {
+      page?: number;
+      itemsPerPage?: number;
+      limit?: number;
+    } = {}
   ): Observable<{ hits: IMeilisearchItem[]; totalItems: number }> {
     let params = query ? new HttpParams().set('q', query) : new HttpParams();
+
+    const itemsPerPage = options.itemsPerPage ?? 12;
     if (filters) {
       params = params.set('filter', filters);
     }
-    const itemsPerPage = options.itemsPerPage ?? 12;
-
     if (options.page !== undefined) {
       params = params.set('offset', String(options.page * itemsPerPage));
     }
-    if (options.itemsPerPage !== undefined) {
+    if (itemsPerPage !== undefined) {
       params = params.set('limit', String(itemsPerPage));
+    }
+    if (!query) {
+      params = params.set('limit', String(options.limit ?? 112));
     }
 
     return this.http
@@ -65,40 +104,16 @@ export class MeiliSearchService {
         })),
         tap(({ hits }) => {
           // Update with new results
-          this.searchResultsFromMeilisearch$.next(hits);
+          this.items$.next(hits);
         })
       );
   }
 
-  getItemsByPage(
-    page: number,
-    itemsPerPage: number,
-    filters: string = ''
-  ): Observable<IMeilisearchItem[]> {
-    return this.updatedSearch('', filters, { page, itemsPerPage }).pipe(
-      map((response) => response.hits)
-    );
+  getSearchValue(): Observable<string> {
+    return this.searchValue$.asObservable();
   }
 
-  getAllItems(): Observable<IMeilisearchItem[]> {
-    return this.updatedSearch('').pipe(map((response) => response.hits));
-  }
-
-  getItemById(id: string): Observable<IMeilisearchItem> {
-    const params = new HttpParams().set('q', id);
-    return this.http
-      .get<{ hits: IMeilisearchItem[] }>(this.meiliSearchUrl, {
-        params: params,
-        headers: this.headers,
-      })
-      .pipe(
-        map((response) => {
-          if (response.hits.length > 0) {
-            return response.hits[0];
-          } else {
-            throw new Error(`Book not found with id: ${id}`);
-          }
-        })
-      );
+  setSearchValue(value: string): void {
+    this.searchValue$.next(value);
   }
 }

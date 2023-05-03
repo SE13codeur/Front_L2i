@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { IMeilisearchItem } from '@m/IMeilisearchItem';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 @Injectable({
@@ -26,8 +27,11 @@ export class FiltersService {
   ratingsSource = new BehaviorSubject<number[]>([]);
   ratings$ = this.ratingsSource.asObservable();
 
+  filtersUpdated$ = new Subject<void>();
+
   updateFilterValue<T>(subject: BehaviorSubject<T>, newValue: T): void {
     subject.next(newValue);
+    this.filtersUpdated$.next();
   }
 
   updateCategories(categories: string[]): void {
@@ -82,20 +86,24 @@ export class FiltersService {
     return filterString;
   }
 
+  filterItems(
+    items: IMeilisearchItem[],
+    filterString: string
+  ): IMeilisearchItem[] {
+    const filteredItems = items.filter((item) => {
+      const itemString = JSON.stringify(item);
+      return itemString.match(filterString);
+    });
+
+    return filteredItems;
+  }
+
   subscribeToAllFilters(
     callback: () => void,
     takeUntil$: Observable<void>
   ): void {
-    this.categories$.pipe(takeUntil(takeUntil$)).subscribe(() => callback());
-
-    this.priceMin$.pipe(takeUntil(takeUntil$)).subscribe(() => callback());
-
-    this.priceMax$.pipe(takeUntil(takeUntil$)).subscribe(() => callback());
-
-    this.yearMin$.pipe(takeUntil(takeUntil$)).subscribe(() => callback());
-
-    this.yearMax$.pipe(takeUntil(takeUntil$)).subscribe(() => callback());
-
-    this.ratings$.pipe(takeUntil(takeUntil$)).subscribe(() => callback());
+    this.filtersUpdated$
+      .pipe(takeUntil(takeUntil$))
+      .subscribe(() => callback());
   }
 }

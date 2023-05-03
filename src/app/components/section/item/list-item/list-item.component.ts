@@ -14,7 +14,7 @@ import { MeiliSearchService } from '@s/meilisearch.service';
 })
 export class ListItemComponent implements OnInit, OnDestroy {
   itemList$ = new BehaviorSubject<IMeilisearchItem[]>([]);
-  private originalItemList: IMeilisearchItem[] = [];
+  private originalItemList$ = new BehaviorSubject<IMeilisearchItem[]>([]);
 
   private readonly destroy$ = new Subject<void>();
   totalItems$ = new BehaviorSubject<number | null>(null);
@@ -34,45 +34,33 @@ export class ListItemComponent implements OnInit, OnDestroy {
       .subscribe((params) => {
         const query = params['q'];
 
-        this.meiliSearchService
-          .updatedSearch(query, '', {
-            page: this.currentPage,
-            itemsPerPage: this.itemsPerPage,
-          })
-          .subscribe((searchResults) => {
-            this.originalItemList = searchResults.hits;
-            this.totalItems$.next(searchResults.totalItems);
+        if (!!query) {
+          this.meiliSearchService
+            .updatedSearch(query, '', {
+              page: this.currentPage,
+              itemsPerPage: this.itemsPerPage,
+            })
+            .subscribe(({ hits, totalItems }) => {
+              this.itemList$.next(hits);
+              this.totalItems$.next(totalItems);
+            });
+        }
+        if (!query) {
+          this.meiliSearchService.getAllItems().subscribe((allItems) => {
+            this.originalItemList$.next(allItems);
+            this.itemList$.next(this.originalItemList$.getValue());
+            this.totalItems$.next(allItems.length);
             this.applyFilters();
+            this.updatePagination();
           });
+        }
       });
 
-    this.filtersService.categories$
+    this.filtersService.filtersUpdated$
       .pipe(takeUntil(this.destroy$))
-      .subscribe(() => this.applyFilters());
-    this.filtersService.priceMin$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(() => this.applyFilters());
-    this.filtersService.priceMax$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(() => this.applyFilters());
-    this.filtersService.yearMin$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(() => this.applyFilters());
-    this.filtersService.yearMax$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(() => this.applyFilters());
-    this.filtersService.ratings$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(() => this.applyFilters());
-
-    this.meiliSearchService
-      .updatedSearch('', '', {
-        page: this.currentPage,
-        itemsPerPage: this.itemsPerPage,
-      })
-      .subscribe(({ hits, totalItems }) => {
-        this.itemList$.next(hits);
-        this.totalItems$.next(totalItems);
+      .subscribe(() => {
+        this.applyFilters();
+        this.updatePagination();
       });
   }
 
@@ -85,14 +73,36 @@ export class ListItemComponent implements OnInit, OnDestroy {
     return text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
   }
 
+  updatePagination() {
+    const originalItems = this.originalItemList$.getValue();
+    let paginatedItems = originalItems;
+
+    // Apply filters before pagination
+    paginatedItems = this.applyFilters();
+
+    // Paginate items
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    paginatedItems = paginatedItems.slice(startIndex, endIndex);
+
+    this.itemList$.next(paginatedItems);
+    this.totalItems$.next(originalItems.length);
+  }
+
+  onPageChange(event: PageEvent) {
+    this.currentPage = event.pageIndex + 1;
+    this.itemsPerPage = event.pageSize;
+    this.updatePagination();
+  }
+
   applyFilters() {
     // Apply all filters to the originalItemList and update itemList$
-    let filteredItems = this.originalItemList;
+    let filteredItems = this.originalItemList$.getValue();
 
     // Apply categories filter
     const categories = this.filtersService.categoriesSource.getValue();
     if (categories.length > 0) {
-      filteredItems = filteredItems.filter((item) => {
+      filteredItems = filteredItems.filter((item: any) => {
         return categories.includes(item.category.id);
       });
     }
@@ -101,26 +111,30 @@ export class ListItemComponent implements OnInit, OnDestroy {
     const priceMin = this.filtersService.priceMinSource.getValue();
     const priceMax = this.filtersService.priceMaxSource.getValue();
     filteredItems = filteredItems.filter(
-      (item) => item.regularPrice >= priceMin && item.regularPrice <= priceMax
+      (item: any) =>
+        item.regularPrice >= priceMin && item.regularPrice <= priceMax
     );
 
     // Apply yearMin and yearMax filters
     const yearMin = Number(this.filtersService.yearMinSource.getValue());
     const yearMax = Number(this.filtersService.yearMaxSource.getValue());
     filteredItems = filteredItems.filter(
-      (item) => Number(item.year) >= yearMin && Number(item.year) <= yearMax
+      (item: any) =>
+        Number(item.year) >= yearMin && Number(item.year) <= yearMax
     );
 
     // Apply ratings filter
     const ratings = this.filtersService.ratingsSource.getValue();
     if (ratings.length > 0) {
-      filteredItems = filteredItems.filter((item) =>
+      filteredItems = filteredItems.filter((item: any) =>
         ratings.includes(Math.round(item.rating || 0))
       );
     }
 
     // Update itemList$ with filteredItems
     this.itemList$.next(filteredItems);
+
+    return this.itemList$.getValue();
   }
 
   getRatingStars(rating: number | undefined): number[] {
@@ -132,21 +146,6 @@ export class ListItemComponent implements OnInit, OnDestroy {
 
   openItemDetails(item: IMeilisearchItem) {
     this.router.navigate(['/items', item.id]);
-  }
-
-  onPageChange(event: PageEvent) {
-    this.currentPage = event.pageIndex;
-    this.itemsPerPage = event.pageSize;
-
-    this.meiliSearchService
-      .updatedSearch('', '', {
-        page: this.currentPage,
-        itemsPerPage: this.itemsPerPage,
-      })
-      .subscribe(({ hits, totalItems }) => {
-        this.itemList$.next(hits);
-        this.totalItems$.next(totalItems);
-      });
   }
 
   addToFavorites(item: IMeilisearchItem, event: Event) {
