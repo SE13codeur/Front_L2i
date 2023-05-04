@@ -29,7 +29,7 @@
     </div>
   </div>
   <mat-paginator
-    [length]="(totalItems$ | async) ?? 112"
+    [length]="(totalItems$ | async)"
     [pageSize]="itemsPerPage"
     [pageSizeOptions]="[12, 24, 36, 48]"
     (page)="onPageChange($event)"

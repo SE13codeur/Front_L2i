@@ -2,10 +2,11 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
 
-import { MatPaginatorIntl, PageEvent } from '@angular/material/paginator';
+import { PageEvent } from '@angular/material/paginator';
 import { IMeilisearchItem } from '@m/IMeilisearchItem';
 import { FiltersService } from '@s/filters.service';
 import { MeiliSearchService } from '@s/meilisearch.service';
+import { PaginationService } from '@s/pagination.service';
 
 @Component({
   selector: 'app-list-item',
@@ -25,7 +26,8 @@ export class ListItemComponent implements OnInit, OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     private meiliSearchService: MeiliSearchService,
-    private filtersService: FiltersService
+    private filtersService: FiltersService,
+    private paginationService: PaginationService
   ) {}
 
   ngOnInit() {
@@ -55,6 +57,11 @@ export class ListItemComponent implements OnInit, OnDestroy {
           });
         }
       });
+
+    this.paginationService.currentPage$.subscribe((page) => {
+      this.currentPage = page;
+      this.updatePagination();
+    });
 
     this.filtersService.filtersUpdated$
       .pipe(takeUntil(this.destroy$))
