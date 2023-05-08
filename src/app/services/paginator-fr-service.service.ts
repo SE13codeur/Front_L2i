@@ -8,6 +8,8 @@ export class PaginatorFrService extends MatPaginatorIntl {
   override itemsPerPageLabel = 'Articles par page';
   override nextPageLabel = 'Page suivante';
   override previousPageLabel = 'Page précédente';
+  override firstPageLabel = 'Première page';
+  override lastPageLabel = 'Dernière page';
 
   override getRangeLabel = (
     page: number,

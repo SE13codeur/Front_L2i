@@ -29,13 +29,18 @@
     </div>
   </div>
   <mat-paginator
-    [length]="(totalItems$ | async) ?? 160"
-    [pageSize]="itemsPerPage"
-    [pageSizeOptions]="[12, 24, 36, 48]"
-    (page)="onPageChange($event)"
-    intlNextPageLabel="Page suivante"
-    intlPreviousPageLabel="Page précédente"
-    intlItemsPerPageLabel="Articles par page"
-  ></mat-paginator>
+  [length]="(totalItems$ | async)"
+  [pageSize]="itemsPerPage"
+  [pageSizeOptions]="[12, 24, 36, 48]"
+  [pageIndex]="getCurrentPageIndex()"
+  (page)="onPageChange($event)"
+  [showFirstLastButtons]="true"
+  intlNextPageLabel="Page suivante"
+  intlPreviousPageLabel="Page précédente"
+  intlItemsPerPageLabel="Articles par page"
+></mat-paginator>
+
+
+
 
 </div>

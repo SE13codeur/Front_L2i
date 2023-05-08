@@ -3,6 +3,8 @@ import { Component, ViewChild } from '@angular/core';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { FiltersService } from '@s/filters.service';
 import { MeiliSearchService } from '@s/meilisearch.service';
+import { PaginationService } from '@s/pagination.service';
+import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-filters-item',
@@ -54,7 +56,8 @@ export class FiltersItemComponent {
 
   constructor(
     private filtersService: FiltersService,
-    private meiliSearchService: MeiliSearchService
+    private meiliSearchService: MeiliSearchService,
+    private paginationService: PaginationService
   ) {}
 
   onSubcategoryChange(
@@ -146,13 +149,22 @@ export class FiltersItemComponent {
   onFilterChange() {
     const filterString = this.filtersService.getFilterString();
 
-    // Get current page and items per page values
-    const currentPage = 1;
+    // Set current page and itemsPerPage
     const itemsPerPage = 12;
+    this.paginationService.updateCurrentPage(1);
 
-    // Call getItemsByPage with updated filter values
-    this.meiliSearchService
-      .getItemsByPage(currentPage, itemsPerPage, filterString)
+    // switchMap for combining currentPage$ and getItemsByPage
+    this.paginationService.currentPage$
+      .pipe(
+        switchMap((currentPage) =>
+          this.meiliSearchService.getItemsByPage(
+            currentPage,
+            itemsPerPage,
+            filterString
+          )
+        )
+      )
       .subscribe();
+    this.paginationService.updateCurrentPage(1);
   }
 }

@@ -1,11 +1,12 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
+import { BehaviorSubject, Subject, combineLatest, take, takeUntil } from 'rxjs';
 
-import { MatPaginatorIntl, PageEvent } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { IMeilisearchItem } from '@m/IMeilisearchItem';
 import { FiltersService } from '@s/filters.service';
 import { MeiliSearchService } from '@s/meilisearch.service';
+import { PaginationService } from '@s/pagination.service';
 
 @Component({
   selector: 'app-list-item',
@@ -13,10 +14,13 @@ import { MeiliSearchService } from '@s/meilisearch.service';
   styleUrls: ['./list-item.component.css'],
 })
 export class ListItemComponent implements OnInit, OnDestroy {
-  itemList$ = new BehaviorSubject<IMeilisearchItem[]>([]);
-  private originalItemList: IMeilisearchItem[] = [];
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  private originalItemList$ = new BehaviorSubject<IMeilisearchItem[]>([]);
 
   private readonly destroy$ = new Subject<void>();
+  currentSearch: string = '';
+  itemList$ = new BehaviorSubject<IMeilisearchItem[]>([]);
   totalItems$ = new BehaviorSubject<number | null>(null);
   itemsPerPage = 12;
   currentPage = 1;
@@ -25,7 +29,8 @@ export class ListItemComponent implements OnInit, OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     private meiliSearchService: MeiliSearchService,
-    private filtersService: FiltersService
+    private filtersService: FiltersService,
+    private paginationService: PaginationService
   ) {}
 
   ngOnInit() {
@@ -33,46 +38,37 @@ export class ListItemComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe((params) => {
         const query = params['q'];
-
-        this.meiliSearchService
-          .updatedSearch(query, '', {
-            page: this.currentPage,
-            itemsPerPage: this.itemsPerPage,
-          })
-          .subscribe((searchResults) => {
-            this.originalItemList = searchResults.hits;
-            this.totalItems$.next(searchResults.totalItems);
+        this.currentSearch = query || '';
+        if (!!query) {
+          this.meiliSearchService
+            .updatedSearch(query, '', {
+              page: this.currentPage,
+              itemsPerPage: this.itemsPerPage,
+            })
+            .subscribe(({ hits, totalItems }) => {
+              this.itemList$.next(hits);
+              this.totalItems$.next(totalItems);
+            });
+        }
+        if (!query) {
+          this.meiliSearchService.getAllItems().subscribe((allItems) => {
+            this.originalItemList$.next(allItems);
+            this.itemList$.next(this.originalItemList$.getValue());
+            this.totalItems$.next(allItems.length);
             this.applyFilters();
+            this.updatePagination();
           });
+        }
       });
 
-    this.filtersService.categories$
+    combineLatest([
+      this.filtersService.filtersUpdated$,
+      this.paginationService.currentPage$,
+    ])
       .pipe(takeUntil(this.destroy$))
-      .subscribe(() => this.applyFilters());
-    this.filtersService.priceMin$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(() => this.applyFilters());
-    this.filtersService.priceMax$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(() => this.applyFilters());
-    this.filtersService.yearMin$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(() => this.applyFilters());
-    this.filtersService.yearMax$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(() => this.applyFilters());
-    this.filtersService.ratings$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(() => this.applyFilters());
-
-    this.meiliSearchService
-      .updatedSearch('', '', {
-        page: this.currentPage,
-        itemsPerPage: this.itemsPerPage,
-      })
-      .subscribe(({ hits, totalItems }) => {
-        this.itemList$.next(hits);
-        this.totalItems$.next(totalItems);
+      .subscribe(([_, page]) => {
+        this.currentPage = page;
+        this.updatePagination();
       });
   }
 
@@ -87,12 +83,18 @@ export class ListItemComponent implements OnInit, OnDestroy {
 
   applyFilters() {
     // Apply all filters to the originalItemList and update itemList$
-    let filteredItems = this.originalItemList;
+    let filteredItems = this.originalItemList$.getValue();
 
+    // Apply search filter
+    if (this.currentSearch) {
+      filteredItems = filteredItems.filter((item: any) =>
+        item.title.toLowerCase().includes(this.currentSearch.toLowerCase())
+      );
+    }
     // Apply categories filter
     const categories = this.filtersService.categoriesSource.getValue();
     if (categories.length > 0) {
-      filteredItems = filteredItems.filter((item) => {
+      filteredItems = filteredItems.filter((item: any) => {
         return categories.includes(item.category.id);
       });
     }
@@ -101,26 +103,56 @@ export class ListItemComponent implements OnInit, OnDestroy {
     const priceMin = this.filtersService.priceMinSource.getValue();
     const priceMax = this.filtersService.priceMaxSource.getValue();
     filteredItems = filteredItems.filter(
-      (item) => item.regularPrice >= priceMin && item.regularPrice <= priceMax
+      (item: any) =>
+        item.regularPrice >= priceMin && item.regularPrice <= priceMax
     );
 
     // Apply yearMin and yearMax filters
     const yearMin = Number(this.filtersService.yearMinSource.getValue());
     const yearMax = Number(this.filtersService.yearMaxSource.getValue());
     filteredItems = filteredItems.filter(
-      (item) => Number(item.year) >= yearMin && Number(item.year) <= yearMax
+      (item: any) =>
+        Number(item.year) >= yearMin && Number(item.year) <= yearMax
     );
 
     // Apply ratings filter
     const ratings = this.filtersService.ratingsSource.getValue();
     if (ratings.length > 0) {
-      filteredItems = filteredItems.filter((item) =>
+      filteredItems = filteredItems.filter((item: any) =>
         ratings.includes(Math.round(item.rating || 0))
       );
     }
 
-    // Update itemList$ with filteredItems
-    this.itemList$.next(filteredItems);
+    // Update the totalItems$ BehaviorSubject
+    this.totalItems$.next(filteredItems.length);
+
+    return filteredItems;
+  }
+
+  updatePagination() {
+    const filteredItems = this.applyFilters();
+
+    // Paginate items
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    const paginatedItems = filteredItems.slice(startIndex, endIndex);
+
+    this.itemList$.next(paginatedItems);
+  }
+
+  onPageChange(event: PageEvent) {
+    this.currentPage = event.pageIndex + 1;
+    this.paginationService.updateCurrentPage(this.currentPage);
+    this.itemsPerPage = event.pageSize;
+    this.updatePagination();
+  }
+
+  getCurrentPageIndex(): number {
+    let pageIndex = 0;
+    this.paginationService.currentPage$.pipe(take(1)).subscribe(() => {
+      pageIndex = this.currentPage - 1;
+    });
+    return pageIndex;
   }
 
   getRatingStars(rating: number | undefined): number[] {
@@ -132,21 +164,6 @@ export class ListItemComponent implements OnInit, OnDestroy {
 
   openItemDetails(item: IMeilisearchItem) {
     this.router.navigate(['/items', item.id]);
-  }
-
-  onPageChange(event: PageEvent) {
-    this.currentPage = event.pageIndex;
-    this.itemsPerPage = event.pageSize;
-
-    this.meiliSearchService
-      .updatedSearch('', '', {
-        page: this.currentPage,
-        itemsPerPage: this.itemsPerPage,
-      })
-      .subscribe(({ hits, totalItems }) => {
-        this.itemList$.next(hits);
-        this.totalItems$.next(totalItems);
-      });
   }
 
   addToFavorites(item: IMeilisearchItem, event: Event) {

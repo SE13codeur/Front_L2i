@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
-import { environment } from '@env/environment.dev';
+import { environmentProd as environment } from '@env/environment.prod';
 import { IMeilisearchItem } from '@m/IMeilisearchItem';
 
 @Injectable({
