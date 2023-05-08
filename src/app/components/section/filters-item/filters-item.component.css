@@ -99,7 +99,7 @@ p {
   transition: background-color 0.3s; /* Animation de transition pour le hover */
 }
 
-.filter-section:hover {
+.category-section:hover {
   background-color: #E1E1E1; /* Couleur de fond blanche au hover */
 }
 
