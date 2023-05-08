@@ -19,6 +19,7 @@ export class ListItemComponent implements OnInit, OnDestroy {
   private originalItemList$ = new BehaviorSubject<IMeilisearchItem[]>([]);
 
   private readonly destroy$ = new Subject<void>();
+  currentSearch: string = '';
   itemList$ = new BehaviorSubject<IMeilisearchItem[]>([]);
   totalItems$ = new BehaviorSubject<number | null>(null);
   itemsPerPage = 12;
@@ -37,7 +38,7 @@ export class ListItemComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe((params) => {
         const query = params['q'];
-
+        this.currentSearch = query || '';
         if (!!query) {
           this.meiliSearchService
             .updatedSearch(query, '', {
@@ -84,6 +85,12 @@ export class ListItemComponent implements OnInit, OnDestroy {
     // Apply all filters to the originalItemList and update itemList$
     let filteredItems = this.originalItemList$.getValue();
 
+    // Apply search filter
+    if (this.currentSearch) {
+      filteredItems = filteredItems.filter((item: any) =>
+        item.title.toLowerCase().includes(this.currentSearch.toLowerCase())
+      );
+    }
     // Apply categories filter
     const categories = this.filtersService.categoriesSource.getValue();
     if (categories.length > 0) {
