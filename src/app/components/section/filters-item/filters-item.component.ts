@@ -165,5 +165,6 @@ export class FiltersItemComponent {
         )
       )
       .subscribe();
+    this.paginationService.updateCurrentPage(1);
   }
 }

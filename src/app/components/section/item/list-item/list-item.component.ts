@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
+import { BehaviorSubject, Subject, combineLatest, takeUntil } from 'rxjs';
 
 import { PageEvent } from '@angular/material/paginator';
 import { IMeilisearchItem } from '@m/IMeilisearchItem';
@@ -14,10 +14,10 @@ import { PaginationService } from '@s/pagination.service';
   styleUrls: ['./list-item.component.css'],
 })
 export class ListItemComponent implements OnInit, OnDestroy {
-  itemList$ = new BehaviorSubject<IMeilisearchItem[]>([]);
   private originalItemList$ = new BehaviorSubject<IMeilisearchItem[]>([]);
 
   private readonly destroy$ = new Subject<void>();
+  itemList$ = new BehaviorSubject<IMeilisearchItem[]>([]);
   totalItems$ = new BehaviorSubject<number | null>(null);
   itemsPerPage = 12;
   currentPage = 1;
@@ -58,15 +58,13 @@ export class ListItemComponent implements OnInit, OnDestroy {
         }
       });
 
-    this.paginationService.currentPage$.subscribe((page) => {
-      this.currentPage = page;
-      this.updatePagination();
-    });
-
-    this.filtersService.filtersUpdated$
+    combineLatest([
+      this.filtersService.filtersUpdated$,
+      this.paginationService.currentPage$,
+    ])
       .pipe(takeUntil(this.destroy$))
-      .subscribe(() => {
-        this.applyFilters();
+      .subscribe(([_, page]) => {
+        this.currentPage = page;
         this.updatePagination();
       });
   }
@@ -78,28 +76,6 @@ export class ListItemComponent implements OnInit, OnDestroy {
 
   truncateText(text: string, maxLength: number): string {
     return text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
-  }
-
-  updatePagination() {
-    const originalItems = this.originalItemList$.getValue();
-    let paginatedItems = originalItems;
-
-    // Apply filters before pagination
-    paginatedItems = this.applyFilters();
-
-    // Paginate items
-    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-    const endIndex = startIndex + this.itemsPerPage;
-    paginatedItems = paginatedItems.slice(startIndex, endIndex);
-
-    this.itemList$.next(paginatedItems);
-    this.totalItems$.next(originalItems.length);
-  }
-
-  onPageChange(event: PageEvent) {
-    this.currentPage = event.pageIndex + 1;
-    this.itemsPerPage = event.pageSize;
-    this.updatePagination();
   }
 
   applyFilters() {
@@ -138,10 +114,27 @@ export class ListItemComponent implements OnInit, OnDestroy {
       );
     }
 
-    // Update itemList$ with filteredItems
-    this.itemList$.next(filteredItems);
+    // Update the totalItems$ BehaviorSubject
+    this.totalItems$.next(filteredItems.length);
 
-    return this.itemList$.getValue();
+    return filteredItems;
+  }
+
+  updatePagination() {
+    const filteredItems = this.applyFilters();
+
+    // Paginate items
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    const paginatedItems = filteredItems.slice(startIndex, endIndex);
+
+    this.itemList$.next(paginatedItems);
+  }
+
+  onPageChange(event: PageEvent) {
+    this.paginationService.updateCurrentPage(event.pageIndex + 1);
+    this.itemsPerPage = event.pageSize;
+    this.updatePagination();
   }
 
   getRatingStars(rating: number | undefined): number[] {
