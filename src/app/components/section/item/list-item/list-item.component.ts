@@ -1,8 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BehaviorSubject, Subject, combineLatest, takeUntil } from 'rxjs';
+import { BehaviorSubject, Subject, combineLatest, take, takeUntil } from 'rxjs';
 
-import { PageEvent } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { IMeilisearchItem } from '@m/IMeilisearchItem';
 import { FiltersService } from '@s/filters.service';
 import { MeiliSearchService } from '@s/meilisearch.service';
@@ -14,6 +14,8 @@ import { PaginationService } from '@s/pagination.service';
   styleUrls: ['./list-item.component.css'],
 })
 export class ListItemComponent implements OnInit, OnDestroy {
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
   private originalItemList$ = new BehaviorSubject<IMeilisearchItem[]>([]);
 
   private readonly destroy$ = new Subject<void>();
@@ -132,9 +134,18 @@ export class ListItemComponent implements OnInit, OnDestroy {
   }
 
   onPageChange(event: PageEvent) {
-    this.paginationService.updateCurrentPage(event.pageIndex + 1);
+    this.currentPage = event.pageIndex + 1;
+    this.paginationService.updateCurrentPage(this.currentPage);
     this.itemsPerPage = event.pageSize;
     this.updatePagination();
+  }
+
+  getCurrentPageIndex(): number {
+    let pageIndex = 0;
+    this.paginationService.currentPage$.pipe(take(1)).subscribe(() => {
+      pageIndex = this.currentPage - 1;
+    });
+    return pageIndex;
   }
 
   getRatingStars(rating: number | undefined): number[] {

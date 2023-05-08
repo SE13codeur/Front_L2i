@@ -15,6 +15,7 @@
   height: 100%;
   cursor: pointer;
   margin: 0;
+  margin-bottom: 1.11rem;
 }
 
 .custom-card:hover {
@@ -37,6 +38,8 @@ mat-card-image {
 
 .item-description {
   cursor: pointer;
+  color: #333;
+  font-size: 0.9rem;
 }
 
 .rating {
@@ -60,4 +63,16 @@ mat-icon {
 
 mat-card-title {
   margin: 0;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.mat-paginator {
+  margin-top: 1.77rem;
+  margin-right: 1.11rem;
+  font-size: 1.11rem;
+}
+
+::ng-deep .mat-select-min-line {
+  font-size: 1.11rem;
 }
