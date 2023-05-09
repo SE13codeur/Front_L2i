@@ -68,6 +68,10 @@ export class MeiliSearchService {
       );
   }
 
+  getAllItems(): Observable<IMeilisearchItem[]> {
+    return this.updatedSearch('').pipe(map((response) => response.hits));
+  }
+
   getItemsByPage(
     page: number,
     itemsPerPage: number,
@@ -76,10 +80,6 @@ export class MeiliSearchService {
     return this.updatedSearch('', filters, { page, itemsPerPage }).pipe(
       map((response) => response.hits)
     );
-  }
-
-  getAllItems(): Observable<IMeilisearchItem[]> {
-    return this.updatedSearch('').pipe(map((response) => response.hits));
   }
 
   getItemById(id: string): Observable<IMeilisearchItem> {
