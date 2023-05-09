@@ -4,8 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "cp src/environments/environment.prod.template.ts src/environments/environment.prod.ts",
-    "build:local": "envsubst < src/environments/environment.prod.ts > src/environments/environment.prod.temp.ts && mv src/environments/environment.prod.temp.ts src/environments/environment.prod.ts && ng build",
+    "build": "mv src/environments/environment.prod.temp.ts src/environments/environment.prod.ts && ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
