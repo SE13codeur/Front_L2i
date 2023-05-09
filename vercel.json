@@ -1,0 +1,10 @@
+{
+  "build": {
+    "env": {
+      "MEILISEARCH_API_KEY": "@MEILISEARCH_API_KEY",
+      "MEILISEARCH_API_URL": "@MEILISEARCH_API_URL",
+      "API_URL": "@API_URL"
+    },
+    "command": "ng build --configuration=production --output-hashing=all"
+  }
+}
