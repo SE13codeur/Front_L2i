@@ -17,7 +17,7 @@ export interface IMeilisearchItem {
   year: string;
   language?: string;
   version?: number;
-  newCollection: boolean;
+  isNewCollection: boolean;
 }
 
 export interface IAuthor {
