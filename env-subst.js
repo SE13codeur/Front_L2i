@@ -10,4 +10,4 @@ const newConfigFile = prodConfigFile
   .replace('${MEILISEARCH_API_URL}', envConfig.MEILISEARCH_API_URL)
   .replace('${API_URL}', envConfig.API_URL);
 
-fs.writeFileSync('src/environments/environment.prod.ts', newConfigFile);
+fs.writeFileSync('src/environments/environment.prod.template.ts', newConfigFile);
