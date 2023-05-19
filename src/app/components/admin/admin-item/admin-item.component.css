@@ -1,0 +1,12 @@
+.mat-card-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.mat-form-field {
+  margin-bottom: 15px;
+}
+
+mat-checkbox {
+  margin-bottom: 15px;
+}

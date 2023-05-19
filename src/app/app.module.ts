@@ -24,6 +24,7 @@ import { FiltersItemComponent } from '@c/section/filters-item/filters-item.compo
 
 import { CartService } from '@s/cart.service';
 import { PaginatorFrService } from '@s/paginator-fr-service.service';
+import { AuthService } from '@s/admin/auth.service';
 
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -45,6 +46,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AdminItemComponent } from './components/admin/admin-item/admin-item.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +64,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     AsideComponent,
     SearchItemComponent,
     FiltersItemComponent,
+    AdminItemComponent,
   ],
   imports: [
     BrowserModule,
@@ -89,6 +92,7 @@ import { ReactiveFormsModule } from '@angular/forms';
   providers: [
     { provide: LOCALE_ID, useValue: 'fr-FR' },
     CartService,
+    AuthService,
     {
       provide: MatPaginatorIntl,
       useClass: PaginatorFrService,
