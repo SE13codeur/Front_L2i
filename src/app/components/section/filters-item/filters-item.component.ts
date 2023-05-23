@@ -2,7 +2,7 @@ import { LabelType, Options } from '@angular-slider/ngx-slider';
 import { Component, ViewChild } from '@angular/core';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { FiltersService } from '@s/search/filters.service';
-import { MeiliSearchService } from '@s/search/meilisearch.service';
+import { ItemService } from '@s/search/item.service';
 import { PaginationService } from '@s/pagination/pagination.service';
 import { switchMap } from 'rxjs';
 
@@ -56,7 +56,7 @@ export class FiltersItemComponent {
 
   constructor(
     private filtersService: FiltersService,
-    private meiliSearchService: MeiliSearchService,
+    private ItemService: ItemService,
     private paginationService: PaginationService
   ) {}
 
@@ -157,7 +157,7 @@ export class FiltersItemComponent {
     this.paginationService.currentPage$
       .pipe(
         switchMap((currentPage) =>
-          this.meiliSearchService.getItemsByPage(
+          this.ItemService.getItemsByPage(
             currentPage,
             itemsPerPage,
             filterString

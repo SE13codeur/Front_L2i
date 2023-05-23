@@ -18,7 +18,6 @@ import { CartComponent } from '@c/aside/cart/cart.component';
 import { HeaderComponent } from '@c/header/header.component';
 import { SectionComponent } from '@c/section/section.component';
 import { SearchItemComponent } from '@c/nav/search-item/search-item.component';
-import { ListItemComponent } from '@c/section/item/list-item/list-item.component';
 import { DetailItemComponent } from '@c/section/item/detail-item/detail-item.component';
 import { FiltersItemComponent } from '@c/section/filters-item/filters-item.component';
 
@@ -47,7 +46,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AdminItemComponent } from './components/admin/admin-item/admin-item.component';
-import { ListItemWithoutMeilisearchComponent } from './components/section/list-item-without-meilisearch/list-item-without-meilisearch.component';
+import { ListItemWithoutMeilisearchComponent } from './components/section/item/list-item-without-meilisearch/list-item-without-meilisearch.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +56,6 @@ import { ListItemWithoutMeilisearchComponent } from './components/section/list-i
     SignPageComponent,
     NavComponent,
     SectionComponent,
-    ListItemComponent,
     DetailItemComponent,
     NotFoundComponent,
     ItemPageComponent,

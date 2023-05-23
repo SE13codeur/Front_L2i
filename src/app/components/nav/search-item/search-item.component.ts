@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 
-import { MeiliSearchService } from '@s/search/meilisearch.service';
+import { ItemService } from '@s/search/item.service';
 import { SearchFocusService } from '@s/search/searchFocus.service';
 
 @Component({
@@ -25,7 +25,7 @@ export class SearchItemComponent implements OnDestroy, OnInit {
   private readonly destroy$ = new Subject<void>();
 
   constructor(
-    private readonly meiliSearchService: MeiliSearchService,
+    private readonly itemService: ItemService,
     private router: Router,
     private searchFocusService: SearchFocusService
   ) {}
@@ -57,8 +57,8 @@ export class SearchItemComponent implements OnDestroy, OnInit {
   }
 
   search(query: string): void {
-    this.meiliSearchService.updatedSearch(query).subscribe((results) => {
-      this.meiliSearchService.setSearchValue(query);
+    this.itemService.updatedSearch(query).subscribe((results) => {
+      this.itemService.setSearchValue(query);
       this.router
         .navigate(['/items'], { queryParams: { q: query } })
         .then(() => {

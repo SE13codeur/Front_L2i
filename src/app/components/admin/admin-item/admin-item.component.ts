@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import IMeilisearchItem from '@m/IItem';
 import { AdminItemService } from '@s/admin/admin-item.service';
-import { MeiliSearchService } from '@s/search/meilisearch.service';
+import { ItemService } from '@s/search/item.service';
 
 @Component({
   selector: 'app-admin-item',
@@ -20,7 +20,7 @@ export class AdminItemComponent implements OnInit {
     private adminItemService: AdminItemService,
     private router: Router,
     private route: ActivatedRoute,
-    private meiliSearchService: MeiliSearchService
+    private itemService: ItemService
   ) {
     this.itemForm = this.fb.group({
       imageUrl: ['', Validators.required],
@@ -51,7 +51,7 @@ export class AdminItemComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.itemId) {
-      this.meiliSearchService.getItemById(this.itemId).subscribe({
+      this.itemService.getItemById(this.itemId).subscribe({
         next: (response: any) => {
           this.item = response;
         },

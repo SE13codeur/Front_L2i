@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import IMeilisearchItem, { IAuthor } from '@m/IItem';
-import { MeiliSearchService } from '@s/search/meilisearch.service';
 import { Location } from '@angular/common';
 import { Observable, of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { AuthService } from '@s/admin/auth.service';
 import { AdminItemService } from '@s/admin/admin-item.service';
+import { ItemService } from '@s/search/item.service';
 
 @Component({
   selector: 'app-detail-item',
@@ -21,7 +21,7 @@ export class DetailItemComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private meiliSearchService: MeiliSearchService,
+    private itemService: ItemService,
     private location: Location,
     private authService: AuthService,
     private itemAdminService: AdminItemService
@@ -29,7 +29,7 @@ export class DetailItemComponent implements OnInit {
     this.item$ = this.route.params.pipe(
       map((params) => params['id']),
       switchMap((id) =>
-        this.meiliSearchService.getItemById(id).pipe(catchError(() => of(null)))
+        this.itemService.getItemById(id).pipe(catchError(() => of(null)))
       )
     );
   }
