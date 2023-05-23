@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { environmentDev as environment } from '@env/environment.dev';
 
-import { IMeilisearchItem } from '@m/IMeilisearchItem';
+import IMeilisearchItem from '@m/IItem';
 
 @Injectable({
   providedIn: 'root',
@@ -22,13 +22,11 @@ export class MeiliSearchService {
 
   constructor(private readonly http: HttpClient) {
     this.meiliSearchUrl = `${environment.meiliSearchApiUrl}/indexes/items/search`;
-    this.headers = new HttpHeaders({
-      Authorization: `Bearer ${environment.meiliSearchApiKey}`,
-    });
+    this.headers = new HttpHeaders();
   }
 
   getAllItems(): Observable<IMeilisearchItem[]> {
-    return this.updatedSearch('', '', { limit: 112, itemsPerPage: 12 }).pipe(
+    return this.updatedSearch('', '', { limit: 120, itemsPerPage: 12 }).pipe(
       map((response) => response.hits)
     );
   }
@@ -89,7 +87,7 @@ export class MeiliSearchService {
       params = params.set('limit', String(itemsPerPage));
     }
     if (!query) {
-      params = params.set('limit', String(options.limit ?? 112));
+      params = params.set('limit', String(options.limit ?? 120));
     }
 
     return this.http

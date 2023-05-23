@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IMeilisearchItem } from '@m/IMeilisearchItem';
+import IMeilisearchItem from '@m/IItem';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 

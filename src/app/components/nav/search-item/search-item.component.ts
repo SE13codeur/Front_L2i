@@ -10,8 +10,8 @@ import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 
-import { MeiliSearchService } from '@s/meilisearch.service';
-import { SearchFocusService } from '@s/searchFocus.service';
+import { MeiliSearchService } from '@s/search/meilisearch.service';
+import { SearchFocusService } from '@s/search/searchFocus.service';
 
 @Component({
   selector: 'app-search-item',

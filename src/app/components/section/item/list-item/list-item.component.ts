@@ -3,10 +3,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, Subject, combineLatest, take, takeUntil } from 'rxjs';
 
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { IMeilisearchItem } from '@m/IMeilisearchItem';
-import { FiltersService } from '@s/filters.service';
-import { MeiliSearchService } from '@s/meilisearch.service';
-import { PaginationService } from '@s/pagination.service';
+import IMeilisearchItem from '@m/IItem';
+import { FiltersService } from '@s/search/filters.service';
+import { MeiliSearchService } from '@s/search/meilisearch.service';
+import { PaginationService } from '@s/pagination/pagination.service';
 
 @Component({
   selector: 'app-list-item',

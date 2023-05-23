@@ -30,6 +30,11 @@
       <button mat-raised-button color="primary" (click)="goBackToListItems()">Retour aux articles</button>
     </div>
   </div>
+
+  <button mat-icon-button color="warn" *ngIf="isAdmin" (click)="deleteItem()">
+    <mat-icon>delete</mat-icon>
+  </button>
+
   <h3 class="reviews-title" (click)="toggleShowReviews()">
     Commentaires
     <mat-icon>{{ showReviews ? 'expand_less' : 'expand_more' }}</mat-icon>

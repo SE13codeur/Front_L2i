@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
-import { SearchFocusService } from '@s/searchFocus.service';
+import { SearchFocusService } from '@s/search/searchFocus.service';
 
 @Component({
   selector: 'app-root',

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environmentDev } from '@env/environment.dev';
-import { IMeilisearchItem } from '@m/IMeilisearchItem';
+import IMeilisearchItem from '@m/IItem';
 import { Observable } from 'rxjs';
 
 @Injectable({

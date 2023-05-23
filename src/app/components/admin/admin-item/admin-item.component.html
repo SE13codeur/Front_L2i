@@ -4,31 +4,49 @@
       <mat-form-field>
         <mat-label>URL de l'image</mat-label>
         <input matInput formControlName="imageUrl">
+        <mat-error *ngIf="itemForm.get('imageUrl')?.invalid && itemForm.get('imageUrl')?.touched">
+          L'URL de l'image est requise.
+        </mat-error>
       </mat-form-field>
 
       <mat-form-field>
         <mat-label>isbn13 du livre</mat-label>
         <input matInput formControlName="isbn13">
+        <mat-error *ngIf="itemForm.get('isbn13')?.invalid && itemForm.get('isbn13')?.touched">
+          Un numéro isbn13 est requis.
+        </mat-error>
       </mat-form-field>
 
       <mat-form-field>
         <mat-label>Titre</mat-label>
         <input matInput formControlName="title">
+        <mat-error *ngIf="itemForm.get('title')?.invalid && itemForm.get('title')?.touched">
+          Le titre est requis.
+        </mat-error>
       </mat-form-field>
 
       <mat-form-field>
         <mat-label>Sous-titre</mat-label>
         <input matInput formControlName="subtitle">
+        <mat-error *ngIf="itemForm.get('subtitle')?.invalid && itemForm.get('subtitle')?.touched">
+          Le sous-titre est requis.
+        </mat-error>
       </mat-form-field>
 
       <mat-form-field>
         <mat-label>Description</mat-label>
         <textarea matInput formControlName="description"></textarea>
+        <mat-error *ngIf="itemForm.get('description')?.invalid && itemForm.get('description')?.touched">
+          La description est requise.
+        </mat-error>
       </mat-form-field>
 
       <mat-form-field>
         <mat-label>Prix en $</mat-label>
         <input matInput type="number" formControlName="regularPrice">
+        <mat-error *ngIf="itemForm.get('regularPrice')?.invalid && itemForm.get('regularPrice')?.touched">
+          Le prix est requis et doit être supérieur à 0.
+        </mat-error>
       </mat-form-field>
 
       <mat-label>En stock</mat-label>
@@ -37,16 +55,25 @@
       <mat-form-field>
         <mat-label>Quantité en stock</mat-label>
         <input matInput type="number" formControlName="quantityInStock">
+        <mat-error *ngIf="itemForm.get('quantityInStock')?.invalid && itemForm.get('quantityInStock')?.touched">
+          La quantité en stock est requise.
+        </mat-error>
       </mat-form-field>
 
       <mat-form-field>
         <mat-label>Auteurs</mat-label>
         <input matInput formControlName="authors">
+        <mat-error *ngIf="itemForm.get('authors')?.invalid && itemForm.get('authors')?.touched">
+          Veuillez renseigner un auteur, et si besoin utiliser des virgules pour les séparer.
+        </mat-error>
       </mat-form-field>
 
       <mat-form-field>
         <mat-label>Éditeur</mat-label>
         <input matInput formControlName="editor">
+        <mat-error *ngIf="itemForm.get('editor')?.invalid && itemForm.get('editor')?.touched">
+          Un éditeur est requis.
+        </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="fill">
@@ -61,16 +88,25 @@
             <option value="6">Langue Anglaise</option>
           </optgroup>
         </select>
+        <mat-error *ngIf="itemForm.get('category')?.invalid && itemForm.get('category')?.touched">
+          La catégorie est requise.
+        </mat-error>
       </mat-form-field>
 
       <mat-form-field>
         <mat-label>Nombre de pages</mat-label>
         <input matInput type="number" formControlName="pages">
+        <mat-error *ngIf="itemForm.get('pages')?.invalid && itemForm.get('pages')?.touched">
+          Le nombre de pages est requis.
+        </mat-error>
       </mat-form-field>
 
       <mat-form-field>
         <mat-label>Année</mat-label>
         <input matInput type="number" formControlName="year">
+        <mat-error *ngIf="itemForm.get('year')?.invalid && itemForm.get('year')?.touched">
+          L'année est requise.
+        </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="fill">
@@ -79,11 +115,17 @@
           <option value="french">Français</option>
           <option value="english">Anglais</option>
         </select>
+        <mat-error *ngIf="itemForm.get('language')?.invalid && itemForm.get('language')?.touched">
+          La langue est requise.
+        </mat-error>
       </mat-form-field>
 
       <mat-form-field>
         <mat-label>Version</mat-label>
         <input matInput type="number" formControlName="version">
+        <mat-error *ngIf="itemForm.get('version')?.invalid && itemForm.get('version')?.touched">
+          Une version est requise.
+        </mat-error>
       </mat-form-field>
 
       <mat-label>Nouvelle collection</mat-label>
@@ -92,7 +134,7 @@
     </mat-card-content>
 
     <mat-card-actions>
-      <button mat-raised-button color="primary">Soumettre</button>
+      <button mat-raised-button color="primary" (click)="onSubmit()">Soumettre</button>
       <button mat-raised-button color="warn" (click)="onReset()">Réinitialiser</button>
     </mat-card-actions>
   </form>

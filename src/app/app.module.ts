@@ -22,8 +22,8 @@ import { ListItemComponent } from '@c/section/item/list-item/list-item.component
 import { DetailItemComponent } from '@c/section/item/detail-item/detail-item.component';
 import { FiltersItemComponent } from '@c/section/filters-item/filters-item.component';
 
-import { CartService } from '@s/cart.service';
-import { PaginatorFrService } from '@s/paginator-fr-service.service';
+import { CartService } from '@s/cart/cart.service';
+import { PaginatorFrService } from '@s/pagination/paginator-fr-service.service';
 import { AuthService } from '@s/admin/auth.service';
 
 import { MatCardModule } from '@angular/material/card';
@@ -47,6 +47,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AdminItemComponent } from './components/admin/admin-item/admin-item.component';
+import { ListItemWithoutMeilisearchComponent } from './components/section/list-item-without-meilisearch/list-item-without-meilisearch.component';
 
 @NgModule({
   declarations: [
@@ -65,6 +66,7 @@ import { AdminItemComponent } from './components/admin/admin-item/admin-item.com
     SearchItemComponent,
     FiltersItemComponent,
     AdminItemComponent,
+    ListItemWithoutMeilisearchComponent,
   ],
   imports: [
     BrowserModule,

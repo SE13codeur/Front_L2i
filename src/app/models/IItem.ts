@@ -1,4 +1,4 @@
-export interface IMeilisearchItem {
+export default interface IItem {
   id: string;
   isbn13?: string;
   imageUrl: string;
@@ -24,13 +24,13 @@ export interface IAuthor {
   id: number;
   firstname: string;
   lastname: string;
-  books?: IMeilisearchItem[];
+  books?: IItem[];
 }
 
 export interface IEditor {
   id: number;
   name: string;
-  books?: IMeilisearchItem[];
+  books?: IItem[];
 }
 
 export interface ICategoryItem {

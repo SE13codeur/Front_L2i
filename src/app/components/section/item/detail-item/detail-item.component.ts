@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { IAuthor, IMeilisearchItem } from '@m/IMeilisearchItem';
-import { MeiliSearchService } from '@s/meilisearch.service';
+import IMeilisearchItem, { IAuthor } from '@m/IItem';
+import { MeiliSearchService } from '@s/search/meilisearch.service';
 import { Location } from '@angular/common';
 import { Observable, of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
+import { AuthService } from '@s/admin/auth.service';
+import { AdminItemService } from '@s/admin/admin-item.service';
 
 @Component({
   selector: 'app-detail-item',
@@ -15,11 +17,14 @@ export class DetailItemComponent implements OnInit {
   item$: Observable<IMeilisearchItem | null>;
   item: IMeilisearchItem | null = null;
   showReviews = false;
+  isAdmin = false;
 
   constructor(
     private route: ActivatedRoute,
     private meiliSearchService: MeiliSearchService,
-    private location: Location
+    private location: Location,
+    private authService: AuthService,
+    private itemAdminService: AdminItemService
   ) {
     this.item$ = this.route.params.pipe(
       map((params) => params['id']),
@@ -33,6 +38,8 @@ export class DetailItemComponent implements OnInit {
     this.item$.subscribe((item) => {
       this.item = item;
     });
+
+    this.isAdmin = this.authService.isAdminAuthenticated();
   }
 
   goBackToListItems(): void {
@@ -64,5 +71,19 @@ export class DetailItemComponent implements OnInit {
     }
     // TODO : mettre à jour la base de données
     console.log('New rating:', newRating);
+  }
+
+  deleteItem(): void {
+    if (this.item) {
+      this.itemAdminService.deleteItem('books', this.item.id).subscribe({
+        next: (response: any) => {
+          console.log('Item deleted successfully:', response);
+          this.goBackToListItems();
+        },
+        error: (error: any) => {
+          console.error('Error deleting item:', error);
+        },
+      });
+    }
   }
 }
