@@ -34,8 +34,6 @@ export class ListItemWithoutMeilisearchComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.itemService.getItems().subscribe((items) => {
       this.originalItemList$.next(items);
-      console.log('Items récupérés : ', items);
-
       this.itemList$.next(items);
       this.updatePagination();
     });
