@@ -19,14 +19,14 @@
       <h1><strong>{{ item.title }}</strong></h1>
       <h2>{{ item.subtitle }}</h2>
       <p><strong>Autheur(s) :</strong> {{ getAuthorNames() }}</p>
-      <p><strong>Edition :</strong> {{ item.editor?.name }}</p>
+      <p><strong>Edition :</strong> {{ item.editor.name }}</p>
       <p><strong>Description :</strong> {{ item.description }}</p>
       <p><strong>Prix :</strong> {{ item.regularPrice }} $</p>
       <p><strong>Pages :</strong> {{ item.pages }}</p>
       <p><strong>Catégorie :</strong> {{ item.category.name }}</p>
       <p><strong>Année :</strong> {{ item.year }}</p>
       <p><strong>Version :</strong> {{ item.version }}</p>
-      <p><strong>ISBN :</strong> {{ item.isbn13 }}</p>
+      <p><strong>ISBN13 :</strong> {{ item.isbn13 }}</p>
       <button mat-raised-button color="primary" (click)="goBackToListItems()">Retour aux articles</button>
     </div>
   </div>

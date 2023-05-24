@@ -67,21 +67,10 @@ export class ItemService {
 
   getItemById(id: string): Observable<IItem> {
     const url = `${this.itemsUrl}/${id}`;
-    this.http.get<IItem>(url).subscribe((item) => {
-      const currentItems = this.items$.getValue();
-      const updatedItems = currentItems.map((currentItem) =>
-        currentItem.id === item.id ? item : currentItem
-      );
-      this.items$.next(updatedItems);
-    });
-    return this.items$.asObservable().pipe(
-      map((items) => {
-        const foundItem = items.find((item) => item.id === id);
-        if (foundItem) {
-          return foundItem;
-        } else {
-          throw new Error(`Item with id ${id} not found`);
-        }
+    return this.http.get<IItem>(url).pipe(
+      catchError((error) => {
+        console.error(`Error getting item with id ${id}`, error);
+        throw new Error(`Error getting item with id ${id}`);
       })
     );
   }

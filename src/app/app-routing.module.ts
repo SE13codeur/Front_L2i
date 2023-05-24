@@ -12,8 +12,8 @@ import { AdminItemComponent } from '@c/admin/admin-item/admin-item.component';
 const routes: Routes = [
   { path: 'sign-in', component: SignPageComponent },
   { path: '', component: HomePageComponent },
-  { path: 'items', component: ItemPageComponent },
-  { path: 'items/:id', component: DetailItemComponent },
+  { path: 'items/books', component: ItemPageComponent },
+  { path: 'items/books/:id', component: DetailItemComponent },
   { path: 'cart', component: CartComponent },
   { path: 'login/:admin', component: SignPageComponent },
   {

@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import IItem from '@m/IItem';
 import { PaginationService } from '@s/pagination/pagination.service';
 import { FiltersService } from '@s/search/filters.service';
@@ -131,7 +131,7 @@ export class ListItemWithoutMeilisearchComponent implements OnInit, OnDestroy {
   }
 
   openItemDetails(item: IItem) {
-    this.router.navigate(['/items', item.id]);
+    this.router.navigate(['/items/books', item.id]);
   }
 
   addToFavorites(item: IItem, event: Event) {
