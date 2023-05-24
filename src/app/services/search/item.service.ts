@@ -15,6 +15,7 @@ export class ItemService {
   constructor(private http: HttpClient) {}
 
   getItems(): Observable<IItem[]> {
+<<<<<<< HEAD
     return this.http.get<IItem[]>(this.itemsUrl).pipe(
       map((items) => (items ? items : [])),
       catchError((error) => {
@@ -22,6 +23,12 @@ export class ItemService {
         return of([]);
       })
     );
+=======
+    this.http
+      .get<IItem[]>(`${this.itemsUrl}`)
+      .subscribe((items) => this.items$.next(items));
+    return this.items$.asObservable();
+>>>>>>> c9e58faa0bf9c39ba4019aa61fd3bac3152e7028
   }
 
   getItemsByPage(

@@ -34,10 +34,15 @@ export class ListItemWithoutMeilisearchComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.itemService.getItems().subscribe((items) => {
       this.originalItemList$.next(items);
+<<<<<<< HEAD
       console.log('Items récupérés : ', items);
 
       this.itemList$.next(items);
       // this.updatePagination();
+=======
+      this.itemList$.next(items);
+      this.updatePagination();
+>>>>>>> c9e58faa0bf9c39ba4019aa61fd3bac3152e7028
     });
   }
 
@@ -50,6 +55,7 @@ export class ListItemWithoutMeilisearchComponent implements OnInit, OnDestroy {
     return text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
   }
 
+<<<<<<< HEAD
   // applyFilters() {
   //   // Apply all filters to the originalItemList and update itemList$
   //   let filteredItems = this.originalItemList$.getValue();
@@ -109,6 +115,67 @@ export class ListItemWithoutMeilisearchComponent implements OnInit, OnDestroy {
 
   //   this.itemList$.next(paginatedItems);
   // }
+=======
+  applyFilters() {
+    // Apply all filters to the originalItemList and update itemList$
+    let filteredItems = this.originalItemList$.getValue();
+
+    // Apply search filter
+    if (this.currentSearch) {
+      filteredItems = filteredItems.filter((item: IItem) =>
+        item.title.toLowerCase().includes(this.currentSearch.toLowerCase())
+      );
+    }
+
+    // Apply categories filter
+    const categories = this.filtersService.categoriesSource.getValue();
+    if (categories.length > 0) {
+      filteredItems = filteredItems.filter((item: any) => {
+        return categories.includes(item.category.id);
+      });
+    }
+
+    // Apply priceMin and priceMax filters
+    const priceMin = this.filtersService.priceMinSource.getValue();
+    const priceMax = this.filtersService.priceMaxSource.getValue();
+    filteredItems = filteredItems.filter(
+      (item: any) =>
+        item.regularPrice >= priceMin && item.regularPrice <= priceMax
+    );
+
+    // Apply yearMin and yearMax filters
+    const yearMin = Number(this.filtersService.yearMinSource.getValue());
+    const yearMax = Number(this.filtersService.yearMaxSource.getValue());
+    filteredItems = filteredItems.filter(
+      (item: any) =>
+        Number(item.year) >= yearMin && Number(item.year) <= yearMax
+    );
+
+    // Apply ratings filter
+    const ratings = this.filtersService.ratingsSource.getValue();
+    if (ratings.length > 0) {
+      filteredItems = filteredItems.filter((item: any) =>
+        ratings.includes(Math.round(item.rating || 0))
+      );
+    }
+
+    // Update the totalItems$ BehaviorSubject
+    this.totalItems$.next(filteredItems.length);
+
+    return filteredItems;
+  }
+
+  updatePagination() {
+    const filteredItems = this.applyFilters();
+
+    // Paginate items
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    const paginatedItems = filteredItems.slice(startIndex, endIndex);
+
+    this.itemList$.next(paginatedItems);
+  }
+>>>>>>> c9e58faa0bf9c39ba4019aa61fd3bac3152e7028
 
   onPageChange(event: PageEvent) {
     this.currentPage = event.pageIndex + 1;
