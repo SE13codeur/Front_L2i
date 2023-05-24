@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import IMeilisearchItem, { IAuthor } from '@m/IItem';
 import { Location } from '@angular/common';
 import { Observable, of } from 'rxjs';
@@ -17,10 +17,11 @@ export class DetailItemComponent implements OnInit {
   item$: Observable<IMeilisearchItem | null>;
   item: IMeilisearchItem | null = null;
   showReviews = false;
-  isAdmin = false;
+  isAdmin = true;
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private itemService: ItemService,
     private location: Location,
     private authService: AuthService,
@@ -75,7 +76,7 @@ export class DetailItemComponent implements OnInit {
 
   deleteItem(): void {
     if (this.item) {
-      this.itemAdminService.deleteItem('books', this.item.id).subscribe({
+      this.itemAdminService.deleteItem(this.item.id).subscribe({
         next: (response: any) => {
           console.log('Item deleted successfully:', response);
           this.goBackToListItems();
@@ -85,5 +86,9 @@ export class DetailItemComponent implements OnInit {
         },
       });
     }
+  }
+
+  goToEditItem(): void {
+    this.router.navigate(['/admin/items/books']);
   }
 }

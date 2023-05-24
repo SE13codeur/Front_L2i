@@ -17,7 +17,7 @@ const routes: Routes = [
   { path: 'cart', component: CartComponent },
   { path: 'login/:admin', component: SignPageComponent },
   {
-    path: 'admin/items/add',
+    path: 'admin/items/books',
     component: AdminItemComponent,
     // canActivate: [AdminAuthGuard],
   },

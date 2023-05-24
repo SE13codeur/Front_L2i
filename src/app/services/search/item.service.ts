@@ -1,5 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environmentDev } from '@env/environment.dev';
 import IItem from '@m/IItem';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
@@ -8,7 +9,7 @@ import { catchError, map, tap } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class ItemService {
-  private itemsUrl = 'http://localhost:909/ws/dev/items/books';
+  private itemsUrl = `${environmentDev.apiUrl}/items/books`;
   private items$ = new BehaviorSubject<IItem[]>([]);
   private searchValue$ = new BehaviorSubject<string>('');
 

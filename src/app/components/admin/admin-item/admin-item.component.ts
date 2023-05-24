@@ -77,7 +77,7 @@ export class AdminItemComponent implements OnInit {
         return { firstname, lastname };
       });
 
-      this.adminItemService.addItem('books', itemData).subscribe({
+      this.adminItemService.addItem(itemData).subscribe({
         next: (response: any) => {
           this.router.navigate(['/detail', response.id]);
         },
@@ -87,6 +87,8 @@ export class AdminItemComponent implements OnInit {
       });
     }
   }
+
+  onEditItem(): void {}
 
   onReset(): void {
     this.itemForm.reset();

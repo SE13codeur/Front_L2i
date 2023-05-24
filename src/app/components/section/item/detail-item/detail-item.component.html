@@ -14,6 +14,14 @@
           star
         </mat-icon>
       </div>
+      <div class="adminActions" *ngIf="isAdmin">
+        <button mat-icon-button color="warn" (click)="deleteItem()">
+          <mat-icon>delete</mat-icon>
+        </button>
+        <button mat-icon-button color="primary" (click)="goToEditItem()">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </div>
     </div>
     <div class="detail-info">
       <h1><strong>{{ item.title }}</strong></h1>
@@ -31,9 +39,6 @@
     </div>
   </div>
 
-  <button mat-icon-button color="warn" *ngIf="isAdmin" (click)="deleteItem()">
-    <mat-icon>delete</mat-icon>
-  </button>
 
   <h3 class="reviews-title" (click)="toggleShowReviews()">
     Commentaires

@@ -7,7 +7,7 @@ export default interface IItem {
   description: string;
   regularPrice: number;
   rating: number;
-  inStock: boolean;
+  inStock?: boolean;
   quantityInStock: number;
   totalSales: number;
   authors: IAuthor[];
@@ -17,7 +17,7 @@ export default interface IItem {
   year: string;
   language: string;
   version: number;
-  newCollection: boolean;
+  newCollection?: boolean;
 }
 
 export interface IAuthor {
