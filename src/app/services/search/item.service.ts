@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import IItem from '@m/IItem';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -14,11 +14,14 @@ export class ItemService {
 
   constructor(private http: HttpClient) {}
 
-  getItems(page: number, size: number): Observable<IItem[]> {
-    this.http
-      .get<IItem[]>(`${this.itemsUrl}/${page}/${size}`)
-      .subscribe((items) => this.items$.next(items));
-    return this.items$.asObservable();
+  getItems(): Observable<IItem[]> {
+    return this.http.get<IItem[]>(this.itemsUrl).pipe(
+      map((items) => (items ? items : [])),
+      catchError((error) => {
+        console.error('Erreur lors de la récupération des items', error);
+        return of([]);
+      })
+    );
   }
 
   getItemsByPage(

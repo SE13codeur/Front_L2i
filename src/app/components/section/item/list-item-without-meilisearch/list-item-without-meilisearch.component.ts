@@ -32,13 +32,13 @@ export class ListItemWithoutMeilisearchComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.itemService
-      .getItems(this.currentPage, this.itemsPerPage)
-      .subscribe((items) => {
-        this.originalItemList$.next(items);
-        this.itemList$.next(items);
-        this.updatePagination();
-      });
+    this.itemService.getItems().subscribe((items) => {
+      this.originalItemList$.next(items);
+      console.log('Items récupérés : ', items);
+
+      this.itemList$.next(items);
+      // this.updatePagination();
+    });
   }
 
   ngOnDestroy(): void {
@@ -50,70 +50,71 @@ export class ListItemWithoutMeilisearchComponent implements OnInit, OnDestroy {
     return text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
   }
 
-  applyFilters() {
-    // Apply all filters to the originalItemList and update itemList$
-    let filteredItems = this.originalItemList$.getValue();
+  // applyFilters() {
+  //   // Apply all filters to the originalItemList and update itemList$
+  //   let filteredItems = this.originalItemList$.getValue();
 
-    // Apply search filter
-    if (this.currentSearch) {
-      filteredItems = filteredItems.filter((item: any) =>
-        item.title.toLowerCase().includes(this.currentSearch.toLowerCase())
-      );
-    }
-    // Apply categories filter
-    const categories = this.filtersService.categoriesSource.getValue();
-    if (categories.length > 0) {
-      filteredItems = filteredItems.filter((item: any) => {
-        return categories.includes(item.category.id);
-      });
-    }
+  //   // Apply search filter
+  //   if (this.currentSearch) {
+  //     filteredItems = filteredItems.filter((item: IItem) =>
+  //       item.title.toLowerCase().includes(this.currentSearch.toLowerCase())
+  //     );
+  //   }
 
-    // Apply priceMin and priceMax filters
-    const priceMin = this.filtersService.priceMinSource.getValue();
-    const priceMax = this.filtersService.priceMaxSource.getValue();
-    filteredItems = filteredItems.filter(
-      (item: any) =>
-        item.regularPrice >= priceMin && item.regularPrice <= priceMax
-    );
+  //   // Apply categories filter
+  //   const categories = this.filtersService.categoriesSource.getValue();
+  //   if (categories.length > 0) {
+  //     filteredItems = filteredItems.filter((item: any) => {
+  //       return categories.includes(item.category.id);
+  //     });
+  //   }
 
-    // Apply yearMin and yearMax filters
-    const yearMin = Number(this.filtersService.yearMinSource.getValue());
-    const yearMax = Number(this.filtersService.yearMaxSource.getValue());
-    filteredItems = filteredItems.filter(
-      (item: any) =>
-        Number(item.year) >= yearMin && Number(item.year) <= yearMax
-    );
+  //   // Apply priceMin and priceMax filters
+  //   const priceMin = this.filtersService.priceMinSource.getValue();
+  //   const priceMax = this.filtersService.priceMaxSource.getValue();
+  //   filteredItems = filteredItems.filter(
+  //     (item: any) =>
+  //       item.regularPrice >= priceMin && item.regularPrice <= priceMax
+  //   );
 
-    // Apply ratings filter
-    const ratings = this.filtersService.ratingsSource.getValue();
-    if (ratings.length > 0) {
-      filteredItems = filteredItems.filter((item: any) =>
-        ratings.includes(Math.round(item.rating || 0))
-      );
-    }
+  //   // Apply yearMin and yearMax filters
+  //   const yearMin = Number(this.filtersService.yearMinSource.getValue());
+  //   const yearMax = Number(this.filtersService.yearMaxSource.getValue());
+  //   filteredItems = filteredItems.filter(
+  //     (item: any) =>
+  //       Number(item.year) >= yearMin && Number(item.year) <= yearMax
+  //   );
 
-    // Update the totalItems$ BehaviorSubject
-    this.totalItems$.next(filteredItems.length);
+  //   // Apply ratings filter
+  //   const ratings = this.filtersService.ratingsSource.getValue();
+  //   if (ratings.length > 0) {
+  //     filteredItems = filteredItems.filter((item: any) =>
+  //       ratings.includes(Math.round(item.rating || 0))
+  //     );
+  //   }
 
-    return filteredItems;
-  }
+  //   // Update the totalItems$ BehaviorSubject
+  //   this.totalItems$.next(filteredItems.length);
 
-  updatePagination() {
-    const filteredItems = this.applyFilters();
+  //   return filteredItems;
+  // }
 
-    // Paginate items
-    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-    const endIndex = startIndex + this.itemsPerPage;
-    const paginatedItems = filteredItems.slice(startIndex, endIndex);
+  // updatePagination() {
+  //   const filteredItems = this.applyFilters();
 
-    this.itemList$.next(paginatedItems);
-  }
+  //   // Paginate items
+  //   const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+  //   const endIndex = startIndex + this.itemsPerPage;
+  //   const paginatedItems = filteredItems.slice(startIndex, endIndex);
+
+  //   this.itemList$.next(paginatedItems);
+  // }
 
   onPageChange(event: PageEvent) {
     this.currentPage = event.pageIndex + 1;
     this.paginationService.updateCurrentPage(this.currentPage);
     this.itemsPerPage = event.pageSize;
-    this.updatePagination();
+    // this.updatePagination();
   }
 
   getCurrentPageIndex(): number {
