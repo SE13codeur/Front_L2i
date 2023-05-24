@@ -14,9 +14,9 @@ export class ItemService {
 
   constructor(private http: HttpClient) {}
 
-  getItems(page: number, size: number): Observable<IItem[]> {
+  getItems(): Observable<IItem[]> {
     this.http
-      .get<IItem[]>(`${this.itemsUrl}/${page}/${size}`)
+      .get<IItem[]>(`${this.itemsUrl}`)
       .subscribe((items) => this.items$.next(items));
     return this.items$.asObservable();
   }

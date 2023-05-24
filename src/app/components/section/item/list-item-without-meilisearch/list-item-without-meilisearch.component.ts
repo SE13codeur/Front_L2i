@@ -32,13 +32,11 @@ export class ListItemWithoutMeilisearchComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.itemService
-      .getItems(this.currentPage, this.itemsPerPage)
-      .subscribe((items) => {
-        this.originalItemList$.next(items);
-        this.itemList$.next(items);
-        this.updatePagination();
-      });
+    this.itemService.getItems().subscribe((items) => {
+      this.originalItemList$.next(items);
+      this.itemList$.next(items);
+      this.updatePagination();
+    });
   }
 
   ngOnDestroy(): void {
@@ -56,10 +54,11 @@ export class ListItemWithoutMeilisearchComponent implements OnInit, OnDestroy {
 
     // Apply search filter
     if (this.currentSearch) {
-      filteredItems = filteredItems.filter((item: any) =>
+      filteredItems = filteredItems.filter((item: IItem) =>
         item.title.toLowerCase().includes(this.currentSearch.toLowerCase())
       );
     }
+
     // Apply categories filter
     const categories = this.filtersService.categoriesSource.getValue();
     if (categories.length > 0) {
