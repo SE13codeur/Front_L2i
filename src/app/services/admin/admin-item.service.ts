@@ -8,22 +8,22 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class AdminItemService {
-  private itemsUrl = `${environmentDev.apiUrl}/items/books`;
+  private adminItemsUrl = `${environmentDev.apiUrl}/admin/items/books`;
 
   constructor(private http: HttpClient) {}
 
   addItem(item: IItem): Observable<IItem> {
-    const apiUrl = `${this.itemsUrl}`;
+    const apiUrl = `${this.adminItemsUrl}`;
     return this.http.post<IItem>(apiUrl, item);
   }
 
   deleteItem(id: string): Observable<void> {
-    const apiUrl = `${this.itemsUrl}/${id}`;
+    const apiUrl = `${this.adminItemsUrl}/${id}`;
     return this.http.delete<void>(apiUrl);
   }
 
   editItem(id: string, item: IItem): Observable<IItem> {
-    const apiUrl = `${this.itemsUrl}/${id}`;
+    const apiUrl = `${this.adminItemsUrl}/${id}`;
     return this.http.put<IItem>(apiUrl, item);
   }
 }

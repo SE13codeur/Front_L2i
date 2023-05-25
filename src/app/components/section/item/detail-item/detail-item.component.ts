@@ -89,6 +89,8 @@ export class DetailItemComponent implements OnInit {
   }
 
   goToEditItem(): void {
-    this.router.navigate(['/admin/items/books']);
+    if (this.item) {
+      this.router.navigate([`/admin/items/books/${this.item.id}`]);
+    }
   }
 }

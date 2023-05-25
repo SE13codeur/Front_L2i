@@ -36,6 +36,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatListModule } from '@angular/material/list';
 import { MatSliderModule } from '@angular/material/slider';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+
 import {
   MatPaginatorIntl,
   MatPaginatorModule,
@@ -88,6 +90,7 @@ import { ListItemWithoutMeilisearchComponent } from './components/section/item/l
     NgxSliderModule,
     MatExpansionModule,
     MatPaginatorModule,
+    MatSnackBarModule,
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'fr-FR' },

@@ -7,7 +7,6 @@ export default interface IItem {
   description: string;
   regularPrice: number;
   rating: number;
-  inStock?: boolean;
   quantityInStock: number;
   totalSales: number;
   authors: IAuthor[];
@@ -36,5 +35,6 @@ export interface IEditor {
 export interface ICategoryItem {
   id: string;
   name: string;
-  parentId?: number;
+  parent?: ICategoryItem | null;
+  books?: [];
 }

@@ -15,9 +15,13 @@ const routes: Routes = [
   { path: 'items/books', component: ItemPageComponent },
   { path: 'items/books/:id', component: DetailItemComponent },
   { path: 'cart', component: CartComponent },
-  { path: 'login/:admin', component: SignPageComponent },
   {
     path: 'admin/items/books',
+    component: AdminItemComponent,
+    // canActivate: [AdminAuthGuard],
+  },
+  {
+    path: 'admin/items/books/:id',
     component: AdminItemComponent,
     // canActivate: [AdminAuthGuard],
   },

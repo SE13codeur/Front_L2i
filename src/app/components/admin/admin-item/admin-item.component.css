@@ -1,12 +1,42 @@
-.mat-card-content {
-  display: flex;
-  flex-direction: column;
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
+.mat-card {
+  max-width: 600px;
+  margin: 2em auto;
+  text-align: center;
+  padding: 1em;
 }
 
 .mat-form-field {
-  margin-bottom: 15px;
+  width: 100%;
+  margin-top: 16px;
 }
 
-mat-checkbox {
-  margin-bottom: 15px;
+.button-row {
+  margin-top: 14px;
+}
+
+.mat-raised-button {
+  margin-right: 12px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.mat-expansion-panel {
+  width: 100%;
+}
+
+.mat-accordion {
+  width: 100%;
+}
+
+button {
+  margin-top: 20px;
 }

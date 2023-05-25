@@ -3,6 +3,7 @@
     <a class="nav-logo" routerLink="/">
       <img src="../../../assets/L2i.ico">
     </a>
+
       <!-- Desktop menu -->
     <div class="menu">
       <button mat-button routerLink="/items/books">Articles</button>
@@ -10,10 +11,17 @@
       <button mat-button routerLink="/favorites">Favoris</button>
       <button mat-button routerLink="/comments">Avis</button>
     </div>
+
     <!-- Search bar -->
     <div class="logo-search-container">
       <app-search-item class="search-bar-large"></app-search-item>
     </div>
+
+    <!-- ADD item for admin -->
+    <button mat-icon-button routerLink="/admin/items/books">
+      <mat-icon>add</mat-icon>
+    </button>
+
     <div class="nav-actions">
       <!-- User button for connection -->
       <button mat-icon-button routerLink="/">
@@ -21,6 +29,7 @@
       </button>
     </div>
   </div>
+
   <!-- Cart drawer for shopping -->
   <div class="nav-aside">
     <app-aside></app-aside>
