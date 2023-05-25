@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IMeilisearchItem } from '@m/IMeilisearchItem';
+import IItem from '@m/IItem';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -30,6 +30,10 @@ export class FiltersService {
   filtersUpdated$ = new Subject<void>();
 
   updateFilterValue<T>(subject: BehaviorSubject<T>, newValue: T): void {
+    console.log(
+      `Updating filter value. Old value: ${subject.value}, new value: ${newValue}`
+    );
+
     subject.next(newValue);
     this.filtersUpdated$.next();
   }
@@ -82,16 +86,19 @@ export class FiltersService {
 
     filterString += filterString ? ` AND ${priceRange}` : priceRange;
     filterString += filterString ? ` AND ${yearRange}` : yearRange;
+    console.log(`Generated filter string: ${filterString}`);
 
     return filterString;
   }
 
-  filterItems(
-    items: IMeilisearchItem[],
-    filterString: string
-  ): IMeilisearchItem[] {
+  filterItems(items: IItem[], filterString: string): IItem[] {
+    console.log(
+      `Filtering ${items.length} items with filter string: ${filterString}`
+    );
     const filteredItems = items.filter((item) => {
       const itemString = JSON.stringify(item);
+      console.log(`Filtered items count: ${filteredItems.length}`);
+
       return itemString.match(filterString);
     });
 
@@ -102,8 +109,9 @@ export class FiltersService {
     callback: () => void,
     takeUntil$: Observable<void>
   ): void {
-    this.filtersUpdated$
-      .pipe(takeUntil(takeUntil$))
-      .subscribe(() => callback());
+    this.filtersUpdated$.pipe(takeUntil(takeUntil$)).subscribe(() => {
+      console.log('Filters updated, running callback...');
+      callback();
+    });
   }
 }

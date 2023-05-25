@@ -6,13 +6,25 @@ import { SignPageComponent } from '@p/sign/sign-page.component';
 import { HomePageComponent } from '@p/home/home-page.component';
 import { ItemPageComponent } from '@p/item/item-page.component';
 import { NotFoundComponent } from '@p/not-found/not-found.component';
+import { AdminAuthGuard } from './guards/admin/admin-auth.service';
+import { AdminItemComponent } from '@c/admin/admin-item/admin-item.component';
 
 const routes: Routes = [
   { path: 'sign-in', component: SignPageComponent },
   { path: '', component: HomePageComponent },
-  { path: 'items', component: ItemPageComponent },
-  { path: 'items/:id', component: DetailItemComponent },
+  { path: 'items/books', component: ItemPageComponent },
+  { path: 'items/books/:id', component: DetailItemComponent },
   { path: 'cart', component: CartComponent },
+  {
+    path: 'admin/items/books',
+    component: AdminItemComponent,
+    // canActivate: [AdminAuthGuard],
+  },
+  {
+    path: 'admin/items/books/:id',
+    component: AdminItemComponent,
+    // canActivate: [AdminAuthGuard],
+  },
   { path: '', redirectTo: '/', pathMatch: 'full' },
   { path: '**', component: NotFoundComponent },
 ];

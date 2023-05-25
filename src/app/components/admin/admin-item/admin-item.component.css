@@ -1,0 +1,50 @@
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
+.mat-card {
+  max-width: 600px;
+  margin: 0.44rem auto;
+  text-align: center;
+}
+
+.mat-card-actions.button-row {
+  margin: 0;
+  padding: 0;
+}
+
+.mat-form-field {
+  width: 100%;
+  margin-top: 0.99rem;
+}
+
+.mat-raised-button {
+  margin-right: 12px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.mat-expansion-panel {
+  width: 100%;
+}
+
+.mat-accordion {
+  width: 100%;
+}
+
+.custom-mat-form-field {
+  display: inline-block;
+  width: 100%;
+  padding: 0 1em 0 0;
+}
+
+.author-checkbox {
+  display: flex;
+  align-items: center;
+  padding: 0.44em 0;
+}

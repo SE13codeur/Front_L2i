@@ -1,9 +1,9 @@
 import { LabelType, Options } from '@angular-slider/ngx-slider';
 import { Component, ViewChild } from '@angular/core';
 import { MatCheckbox } from '@angular/material/checkbox';
-import { FiltersService } from '@s/filters.service';
-import { MeiliSearchService } from '@s/meilisearch.service';
-import { PaginationService } from '@s/pagination.service';
+import { FiltersService } from '@s/search/filters.service';
+import { ItemService } from '@s/search/item.service';
+import { PaginationService } from '@s/pagination/pagination.service';
 import { switchMap } from 'rxjs';
 
 @Component({
@@ -28,11 +28,11 @@ export class FiltersItemComponent {
     translate: (value: number, label: LabelType): string => {
       switch (label) {
         case LabelType.Low:
-          return '<b>Min :</b> $' + value;
+          return '<b>Min :</b> €' + value;
         case LabelType.High:
-          return '<b>Max :</b> $' + value;
+          return '<b>Max :</b> €' + value;
         default:
-          return '$' + value;
+          return '€' + value;
       }
     },
   };
@@ -56,7 +56,7 @@ export class FiltersItemComponent {
 
   constructor(
     private filtersService: FiltersService,
-    private meiliSearchService: MeiliSearchService,
+    private ItemService: ItemService,
     private paginationService: PaginationService
   ) {}
 
@@ -157,7 +157,7 @@ export class FiltersItemComponent {
     this.paginationService.currentPage$
       .pipe(
         switchMap((currentPage) =>
-          this.meiliSearchService.getItemsByPage(
+          this.ItemService.getItemsByPage(
             currentPage,
             itemsPerPage,
             filterString

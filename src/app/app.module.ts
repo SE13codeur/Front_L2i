@@ -18,12 +18,12 @@ import { CartComponent } from '@c/aside/cart/cart.component';
 import { HeaderComponent } from '@c/header/header.component';
 import { SectionComponent } from '@c/section/section.component';
 import { SearchItemComponent } from '@c/nav/search-item/search-item.component';
-import { ListItemComponent } from '@c/section/item/list-item/list-item.component';
 import { DetailItemComponent } from '@c/section/item/detail-item/detail-item.component';
 import { FiltersItemComponent } from '@c/section/filters-item/filters-item.component';
 
-import { CartService } from '@s/cart.service';
-import { PaginatorFrService } from '@s/paginator-fr-service.service';
+import { CartService } from '@s/cart/cart.service';
+import { PaginatorFrService } from '@s/pagination/paginator-fr-service.service';
+import { AuthService } from '@s/admin/auth.service';
 
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -36,6 +36,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatListModule } from '@angular/material/list';
 import { MatSliderModule } from '@angular/material/slider';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+
 import {
   MatPaginatorIntl,
   MatPaginatorModule,
@@ -45,6 +47,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AdminItemComponent } from './components/admin/admin-item/admin-item.component';
+import { ListItemWithoutMeilisearchComponent } from './components/section/item/list-item-without-meilisearch/list-item-without-meilisearch.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +58,6 @@ import { ReactiveFormsModule } from '@angular/forms';
     SignPageComponent,
     NavComponent,
     SectionComponent,
-    ListItemComponent,
     DetailItemComponent,
     NotFoundComponent,
     ItemPageComponent,
@@ -62,6 +65,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     AsideComponent,
     SearchItemComponent,
     FiltersItemComponent,
+    AdminItemComponent,
+    ListItemWithoutMeilisearchComponent,
   ],
   imports: [
     BrowserModule,
@@ -85,10 +90,12 @@ import { ReactiveFormsModule } from '@angular/forms';
     NgxSliderModule,
     MatExpansionModule,
     MatPaginatorModule,
+    MatSnackBarModule,
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'fr-FR' },
     CartService,
+    AuthService,
     {
       provide: MatPaginatorIntl,
       useClass: PaginatorFrService,

@@ -1,40 +1,39 @@
-export interface IMeilisearchItem {
+export default interface IItem {
   id: string;
-  isbn13?: string;
+  isbn13: string;
   imageUrl: string;
   title: string;
   subtitle: string;
   description: string;
   regularPrice: number;
   rating?: number;
-  inStock: boolean;
   quantityInStock: number;
   totalSales: number;
-  authors?: IAuthor[];
-  editor?: IEditor;
+  authors: IAuthor[];
+  editor: IEditor;
   category: ICategoryItem;
   pages: string;
   year: string;
   language?: string;
-  version?: number;
-  newCollection: boolean;
+  version: number;
+  newCollection?: boolean;
 }
 
 export interface IAuthor {
   id: number;
   firstname: string;
   lastname: string;
-  books?: IMeilisearchItem[];
+  books?: IItem[];
 }
 
 export interface IEditor {
   id: number;
   name: string;
-  books?: IMeilisearchItem[];
+  books?: IItem[];
 }
 
 export interface ICategoryItem {
-  id: string;
+  id: number;
   name: string;
-  parentId?: number;
+  parentId?: number | null;
 }

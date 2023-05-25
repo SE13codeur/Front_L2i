@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { CartService } from 'src/app/services/cart.service';
+import { CartService } from '@s/cart/cart.service';
 
 @Component({
   selector: 'app-aside',

@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { IAuthor, IMeilisearchItem } from '@m/IMeilisearchItem';
-import { MeiliSearchService } from '@s/meilisearch.service';
-import { Location } from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
+import IMeilisearchItem from '@m/IItem';
+import { AdminItemService } from '@s/admin/admin-item.service';
+import { AuthService } from '@s/admin/auth.service';
+import { ItemService } from '@s/search/item.service';
 import { Observable, of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 
@@ -15,16 +16,19 @@ export class DetailItemComponent implements OnInit {
   item$: Observable<IMeilisearchItem | null>;
   item: IMeilisearchItem | null = null;
   showReviews = false;
+  isAdmin = true;
 
   constructor(
     private route: ActivatedRoute,
-    private meiliSearchService: MeiliSearchService,
-    private location: Location
+    private router: Router,
+    private itemService: ItemService,
+    private authService: AuthService,
+    private itemAdminService: AdminItemService
   ) {
     this.item$ = this.route.params.pipe(
       map((params) => params['id']),
       switchMap((id) =>
-        this.meiliSearchService.getItemById(id).pipe(catchError(() => of(null)))
+        this.itemService.getItemById(id).pipe(catchError(() => of(null)))
       )
     );
   }
@@ -33,10 +37,12 @@ export class DetailItemComponent implements OnInit {
     this.item$.subscribe((item) => {
       this.item = item;
     });
+
+    this.isAdmin = this.authService.isAdminAuthenticated();
   }
 
   goBackToListItems(): void {
-    this.location.back();
+    this.router.navigate(['/items/books']);
   }
 
   getAuthorNames(): string {
@@ -64,5 +70,25 @@ export class DetailItemComponent implements OnInit {
     }
     // TODO : mettre à jour la base de données
     console.log('New rating:', newRating);
+  }
+
+  deleteItem(): void {
+    if (this.item) {
+      this.itemAdminService.deleteItem(this.item.id).subscribe({
+        next: (response: any) => {
+          console.log('Item deleted successfully:', response);
+          this.goBackToListItems();
+        },
+        error: (error: any) => {
+          console.error('Error deleting item:', error);
+        },
+      });
+    }
+  }
+
+  goToEditItem(): void {
+    if (this.item) {
+      this.router.navigate([`/admin/items/books/${this.item.id}`]);
+    }
   }
 }
