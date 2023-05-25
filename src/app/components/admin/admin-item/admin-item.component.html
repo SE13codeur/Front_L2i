@@ -1,4 +1,4 @@
-<mat-card class="mat-elevation-z8">
+<mat-card class="mat-elevation-z8" *ngIf="item">
   <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
     <mat-card-content>
       <mat-form-field>
@@ -42,7 +42,7 @@
       </mat-form-field>
 
       <mat-form-field>
-        <mat-label>Prix en $</mat-label>
+        <mat-label>Prix en €</mat-label>
         <input matInput type="number" formControlName="regularPrice">
         <mat-error *ngIf="itemForm.get('regularPrice')?.invalid && itemForm.get('regularPrice')?.touched">
           Le prix est requis et doit être supérieur à 11€.
@@ -123,17 +123,6 @@
       </mat-form-field>
 
       <mat-form-field>
-        <mat-label>Langue</mat-label>
-        <select matNativeControl formControlName="language">
-          <option value="french">Français</option>
-          <option value="english">Anglais</option>
-        </select>
-        <mat-error *ngIf="itemForm.get('language')?.invalid && itemForm.get('language')?.touched">
-          La langue est requise.
-        </mat-error>
-      </mat-form-field>
-
-      <mat-form-field>
         <mat-label>Version</mat-label>
         <input matInput type="number" formControlName="version">
         <mat-error *ngIf="itemForm.get('version')?.invalid && itemForm.get('version')?.touched">
@@ -148,9 +137,9 @@
 
     <mat-card-actions class="button-row">
 
+      <button mat-raised-button color="accent" (click)="goBack()">Retour</button>
       <button mat-raised-button color="primary" type="submit" [disabled]="itemForm.invalid || isSubmitting">Submit</button>
       <button mat-raised-button color="warn" (click)="onReset()">Réinitialiser</button>
-      <button mat-raised-button color="accent" (click)="goBack()">Retour</button>
     </mat-card-actions>
   </form>
 </mat-card>

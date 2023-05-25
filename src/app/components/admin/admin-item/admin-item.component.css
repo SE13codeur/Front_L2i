@@ -4,18 +4,18 @@ body {
 
 .mat-card {
   max-width: 600px;
-  margin: 2em auto;
+  margin: 0.44rem auto;
   text-align: center;
-  padding: 1em;
+}
+
+.mat-card-actions.button-row {
+  margin: 0;
+  padding: 0;
 }
 
 .mat-form-field {
   width: 100%;
-  margin-top: 16px;
-}
-
-.button-row {
-  margin-top: 14px;
+  margin-top: 0.99rem;
 }
 
 .mat-raised-button {
@@ -37,10 +37,6 @@ form {
   width: 100%;
 }
 
-button {
-  margin-top: 20px;
-}
-
 .custom-mat-form-field {
   display: inline-block;
   width: 100%;
@@ -50,5 +46,5 @@ button {
 .author-checkbox {
   display: flex;
   align-items: center;
-  padding: 0.5em 0;
+  padding: 0.44em 0;
 }
