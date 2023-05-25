@@ -1,4 +1,4 @@
-<mat-card class="mat-elevation-z8">
+<mat-card class="mat-elevation-z8" *ngIf="item">
   <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
     <mat-card-content>
       <mat-form-field>

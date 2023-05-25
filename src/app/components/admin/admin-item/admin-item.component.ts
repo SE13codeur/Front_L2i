@@ -98,6 +98,8 @@ export class AdminItemComponent implements OnInit {
           this.item = item;
 
           const authorsIds = item.authors.map((author) => author.id);
+
+          // Update form controls
           this.itemForm.patchValue({
             imageUrl: item.imageUrl,
             isbn13: item.isbn13,
@@ -106,9 +108,6 @@ export class AdminItemComponent implements OnInit {
             description: item.description,
             regularPrice: item.regularPrice,
             quantityInStock: item.quantityInStock,
-            authors: this.authors.map((author) =>
-              authorsIds.includes(author.id)
-            ),
             editor: item.editor.id,
             category: item.category.id,
             pages: item.pages,
@@ -117,6 +116,7 @@ export class AdminItemComponent implements OnInit {
             version: item.version,
             newCollection: item.newCollection,
           });
+
           this.snackBar.open('Données chargées avec succès!', 'Fermer', {
             duration: 4004,
           });
@@ -138,7 +138,10 @@ export class AdminItemComponent implements OnInit {
   }
 
   setAuthorControls(): void {
-    const authorControls = this.authors.map(() => new FormControl(false));
+    const itemAuthorsIds = this.item?.authors.map((author) => author.id) || [];
+    const authorControls = this.authors.map(
+      (author) => new FormControl(itemAuthorsIds.includes(author.id))
+    );
     this.itemForm.setControl('authors', new FormArray(authorControls));
   }
 
