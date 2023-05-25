@@ -163,6 +163,10 @@ export class AdminItemComponent implements OnInit {
 
   processFormData(): any {
     const itemData = this.itemForm.value;
+    console.log('🚀 ~ itemData:', itemData.editor);
+    console.log('🚀 ~ itemData:', itemData.category);
+    console.log('🚀 ~ itemData:', this.editors);
+    console.log('🚀 ~ itemData:', this.categories);
 
     itemData.authors = itemData.authors
       .map((checked: boolean, i: number) =>
@@ -187,6 +191,7 @@ export class AdminItemComponent implements OnInit {
     itemData.rating = this.isAddRouting ? 5 : this.item?.rating;
     itemData.language = this.isAddRouting ? 'french' : this.item?.language;
 
+    console.log('🚀 ~ itemData:', itemData);
     return itemData;
   }
 
