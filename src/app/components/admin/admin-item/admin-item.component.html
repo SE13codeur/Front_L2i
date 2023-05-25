@@ -1,4 +1,4 @@
-<mat-card class="mat-elevation-z8" *ngIf="item">
+<mat-card class="mat-elevation-z8" *ngIf="itemId || isAddRouting">
   <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
     <mat-card-content>
       <mat-form-field>
