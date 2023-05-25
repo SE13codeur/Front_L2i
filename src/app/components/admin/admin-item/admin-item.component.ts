@@ -28,7 +28,7 @@ export class AdminItemComponent implements OnInit {
   editors: IEditor[] = [];
   categories: ICategoryItem[] = [];
   isSubmitting = false;
-
+  isAddRouting = !!this.route.snapshot.paramMap.get('id') ? false : true;
   constructor(
     private fb: FormBuilder,
     private adminItemService: AdminItemService,
@@ -51,12 +51,15 @@ export class AdminItemComponent implements OnInit {
       subtitle: ['', Validators.required],
       description: ['', Validators.required],
       regularPrice: ['', [Validators.required, Validators.min(0)]],
-      inStock: [false],
+      inStock: [true],
       quantityInStock: ['', [Validators.required, Validators.min(1)]],
-      rating: ['', [Validators.required]],
+      rating: [
+        this.isAddRouting ? 5 : this.item?.rating,
+        [Validators.required],
+      ],
       authors: this.fb.array([], Validators.required),
-      editor: [[], Validators.required],
-      category: [[], Validators.required],
+      editor: ['', Validators.required],
+      category: ['', Validators.required],
       pages: ['', [Validators.required, Validators.min(1)]],
       year: [
         '',
@@ -66,7 +69,7 @@ export class AdminItemComponent implements OnInit {
           Validators.max(new Date().getFullYear()),
         ],
       ],
-      language: ['', Validators.required],
+      language: [this.isAddRouting ? 'french' : this.item?.language],
       version: ['', Validators.required],
       newCollection: [false],
     });
@@ -97,10 +100,6 @@ export class AdminItemComponent implements OnInit {
       this.itemService.getItemById(this.itemId).subscribe({
         next: (item: IItem) => {
           this.item = item;
-
-          const authorsIds = item.authors.map((author) => author.id);
-
-          // Update form controls
 
           // Update form controls
           this.itemForm.patchValue({
@@ -164,6 +163,10 @@ export class AdminItemComponent implements OnInit {
 
   processFormData(): any {
     const itemData = this.itemForm.value;
+    console.log('🚀 ~ itemData:', itemData.editor);
+    console.log('🚀 ~ itemData:', itemData.category);
+    console.log('🚀 ~ itemData:', this.editors);
+    console.log('🚀 ~ itemData:', this.categories);
 
     itemData.authors = itemData.authors
       .map((checked: boolean, i: number) =>
@@ -171,18 +174,24 @@ export class AdminItemComponent implements OnInit {
       )
       .filter((v: string | null) => v !== null);
 
-    itemData.editor = this.editors.find(
-      (editor) => editor.id === itemData.editor
-    );
     itemData.authors = this.authors.filter((author) =>
       itemData.authors.includes(author.id)
     );
-    itemData.category = this.categories.find(
-      (category) => category.id === itemData.category
-    );
-    itemData.rating = this.item?.rating;
-    itemData.language = this.item?.language;
 
+    let editorObject = this.editors.find(
+      (editor) => editor.id == itemData.editor
+    );
+    itemData.editor = editorObject;
+
+    let categoryObject = this.categories.find(
+      (category) => category.id == itemData.category
+    );
+    itemData.category = categoryObject;
+
+    itemData.rating = this.isAddRouting ? 5 : this.item?.rating;
+    itemData.language = this.isAddRouting ? 'french' : this.item?.language;
+
+    console.log('🚀 ~ itemData:', itemData);
     return itemData;
   }
 

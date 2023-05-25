@@ -6,7 +6,7 @@ export default interface IItem {
   subtitle: string;
   description: string;
   regularPrice: number;
-  rating: number;
+  rating?: number;
   quantityInStock: number;
   totalSales: number;
   authors: IAuthor[];
@@ -14,7 +14,7 @@ export default interface IItem {
   category: ICategoryItem;
   pages: string;
   year: string;
-  language: string;
+  language?: string;
   version: number;
   newCollection?: boolean;
 }
@@ -33,8 +33,7 @@ export interface IEditor {
 }
 
 export interface ICategoryItem {
-  id: string;
+  id: number;
   name: string;
-  parent?: ICategoryItem | null;
-  books?: [];
+  parentId?: number | null;
 }
