@@ -125,7 +125,6 @@ export class AdminItemComponent implements OnInit {
           });
         },
         error: (error: any) => {
-          console.error(error);
           this.snackBar.open(
             'Erreur lors du chargement des données!',
             'Fermer',
@@ -163,7 +162,6 @@ export class AdminItemComponent implements OnInit {
 
   processFormData(): any {
     const itemData = this.itemForm.value;
-
     itemData.authors = itemData.authors
       .map((checked: boolean, i: number) =>
         checked ? this.authors[i].id : null
@@ -203,7 +201,6 @@ export class AdminItemComponent implements OnInit {
         this.router.navigate(['/items/books']);
       },
       error: (error: any) => {
-        console.error(error);
         this.snackBar.open(
           "Erreur lors de la sauvegarde de l'article!",
           'Fermer',
