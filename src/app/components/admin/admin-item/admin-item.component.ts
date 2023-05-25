@@ -101,6 +101,8 @@ export class AdminItemComponent implements OnInit {
           const authorsIds = item.authors.map((author) => author.id);
 
           // Update form controls
+
+          // Update form controls
           this.itemForm.patchValue({
             imageUrl: item.imageUrl,
             isbn13: item.isbn13,
