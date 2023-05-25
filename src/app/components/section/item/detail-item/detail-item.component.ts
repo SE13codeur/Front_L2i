@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import IMeilisearchItem, { IAuthor } from '@m/IItem';
-import { Location } from '@angular/common';
+import IMeilisearchItem from '@m/IItem';
+import { AdminItemService } from '@s/admin/admin-item.service';
+import { AuthService } from '@s/admin/auth.service';
+import { ItemService } from '@s/search/item.service';
 import { Observable, of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
-import { AuthService } from '@s/admin/auth.service';
-import { AdminItemService } from '@s/admin/admin-item.service';
-import { ItemService } from '@s/search/item.service';
 
 @Component({
   selector: 'app-detail-item',
@@ -23,7 +22,6 @@ export class DetailItemComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private itemService: ItemService,
-    private location: Location,
     private authService: AuthService,
     private itemAdminService: AdminItemService
   ) {
@@ -44,7 +42,7 @@ export class DetailItemComponent implements OnInit {
   }
 
   goBackToListItems(): void {
-    this.location.back();
+    this.router.navigate(['/items/books']);
   }
 
   getAuthorNames(): string {

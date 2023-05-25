@@ -27,6 +27,7 @@ export class AdminItemComponent implements OnInit {
   authors: IAuthor[] = [];
   editors: IEditor[] = [];
   categories: ICategoryItem[] = [];
+  isSubmitting = false;
 
   constructor(
     private fb: FormBuilder,
@@ -116,21 +117,21 @@ export class AdminItemComponent implements OnInit {
             version: item.version,
             newCollection: item.newCollection,
           });
-          this.snackBar.open('Données chargées avec succès !', 'Fermer', {
+          this.snackBar.open('Données chargées avec succès!', 'Fermer', {
             duration: 4004,
           });
         },
         error: (error: any) => {
           console.error(error);
           this.snackBar.open(
-            'Erreur lors du chargement des données !',
+            'Erreur lors du chargement des données!',
             'Fermer',
             { duration: 4004 }
           );
         },
       });
     } else {
-      this.snackBar.open("Aucun ID d'article fourni !", 'Fermer', {
+      this.snackBar.open("Aucun ID d'article fourni!", 'Fermer', {
         duration: 4004,
       });
     }
@@ -143,11 +144,12 @@ export class AdminItemComponent implements OnInit {
 
   onSubmit(): void {
     if (this.itemForm.valid) {
+      this.isSubmitting = true;
       this.snackBar.open('Envoi des données...', 'Fermer', { duration: 4004 });
       const itemData = this.processFormData();
       this.saveItem(itemData);
     } else {
-      this.snackBar.open('Formulaire non valide !', 'Fermer', {
+      this.snackBar.open('Formulaire non valide!', 'Fermer', {
         duration: 4004,
       });
     }
@@ -182,7 +184,7 @@ export class AdminItemComponent implements OnInit {
 
     saveOperation.subscribe({
       next: () => {
-        this.snackBar.open('Article sauvegardé avec succès !', 'Fermer', {
+        this.snackBar.open('Article sauvegardé avec succès!', 'Fermer', {
           duration: 4004,
         });
         this.router.navigate(['/items/books']);
@@ -190,7 +192,7 @@ export class AdminItemComponent implements OnInit {
       error: (error: any) => {
         console.error(error);
         this.snackBar.open(
-          "Erreur lors de la sauvegarde de l'article !",
+          "Erreur lors de la sauvegarde de l'article!",
           'Fermer',
           { duration: 4004 }
         );
@@ -200,7 +202,7 @@ export class AdminItemComponent implements OnInit {
 
   onReset(): void {
     this.itemForm.reset();
-    this.snackBar.open('Formulaire réinitialisé !', 'Fermer', {
+    this.snackBar.open('Formulaire réinitialisé!', 'Fermer', {
       duration: 4004,
     });
   }
@@ -208,8 +210,7 @@ export class AdminItemComponent implements OnInit {
   goBack(): void {
     if (this.itemId) {
       this.router.navigate(['/items/books', this.itemId]);
-    }
-    if (!this.itemId) {
+    } else {
       this.router.navigate(['/items/books']);
     }
   }

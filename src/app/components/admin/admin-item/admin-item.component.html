@@ -92,7 +92,14 @@
       <mat-form-field>
         <mat-label>Catégorie</mat-label>
         <select matNativeControl formControlName="category">
-          <option *ngFor="let category of categories" [value]="category.id">{{category.name}}</option>
+          <optgroup label="Livres">
+            <option [value]="4">Langue Française</option>
+            <option [value]="5">Langue Anglaise</option>
+          </optgroup>
+          <optgroup label="Vidéos">
+            <option [value]="7">Langue Française</option>
+            <option [value]="6">Langue Anglaise</option>
+          </optgroup>
         </select>
         <mat-error *ngIf="itemForm.get('category')?.invalid && itemForm.get('category')?.touched">
           La catégorie est requise.
@@ -140,7 +147,8 @@
     </mat-card-content>
 
     <mat-card-actions class="button-row">
-      <button mat-raised-button color="primary" (click)="onSubmit()">Soumettre</button>
+
+      <button mat-raised-button color="primary" type="submit" [disabled]="itemForm.invalid || isSubmitting">Submit</button>
       <button mat-raised-button color="warn" (click)="onReset()">Réinitialiser</button>
       <button mat-raised-button color="accent" (click)="goBack()">Retour</button>
     </mat-card-actions>
