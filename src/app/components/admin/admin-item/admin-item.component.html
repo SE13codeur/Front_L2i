@@ -45,7 +45,7 @@
         <mat-label>Prix en $</mat-label>
         <input matInput type="number" formControlName="regularPrice">
         <mat-error *ngIf="itemForm.get('regularPrice')?.invalid && itemForm.get('regularPrice')?.touched">
-          Le prix est requis et doit être supérieur à 0.
+          Le prix est requis et doit être supérieur à 11€.
         </mat-error>
       </mat-form-field>
 
@@ -60,18 +60,18 @@
       <mat-accordion class="mat-elevation-z8">
         <mat-expansion-panel>
           <mat-expansion-panel-header>
-            <mat-panel-title>
-              Auteurs
-            </mat-panel-title>
+            <mat-label>
+              Auteurs *
+            </mat-label>
           </mat-expansion-panel-header>
-          <div formArrayName="authors">
-            <div *ngFor="let author of authors; let i = index">
+          <div formArrayName="authors" class="custom-mat-form-field">
+            <div *ngFor="let author of authors; let i = index" class="author-checkbox">
               <mat-checkbox [formControlName]="i">
                 {{author.firstname}} {{author.lastname}}
               </mat-checkbox>
             </div>
             <mat-error *ngIf="itemForm.get('authors')?.invalid && itemForm.get('authors')?.touched">
-              Veuillez renseigner un auteur.
+              Veuillez renseigner au moins un auteur.
             </mat-error>
           </div>
         </mat-expansion-panel>

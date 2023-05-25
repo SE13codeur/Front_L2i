@@ -40,3 +40,15 @@ form {
 button {
   margin-top: 20px;
 }
+
+.custom-mat-form-field {
+  display: inline-block;
+  width: 100%;
+  padding: 0 1em 0 0;
+}
+
+.author-checkbox {
+  display: flex;
+  align-items: center;
+  padding: 0.5em 0;
+}

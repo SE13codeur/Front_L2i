@@ -28,11 +28,11 @@ export class FiltersItemComponent {
     translate: (value: number, label: LabelType): string => {
       switch (label) {
         case LabelType.Low:
-          return '<b>Min :</b> $' + value;
+          return '<b>Min :</b> €' + value;
         case LabelType.High:
-          return '<b>Max :</b> $' + value;
+          return '<b>Max :</b> €' + value;
         default:
-          return '$' + value;
+          return '€' + value;
       }
     },
   };

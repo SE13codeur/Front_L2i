@@ -9,7 +9,7 @@ import {
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import IItem, { IAuthor, ICategoryItem, IEditor } from '@m/IItem';
-import { AdminCategoryService } from '@s/admin-category.service';
+import { AdminCategoryService } from '@s/admin/admin-category.service';
 import { AdminAuthorService } from '@s/admin/admin-author.service';
 import { AdminEditorService } from '@s/admin/admin-editor.service';
 import { AdminItemService } from '@s/admin/admin-item.service';
