@@ -28,11 +28,11 @@
       <th mat-header-cell *matHeaderCellDef> Quantity </th>
       <td mat-cell *matCellDef="let element">
         <div fxLayout="row" fxLayoutAlign="space-between center">
-          <button mat-icon-button color="accent" (click)="decreaseItemQty(element)">
+          <button mat-icon-button color="accent" (click)="decreaseItemQuantity(element)">
             <mat-icon>remove</mat-icon>
           </button>
           <span>{{ element.quantity }}</span>
-          <button mat-icon-button color="accent" (click)="increaseItemQty(element)">
+          <button mat-icon-button color="accent" (click)="increaseItemQuantity(element)">
             <mat-icon>add</mat-icon>
           </button>
         </div>

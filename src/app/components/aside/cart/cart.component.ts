@@ -29,7 +29,7 @@ export class CartComponent implements OnInit {
       this.cartItems = items;
     });
 
-    this.cartService.getTotalCartItemsCount().subscribe((count) => {
+    this.cartButtonService.getTotalItemsForCart().subscribe((count) => {
       this.totalCartItems$ = count;
     });
   }
@@ -38,12 +38,12 @@ export class CartComponent implements OnInit {
     return this.cartService.getTotalPrice();
   }
 
-  increaseItemQty(item: ICartItem): void {
-    this.cartButtonService.increaseItemQty(item.id);
+  increaseItemQuantity(item: ICartItem): void {
+    this.cartButtonService.increaseItemQuantity(item.id);
   }
 
-  decreaseItemQty(item: ICartItem): void {
-    this.cartButtonService.decreaseItemQty(item.id);
+  decreaseItemQuantity(item: ICartItem): void {
+    this.cartButtonService.decreaseItemQuantity(item.id);
   }
 
   removeItem(cartId: ICartItem): void {

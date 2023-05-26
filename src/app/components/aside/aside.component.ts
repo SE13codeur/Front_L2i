@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { CartService } from '@s/cart/cart.service';
+import { CartButtonService } from '@s/cart/cart-button.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-aside',
@@ -9,36 +11,19 @@ import { CartService } from '@s/cart/cart.service';
   styleUrls: ['./aside.component.css'],
 })
 export class AsideComponent implements OnInit {
-  totalItems$: number | null = null;
+  totalItemsForCart$ = new BehaviorSubject<number>(0);
   isCartPanelOpen$ = this.cartService.toggleCart();
 
   constructor(
     private cartService: CartService,
+    private cartButtonService: CartButtonService,
     private router: Router,
     private location: Location
   ) {}
 
   ngOnInit() {
-    this.cartService.getTotalCartItemsCount().subscribe((count) => {
-      this.totalItems$ = count;
+    this.cartButtonService.getTotalItemsForCart().subscribe((count) => {
+      this.totalItemsForCart$.next(count);
     });
-  }
-
-  toggleCartDrawer(): void {
-    if (this.isCartPanelOpen$) {
-      this.goToCart();
-    }
-  }
-
-  closeCartDrawer(): void {
-    if (this.isCartPanelOpen$) {
-      this.cartService.closeCart();
-      this.location.back();
-    }
-  }
-
-  goToCart(): void {
-    this.router.navigate(['/cart']);
-    // event.stopPropagation();
   }
 }

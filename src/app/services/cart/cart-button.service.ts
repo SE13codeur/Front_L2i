@@ -1,38 +1,52 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, combineLatest, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CartButtonService {
-  itemsQuantities$: { [itemId: number]: BehaviorSubject<number> } = {};
+  itemQuantityByItemId$: {
+    [itemId: number]: BehaviorSubject<number>;
+  } = {};
 
-  getItemQuantity(itemId: number): Observable<number> {
-    if (!this.itemsQuantities$[itemId]) {
-      this.itemsQuantities$[itemId] = new BehaviorSubject<number>(0);
+  getItemQuantityByCardForCart(itemId: number): Observable<number> {
+    if (!this.itemQuantityByItemId$[itemId]) {
+      this.itemQuantityByItemId$[itemId] = new BehaviorSubject<number>(0);
     }
-    return this.itemsQuantities$[itemId].asObservable();
+    return this.itemQuantityByItemId$[itemId].asObservable();
   }
 
-  increaseItemQty(itemId: number, qty = 1): void {
-    if (!this.itemsQuantities$[itemId]) {
-      this.itemsQuantities$[itemId] = new BehaviorSubject<number>(0);
+  increaseItemQuantity(itemId: number, qty = 1): void {
+    if (!this.itemQuantityByItemId$[itemId]) {
+      this.itemQuantityByItemId$[itemId] = new BehaviorSubject<number>(0);
     }
-    if (this.itemsQuantities$[itemId].getValue() + qty <= 7) {
-      this.itemsQuantities$[itemId].next(
-        this.itemsQuantities$[itemId].getValue() + qty
+    if (this.itemQuantityByItemId$[itemId].getValue() + qty <= 7) {
+      this.itemQuantityByItemId$[itemId].next(
+        this.itemQuantityByItemId$[itemId].getValue() + qty
       );
     }
   }
 
-  decreaseItemQty(itemId: number, qty = 1): void {
+  decreaseItemQuantity(itemId: number, qty = 1): void {
     if (
-      this.itemsQuantities$[itemId] &&
-      this.itemsQuantities$[itemId].getValue() - qty >= 0
+      this.itemQuantityByItemId$[itemId] &&
+      this.itemQuantityByItemId$[itemId].getValue() - qty >= 0
     ) {
-      this.itemsQuantities$[itemId].next(
-        this.itemsQuantities$[itemId].getValue() - qty
+      this.itemQuantityByItemId$[itemId].next(
+        this.itemQuantityByItemId$[itemId].getValue() - qty
       );
     }
+  }
+
+  getTotalItemsForCart(): Observable<number> {
+    const totalItemsForCart = Object.values(this.itemQuantityByItemId$);
+
+    if (totalItemsForCart.length === 0) {
+      return new BehaviorSubject(0).asObservable();
+    }
+
+    return combineLatest(totalItemsForCart).pipe(
+      map((values) => values.reduce((acc, val) => acc + val, 0))
+    );
   }
 }

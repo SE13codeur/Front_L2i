@@ -11,20 +11,20 @@ import { BehaviorSubject, Observable, startWith, take } from 'rxjs';
 })
 export class CartButtonComponent implements OnInit {
   @Input() item: IItem | undefined;
-  itemsQuantitiesByCard$: BehaviorSubject<number>;
+  itemQuantityByItemId$: BehaviorSubject<number>;
   numbers: number[] = [0, 1, 2, 3, 4, 5, 6, 7];
   selectedQty: number = 0;
 
   constructor(private cartButtonService: CartButtonService) {
-    this.itemsQuantitiesByCard$ = new BehaviorSubject<number>(0);
+    this.itemQuantityByItemId$ = new BehaviorSubject<number>(0);
   }
 
   ngOnInit(): void {
     if (this.item) {
       this.cartButtonService
-        .getItemQuantity(this.item.id)
+        .getItemQuantityByCardForCart(this.item.id)
         .subscribe((quantity) => {
-          this.itemsQuantitiesByCard$.next(quantity);
+          this.itemQuantityByItemId$.next(quantity);
           this.selectedQty = quantity;
         });
     }
@@ -32,15 +32,15 @@ export class CartButtonComponent implements OnInit {
 
   changeItemQty(newQty: number): void {
     if (this.item) {
-      const currentQty = this.itemsQuantitiesByCard$.getValue();
+      const currentQty = this.itemQuantityByItemId$.getValue();
       if (newQty > currentQty) {
-        this.cartButtonService.increaseItemQty(
+        this.cartButtonService.increaseItemQuantity(
           this.item.id,
           newQty - currentQty
         );
       }
       if (newQty < currentQty) {
-        this.cartButtonService.decreaseItemQty(
+        this.cartButtonService.decreaseItemQuantity(
           this.item.id,
           currentQty - newQty
         );
