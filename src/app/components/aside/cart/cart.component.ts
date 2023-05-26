@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ICartItem } from '@m/ICartItem';
+import { CartButtonService } from '@s/cart/cart-button.service';
 import { CartService } from '@s/cart/cart.service';
 
 @Component({
@@ -17,7 +18,10 @@ export class CartComponent implements OnInit {
     'Action',
   ];
 
-  constructor(private cartService: CartService) {}
+  constructor(
+    private cartService: CartService,
+    private cartButtonService: CartButtonService
+  ) {}
   totalCartItems$ = 0;
 
   ngOnInit(): void {
@@ -35,11 +39,11 @@ export class CartComponent implements OnInit {
   }
 
   increaseItemQty(item: ICartItem): void {
-    this.cartService.increaseItemQty(item);
+    this.cartButtonService.increaseItemQty(item.id);
   }
 
   decreaseItemQty(item: ICartItem): void {
-    this.cartService.decreaseItemQty(item);
+    this.cartButtonService.decreaseItemQty(item.id);
   }
 
   removeItem(cartId: ICartItem): void {

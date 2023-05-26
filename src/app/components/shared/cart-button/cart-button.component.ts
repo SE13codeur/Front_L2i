@@ -1,38 +1,55 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ICartItem } from '@m/ICartItem';
-import { CartService } from '@s/cart/cart.service';
-import { BehaviorSubject } from 'rxjs';
+import IItem from '@m/IItem';
+import { CartButtonService } from '@s/cart/cart-button.service';
+import { BehaviorSubject, Observable, startWith, take } from 'rxjs';
 
 @Component({
   selector: 'app-cart-button',
   templateUrl: './cart-button.component.html',
   styleUrls: ['./cart-button.component.css'],
 })
-export class CartButtonComponent {
-  @Input() item: ICartItem | undefined;
-  quantity$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+export class CartButtonComponent implements OnInit {
+  @Input() item: IItem | undefined;
+  itemsQuantitiesByCard$: BehaviorSubject<number>;
 
-  constructor(private cartService: CartService) {}
+  constructor(private cartButtonService: CartButtonService) {
+    this.itemsQuantitiesByCard$ = new BehaviorSubject<number>(0);
+  }
+
+  ngOnInit(): void {
+    if (this.item) {
+      this.cartButtonService
+        .getItemQuantity(this.item.id)
+        .subscribe((quantity) => {
+          this.itemsQuantitiesByCard$.next(quantity);
+        });
+    }
+  }
 
   increaseItemQty(event: Event): void {
     event.stopPropagation();
     if (this.item) {
-      this.cartService.increaseItemQty(this.item);
-      let currentQuantity = this.quantity$.getValue();
-      this.quantity$.next(currentQuantity + 1);
+      this.cartButtonService.increaseItemQty(this.item.id);
     }
   }
 
   decreaseItemQty(event: Event): void {
     event.stopPropagation();
     if (this.item) {
-      this.cartService.decreaseItemQty(this.item);
-      let currentQuantity = this.quantity$.getValue();
-      this.quantity$.next(currentQuantity - 1);
+      this.cartButtonService.decreaseItemQty(this.item.id);
     }
   }
 
   get isMinusButtonDisabled(): boolean {
-    return this.quantity$.getValue() === 0;
+    return this.itemsQuantitiesByCard$.getValue() === 0;
+  }
+
+  get isPlusButtonDisabled(): boolean {
+    let qty = 0;
+    this.itemsQuantitiesByCard$?.pipe(take(1)).subscribe((quantity) => {
+      qty = quantity;
+    });
+    return qty >= 7;
   }
 }

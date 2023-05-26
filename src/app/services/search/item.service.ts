@@ -66,7 +66,7 @@ export class ItemService {
       );
   }
 
-  getItemById(id: string): Observable<IItem> {
+  getItemById(id: number): Observable<IItem> {
     const url = `${this.itemsUrl}/${id}`;
     return this.http.get<IItem>(url).pipe(
       catchError((error) => {

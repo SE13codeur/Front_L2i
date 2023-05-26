@@ -23,7 +23,7 @@ import { ItemService } from '@s/search/item.service';
 export class AdminItemComponent implements OnInit {
   itemForm!: FormGroup;
   item: IItem | undefined;
-  itemId: string | null = null;
+  itemId: number | null = null;
   authors: IAuthor[] = [];
   editors: IEditor[] = [];
   categories: ICategoryItem[] = [];
@@ -89,7 +89,8 @@ export class AdminItemComponent implements OnInit {
       this.categories = categories;
     });
 
-    this.itemId = this.route.snapshot.paramMap.get('id');
+    let tempId = this.route.snapshot.paramMap.get('id');
+    this.itemId = tempId && !isNaN(parseInt(tempId)) ? parseInt(tempId) : null;
     if (this.itemId) {
       this.populateForm();
     }

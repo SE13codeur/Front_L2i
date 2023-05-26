@@ -17,12 +17,12 @@ export class AdminItemService {
     return this.http.post<IItem>(apiUrl, item);
   }
 
-  deleteItem(id: string): Observable<void> {
+  deleteItem(id: number): Observable<void> {
     const apiUrl = `${this.adminItemsUrl}/${id}`;
     return this.http.delete<void>(apiUrl);
   }
 
-  editItem(id: string, item: IItem): Observable<IItem> {
+  editItem(id: number, item: IItem): Observable<IItem> {
     const apiUrl = `${this.adminItemsUrl}/${id}`;
     return this.http.put<IItem>(apiUrl, item);
   }

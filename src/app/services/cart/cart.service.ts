@@ -57,33 +57,6 @@ export class CartService {
     );
   }
 
-  increaseItemQty(item: ICartItem): void {
-    const itemIndex = this.cartItems.findIndex(
-      (cartItem) => cartItem.isbn13 === item.isbn13
-    );
-    if (itemIndex > -1) {
-      this.cartItems[itemIndex].quantity$.next(
-        this.cartItems[itemIndex].quantity$.value + 1
-      );
-      this.cartItemsSubject.next(this.cartItems);
-    }
-  }
-
-  decreaseItemQty(item: ICartItem): void {
-    const itemIndex = this.cartItems.findIndex(
-      (cartItem) => cartItem.isbn13 === item.isbn13
-    );
-    if (itemIndex > -1) {
-      this.cartItems[itemIndex].quantity$.next(
-        this.cartItems[itemIndex].quantity$.value - 1
-      );
-      if (this.cartItems[itemIndex].quantity$.value === 0) {
-        this.cartItems.splice(itemIndex, 1);
-      }
-      this.cartItemsSubject.next(this.cartItems);
-    }
-  }
-
   removeItemFromCart(item: ICartItem): void {
     const itemIndex = this.cartItems.findIndex(
       (cartItem) => cartItem.isbn13 === item.isbn13

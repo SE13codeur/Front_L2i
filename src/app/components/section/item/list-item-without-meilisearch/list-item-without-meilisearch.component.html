@@ -14,7 +14,7 @@
             <mat-card-title>{{ item.regularPrice }} $</mat-card-title>
           </mat-card-header>
         <!-- CART BUTTON-->
-         <app-cart-button></app-cart-button>
+         <app-cart-button [item]="item"></app-cart-button>
         </mat-card-actions>
         <div class="rating">
           <mat-icon

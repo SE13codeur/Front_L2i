@@ -41,7 +41,7 @@
 //     );
 //   }
 
-//   getItemById(id: string): Observable<IMeilisearchItem> {
+//   getItemById(id: number): Observable<IMeilisearchItem> {
 //     const item = this.items$.getValue().find((item) => item.id === id);
 
 //     if (item) {
