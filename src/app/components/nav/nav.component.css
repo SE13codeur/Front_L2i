@@ -1,6 +1,4 @@
 .nav-container {
-  display: flex;
-  justify-content: space-between;
   height: 7rem;
 }
 
@@ -31,16 +29,17 @@
   width: auto;
   margin-right: 3.3rem;
   margin-left: 3.3rem;
-
 }
 
 .nav-actions {
   display: flex;
   align-items: center;
+  justify-content: center;
+  flex-grow: 0.111;
 }
 
 .search-bar-large {
-  flex-grow: 1;
+  flex-grow: 7.7;
 }
 
 .nav-aside {
@@ -72,5 +71,9 @@
 
   .nav-aside {
     margin-right: 0;
+  }
+
+  .nav-actions {
+    justify-content: center;
   }
 }

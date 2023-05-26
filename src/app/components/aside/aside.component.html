@@ -1,4 +1,4 @@
-<aside>
-  <mat-icon>shopping_cart</mat-icon>
+<aside xLayout="row" fxLayoutAlign="center center" >
+  <mat-icon [ngClass]="{'ping': (totalItemsForCart$.value > 0)}">shopping_cart</mat-icon>
   <span>{{totalItemsForCart$ | async}}</span>
 </aside>

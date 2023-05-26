@@ -1,8 +1,8 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Location } from '@angular/common';
-import { CartService } from '@s/cart/cart.service';
 import { CartButtonService } from '@s/cart/cart-button.service';
+import { CartService } from '@s/cart/cart.service';
 import { BehaviorSubject } from 'rxjs';
 
 @Component({
@@ -17,13 +17,18 @@ export class AsideComponent implements OnInit {
   constructor(
     private cartService: CartService,
     private cartButtonService: CartButtonService,
-    private router: Router,
-    private location: Location
+    private router: Router
   ) {}
 
   ngOnInit() {
+    let initialValue = localStorage.getItem('totalItemsForCart');
+    if (initialValue) {
+      this.totalItemsForCart$.next(parseInt(initialValue));
+    }
+
     this.cartButtonService.getTotalItemsForCart().subscribe((count) => {
       this.totalItemsForCart$.next(count);
+      localStorage.setItem('totalItemsForCart', count.toString());
     });
   }
 }

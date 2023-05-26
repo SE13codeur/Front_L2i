@@ -5,13 +5,12 @@
       #searchInputElement
       matInput
       [formControl]="searchInput"
-      placeholder="Rechercher votre article"
+      placeholder="Rechercher ..."
       class="input-field w-full"
     />
 
     <button
       mat-icon-button
-      aria-label="Trouver votre article"
       (click)="searchInput.setValue('')"
       class="search-button"
     >

@@ -9,11 +9,20 @@ export class CartButtonService {
     [itemId: number]: BehaviorSubject<number>;
   } = {};
 
-  getItemQuantityByCardForCart(itemId: number): Observable<number> {
-    if (!this.itemQuantityByItemId$[itemId]) {
-      this.itemQuantityByItemId$[itemId] = new BehaviorSubject<number>(0);
+  constructor() {
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key?.startsWith('item-')) {
+        const itemId = parseInt(key.split('-')[1]);
+        const valueStr = localStorage.getItem(key);
+        if (valueStr !== null) {
+          const value = parseInt(valueStr);
+          this.itemQuantityByItemId$[itemId] = new BehaviorSubject<number>(
+            value
+          );
+        }
+      }
     }
-    return this.itemQuantityByItemId$[itemId].asObservable();
   }
 
   increaseItemQuantity(itemId: number, qty = 1): void {
@@ -21,7 +30,8 @@ export class CartButtonService {
       this.itemQuantityByItemId$[itemId] = new BehaviorSubject<number>(0);
     }
     if (this.itemQuantityByItemId$[itemId].getValue() + qty <= 7) {
-      this.itemQuantityByItemId$[itemId].next(
+      this.updateAndPersist(
+        itemId,
         this.itemQuantityByItemId$[itemId].getValue() + qty
       );
     }
@@ -32,10 +42,18 @@ export class CartButtonService {
       this.itemQuantityByItemId$[itemId] &&
       this.itemQuantityByItemId$[itemId].getValue() - qty >= 0
     ) {
-      this.itemQuantityByItemId$[itemId].next(
+      this.updateAndPersist(
+        itemId,
         this.itemQuantityByItemId$[itemId].getValue() - qty
       );
     }
+  }
+
+  getItemQuantityByCardForCart(itemId: number): Observable<number> {
+    if (!this.itemQuantityByItemId$[itemId]) {
+      this.itemQuantityByItemId$[itemId] = new BehaviorSubject<number>(0);
+    }
+    return this.itemQuantityByItemId$[itemId].asObservable();
   }
 
   getTotalItemsForCart(): Observable<number> {
@@ -48,5 +66,10 @@ export class CartButtonService {
     return combineLatest(totalItemsForCart).pipe(
       map((values) => values.reduce((acc, val) => acc + val, 0))
     );
+  }
+
+  private updateAndPersist(itemId: number, value: number): void {
+    this.itemQuantityByItemId$[itemId].next(value);
+    localStorage.setItem(`item-${itemId}`, value.toString());
   }
 }
