@@ -14,24 +14,24 @@ export class CartButtonService {
     return this.itemsQuantities$[itemId].asObservable();
   }
 
-  increaseItemQty(itemId: number): void {
+  increaseItemQty(itemId: number, qty = 1): void {
     if (!this.itemsQuantities$[itemId]) {
       this.itemsQuantities$[itemId] = new BehaviorSubject<number>(0);
     }
-    if (this.itemsQuantities$[itemId].getValue() < 7) {
+    if (this.itemsQuantities$[itemId].getValue() + qty <= 7) {
       this.itemsQuantities$[itemId].next(
-        this.itemsQuantities$[itemId].getValue() + 1
+        this.itemsQuantities$[itemId].getValue() + qty
       );
     }
   }
 
-  decreaseItemQty(itemId: number): void {
+  decreaseItemQty(itemId: number, qty = 1): void {
     if (
       this.itemsQuantities$[itemId] &&
-      this.itemsQuantities$[itemId].getValue() > 0
+      this.itemsQuantities$[itemId].getValue() - qty >= 0
     ) {
       this.itemsQuantities$[itemId].next(
-        this.itemsQuantities$[itemId].getValue() - 1
+        this.itemsQuantities$[itemId].getValue() - qty
       );
     }
   }

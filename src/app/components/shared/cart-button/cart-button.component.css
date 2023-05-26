@@ -1,29 +1,8 @@
-button {
-  border: none;
-  background: none;
-  cursor: pointer;
-  transition: transform 0.2s;
+.cart-container {
+  gap: 0.44rem;
 }
 
-button:hover {
-  transform: scale(1.1);
+.cart-container mat-form-field {
+  width: 1.77rem;
 }
 
-button[disabled] {
-  cursor: not-allowed;
-  color: grey;
-}
-
-mat-icon {
-  vertical-align: middle;
-}
-
-span {
-  margin: 0 10px;
-  font-size: 1.2em;
-}
-
-button[disabled] {
-  cursor: not-allowed;
-  color: grey;
-}
