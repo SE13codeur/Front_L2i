@@ -39,5 +39,6 @@ export class AsideComponent implements OnInit {
 
   goToCart(): void {
     this.router.navigate(['/cart']);
+    // event.stopPropagation();
   }
 }

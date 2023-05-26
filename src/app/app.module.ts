@@ -20,6 +20,9 @@ import { SectionComponent } from '@c/section/section.component';
 import { SearchItemComponent } from '@c/nav/search-item/search-item.component';
 import { DetailItemComponent } from '@c/section/item/detail-item/detail-item.component';
 import { FiltersItemComponent } from '@c/section/filters-item/filters-item.component';
+import { AdminItemComponent } from '@c/admin/admin-item/admin-item.component';
+import { ListItemWithoutMeilisearchComponent } from '@c/section/item/list-item-without-meilisearch/list-item-without-meilisearch.component';
+import { CartButtonComponent } from '@c/shared/cart-button/cart-button.component';
 
 import { CartService } from '@s/cart/cart.service';
 import { PaginatorFrService } from '@s/pagination/paginator-fr-service.service';
@@ -47,8 +50,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
-import { AdminItemComponent } from './components/admin/admin-item/admin-item.component';
-import { ListItemWithoutMeilisearchComponent } from './components/section/item/list-item-without-meilisearch/list-item-without-meilisearch.component';
+import { DetailItemPageComponent } from '@p/detail-item/detail-item-page.component';
 
 @NgModule({
   declarations: [
@@ -67,6 +69,8 @@ import { ListItemWithoutMeilisearchComponent } from './components/section/item/l
     FiltersItemComponent,
     AdminItemComponent,
     ListItemWithoutMeilisearchComponent,
+    CartButtonComponent,
+    DetailItemPageComponent,
   ],
   imports: [
     BrowserModule,

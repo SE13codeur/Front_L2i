@@ -1,19 +1,18 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DetailItemComponent } from '@c/section/item/detail-item/detail-item.component';
+import { AdminItemComponent } from '@c/admin/admin-item/admin-item.component';
 import { CartComponent } from '@c/aside/cart/cart.component';
-import { SignPageComponent } from '@p/sign/sign-page.component';
+import { DetailItemPageComponent } from '@p/detail-item/detail-item-page.component';
 import { HomePageComponent } from '@p/home/home-page.component';
 import { ItemPageComponent } from '@p/item/item-page.component';
 import { NotFoundComponent } from '@p/not-found/not-found.component';
-import { AdminAuthGuard } from './guards/admin/admin-auth.service';
-import { AdminItemComponent } from '@c/admin/admin-item/admin-item.component';
+import { SignPageComponent } from '@p/sign/sign-page.component';
 
 const routes: Routes = [
   { path: 'sign-in', component: SignPageComponent },
   { path: '', component: HomePageComponent },
   { path: 'items/books', component: ItemPageComponent },
-  { path: 'items/books/:id', component: DetailItemComponent },
+  { path: 'items/books/:id', component: DetailItemPageComponent },
   { path: 'cart', component: CartComponent },
   {
     path: 'admin/items/books',

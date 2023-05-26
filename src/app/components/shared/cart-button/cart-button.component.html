@@ -1,0 +1,11 @@
+<button mat-icon-button color="primary" [disabled]="isMinusButtonDisabled" (click)="increaseItemQty($event)">
+  <mat-icon>remove</mat-icon>
+</button>
+
+<span *ngIf="quantity$.getValue() > 0">{{ quantity$ | async }}</span>
+
+<mat-icon *ngIf="quantity$.getValue() === 0">shopping_cart</mat-icon>
+
+<button mat-icon-button color="primary" (click)="increaseItemQty($event)">
+  <mat-icon>add</mat-icon>
+</button>

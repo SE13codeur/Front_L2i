@@ -138,9 +138,4 @@ export class ListItemWithoutMeilisearchComponent implements OnInit, OnDestroy {
     console.log('Item added to favorites:', item);
     event.stopPropagation();
   }
-
-  addToCart(item: IItem, event: Event) {
-    console.log('Item added to cart:', item);
-    event.stopPropagation();
-  }
 }

@@ -14,6 +14,10 @@
           star
         </mat-icon>
       </div>
+      <!-- CART BUTTON-->
+      <div class="adminActions" *ngIf="!isAdmin">
+        <app-cart-button></app-cart-button>
+      </div>
       <div class="adminActions" *ngIf="isAdmin">
         <button mat-icon-button color="warn" (click)="deleteItem()">
           <mat-icon>delete</mat-icon>

@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" style="margin-right: 2.2rem;">
     <div *ngFor="let item of itemList$ | async">
       <mat-card class="custom-card" (click)="openItemDetails(item)">
         <img mat-card-image [src]="item.imageUrl" alt="{{ item.title }} cover image">
@@ -13,9 +13,8 @@
           <mat-card-header>
             <mat-card-title>{{ item.regularPrice }} $</mat-card-title>
           </mat-card-header>
-          <button mat-icon-button color="accent" (click)="addToCart(item, $event)">
-            <mat-icon>shopping_cart</mat-icon>
-          </button>
+        <!-- CART BUTTON-->
+         <app-cart-button></app-cart-button>
         </mat-card-actions>
         <div class="rating">
           <mat-icon

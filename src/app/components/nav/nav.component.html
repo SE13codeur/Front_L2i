@@ -18,7 +18,7 @@
     </div>
 
     <!-- ADD item for admin -->
-    <button mat-icon-button routerLink="/admin/items/books">
+    <button *ngIf="isAdmin" (click)="goToAddItem()">
       <mat-icon>add</mat-icon>
     </button>
 
