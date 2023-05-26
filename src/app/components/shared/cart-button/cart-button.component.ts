@@ -12,6 +12,8 @@ import { BehaviorSubject, Observable, startWith, take } from 'rxjs';
 export class CartButtonComponent implements OnInit {
   @Input() item: IItem | undefined;
   itemsQuantitiesByCard$: BehaviorSubject<number>;
+  numbers: number[] = [0, 1, 2, 3, 4, 5, 6, 7];
+  selectedQty: number = 0;
 
   constructor(private cartButtonService: CartButtonService) {
     this.itemsQuantitiesByCard$ = new BehaviorSubject<number>(0);
@@ -23,33 +25,26 @@ export class CartButtonComponent implements OnInit {
         .getItemQuantity(this.item.id)
         .subscribe((quantity) => {
           this.itemsQuantitiesByCard$.next(quantity);
+          this.selectedQty = quantity;
         });
     }
   }
 
-  increaseItemQty(event: Event): void {
-    event.stopPropagation();
+  changeItemQty(newQty: number): void {
     if (this.item) {
-      this.cartButtonService.increaseItemQty(this.item.id);
+      const currentQty = this.itemsQuantitiesByCard$.getValue();
+      if (newQty > currentQty) {
+        this.cartButtonService.increaseItemQty(
+          this.item.id,
+          newQty - currentQty
+        );
+      }
+      if (newQty < currentQty) {
+        this.cartButtonService.decreaseItemQty(
+          this.item.id,
+          currentQty - newQty
+        );
+      }
     }
-  }
-
-  decreaseItemQty(event: Event): void {
-    event.stopPropagation();
-    if (this.item) {
-      this.cartButtonService.decreaseItemQty(this.item.id);
-    }
-  }
-
-  get isMinusButtonDisabled(): boolean {
-    return this.itemsQuantitiesByCard$.getValue() === 0;
-  }
-
-  get isPlusButtonDisabled(): boolean {
-    let qty = 0;
-    this.itemsQuantitiesByCard$?.pipe(take(1)).subscribe((quantity) => {
-      qty = quantity;
-    });
-    return qty >= 7;
   }
 }

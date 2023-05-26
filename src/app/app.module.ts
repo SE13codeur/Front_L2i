@@ -40,6 +40,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatListModule } from '@angular/material/list';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSelectModule } from '@angular/material/select';
 
 import {
   MatPaginatorIntl,
@@ -95,6 +96,7 @@ import { DetailItemPageComponent } from '@p/detail-item/detail-item-page.compone
     MatExpansionModule,
     MatPaginatorModule,
     MatSnackBarModule,
+    MatSelectModule,
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'fr-FR' },
