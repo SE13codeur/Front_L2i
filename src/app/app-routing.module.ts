@@ -13,7 +13,6 @@ const routes: Routes = [
   { path: '', component: HomePageComponent },
   { path: 'items/books', component: ItemPageComponent },
   { path: 'items/books/:id', component: DetailItemPageComponent },
-  { path: 'cart', component: CartComponent },
   {
     path: 'admin/items/books',
     component: AdminItemComponent,

@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { SearchFocusService } from '@s/search/searchFocus.service';
+import { CartDrawerService } from '@s/cart/cart-drawer.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -10,17 +12,28 @@ import { SearchFocusService } from '@s/search/searchFocus.service';
 })
 export class AppComponent {
   title = 'front_L2i';
+  isDrawerOpened$: Observable<boolean> | undefined;
 
   constructor(
     private router: Router,
-    private searchFocusService: SearchFocusService
+    private searchFocusService: SearchFocusService,
+    private cartDrawerService: CartDrawerService
   ) {}
 
   ngOnInit(): void {
+    this.isDrawerOpened$ = this.cartDrawerService.isDrawerOpened$;
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe(() => {
         this.searchFocusService.triggerFocus();
       });
+  }
+
+  toggleDrawer() {
+    this.cartDrawerService.toggleDrawer();
+  }
+
+  closeDrawer() {
+    this.cartDrawerService.closeDrawer();
   }
 }

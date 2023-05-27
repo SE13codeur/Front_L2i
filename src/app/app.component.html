@@ -1,1 +1,13 @@
-<router-outlet></router-outlet>
+<mat-sidenav-container>
+  <mat-sidenav mode="over" [opened]="isDrawerOpened$ | async">
+    <button mat-icon-button (click)="closeDrawer()">
+      <mat-icon>close</mat-icon>
+    </button>
+    <app-cart></app-cart>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <app-nav></app-nav>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

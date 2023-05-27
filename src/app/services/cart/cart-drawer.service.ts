@@ -6,7 +6,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class CartDrawerService {
   private isDrawerOpen = new BehaviorSubject<boolean>(false);
-  isDrawerOpen$ = this.isDrawerOpen.asObservable();
+  isDrawerOpened$ = this.isDrawerOpen.asObservable();
 
   toggleDrawer() {
     this.isDrawerOpen.next(!this.isDrawerOpen.getValue());
@@ -14,5 +14,9 @@ export class CartDrawerService {
 
   closeDrawer() {
     this.isDrawerOpen.next(false);
+  }
+
+  isDrawerOpened() {
+    return this.isDrawerOpened$;
   }
 }

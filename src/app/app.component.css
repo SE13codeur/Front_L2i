@@ -1,0 +1,4 @@
+.mat-sidenav {
+  width: 77.7%;
+  transition: transform 1..11s ease-in, transform 3.33s ease-out;
+}
