@@ -1,0 +1,110 @@
+.sidenav-container {
+  height: 100%;
+}
+
+mat-sidenav {
+  width: 250px;
+  background-color: #f7f7f7;
+  padding: 1rem;
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.filters {
+  font-family: 'Roboto', sans-serif;
+}
+
+.filter-section {
+  margin-bottom: 3.33rem;
+}
+
+.filter-section h3 {
+  font-weight: 777;
+  font-size: 1.11rem;
+  margin-bottom: 0.89rem;
+  color: #333;
+  text-transform: uppercase;
+}
+
+.filter-section mat-divider {
+  margin-bottom: 1.11rem;
+}
+
+.categories,
+.authors,
+.ratings {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 0.5rem 1rem;
+  margin-bottom: 1rem;
+}
+
+mat-checkbox {
+  font-size: 0.8rem;
+}
+
+mat-slider {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+p {
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.yellow-star {
+  color: gold;
+}
+
+.gray-star {
+  color: gray;
+}
+
+/* Configs: */
+
+.list-identation {
+  padding-left: 1.2em;
+}
+
+.list-between-spacing {
+  margin: 0.2em 0;
+}
+
+.list-carret-character {
+  content: "\f0da";
+  font-family: "FontAwesome";
+  visibility: visible;
+  font-size: 14px;
+  position: absolute;
+  left: 0;
+  top: -1.45em;
+  transition: transform 0.3s;
+}
+
+
+/* CATEGORIES' TREE: */
+
+/* Styles pour mat-expansion-panel */
+.mat-expansion-panel {
+  background-color: #F7F7F7; /* Couleur de fond plus foncée */
+}
+
+.mat-expansion-panel:hover {
+  background-color: #eaeaea; /* Couleur de fond plus foncée */
+}
+
+/* Styles pour les div */
+.filter-section {
+  background-color: #F7F7F7; /* Couleur de fond grise */
+  transition: background-color 0.3s; /* Animation de transition pour le hover */
+}
+
+.category-section:hover {
+  background-color: #E1E1E1; /* Couleur de fond blanche au hover */
+}
+
+::ng-deep .mat-expansion-panel-header:not([aria-expanded="true"]) .mat-expansion-indicator::after,
+::ng-deep .mat-expansion-panel-header[aria-expanded="true"] .mat-expansion-indicator::before {
+  border-color: #808080 !important;
+}
+

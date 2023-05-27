@@ -1,0 +1,73 @@
+<div *ngIf="item as item" class="container">
+  <div class="detail-container">
+    <div class="detail-image">
+      <div class="image-wrapper">
+        <img [src]="item.imageUrl" alt="{{ item.title }} cover image" />
+        <div *ngIf="item.newCollection" class="new-banner">New</div>
+      </div>
+      <div class="rating">
+        <mat-icon
+          *ngFor="let star of getRatingStars(item.rating); let i = index"
+          [ngClass]="{ 'yellow-star': star === 1, 'gray-star': star === 0 }"
+          (click)="setRating(i + 1)"
+        >
+          star
+        </mat-icon>
+      </div>
+      <!-- CART BUTTON-->
+      <div class="adminActions" *ngIf="!isAdmin">
+        <app-cart-button [item]="item"></app-cart-button>
+      </div>
+      <div class="adminActions" *ngIf="isAdmin">
+        <button mat-icon-button color="warn" (click)="deleteItem()">
+          <mat-icon>delete</mat-icon>
+        </button>
+        <button mat-icon-button color="primary" (click)="goToEditItem()">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </div>
+    </div>
+    <div class="detail-info">
+      <h1><strong>{{ item.title }}</strong></h1>
+      <h2>{{ item.subtitle }}</h2>
+      <p><strong>Autheur(s) :</strong> {{ getAuthorNames() }}</p>
+      <p><strong>Edition :</strong> {{ item.editor.name }}</p>
+      <p><strong>Description :</strong> {{ item.description }}</p>
+      <p><strong>Prix :</strong> {{ item.regularPrice }} €</p>
+      <p><strong>Pages :</strong> {{ item.pages }}</p>
+      <p><strong>Catégorie :</strong> {{ item.category.name }}</p>
+      <p><strong>Année :</strong> {{ item.year }}</p>
+      <p><strong>Version :</strong> {{ item.version }}</p>
+      <p><strong>ISBN13 :</strong> {{ item.isbn13 }}</p>
+      <button mat-raised-button color="primary" (click)="goBackToListItems()">Retour aux articles</button>
+    </div>
+  </div>
+
+
+  <h3 class="reviews-title" (click)="toggleShowReviews()">
+    Commentaires
+    <mat-icon>{{ showReviews ? 'expand_less' : 'expand_more' }}</mat-icon>
+  </h3>
+  <div *ngIf="showReviews">
+    <p>
+      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptatibus
+      nobis optio totam. Eius nam nobis soluta provident facilis, pariatur error
+      maiores rem quo odit cum, ab repellendus animi molestias ex.
+    </p>
+    <p>
+      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptatibus
+      nobis optio totam. Eius nam nobis soluta provident facilis, pariatur error
+      maiores rem quo odit cum, ab repellendus animi molestias ex.
+    </p>
+    <p>
+      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptatibus
+      nobis optio totam. Eius nam nobis soluta provident facilis, pariatur error
+      maiores rem quo odit cum, ab repellendus animi molestias ex.
+    </p>
+    <p>
+      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptatibus
+      nobis optio totam. Eius nam nobis soluta provident facilis, pariatur error
+      maiores rem quo odit cum, ab repellendus animi molestias ex.
+    </p>
+  </div>
+</div>

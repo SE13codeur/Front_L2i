@@ -1,0 +1,86 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav mode="side" opened>
+    <div class="filter-section category-section">
+      <h3>Catégories</h3>
+      <mat-divider></mat-divider>
+      <div>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <mat-checkbox #booksCheckbox (change)="onCategoryChange('2', $event.checked)">Livres</mat-checkbox>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-list>
+            <mat-list-item>
+              <mat-checkbox #englishBooks (change)="onSubcategoryChange('2', '5', $event.checked, booksCheckbox, englishBooks, frenchBooks)">Langue Anglaise</mat-checkbox>
+            </mat-list-item>
+            <mat-list-item>
+              <mat-checkbox #frenchBooks (change)="onSubcategoryChange('2', '4', $event.checked, booksCheckbox, englishBooks, frenchBooks)">Langue Française</mat-checkbox>
+            </mat-list-item>
+          </mat-list>
+        </mat-expansion-panel>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <mat-checkbox #videosCheckbox (change)="onCategoryChange('3', $event.checked)">Vidéos</mat-checkbox>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-list>
+            <mat-list-item>
+              <mat-checkbox #englishMovies (change)="onSubcategoryChange('3', '7', $event.checked, videosCheckbox, englishMovies, frenchMovies)">Langue Anglaise</mat-checkbox>
+            </mat-list-item>
+            <mat-list-item>
+              <mat-checkbox #frenchMovies (change)="onSubcategoryChange('3', '6', $event.checked, videosCheckbox, englishMovies, frenchMovies)">Langue Française</mat-checkbox>
+            </mat-list-item>
+          </mat-list>
+        </mat-expansion-panel>
+
+      </div>
+    </div>
+    <div class="filter-section">
+      <h3>Prix en €</h3>
+      <mat-divider></mat-divider>
+      <ngx-slider
+        [(value)]="priceMin"
+        [(highValue)]="priceMax"
+        [options]="options"
+        (valueChange)="onPriceMinChange($event)"
+        (highValueChange)="onPriceMaxChange($event)"
+      ></ngx-slider>
+    </div>
+
+    <div class="filter-section">
+      <h3>Années</h3>
+      <mat-divider></mat-divider>
+      <ngx-slider
+        [(value)]="yearMin"
+        [(highValue)]="yearMax"
+        [options]="optionsYear"
+        (valueChange)="onYearMinChange($event)"
+        (highValueChange)="onYearMaxChange($event)"
+      ></ngx-slider>
+    </div>
+
+    <div class="filter-section">
+      <h3>NOTES DES CLIENTS</h3>
+      <mat-divider></mat-divider>
+      <div class="rating" *ngFor="let rate of [1, 2, 3, 4, 5]">
+        <mat-checkbox (change)="onRatingChange(rate, $event.checked)">
+          <ng-container *ngFor="let star of [1, 2, 3, 4, 5]">
+            <mat-icon [ngClass]="star <= rate ? 'yellow-star' : 'gray-star'">star</mat-icon>
+          </ng-container>
+        </mat-checkbox>
+      </div>
+    </div>
+
+    <div class="filter-section">
+      <h3>OFFRES ET RÉDUCTIONS</h3>
+      <mat-divider></mat-divider>
+    </div>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <app-list-item-without-meilisearch></app-list-item-without-meilisearch>
+    <!-- <app-list-item></app-list-item> -->
+  </mat-sidenav-content>
+</mat-sidenav-container>

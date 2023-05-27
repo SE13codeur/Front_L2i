@@ -1,0 +1,8 @@
+.cart-container {
+  gap: 0.44rem;
+}
+
+.cart-container mat-form-field {
+  width: 1.77rem;
+}
+

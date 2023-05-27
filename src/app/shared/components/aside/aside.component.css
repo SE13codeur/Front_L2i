@@ -1,0 +1,36 @@
+aside {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin: 1.11rem;
+}
+
+aside:hover {
+  color: #7b7070;
+}
+
+.ping {
+  animation: blink 3.33s linear infinite;
+  transform: scale(1.11);
+  margin-right: 0.777rem;
+  border-radius: 77%;
+}
+
+@keyframes blink {
+  0% {background-color: transparent;}
+  50% {background-color: #FF4080;}
+  100% {background-color: transparent;}
+}
+
+span {
+  padding-left: 0.111rem;
+  display: inline-block;
+  animation: scalePulse 1.11s ease-in-out infinite;
+}
+
+@keyframes scalePulse {
+  0% { transform: scale(1.01); }
+  50% { transform: scale(1.11); }
+  100% { transform: scale(1.21); }
+}
