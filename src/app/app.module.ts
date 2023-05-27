@@ -12,12 +12,12 @@ import { HomePageComponent } from '@p/home/home-page.component';
 import { NotFoundComponent } from '@p/not-found/not-found.component';
 import { ItemPageComponent } from '@p/item/item-page.component';
 
-import { NavComponent } from '@c/nav/nav.component';
-import { AsideComponent } from '@c/aside/aside.component';
-import { CartComponent } from '@c/aside/cart/cart.component';
+import { NavComponent } from '@c/shared/nav/nav.component';
+import { AsideComponent } from '@c/shared/aside/aside.component';
+import { CartComponent } from '@c/shared/aside/cart/cart.component';
 import { HeaderComponent } from '@c/header/header.component';
 import { SectionComponent } from '@c/section/section.component';
-import { SearchItemComponent } from '@c/nav/search-item/search-item.component';
+import { SearchItemComponent } from '@c/shared/nav/search-item/search-item.component';
 import { DetailItemComponent } from '@c/section/item/detail-item/detail-item.component';
 import { FiltersItemComponent } from '@c/section/filters-item/filters-item.component';
 import { AdminItemComponent } from '@c/admin/admin-item/admin-item.component';
@@ -52,6 +52,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DetailItemPageComponent } from '@p/detail-item/detail-item-page.component';
+import { CartDrawerComponent } from './pages/cart/cart-drawer.component';
 
 @NgModule({
   declarations: [
@@ -72,6 +73,7 @@ import { DetailItemPageComponent } from '@p/detail-item/detail-item-page.compone
     ListItemWithoutMeilisearchComponent,
     CartButtonComponent,
     DetailItemPageComponent,
+    CartDrawerComponent,
   ],
   imports: [
     BrowserModule,

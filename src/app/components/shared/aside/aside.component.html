@@ -1,0 +1,4 @@
+<aside xLayout="row" fxLayoutAlign="flex-end center">
+  <mat-icon (click)="openDrawer()" [ngClass]="{'ping': (totalItemsForCart$.value > 0)}">shopping_cart</mat-icon>
+  <span>{{totalItemsForCart$ | async}}</span>
+</aside>

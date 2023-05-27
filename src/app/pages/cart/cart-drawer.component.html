@@ -1,0 +1,9 @@
+<mat-sidenav-container  xLayout="row" fxLayoutAlign="center center" class="sidenav-container">
+  <mat-sidenav  #sidenav mode="push" class="sidenav">
+    <app-cart (closeClickedDrawer)="sidenav?.close()"></app-cart>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <app-section (openClickedNav)="sidenav?.toggle()"></app-section>
+  </mat-sidenav-content>
+></mat-sidenav-container>

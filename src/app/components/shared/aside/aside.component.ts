@@ -1,7 +1,6 @@
-import { Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { CartButtonService } from '@s/cart/cart-button.service';
+import { CartDrawerService } from '@s/cart/cart-drawer.service';
 import { CartService } from '@s/cart/cart.service';
 import { BehaviorSubject } from 'rxjs';
 
@@ -12,12 +11,10 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class AsideComponent implements OnInit {
   totalItemsForCart$ = new BehaviorSubject<number>(0);
-  isCartPanelOpen$ = this.cartService.toggleCart();
 
   constructor(
-    private cartService: CartService,
-    private cartButtonService: CartButtonService,
-    private router: Router
+    private cartDrawerService: CartDrawerService,
+    private cartButtonService: CartButtonService
   ) {}
 
   ngOnInit() {
@@ -30,5 +27,9 @@ export class AsideComponent implements OnInit {
       this.totalItemsForCart$.next(count);
       localStorage.setItem('totalItemsForCart', count.toString());
     });
+  }
+
+  openDrawer() {
+    this.cartDrawerService.toggleDrawer();
   }
 }

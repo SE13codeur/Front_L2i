@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ICartItem } from '@m/ICartItem';
 import { CartButtonService } from '@s/cart/cart-button.service';
 import { CartService } from '@s/cart/cart.service';
@@ -17,6 +17,7 @@ export class CartComponent implements OnInit {
     'Discounted Price',
     'Action',
   ];
+  @Output() closeClickedDrawer = new EventEmitter();
 
   constructor(
     private cartService: CartService,

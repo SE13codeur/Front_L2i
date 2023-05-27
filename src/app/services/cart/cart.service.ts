@@ -6,23 +6,8 @@ export class CartService {
   cartItems$: BehaviorSubject<ICartItem[]> = new BehaviorSubject<ICartItem[]>(
     []
   );
-  isCartDrawerOpen$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-    false
-  );
 
   constructor() {}
-
-  toggleCart(): boolean {
-    const newValue = !this.isCartDrawerOpen$.value;
-    this.isCartDrawerOpen$.next(newValue);
-    return newValue;
-  }
-
-  closeCart(): boolean {
-    const newValue = this.isCartDrawerOpen$.value;
-    this.isCartDrawerOpen$.next(newValue);
-    return newValue;
-  }
 
   addItemFromCart(item: ICartItem): void {
     const itemIndex = this.cartItems.findIndex(

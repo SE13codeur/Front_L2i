@@ -27,11 +27,9 @@
       <button mat-icon-button routerLink="/">
         <mat-icon>account_circle</mat-icon>
       </button>
-    </div>
-  </div>
 
-  <!-- Cart drawer for shopping -->
-  <div class="nav-aside">
-    <app-aside></app-aside>
+      <!-- Cart drawer for shopping -->
+      <app-aside (click)="openDrawer()"></app-aside>
+    </div>
   </div>
 </mat-toolbar>

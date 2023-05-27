@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminItemComponent } from '@c/admin/admin-item/admin-item.component';
-import { CartComponent } from '@c/aside/cart/cart.component';
+import { CartComponent } from '@c/shared/aside/cart/cart.component';
 import { DetailItemPageComponent } from '@p/detail-item/detail-item-page.component';
 import { HomePageComponent } from '@p/home/home-page.component';
 import { ItemPageComponent } from '@p/item/item-page.component';
