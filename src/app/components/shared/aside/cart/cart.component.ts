@@ -25,15 +25,7 @@ export class CartComponent implements OnInit {
   ) {}
   totalCartItems$ = 0;
 
-  ngOnInit(): void {
-    this.cartService.cartItems$.subscribe((items) => {
-      this.cartItems = items;
-    });
-
-    this.cartButtonService.getTotalItemsForCart().subscribe((count) => {
-      this.totalCartItems$ = count;
-    });
-  }
+  ngOnInit(): void {}
 
   getTotalPrice(): number {
     return this.cartService.getTotalPrice();
@@ -47,8 +39,8 @@ export class CartComponent implements OnInit {
     this.cartButtonService.decreaseItemQuantity(item.id);
   }
 
-  removeItem(cartId: ICartItem): void {
-    this.cartService.removeItemFromCart(cartId);
+  removeItem(cart: ICartItem): void {
+    this.cartService.removeItemFromCart(cart.id);
   }
 
   checkout(): void {

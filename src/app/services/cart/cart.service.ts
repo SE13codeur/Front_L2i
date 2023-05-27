@@ -1,47 +1,107 @@
-import { BehaviorSubject } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable, map } from 'rxjs';
 import { ICartItem } from '@m/ICartItem';
+import IItem from '@m/IItem';
+
+@Injectable({
+  providedIn: 'root',
+})
 export class CartService {
-  private cartItems: ICartItem[] = [];
-  private cartItemsSubject = new BehaviorSubject<ICartItem[]>(this.cartItems);
-  cartItems$: BehaviorSubject<ICartItem[]> = new BehaviorSubject<ICartItem[]>(
-    []
-  );
+  private cart$ = new BehaviorSubject<ICartItem[]>([]);
+  private taxRate = 0.2; // 20% Tax
+  private shippingFee = 4.04; // Flat shipping fee
 
   constructor() {}
 
-  addItemFromCart(item: ICartItem): void {
-    const itemIndex = this.cartItems.findIndex(
-      (cartItem) => cartItem.isbn13 === item.isbn13
-    );
-    if (itemIndex > -1) {
-      this.cartItems[itemIndex].quantity$.next(
-        this.cartItems[itemIndex].quantity$.value + item.quantity$.value
-      );
-    } else {
-      this.cartItems.push(item);
-    }
-    this.cartItemsSubject.next(this.cartItems);
+  getCartItem(): Observable<ICartItem[]> {
+    return this.cart$.asObservable();
   }
 
-  getTotalPrice(): number {
-    return this.cartItems.reduce(
-      (total, item) => total + item.price * item.quantity$.value,
+  addItemToCart(item: IItem, quantity: number): void {
+    if (quantity > item.quantityInStock) {
+      throw new Error('Quantity exceeds available stock');
+    }
+
+    const cartItem: ICartItem = {
+      id: item.id,
+      isbn13: item.isbn13,
+      title: item.title,
+      price: item.regularPrice,
+      quantity$: new BehaviorSubject<number>(quantity),
+      description: item.description,
+      image: item.imageUrl,
+    };
+
+    const currentCart = this.cart$.getValue();
+    currentCart.push(cartItem);
+    this.cart$.next(currentCart);
+  }
+
+  updateItemQuantity(index: number, quantity: number) {
+    const currentCart = this.cart$.getValue();
+    currentCart[index].quantity$.next(quantity);
+    this.cart$.next(currentCart);
+  }
+
+  removeItemFromCart(index: number) {
+    const currentCart = this.cart$.getValue();
+    currentCart.splice(index, 1);
+    this.cart$.next(currentCart);
+  }
+
+  clearCart() {
+    this.cart$.next([]);
+  }
+
+  getSubTotal(): Observable<number> {
+    return this.cart$.pipe(
+      map((items) =>
+        items.reduce(
+          (total, item) => total + item.price * item.quantity$.getValue(),
+          0
+        )
+      )
+    );
+  }
+
+  getTotalTax(): Observable<number> {
+    return this.getSubTotal().pipe(map((subtotal) => subtotal * this.taxRate));
+  }
+
+  getTotalItems(): number {
+    const currentCart = this.cart$.getValue();
+    return currentCart.reduce(
+      (acc, item) => acc + item.quantity$.getValue(),
       0
     );
   }
 
-  removeItemFromCart(item: ICartItem): void {
-    const itemIndex = this.cartItems.findIndex(
-      (cartItem) => cartItem.isbn13 === item.isbn13
+  getTotalPrice(): number {
+    const currentCart = this.cart$.getValue();
+    return currentCart.reduce(
+      (acc, item) => acc + item.price * item.quantity$.getValue(),
+      0
     );
-    if (itemIndex > -1) {
-      this.cartItems.splice(itemIndex, 1);
-      this.cartItemsSubject.next(this.cartItems);
-    }
   }
 
-  clearCart(): void {
-    this.cartItems = [];
-    this.cartItemsSubject.next(this.cartItems);
+  validateOrder(order: any): boolean {
+    if (!order.shippingAddress || !order.billingAddress) {
+      throw new Error('Missing shipping or billing address');
+    }
+    // TODO validate order with user infos or others validations as needed...
+    return true;
   }
+
+  // createOrder(customerInfo): Order {
+  //   const order: Order
+
+  //   this.clearCart();
+
+  //   return order;
+  // }
+
+  // createInvoice(order: Order): Invoice {
+  //     TODO with Back controller
+  //   return invoice;
+  // }
 }

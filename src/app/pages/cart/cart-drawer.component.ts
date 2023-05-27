@@ -7,9 +7,13 @@ import { CartDrawerService } from '@s/cart/cart-drawer.service';
   styleUrls: ['./cart-drawer.component.css'],
 })
 export class CartDrawerComponent {
-  isDrawerOpen$;
+  isDrawerOpened$;
 
   constructor(private cartDrawerService: CartDrawerService) {
-    this.isDrawerOpen$ = this.cartDrawerService.isDrawerOpen$;
+    this.isDrawerOpened$ = this.cartDrawerService.isDrawerOpen$;
+  }
+
+  closeDrawer() {
+    this.cartDrawerService.closeDrawer();
   }
 }

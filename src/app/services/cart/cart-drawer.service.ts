@@ -11,4 +11,8 @@ export class CartDrawerService {
   toggleDrawer() {
     this.isDrawerOpen.next(!this.isDrawerOpen.getValue());
   }
+
+  closeDrawer() {
+    this.isDrawerOpen.next(false);
+  }
 }
