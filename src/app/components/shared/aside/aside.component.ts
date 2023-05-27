@@ -29,7 +29,8 @@ export class AsideComponent implements OnInit {
     });
   }
 
-  openDrawer() {
+  openDrawer(event: Event) {
+    event.stopPropagation();
     this.cartDrawerService.toggleDrawer();
   }
 }

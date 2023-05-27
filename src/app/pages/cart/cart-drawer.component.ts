@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { MatSidenav } from '@angular/material/sidenav';
+import { Component, OnInit } from '@angular/core';
+import { CartDrawerService } from '@s/cart/cart-drawer.service';
 
 @Component({
   selector: 'app-cart-drawer',
@@ -7,5 +7,9 @@ import { MatSidenav } from '@angular/material/sidenav';
   styleUrls: ['./cart-drawer.component.css'],
 })
 export class CartDrawerComponent {
-  @Input() sidenav: MatSidenav | undefined;
+  isDrawerOpen$;
+
+  constructor(private cartDrawerService: CartDrawerService) {
+    this.isDrawerOpen$ = this.cartDrawerService.isDrawerOpen$;
+  }
 }

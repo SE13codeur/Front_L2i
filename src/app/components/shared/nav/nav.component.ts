@@ -21,7 +21,7 @@ export class NavComponent {
     this.isAdmin = this.authService.isAdminAuthenticated();
   }
 
-  openDrawer() {
+  toggleDrawer() {
     this.cartDrawerService.toggleDrawer();
   }
 

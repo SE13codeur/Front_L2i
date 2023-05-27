@@ -5,10 +5,10 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class CartDrawerService {
-  private drawerState = new BehaviorSubject(false);
-  public isDrawerOpen = this.drawerState.asObservable();
+  private isDrawerOpen = new BehaviorSubject<boolean>(false);
+  isDrawerOpen$ = this.isDrawerOpen.asObservable();
 
   toggleDrawer() {
-    this.drawerState.next(!this.drawerState.value);
+    this.isDrawerOpen.next(!this.isDrawerOpen.getValue());
   }
 }

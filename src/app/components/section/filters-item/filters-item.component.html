@@ -62,7 +62,7 @@
     </div>
 
     <div class="filter-section">
-      <h3>Évaluations</h3>
+      <h3>NOTES DES CLIENTS</h3>
       <mat-divider></mat-divider>
       <div class="rating" *ngFor="let rate of [1, 2, 3, 4, 5]">
         <mat-checkbox (change)="onRatingChange(rate, $event.checked)">
@@ -71,6 +71,11 @@
           </ng-container>
         </mat-checkbox>
       </div>
+    </div>
+
+    <div class="filter-section">
+      <h3>OFFRES ET RÉDUCTIONS</h3>
+      <mat-divider></mat-divider>
     </div>
   </mat-sidenav>
 
