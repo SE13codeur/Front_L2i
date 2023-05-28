@@ -10,8 +10,7 @@ import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 
-import { ItemService } from '@s/search/item.service';
-import { SearchFocusService } from '@s/search/searchFocus.service';
+import { ItemService, SearchFocusService } from '@services/index';
 
 @Component({
   selector: 'app-search-item',
@@ -48,7 +47,7 @@ export class SearchItemComponent implements OnDestroy, OnInit {
   private subscribeToFocusEvents(): void {
     this.searchFocusService.focusSearchInput$
       .pipe(takeUntil(this.destroy$))
-      .subscribe((shouldFocus) => {
+      .subscribe((shouldFocus: any) => {
         if (shouldFocus) {
           this.focusSearchInput();
           this.searchFocusService.resetFocusTrigger();
@@ -57,7 +56,7 @@ export class SearchItemComponent implements OnDestroy, OnInit {
   }
 
   search(query: string): void {
-    this.itemService.updatedSearch(query).subscribe((results) => {
+    this.itemService.updatedSearch(query).subscribe(() => {
       this.itemService.setSearchValue(query);
       this.router
         .navigate(['/items'], { queryParams: { q: query } })

@@ -1,10 +1,12 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
-import IItem from '@m/IItem';
-import { PaginationService } from '@s/pagination/pagination.service';
-import { FiltersService } from '@s/search/filters.service';
-import { ItemService } from '@s/search/item.service';
+import { IItem } from '@models/index';
+import {
+  FiltersService,
+  ItemService,
+  PaginationService,
+} from '@services/index';
 import { BehaviorSubject, Subject, take } from 'rxjs';
 
 @Component({

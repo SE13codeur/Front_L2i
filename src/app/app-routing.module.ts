@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AdminItemComponent } from '@c/admin/admin-item/admin-item.component';
-import { CartComponent } from '@c/shared/aside/cart/cart.component';
-import { DetailItemPageComponent } from '@p/detail-item/detail-item-page.component';
-import { HomePageComponent } from '@p/home/home-page.component';
-import { ItemPageComponent } from '@p/item/item-page.component';
-import { NotFoundComponent } from '@p/not-found/not-found.component';
-import { SignPageComponent } from '@p/sign/sign-page.component';
+import { AdminItemComponent } from '@components/index';
+import {
+  DetailItemPageComponent,
+  HomePageComponent,
+  ItemPageComponent,
+  SignPageComponent,
+  NotFoundPageComponent,
+} from '@pages/index';
 
 const routes: Routes = [
   { path: 'sign-in', component: SignPageComponent },
@@ -24,7 +25,7 @@ const routes: Routes = [
     // canActivate: [AdminAuthGuard],
   },
   { path: '', redirectTo: '/', pathMatch: 'full' },
-  { path: '**', component: NotFoundComponent },
+  { path: '**', component: NotFoundPageComponent },
 ];
 
 @NgModule({

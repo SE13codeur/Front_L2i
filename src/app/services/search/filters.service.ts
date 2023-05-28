@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import IItem from '@m/IItem';
+import { IItem } from '@models/index';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 

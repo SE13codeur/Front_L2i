@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
-import { SearchFocusService } from '@s/search/searchFocus.service';
-import { CartDrawerService } from '@s/cart/cart-drawer.service';
+import { CartDrawerService, SearchFocusService } from '@services/index';
 import { Observable } from 'rxjs';
 
 @Component({

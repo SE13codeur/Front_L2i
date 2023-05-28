@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import IItem from '@m/IItem';
-import { CartButtonService } from '@s/cart/cart-button.service';
+import { IItem } from '@models/index';
+import { CartButtonService } from '@services/index';
 import { BehaviorSubject } from 'rxjs';
 
 @Component({

@@ -1,9 +1,11 @@
 import { LabelType, Options } from '@angular-slider/ngx-slider';
 import { Component, ViewChild } from '@angular/core';
 import { MatCheckbox } from '@angular/material/checkbox';
-import { FiltersService } from '@s/search/filters.service';
-import { ItemService } from '@s/search/item.service';
-import { PaginationService } from '@s/pagination/pagination.service';
+import {
+  FiltersService,
+  PaginationService,
+  ItemService,
+} from '@services/index';
 import { switchMap } from 'rxjs';
 
 @Component({

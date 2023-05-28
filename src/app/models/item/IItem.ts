@@ -1,4 +1,7 @@
-export default interface IItem {
+import { IAuthor, IEditor } from '@models/index';
+import { ICategoryItem } from './ICategory';
+
+export interface IItem {
   id: number;
   isbn13: string;
   imageUrl: string;
@@ -17,23 +20,4 @@ export default interface IItem {
   language?: string;
   version: number;
   newCollection?: boolean;
-}
-
-export interface IAuthor {
-  id: number;
-  firstname: string;
-  lastname: string;
-  books?: IItem[];
-}
-
-export interface IEditor {
-  id: number;
-  name: string;
-  books?: IItem[];
-}
-
-export interface ICategoryItem {
-  id: number;
-  name: string;
-  parentId?: number | null;
 }

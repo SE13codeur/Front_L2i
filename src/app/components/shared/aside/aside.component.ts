@@ -1,7 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { CartButtonService } from '@s/cart/cart-button.service';
-import { CartDrawerService } from '@s/cart/cart-drawer.service';
-import { CartService } from '@s/cart/cart.service';
+import { CartButtonService, CartDrawerService } from '@services/index';
 import { BehaviorSubject } from 'rxjs';
 
 @Component({

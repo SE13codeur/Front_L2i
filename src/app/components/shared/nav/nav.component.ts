@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '@s/admin/auth.service';
-import { CartDrawerService } from '@s/cart/cart-drawer.service';
+import { AuthService, CartDrawerService } from '@services/index';
 
 @Component({
   selector: 'app-nav',

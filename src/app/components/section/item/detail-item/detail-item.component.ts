@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import IMeilisearchItem from '@m/IItem';
-import { AdminItemService } from '@s/admin/admin-item.service';
-import { AuthService } from '@s/admin/auth.service';
-import { ItemService } from '@s/search/item.service';
+import { IItem } from '@models/';
+import { AdminItemService, AuthService, ItemService } from '@services/index';
 import { Observable, of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 
@@ -13,8 +11,8 @@ import { catchError, map, switchMap } from 'rxjs/operators';
   styleUrls: ['./detail-item.component.css'],
 })
 export class DetailItemComponent implements OnInit {
-  item$: Observable<IMeilisearchItem | null>;
-  item: IMeilisearchItem | null = null;
+  item$: Observable<IItem | null>;
+  item: IItem | null = null;
   showReviews = false;
   isAdmin = true;
 

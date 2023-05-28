@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, map } from 'rxjs';
-import { ICartItem } from '@m/ICartItem';
-import IItem from '@m/IItem';
+import { ICartItem, IItem } from '@models/';
 
 @Injectable({
   providedIn: 'root',
@@ -10,6 +9,7 @@ export class CartService {
   private cart$ = new BehaviorSubject<ICartItem[]>([]);
   private taxRate = 0.2; // 20% Tax
   private shippingFee = 4.04; // Flat shipping fee
+  private saveForLaterItems$ = new BehaviorSubject<ICartItem[]>([]);
 
   constructor() {}
 
@@ -104,4 +104,32 @@ export class CartService {
   //     TODO with Back controller
   //   return invoice;
   // }
+
+  saveForLater(item: ICartItem): void {
+    const currentSaveForLaterItems = this.saveForLaterItems$.getValue();
+    currentSaveForLaterItems.push(item);
+    this.saveForLaterItems$.next(currentSaveForLaterItems);
+  }
+
+  applyDiscountCode(discountCode: string): void {
+    // Logic to apply discount code goes here
+    // For example:
+    // if (discountCode === 'DISCOUNT10') {
+    //   const currentCart = this.cart$.getValue();
+    //   currentCart.forEach(item => {
+    //     item.price *= 0.9; // Apply 10% discount
+    //   });
+    //   this.cart$.next(currentCart);
+    // }
+  }
+
+  updateDeliveryOption(deliveryOption: string): void {
+    // Logic to update delivery option goes here
+    // For example, you could adjust the shipping fee based on the option:
+    // if (deliveryOption === 'express') {
+    //   this.shippingFee = 10;
+    // } else if (deliveryOption === 'standard') {
+    //   this.shippingFee = 4.04;
+    // }
+  }
 }
