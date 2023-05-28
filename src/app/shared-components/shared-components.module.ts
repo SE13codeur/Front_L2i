@@ -1,31 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatIconModule } from '@angular/material/icon'; // import MatIconModule here
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import {
-  AsideComponent,
-  CartButtonComponent,
-  NavComponent,
-  SearchItemComponent,
-} from '@shared/components';
-import { ReactiveFormsModule } from '@angular/forms';
-import { MatTableModule } from '@angular/material/table';
-import { NgxSliderModule } from '@angular-slider/ngx-slider';
-import { HttpClientModule } from '@angular/common/http';
+// Angular Material Modules
+import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatSelectModule } from '@angular/material/select';
-import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AppRoutingModule } from '../app-routing.module';
+import { MatSelectModule } from '@angular/material/select';
+import { AsideComponent } from '@c/aside/aside.component';
+import { CartButtonComponent, SearchItemComponent } from '../shared/components';
+import { NavComponent } from '@c/nav/nav.component';
 
 @NgModule({
   declarations: [
@@ -35,28 +25,26 @@ import { AppRoutingModule } from '../app-routing.module';
     SearchItemComponent,
   ],
   imports: [
-    MatTableModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MatButtonModule,
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
     MatIconModule,
-    HttpClientModule,
-    MatSidenavModule,
-    MatToolbarModule,
+    MatButtonModule,
     MatInputModule,
     MatFormFieldModule,
-    ReactiveFormsModule,
     MatCardModule,
-    MatButtonModule,
-    MatIconModule,
     MatCheckboxModule,
     MatListModule,
     MatSliderModule,
-    NgxSliderModule,
-    MatPaginatorModule,
     MatSnackBarModule,
     MatSelectModule,
   ],
   exports: [AsideComponent, NavComponent, SearchItemComponent],
 })
 export class SharedComponentsModule {}
+export {
+  AsideComponent,
+  CartButtonComponent,
+  NavComponent,
+  SearchItemComponent,
+};
