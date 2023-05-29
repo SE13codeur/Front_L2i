@@ -7,13 +7,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import {
-  DetailItemPageComponent,
-  HomePageComponent,
-  ItemPageComponent,
-  NotFoundPageComponent,
-  SignPageComponent,
-} from '@pages/index';
+import { NgxsStoreModule } from './store';
+import { AuthService, CartService, PaginatorFrService } from '@services/index';
 import {
   AdminItemComponent,
   AsideComponent,
@@ -27,7 +22,13 @@ import {
   SearchItemComponent,
   SectionComponent,
 } from '@components/index';
-import { AuthService, CartService, PaginatorFrService } from '@services/index';
+import {
+  DetailItemPageComponent,
+  HomePageComponent,
+  ItemPageComponent,
+  NotFoundPageComponent,
+  SignPageComponent,
+} from '@pages/index';
 
 import { HttpClientModule } from '@angular/common/http';
 
@@ -76,6 +77,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   ],
   imports: [
     BrowserModule,
+    NgxsStoreModule,
     MatTableModule,
     AppRoutingModule,
     BrowserAnimationsModule,

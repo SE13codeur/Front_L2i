@@ -20,7 +20,7 @@
     "lib": ["es2020", "dom"],
     "paths": {
       "@components/*": ["src/app/components/*"],
-      "@models*": ["src/app/models/*"],
+      "@models/*": ["src/app/models/*"],
       "@pages/*": ["src/app/pages/*"],
       "@services/*": ["src/app/services/*"],
       "@assets/*": ["src/assets/*"],
