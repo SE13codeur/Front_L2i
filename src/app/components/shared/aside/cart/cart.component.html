@@ -1,40 +1,28 @@
-<!-- <div class="container mt-5">
+<div class="container mt-5">
   <div *ngIf="(cartItems$ | async) as cartItems">
     <div *ngFor="let item of cartItems; let i = index" class="card mb-3">
       <div class="row g-0">
         <div class="col-md-4">
-          <img [src]="item.image" class="img-fluid rounded-start" alt="{{item.title}}">
+          <img [src]="item.imageUrl" class="img-fluid rounded-start" alt="{{item.title}}">
         </div>
         <div class="col-md-8">
           <div class="card-body">
             <h5 class="card-title">{{item.title}}</h5>
             <p class="card-text">{{item.description}}</p>
             <div class="card-text">
-              <small class="text-muted">Price: {{item.price | currency}}</small>
+              <small class="text-muted">Price: {{item.regularPrice | currency}}</small>
             </div>
             <div class="card-text">
-              <button (click)="decreaseQuantity(item)">-</button>
-              <span>{{(CartState.getItemQuantity(item.id) | async) || 0}}</span>
-              <button (click)="increaseQuantity(item)">+</button>
+              <app-cart-item-quantity [item]="item"></app-cart-item-quantity>
             </div>
             <button class="btn btn-danger" (click)="removeItemFromCart(item.id)">Remove</button>
           </div>
         </div>
       </div>
     </div>
-    <div class="total-items-in-cart" *ngIf="(CartState.getTotalItems | async) as totalItemsInCart">
+    <div class="total-items-in-cart" *ngIf="(totalItems$ | async) as totalItemsInCart">
       Total : {{ totalItemsInCart }}
     </div>
     <button class="btn btn-primary" (click)="checkout()">Checkout</button>
   </div>
 </div>
-
-<div class="cart-container">
-  <mat-icon>shopping_cart</mat-icon>
-  <mat-form-field>
-    <mat-select [value]="(CartState.getItemQuantity(item.id) | async)" (selectionChange)="changeItemQty($event.value, item.id)">
-      <mat-option *ngFor="let number of numbers" [value]="number">{{number}}</mat-option>
-    </mat-select>
-
-  </mat-form-field>
-</div> -->

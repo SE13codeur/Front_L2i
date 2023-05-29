@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ICartItem } from '@models/index';
+import { ICartItem, IItem } from '@models/index';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { UpdateItemQuantityInStock } from '@store/item';
 import { ItemState, ItemStateModel } from '@store/item/item.state';
@@ -76,6 +76,39 @@ export class CartState {
         return undefined;
       }
     };
+  }
+
+  @Selector([ItemState])
+  static getDetailedCartItems(
+    state: CartStateModel,
+    itemState: ItemStateModel
+  ): IItem[] {
+    return state.cartItems.map((cartItem) => {
+      const item = itemState.items.find((item) => item.id === cartItem.id);
+      return {
+        id: cartItem.id,
+        isbn13: cartItem.isbn13 || '',
+        imageUrl: item?.imageUrl || '',
+        title: cartItem.title,
+        subtitle: item?.subtitle || '',
+        description: cartItem.description,
+        regularPrice: item?.regularPrice || 0,
+        rating: item?.rating || 0,
+        quantityInStock: item?.quantityInStock || 0,
+        totalSales: item?.totalSales || 0,
+        authors: item?.authors || [],
+        editor: item?.editor || { id: 0, name: '', slug: '' },
+        category: item?.category || { id: 0, name: '', slug: '' },
+        pages: item?.pages || '',
+        year: item?.year || '',
+        language: item?.language || '',
+        version: item?.version || 0,
+        newCollection: item?.newCollection || false,
+        image: cartItem.image,
+        price: cartItem.price,
+        quantity: cartItem.quantity,
+      };
+    });
   }
 
   @Action(AddToCart)

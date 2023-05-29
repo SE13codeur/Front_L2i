@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ICartItem } from '@models/cart';
+import { IItem } from '@models/item';
 import { Select, Store } from '@ngxs/store';
-import { CartState, UpdateCartItemQuantity } from '@store/index';
+import {
+  CartState,
+  RemoveFromCart,
+  UpdateCartItemQuantity,
+} from '@store/index';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -10,12 +15,8 @@ import { Observable } from 'rxjs';
   styleUrls: ['./cart.component.css'],
 })
 export class CartComponent implements OnInit {
-  @Select(CartState.getCartItems) cartItems$:
-    | Observable<ICartItem[]>
-    | undefined;
-
-  @Select(CartState.getCartItemQuantity) itemQuantity$:
-    | Observable<number>
+  @Select(CartState.getDetailedCartItems) cartItems$:
+    | Observable<IItem[]>
     | undefined;
 
   @Select(CartState.getTotalItems) totalItems$: Observable<number> | undefined;
@@ -24,26 +25,18 @@ export class CartComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  increaseQuantity(itemId: number): void {
-    let item = this.store
-      .selectSnapshot(CartState.getCartItems)
-      .find((a) => a.id === itemId);
-    if (item) {
-      this.store.dispatch(
-        new UpdateCartItemQuantity(itemId, item.quantity + 1)
-      );
-    }
+  removeItemFromCart(itemId: number): void {
+    this.store.dispatch(new RemoveFromCart(itemId));
   }
 
-  decreaseQuantity(itemId: number): void {
-    let item = this.store
-      .selectSnapshot(CartState.getCartItems)
-      .find((a) => a.id === itemId);
-    if (item && item.quantity > 0) {
-      this.store.dispatch(
-        new UpdateCartItemQuantity(itemId, item.quantity - 1)
-      );
-    }
+  updateCartItemQuantity(itemId: number, newQty: number): void {
+    this.store.dispatch(new UpdateCartItemQuantity(itemId, newQty));
+  }
+
+  getCartItemInStock(itemId: number): Observable<ICartItem | undefined> {
+    return this.store.select((state) =>
+      CartState.getCartItemInStock(state.cart, state.item)(itemId)
+    );
   }
 
   checkout(): void {
