@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ICartItem } from '@modelscart';
+import { ICartItem } from '@models/cart';
 import { CartButtonService, CartService } from '@services/index';
 import { Observable } from 'rxjs';
 
