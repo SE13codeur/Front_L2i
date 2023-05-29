@@ -16,7 +16,7 @@
       </div>
       <!-- CART BUTTON-->
       <div class="adminActions" *ngIf="!isAdmin">
-        <app-cart-button [item]="item"></app-cart-button>
+        <app-cart-item-quantity [item]="item"></app-cart-item-quantity>
       </div>
       <div class="adminActions" *ngIf="isAdmin">
         <button mat-icon-button color="warn" (click)="deleteItem()">

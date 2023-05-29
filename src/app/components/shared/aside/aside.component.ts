@@ -1,5 +1,5 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { CartButtonService, CartDrawerService } from '@services/index';
+import { Component, OnInit } from '@angular/core';
+import { CartDrawerService, CartItemQuantityService } from '@services/index';
 import { BehaviorSubject } from 'rxjs';
 
 @Component({
@@ -12,7 +12,7 @@ export class AsideComponent implements OnInit {
 
   constructor(
     private cartDrawerService: CartDrawerService,
-    private cartButtonService: CartButtonService
+    private cartItemQuantityService: CartItemQuantityService
   ) {}
 
   ngOnInit() {
@@ -21,10 +21,12 @@ export class AsideComponent implements OnInit {
       this.totalItemsInCart$.next(parseInt(initialValue));
     }
 
-    this.cartButtonService.getTotalItemsInCart().subscribe((count) => {
-      this.totalItemsInCart$.next(count);
-      localStorage.setItem('totalItemsInCart', count.toString());
-    });
+    this.cartItemQuantityService
+      .getTotalItemsInCart()
+      .subscribe((totalQuantityItems: number) => {
+        this.totalItemsInCart$.next(totalQuantityItems);
+        localStorage.setItem('totalItemsInCart', totalQuantityItems.toString());
+      });
   }
 
   openDrawer(event: Event) {

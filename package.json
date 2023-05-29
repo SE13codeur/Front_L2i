@@ -24,6 +24,7 @@
     "@ngxs/devtools-plugin": "^3.8.1",
     "@ngxs/form-plugin": "^3.8.1",
     "@ngxs/logger-plugin": "^3.8.1",
+    "@ngxs/storage-plugin": "^3.8.1",
     "@ngxs/store": "^3.8.1",
     "meilisearch": "^0.32.3",
     "rxjs": "~7.5.0",

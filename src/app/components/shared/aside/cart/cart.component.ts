@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ICartItem } from '@models/cart';
-import { CartButtonService, CartService } from '@services/index';
+import { Select, Store } from '@ngxs/store';
+import {
+  CartState,
+  RemoveFromCart,
+  UpdateCartItemQuantity,
+} from '@store/index';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -9,42 +14,40 @@ import { Observable } from 'rxjs';
   styleUrls: ['./cart.component.css'],
 })
 export class CartComponent implements OnInit {
-  itemsInCart: ICartItem[] = [];
-  itemQuantitiesInCart: { [itemId: number]: number } = {};
-  cartItems$: Observable<ICartItem[]> | undefined;
-  totalItemsInCart$: Observable<number> | undefined;
+  @Select(CartState.getCartItems) cartItems$:
+    | Observable<ICartItem[]>
+    | undefined;
 
-  constructor(
-    private cartService: CartService,
-    private cartButtonService: CartButtonService
-  ) {}
+  @Select(CartState.getQuantityByItem) itemQuantity$:
+    | Observable<number>
+    | undefined;
 
-  ngOnInit(): void {
-    this.cartItems$ = this.cartService.getCartItem();
-    this.totalItemsInCart$ = this.cartButtonService.getTotalItemsInCart();
+  @Select(CartState.getTotalItems) totalItems$: Observable<number> | undefined;
 
-    this.cartItems$.subscribe((items) => {
-      this.itemsInCart = items;
-      this.itemsInCart.forEach((item) => {
-        this.cartButtonService
-          .getQuantityByItemInCart(item.id)
-          .subscribe((quantity) => {
-            this.itemQuantitiesInCart[item.id] = quantity;
-          });
-      });
-    });
-  }
+  constructor(private store: Store) {}
+
+  ngOnInit(): void {}
 
   increaseQuantity(itemId: number): void {
-    this.cartButtonService.increaseItemQuantity(itemId);
+    let item = this.store
+      .selectSnapshot(CartState.getCartItems)
+      .find((a) => a.id === itemId);
+    if (item) {
+      this.store.dispatch(
+        new UpdateCartItemQuantity(itemId, item.quantity + 1)
+      );
+    }
   }
 
   decreaseQuantity(itemId: number): void {
-    this.cartButtonService.decreaseItemQuantity(itemId);
-  }
-
-  removeItem(index: number): void {
-    this.cartService.removeItemFromCart(index);
+    let item = this.store
+      .selectSnapshot(CartState.getCartItems)
+      .find((a) => a.id === itemId);
+    if (item && item.quantity > 0) {
+      this.store.dispatch(
+        new UpdateCartItemQuantity(itemId, item.quantity - 1)
+      );
+    }
   }
 
   checkout(): void {

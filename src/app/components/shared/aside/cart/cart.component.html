@@ -13,19 +13,28 @@
               <small class="text-muted">Price: {{item.price | currency}}</small>
             </div>
             <div class="card-text">
-              <button (click)="decreaseQuantity(i)">-</button>
-              <span>{{itemQuantitiesInCart[item.id]}}</span>
-              <button (click)="increaseQuantity(i)">+</button>
+              <button (click)="decreaseQuantity(item)">-</button>
+              <span>{{(CartState.getItemQuantity(item.id) | async) || 0}}</span>
+              <button (click)="increaseQuantity(item)">+</button>
             </div>
-            <button class="btn btn-danger" (click)="removeItem(i)">Remove</button>
+            <button class="btn btn-danger" (click)="removeItemFromCart(item.id)">Remove</button>
           </div>
-          <div class="total-items-in-cart" *ngIf="totalItemsInCart$ | async as totalItemsInCart">
-            Total : {{ totalItemsInCart }}
-          </div>
-
         </div>
       </div>
     </div>
+    <div class="total-items-in-cart" *ngIf="(CartState.getTotalItems | async) as totalItemsInCart">
+      Total : {{ totalItemsInCart }}
+    </div>
     <button class="btn btn-primary" (click)="checkout()">Checkout</button>
   </div>
+</div>
+
+<div class="cart-container">
+  <mat-icon>shopping_cart</mat-icon>
+  <mat-form-field>
+    <mat-select [value]="(CartState.getItemQuantity(item.id) | async)" (selectionChange)="changeItemQty($event.value, item.id)">
+      <mat-option *ngFor="let number of numbers" [value]="number">{{number}}</mat-option>
+    </mat-select>
+
+  </mat-form-field>
 </div>

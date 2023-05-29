@@ -7,12 +7,12 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { NgxsStoreModule } from './store';
+import { CartState, NgxsStoreModule } from './store';
 import { AuthService, CartService, PaginatorFrService } from '@services/index';
 import {
   AdminItemComponent,
   AsideComponent,
-  CartButtonComponent,
+  CartItemQuantityComponent,
   CartComponent,
   DetailItemComponent,
   FiltersItemComponent,
@@ -54,6 +54,8 @@ import { NgxSliderModule } from '@angular-slider/ngx-slider';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgxsModule } from '@ngxs/store';
+import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 
 @NgModule({
   declarations: [
@@ -72,10 +74,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     FiltersItemComponent,
     AdminItemComponent,
     ListItemWithoutMeilisearchComponent,
-    CartButtonComponent,
+    CartItemQuantityComponent,
     DetailItemPageComponent,
   ],
   imports: [
+    NgxsModule.forRoot([CartState]),
+    NgxsStoragePluginModule.forRoot({ key: 'cart' }),
     BrowserModule,
     NgxsStoreModule,
     MatTableModule,

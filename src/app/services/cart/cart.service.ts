@@ -1,20 +1,23 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, map } from 'rxjs';
+import { Store } from '@ngxs/store';
 import { ICartItem, IItem } from '@models/index';
+import {
+  AddToCart,
+  UpdateCartItemQuantity,
+  RemoveFromCart,
+  ClearCart,
+} from '@store/index';
+import { CartState } from '@store/cart/cart.state';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CartService {
-  private cart$ = new BehaviorSubject<ICartItem[]>([]);
-  private taxRate = 0.2; // 20% Tax
-  private shippingFee = 4.04; // Flat shipping fee
-  private saveForLaterItems$ = new BehaviorSubject<ICartItem[]>([]);
+  constructor(private store: Store) {}
 
-  constructor() {}
-
-  getCartItem(): Observable<ICartItem[]> {
-    return this.cart$.asObservable();
+  getCartItems(): Observable<ICartItem[]> {
+    return this.store.select(CartState.getCartItems);
   }
 
   addItemToCart(item: IItem, quantity: number): void {
@@ -27,109 +30,27 @@ export class CartService {
       isbn13: item.isbn13,
       title: item.title,
       price: item.regularPrice,
-      quantity$: new BehaviorSubject<number>(quantity),
+      quantity,
       description: item.description,
       image: item.imageUrl,
     };
 
-    const currentCart = this.cart$.getValue();
-    currentCart.push(cartItem);
-    this.cart$.next(currentCart);
+    this.store.dispatch(new AddToCart(cartItem));
   }
 
-  updateItemQuantity(index: number, quantity: number) {
-    const currentCart = this.cart$.getValue();
-    currentCart[index].quantity$.next(quantity);
-    this.cart$.next(currentCart);
-  }
-
-  removeItemFromCart(index: number) {
-    const currentCart = this.cart$.getValue();
-    currentCart.splice(index, 1);
-    this.cart$.next(currentCart);
+  removeItemFromCart(itemId: number) {
+    this.store.dispatch(new RemoveFromCart(itemId));
   }
 
   clearCart() {
-    this.cart$.next([]);
+    this.store.dispatch(new ClearCart());
   }
 
   getSubTotal(): Observable<number> {
-    return this.cart$.pipe(
-      map((items) =>
-        items.reduce(
-          (total, item) => total + item.price * item.quantity$.getValue(),
-          0
-        )
-      )
-    );
+    return this.store.select(CartState.getSubTotal);
   }
 
-  getTotalTax(): Observable<number> {
-    return this.getSubTotal().pipe(map((subtotal) => subtotal * this.taxRate));
-  }
-
-  getTotalItems(): number {
-    const currentCart = this.cart$.getValue();
-    return currentCart.reduce(
-      (acc, item) => acc + item.quantity$.getValue(),
-      0
-    );
-  }
-
-  getTotalPrice(): number {
-    const currentCart = this.cart$.getValue();
-    return currentCart.reduce(
-      (acc, item) => acc + item.price * item.quantity$.getValue(),
-      0
-    );
-  }
-
-  validateOrder(order: any): boolean {
-    if (!order.shippingAddress || !order.billingAddress) {
-      throw new Error('Missing shipping or billing address');
-    }
-    // TODO validate order with user infos or others validations as needed...
-    return true;
-  }
-
-  // createOrder(customerInfo): Order {
-  //   const order: Order
-
-  //   this.clearCart();
-
-  //   return order;
-  // }
-
-  // createInvoice(order: Order): Invoice {
-  //     TODO with Back controller
-  //   return invoice;
-  // }
-
-  saveForLater(item: ICartItem): void {
-    const currentSaveForLaterItems = this.saveForLaterItems$.getValue();
-    currentSaveForLaterItems.push(item);
-    this.saveForLaterItems$.next(currentSaveForLaterItems);
-  }
-
-  applyDiscountCode(discountCode: string): void {
-    // Logic to apply discount code goes here
-    // For example:
-    // if (discountCode === 'DISCOUNT10') {
-    //   const currentCart = this.cart$.getValue();
-    //   currentCart.forEach(item => {
-    //     item.price *= 0.9; // Apply 10% discount
-    //   });
-    //   this.cart$.next(currentCart);
-    // }
-  }
-
-  updateDeliveryOption(deliveryOption: string): void {
-    // Logic to update delivery option goes here
-    // For example, you could adjust the shipping fee based on the option:
-    // if (deliveryOption === 'express') {
-    //   this.shippingFee = 10;
-    // } else if (deliveryOption === 'standard') {
-    //   this.shippingFee = 4.04;
-    // }
+  getTotalPrice(): Observable<number> {
+    return this.store.select(CartState.getTotalWithTaxes);
   }
 }

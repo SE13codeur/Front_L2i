@@ -5,7 +5,7 @@ export interface ICartItem {
   isbn13: string;
   title: string;
   price: number;
-  quantity$: BehaviorSubject<number>;
+  quantity: number;
   description: string;
   image: string;
 }
