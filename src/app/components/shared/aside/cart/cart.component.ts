@@ -1,11 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ICartItem } from '@models/cart';
 import { Select, Store } from '@ngxs/store';
-import {
-  CartState,
-  RemoveFromCart,
-  UpdateCartItemQuantity,
-} from '@store/index';
+import { CartState, UpdateCartItemQuantity } from '@store/index';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -18,7 +14,7 @@ export class CartComponent implements OnInit {
     | Observable<ICartItem[]>
     | undefined;
 
-  @Select(CartState.getQuantityByItem) itemQuantity$:
+  @Select(CartState.getCartItemQuantity) itemQuantity$:
     | Observable<number>
     | undefined;
 

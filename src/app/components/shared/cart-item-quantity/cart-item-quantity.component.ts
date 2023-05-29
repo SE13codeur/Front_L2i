@@ -11,7 +11,7 @@ import { CartItemQuantityService } from '@services/cart';
 export class CartItemQuantityComponent implements OnInit {
   @Input() item: IItem | undefined;
   numbers: number[] = [0, 1, 2, 3, 4, 5, 6, 7];
-  selectedQty: number = 0;
+  selectedQuantity: number = 0;
 
   constructor(private cartItemQuantityService: CartItemQuantityService) {}
 
@@ -20,12 +20,12 @@ export class CartItemQuantityComponent implements OnInit {
       this.cartItemQuantityService
         .getCartItemQuantity(this.item.id)
         .subscribe((quantity) => {
-          this.selectedQty = quantity;
+          this.selectedQuantity = quantity;
         });
     }
   }
 
-  changeItemQty(newQty: number): void {
+  changeItemQuantity(newQty: number): void {
     if (this.item) {
       this.cartItemQuantityService.changeCartItemQuantity(this.item.id, newQty);
     }

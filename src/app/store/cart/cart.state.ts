@@ -1,14 +1,9 @@
 import { Injectable } from '@angular/core';
+import { ICartItem } from '@models/index';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
-import { ICartItem, IItem } from '@models/index';
-import {
-  AddToCart,
-  RemoveFromCart,
-  UpdateCartItemQuantity,
-  ClearCart,
-  IncreaseCartItemQuantity,
-  DecreaseCartItemQuantity,
-} from './cart.action';
+import { UpdateItemQuantityInStock } from '@store/item';
+import { ItemState, ItemStateModel } from '@store/item/item.state';
+import { AddToCart, ClearCart, RemoveFromCart } from './cart.action';
 
 export interface CartStateModel {
   cartItems: ICartItem[];
@@ -22,6 +17,14 @@ export interface CartStateModel {
 })
 @Injectable()
 export class CartState {
+  static getItemQuantity(
+    getItemQuantity: any
+  ): (
+    target: import('../../components').CartComponent,
+    propertyKey: 'itemQuantity$'
+  ) => void {
+    throw new Error('Method not implemented.');
+  }
   constructor() {}
 
   @Selector()
@@ -56,6 +59,25 @@ export class CartState {
     return state.cartItems.reduce((total, item) => total + item.quantity, 0);
   }
 
+  @Selector([ItemState])
+  static getCartItemWithStock(
+    state: CartStateModel,
+    itemState: ItemStateModel
+  ): (id: number) => ICartItem | undefined {
+    return (id: number) => {
+      const cartItem = state.cartItems.find((item) => item.id === id);
+      if (cartItem) {
+        const item = itemState.items.find((item) => item.id === id);
+        return {
+          ...cartItem,
+          quantityInStock: item ? item.quantityInStock : 0,
+        };
+      } else {
+        return undefined;
+      }
+    };
+  }
+
   @Action(AddToCart)
   add(
     { getState, patchState }: StateContext<CartStateModel>,
@@ -77,106 +99,42 @@ export class CartState {
     });
   }
 
-  @Action(IncreaseCartItemQuantity)
-  increaseItemQuantity(
+  @Action(UpdateItemQuantityInStock)
+  updateItemStock(
     { getState, patchState }: StateContext<CartStateModel>,
-    { itemId, selectedQuantity }: IncreaseCartItemQuantity
+    { itemId, selectedQuantity }: UpdateItemQuantityInStock
   ) {
     const state = getState();
     const cartItemIndex = state.cartItems.findIndex(
       (item) => item.id === itemId
     );
+
     if (cartItemIndex === -1) {
       throw new Error('Item not found in cart');
     }
 
     const cartItem = state.cartItems[cartItemIndex];
-
-    // Récupérer le state de l'Item
-    const itemState = this.store.selectSnapshot(ItemState);
-
-    // Récupérer l'item correspondant à partir du state de l'Item
-    const item = itemState.items.find((item) => item.id === cartItem.id);
-
-    if (!item) {
-      throw new Error('Item not found in items');
-    }
-
-    if (cartItem.quantity + selectedQuantity > item.quantityInStock) {
-      throw new Error('Quantity exceeds available stock');
-    }
-
-    const updatedCartItem = {
-      ...cartItem,
-      quantity: cartItem.quantity + selectedQuantity,
-    };
-    const updatedCartItems = [...state.cartItems];
-    updatedCartItems[cartItemIndex] = updatedCartItem;
-
-    patchState({
-      cartItems: updatedCartItems,
-    });
-  }
-
-  @Action(DecreaseCartItemQuantity)
-  decreaseItemQuantity(
-    { getState, patchState }: StateContext<CartStateModel>,
-    { itemId, selectedQuantity }: DecreaseCartItemQuantity
-  ) {
-    const state = getState();
-    const cartItemIndex = state.cartItems.findIndex(
-      (item) => item.id === itemId
-    );
-    if (cartItemIndex === -1) {
-      throw new Error('Item not found in cart');
-    }
-
-    const cartItem = state.cartItems[cartItemIndex];
-    if (cartItem.quantity - selectedQuantity < 0) {
-      throw new Error('Quantity cannot be less than zero');
-    }
-
-    const updatedCartItem = {
-      ...cartItem,
-      quantity: cartItem.quantity - selectedQuantity,
-    };
-    const updatedCartItems = [...state.cartItems];
-    updatedCartItems[cartItemIndex] = updatedCartItem;
-
-    patchState({
-      cartItems: updatedCartItems,
-    });
-  }
-
-  @Action(UpdateCartItemQuantity)
-  updateItemQuantity(
-    { getState, patchState }: StateContext<CartStateModel>,
-    { itemId, quantity }: UpdateCartItemQuantity
-  ) {
-    const state = getState();
-    const item = state.cartItems[itemId];
-
-    if (!item) {
-      throw new Error('Item not found in cart');
-    }
 
     // If quantity is more than available in stock, throw an error
-    if (quantity > item.quantity) {
-      throw new Error('Quantity exceeds available stock');
+    if (selectedQuantity > cartItem.quantity) {
+      throw new Error('Quantity in cart exceeds available stock');
     }
 
     // If quantity is less than zero, throw an error
-    if (quantity < 0) {
-      throw new Error('Quantity cannot be less than zero');
+    if (selectedQuantity < 0) {
+      throw new Error('Selected quantity cannot be less than zero');
     }
 
-    const updatedItem = { ...item, quantity };
+    const updatedCartItem = {
+      ...cartItem,
+      quantity: selectedQuantity,
+    };
+
+    const updatedCartItems = [...state.cartItems];
+    updatedCartItems[cartItemIndex] = updatedCartItem;
 
     patchState({
-      cartItems: {
-        ...state.cartItems,
-        [itemId]: updatedItem,
-      },
+      cartItems: updatedCartItems,
     });
   }
 

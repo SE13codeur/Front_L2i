@@ -9,16 +9,10 @@ import { Observable } from 'rxjs';
 export class CartItemQuantityService {
   constructor(private store: Store) {}
 
-  increaseItemQuantity(itemId: number, qty = 1): void {
-    this.store.dispatch(new IncreaseCartItemQuantity(itemId, qty));
-  }
-
-  decreaseItemQuantity(itemId: number, qty = 1): void {
-    this.store.dispatch(new DecreaseCartItemQuantity(itemId, qty));
-  }
-
   getCartItemQuantity(itemId: number): Observable<number> {
-    return this.store.select(CartState.getCartItemQuantity(itemId));
+    return this.store.select((state) =>
+      CartState.getCartItemQuantity(state.cart)(itemId)
+    );
   }
 
   getTotalItemsInCart(): Observable<number> {
