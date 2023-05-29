@@ -49,21 +49,21 @@ export class CartButtonService {
     }
   }
 
-  getItemQuantityByCardForCart(itemId: number): Observable<number> {
+  getQuantityByItemInCart(itemId: number): Observable<number> {
     if (!this.itemQuantityByItemId$[itemId]) {
       this.itemQuantityByItemId$[itemId] = new BehaviorSubject<number>(0);
     }
     return this.itemQuantityByItemId$[itemId].asObservable();
   }
 
-  getTotalItemsForCart(): Observable<number> {
-    const totalItemsForCart = Object.values(this.itemQuantityByItemId$);
+  getTotalItemsInCart(): Observable<number> {
+    const totalItemsInCart = Object.values(this.itemQuantityByItemId$);
 
-    if (totalItemsForCart.length === 0) {
+    if (totalItemsInCart.length === 0) {
       return new BehaviorSubject(0).asObservable();
     }
 
-    return combineLatest(totalItemsForCart).pipe(
+    return combineLatest(totalItemsInCart).pipe(
       map((values) => values.reduce((acc, val) => acc + val, 0))
     );
   }

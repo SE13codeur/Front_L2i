@@ -1,4 +1,4 @@
 <aside (click)="openDrawer($event)">
-  <mat-icon [ngClass]="{'ping': (totalItemsForCart$.value > 0)}">shopping_cart</mat-icon>
-  <span>{{totalItemsForCart$ | async}}</span>
+  <mat-icon [ngClass]="{'ping': (totalItemsInCart$.value > 0)}">shopping_cart</mat-icon>
+  <span>{{totalItemsInCart$ | async}}</span>
 </aside>

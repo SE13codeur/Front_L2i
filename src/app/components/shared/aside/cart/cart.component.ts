@@ -1,7 +1,7 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { ICartItem } from '@m/ICartItem';
-import { CartButtonService } from '@s/cart/cart-button.service';
-import { CartService } from '@s/cart/cart.service';
+import { Component, OnInit } from '@angular/core';
+import { ICartItem } from '@modelscart';
+import { CartButtonService, CartService } from '@services/index';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-cart',
@@ -9,45 +9,46 @@ import { CartService } from '@s/cart/cart.service';
   styleUrls: ['./cart.component.css'],
 })
 export class CartComponent implements OnInit {
-  cartItems: ICartItem[] = [];
-  displayedColumns: string[] = [
-    'Name',
-    'Description',
-    'Price',
-    'Discounted Price',
-    'Action',
-  ];
-  @Output() closeClickedDrawer = new EventEmitter();
+  itemsInCart: ICartItem[] = [];
+  itemQuantitiesInCart: { [itemId: number]: number } = {};
+  cartItems$: Observable<ICartItem[]> | undefined;
+  totalItemsInCart$: Observable<number> | undefined;
 
   constructor(
     private cartService: CartService,
     private cartButtonService: CartButtonService
   ) {}
-  totalCartItems$ = 0;
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.cartItems$ = this.cartService.getCartItem();
+    this.totalItemsInCart$ = this.cartButtonService.getTotalItemsInCart();
 
-  getTotalPrice(): number {
-    return this.cartService.getTotalPrice();
+    this.cartItems$.subscribe((items) => {
+      this.itemsInCart = items;
+      this.itemsInCart.forEach((item) => {
+        this.cartButtonService
+          .getQuantityByItemInCart(item.id)
+          .subscribe((quantity) => {
+            this.itemQuantitiesInCart[item.id] = quantity;
+          });
+      });
+    });
   }
 
-  increaseItemQuantity(item: ICartItem): void {
-    this.cartButtonService.increaseItemQuantity(item.id);
+  increaseQuantity(itemId: number): void {
+    this.cartButtonService.increaseItemQuantity(itemId);
   }
 
-  decreaseItemQuantity(item: ICartItem): void {
-    this.cartButtonService.decreaseItemQuantity(item.id);
+  decreaseQuantity(itemId: number): void {
+    this.cartButtonService.decreaseItemQuantity(itemId);
   }
 
-  removeItem(cart: ICartItem): void {
-    this.cartService.removeItemFromCart(cart.id);
+  removeItem(index: number): void {
+    this.cartService.removeItemFromCart(index);
   }
 
   checkout(): void {
-    // TODO : the real payment
-    // setTimeout(() => {
-    //   this.cartService.clearCart();
-    //   this.router.navigate(['/checkout']);
-    // }, 2002);
+    // Logic for checking out goes here
+    console.log('Checkout');
   }
 }

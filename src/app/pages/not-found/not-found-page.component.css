@@ -25,7 +25,7 @@ body, html {
 
 .number {
   color: rgb(255, 64, 128);
-  text-shadow: 7px 0px 0px rgba(217, 31, 38, 0.5);
+  text-shadow: 7px 0px 0px rgb(255, 64, 128);
 }
 
 .illustration {
@@ -75,7 +75,7 @@ body, html {
   position: relative;
   width: 20%;
   height: 20%;
-  background: #680100;
+  background: rgb(255, 64, 128);
   border-radius: 50%;
 }
 
@@ -117,10 +117,10 @@ body, html {
   transition: all 0.3s;
 }
 
-.button:hover {background-color: #c60327}
+.button:hover {background-color: rgb(211, 42, 98)}
 
 .button:active {
-  background-color: #c60327;
-  box-shadow: 0 5px #666;
+  background-color: rgb(204, 41, 95);
+  box-shadow: 0 5px #777;
   transform: translateY(4px);
 }

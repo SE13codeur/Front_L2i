@@ -8,7 +8,7 @@ import { BehaviorSubject } from 'rxjs';
   styleUrls: ['./aside.component.css'],
 })
 export class AsideComponent implements OnInit {
-  totalItemsForCart$ = new BehaviorSubject<number>(0);
+  totalItemsInCart$ = new BehaviorSubject<number>(0);
 
   constructor(
     private cartDrawerService: CartDrawerService,
@@ -16,14 +16,14 @@ export class AsideComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    let initialValue = localStorage.getItem('totalItemsForCart');
+    let initialValue = localStorage.getItem('totalItemsInCart');
     if (initialValue) {
-      this.totalItemsForCart$.next(parseInt(initialValue));
+      this.totalItemsInCart$.next(parseInt(initialValue));
     }
 
-    this.cartButtonService.getTotalItemsForCart().subscribe((count) => {
-      this.totalItemsForCart$.next(count);
-      localStorage.setItem('totalItemsForCart', count.toString());
+    this.cartButtonService.getTotalItemsInCart().subscribe((count) => {
+      this.totalItemsInCart$.next(count);
+      localStorage.setItem('totalItemsInCart', count.toString());
     });
   }
 

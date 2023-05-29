@@ -21,7 +21,7 @@ export class CartButtonComponent implements OnInit {
   ngOnInit(): void {
     if (this.item) {
       this.cartButtonService
-        .getItemQuantityByCardForCart(this.item.id)
+        .getQuantityByItemInCart(this.item.id)
         .subscribe((quantity) => {
           this.itemQuantityByItemId$.next(quantity);
           this.selectedQty = quantity;
