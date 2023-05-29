@@ -60,7 +60,7 @@ export class CartState {
   }
 
   @Selector([ItemState])
-  static getCartItemWithStock(
+  static getCartItemInStock(
     state: CartStateModel,
     itemState: ItemStateModel
   ): (id: number) => ICartItem | undefined {

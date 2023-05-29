@@ -1,4 +1,20 @@
 <aside (click)="openDrawer($event)">
-  <mat-icon [ngClass]="{'ping': (totalItemsInCart$.value > 0)}">shopping_cart</mat-icon>
-  <span>{{totalItemsInCart$ | async}}</span>
+  <mat-icon
+    [ngClass]="{'ping': (((totalItemsInCart$ | async) ?? 0) > 0)}"
+    [ngClass]="{'ping-hidden': (((totalItemsInCart$ | async) ?? 0) === 0)}"
+  >
+  add_shopping_cart
+  </mat-icon>
+  <mat-icon [ngClass]="{'animation-cart-empty': ((totalItemsInCart$ | async) ?? 0) === 0}">shopping_cart</mat-icon>
+
+  <span>{{ (totalItemsInCart$ | async) || 0 }}</span>
 </aside>
+
+<!-- Dialog content -->
+<ng-template #dialogContent>
+  <div class="dialog-content">
+   <mat-icon>visibility_off</mat-icon>
+    <span class="dialog-text">Votre panier est vide</span>
+    <mat-icon>shopping_cart</mat-icon>
+  </div>
+</ng-template>

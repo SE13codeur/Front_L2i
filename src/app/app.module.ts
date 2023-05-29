@@ -45,6 +45,8 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatDialogModule } from '@angular/material/dialog';
+
 import {
   MatPaginatorIntl,
   MatPaginatorModule,
@@ -78,10 +80,10 @@ import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
     DetailItemPageComponent,
   ],
   imports: [
-    NgxsModule.forRoot([CartState]),
-    NgxsStoragePluginModule.forRoot({ key: 'cart' }),
     BrowserModule,
     NgxsStoreModule,
+    NgxsModule.forRoot([CartState]),
+    NgxsStoragePluginModule.forRoot({ key: 'cart' }),
     MatTableModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -105,6 +107,7 @@ import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
     MatSnackBarModule,
     MatSelectModule,
     FormsModule,
+    MatDialogModule,
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'fr-FR' },
