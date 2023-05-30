@@ -25,9 +25,12 @@ export class CartItemQuantityComponent implements OnInit {
     }
   }
 
-  changeItemQuantity(newQty: number): void {
+  changeItemQuantity(newQuantity: number): void {
     if (this.item) {
-      this.cartItemQuantityService.changeCartItemQuantity(this.item.id, newQty);
+      this.cartItemQuantityService.changeCartItemQuantity(
+        this.item.id,
+        newQuantity
+      );
     }
   }
 }

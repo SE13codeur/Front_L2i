@@ -15,8 +15,8 @@ export class CartItemQuantityService {
     );
   }
 
-  getTotalItemsInCart(): Observable<number> {
-    return this.store.select(CartState.getTotalItems);
+  getCartTotalItems(): Observable<number> {
+    return this.store.select(CartState.getCartTotalItems);
   }
 
   changeCartItemQuantity(itemId: number, quantity: number): void {

@@ -19,7 +19,7 @@ export class AsideComponent {
     private cartItemQuantityService: CartItemQuantityService,
     public dialog: MatDialog
   ) {
-    this.totalItemsInCart$ = this.cartItemQuantityService.getTotalItemsInCart();
+    this.totalItemsInCart$ = this.cartItemQuantityService.getCartTotalItems();
   }
 
   openDrawer(event: Event) {

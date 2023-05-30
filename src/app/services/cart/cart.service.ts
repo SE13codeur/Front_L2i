@@ -1,13 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Store } from '@ngxs/store';
 import { ICartItem, IItem } from '@models/index';
-import {
-  AddToCart,
-  UpdateCartItemQuantity,
-  RemoveFromCart,
-  ClearCart,
-} from '@store/index';
+import { Store } from '@ngxs/store';
 import { CartState } from '@store/cart/cart.state';
+import { AddToCart, ClearCart, RemoveFromCart } from '@store/index';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -29,10 +24,19 @@ export class CartService {
       id: item.id,
       isbn13: item.isbn13,
       title: item.title,
-      price: item.regularPrice,
-      quantity,
       description: item.description,
-      image: item.imageUrl,
+      imageUrl: item.imageUrl,
+      regularPrice: item.regularPrice,
+      quantity,
+      subtitle: item.subtitle,
+      quantityInStock: item.quantityInStock,
+      totalSales: item.totalSales,
+      authors: item.authors,
+      editor: item.editor,
+      category: item.category,
+      pages: item.pages,
+      year: item.year,
+      version: item.version,
     };
 
     this.store.dispatch(new AddToCart(cartItem));

@@ -1,11 +1,5 @@
-import { BehaviorSubject } from 'rxjs';
+import { IItem } from '@models/item';
 
-export interface ICartItem {
-  id: number;
-  isbn13: string;
-  title: string;
-  price: number;
+export interface ICartItem extends IItem {
   quantity: number;
-  description: string;
-  image: string;
 }

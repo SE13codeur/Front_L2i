@@ -15,11 +15,12 @@ import { Observable } from 'rxjs';
   styleUrls: ['./cart.component.css'],
 })
 export class CartComponent implements OnInit {
-  @Select(CartState.getDetailedCartItems) cartItems$:
-    | Observable<IItem[]>
+  @Select(CartState.getCartItems) cartItems$:
+    | Observable<ICartItem[]>
     | undefined;
-
-  @Select(CartState.getTotalItems) totalItems$: Observable<number> | undefined;
+  @Select(CartState.getCartTotalItems) totalItems$:
+    | Observable<number>
+    | undefined;
 
   constructor(private store: Store) {}
 
@@ -29,14 +30,8 @@ export class CartComponent implements OnInit {
     this.store.dispatch(new RemoveFromCart(itemId));
   }
 
-  updateCartItemQuantity(itemId: number, newQty: number): void {
-    this.store.dispatch(new UpdateCartItemQuantity(itemId, newQty));
-  }
-
-  getCartItemInStock(itemId: number): Observable<ICartItem | undefined> {
-    return this.store.select((state) =>
-      CartState.getCartItemInStock(state.cart, state.item)(itemId)
-    );
+  updateCartItemQuantity(itemId: number, newQuantity: number): void {
+    this.store.dispatch(new UpdateCartItemQuantity(itemId, newQuantity));
   }
 
   checkout(): void {
