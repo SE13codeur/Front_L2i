@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./aside.component.css'],
 })
 export class AsideComponent {
-  totalItemsInCart$: Observable<number>;
+  totalItemsInCart$: Observable<number> | null;
   @ViewChild('dialogContent', { static: false }) dialogContent:
     | TemplateRef<any>
     | undefined;
@@ -26,7 +26,7 @@ export class AsideComponent {
     event.stopPropagation();
 
     this.totalItemsInCart$
-      .subscribe((totalItemsInCart) => {
+      ?.subscribe((totalItemsInCart) => {
         if (totalItemsInCart > 0) {
           this.cartDrawerService.toggleDrawer();
         } else {
