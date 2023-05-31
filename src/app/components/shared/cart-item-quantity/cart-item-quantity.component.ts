@@ -25,8 +25,9 @@ export class CartItemQuantityComponent implements OnInit {
     }
   }
 
-  changeItemQuantity(newQuantity: number): void {
+  changeItemQuantity(event: any): void {
     if (this.item) {
+      const newQuantity = event.value;
       this.cartItemQuantityService.changeCartItemQuantity(
         this.item.id,
         newQuantity

@@ -72,8 +72,9 @@ export class CartState {
         ...cartItems[itemIndex],
         quantity: cartItems[itemIndex].quantity + item.quantity,
       };
-    } else {
-      // Item does not exist in the cart, add it.
+    }
+    // Item does not exist in the cart, add it.
+    if (itemIndex <= -1) {
       cartItems.push(item);
     }
 

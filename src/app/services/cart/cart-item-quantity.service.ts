@@ -19,7 +19,7 @@ export class CartItemQuantityService {
     return this.store.select(CartState.getCartTotalItems);
   }
 
-  changeCartItemQuantity(itemId: number, quantity: number): void {
-    this.store.dispatch(new UpdateCartItemQuantity(itemId, quantity));
+  changeCartItemQuantity(itemId: number, selectedQuantity: number): void {
+    this.store.dispatch(new UpdateCartItemQuantity(itemId, selectedQuantity));
   }
 }

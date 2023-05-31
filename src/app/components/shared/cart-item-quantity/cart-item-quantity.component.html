@@ -1,7 +1,7 @@
 <div class="cart-container">
   <mat-icon>shopping_cart</mat-icon>
   <mat-form-field (click)="$event.stopPropagation()">
-    <mat-select [value]="selectedQuantity" (selectionChange)="changeItemQuantity(selectedQuantity)">
+    <mat-select [value]="selectedQuantity" (selectionChange)="changeItemQuantity($event)">
       <mat-option *ngFor="let number of numbers" [value]="number">{{number}}</mat-option>
     </mat-select>
   </mat-form-field>
