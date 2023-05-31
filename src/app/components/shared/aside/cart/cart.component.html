@@ -1,32 +1,24 @@
 <div class="container">
-  <div class="grid">
-    <div *ngFor="let item of (cartItems$ | async); let i = index" class="product-card">
+  <h1>Votre panier</h1>
+
+  <div class="cart-grid">
+    <div *ngFor="let item of (cartItems$ | async); let i = index" class="cart-item">
       <img [src]="item.imageUrl" alt="{{item.title}}">
-      <div class="content">
+      <div class="item-info">
         <h2>{{item.title}}</h2>
         <p>{{item.category.name}}</p>
         <p><small class="text-muted">Prix en euros: {{item.regularPrice | currency:'EUR':true}}</small></p>
-        <div class="actions">
-          <app-cart-item-quantity [item]="item"></app-cart-item-quantity>
-          <button (click)="removeItemFromCart(item.id)">
-            <mat-icon color="warn" aria-label="Remove this item">delete</mat-icon>
-          </button>
-        </div>
+        <app-cart-item-quantity [item]="item"></app-cart-item-quantity>
+        <button (click)="removeItemFromCart(item.id)">Supprimer</button>
       </div>
     </div>
-  </div>
 
-  <div class="total-items-in-cart" *ngIf="(totalItems$ | async) as totalItemsInCart">
-    <h3>Total d'articles dans le panier: {{ totalItemsInCart }}</h3>
-  </div>
+    <div class="cart-summary">
+      <h3>Total d'articles dans le panier: <span *ngIf="(totalItems$ | async) as totalItemsInCart">{{ totalItemsInCart }}</span></h3>
+      <h3>Prix HT: <span *ngIf="(subTotal$ | async) as subTotal">{{ subTotal | currency:'EUR':true }}</span></h3>
+      <h3>Prix TTC: <span *ngIf="(totalWithTaxes$ | async) as totalWithTaxes">{{ totalWithTaxes | currency:'EUR':true }}</span></h3>
 
-  <div class="sub-total" *ngIf="(subTotal$ | async) as subTotal">
-    <h3>Prix HT: {{ subTotal | currency:'EUR':true }}</h3>
+      <button class="primary-button" (click)="checkout()">Paiement</button>
+    </div>
   </div>
-
-  <div class="total-with-taxes" *ngIf="(totalWithTaxes$ | async) as totalWithTaxes">
-    <h3>Prix TTC: {{ totalWithTaxes | currency:'EUR':true }}</h3>
-  </div>
-
-  <button class="primary-button" (click)="checkout()">Paiement</button>
 </div>
