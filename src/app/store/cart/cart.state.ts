@@ -21,7 +21,7 @@ export interface CartStateModel {
 })
 @Injectable()
 export class CartState {
-  constructor(private itemService: ItemService) {}
+  constructor(private itemService: ItemService, private store: Store) {}
 
   @Selector()
   static getCartItems(state: CartStateModel) {
@@ -88,6 +88,11 @@ export class CartState {
     { getState, patchState }: StateContext<CartStateModel>,
     { itemId, selectedQuantity }: UpdateCartItemQuantity
   ) {
+    if (selectedQuantity === 0) {
+      this.store.dispatch(new RemoveFromCart(itemId));
+      return;
+    }
+
     const state = getState();
     const cartItems = [...state.cartItems];
     const itemIndex = cartItems.findIndex((item) => item.id === itemId);

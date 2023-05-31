@@ -7,13 +7,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { CartState, NgxsStoreModule } from './store';
-import { AuthService, CartService, PaginatorFrService } from '@services/index';
 import {
   AdminItemComponent,
   AsideComponent,
-  CartItemQuantityComponent,
   CartComponent,
+  CartItemQuantityComponent,
   DetailItemComponent,
   FiltersItemComponent,
   HeaderComponent,
@@ -29,12 +27,16 @@ import {
   NotFoundPageComponent,
   SignPageComponent,
 } from '@pages/index';
+import { AuthService, CartService, PaginatorFrService } from '@services/index';
+import { CartState, NgxsStoreModule } from './store';
 
 import { HttpClientModule } from '@angular/common/http';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -44,8 +46,6 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { MatDialogModule } from '@angular/material/dialog';
 
 import {
   MatPaginatorIntl,
@@ -56,8 +56,8 @@ import { NgxSliderModule } from '@angular-slider/ngx-slider';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgxsModule } from '@ngxs/store';
 import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
+import { NgxsModule } from '@ngxs/store';
 
 @NgModule({
   declarations: [

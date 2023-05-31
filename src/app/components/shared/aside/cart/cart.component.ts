@@ -21,6 +21,10 @@ export class CartComponent implements OnInit {
   @Select(CartState.getCartTotalItems) totalItems$:
     | Observable<number>
     | undefined;
+  @Select(CartState.getSubTotal) subTotal$: Observable<number> | undefined;
+  @Select(CartState.getTotalWithTaxes) totalWithTaxes$:
+    | Observable<number>
+    | undefined;
 
   constructor(private store: Store) {}
 
