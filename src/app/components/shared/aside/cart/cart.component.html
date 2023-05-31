@@ -1,28 +1,32 @@
-<div class="container mt-5">
-  <div *ngIf="(cartItems$ | async) as cartItems">
-    <div *ngFor="let item of cartItems; let i = index" class="card mb-3">
-      <div class="row g-0">
-        <div class="col-md-4">
-          <img [src]="item.imageUrl" class="img-fluid rounded-start" alt="{{item.title}}">
-        </div>
-        <div class="col-md-8">
-          <div class="card-body">
-            <h5 class="card-title">{{item.title}}</h5>
-            <p class="card-text">{{item.description}}</p>
-            <div class="card-text">
-              <small class="text-muted">Price: {{item.regularPrice | currency}}</small>
-            </div>
-            <div class="card-text">
-              <app-cart-item-quantity [item]="item"></app-cart-item-quantity>
-            </div>
-            <button class="btn btn-danger" (click)="removeItemFromCart(item.id)">Remove</button>
-          </div>
+<div class="container">
+  <div class="grid">
+    <div *ngFor="let item of (cartItems$ | async); let i = index" class="product-card">
+      <img [src]="item.imageUrl" alt="{{item.title}}">
+      <div class="content">
+        <h2>{{item.title}}</h2>
+        <p>{{item.category.name}}</p>
+        <p><small class="text-muted">Prix en euros: {{item.regularPrice | currency:'EUR':true}}</small></p>
+        <div class="actions">
+          <app-cart-item-quantity [item]="item"></app-cart-item-quantity>
+          <button (click)="removeItemFromCart(item.id)">
+            <mat-icon color="warn" aria-label="Remove this item">delete</mat-icon>
+          </button>
         </div>
       </div>
     </div>
-    <div class="total-items-in-cart" *ngIf="(totalItems$ | async) as totalItemsInCart">
-      Total : {{ totalItemsInCart }}
-    </div>
-    <button class="btn btn-primary" (click)="checkout()">Checkout</button>
   </div>
+
+  <div class="total-items-in-cart" *ngIf="(totalItems$ | async) as totalItemsInCart">
+    <h3>Total d'articles dans le panier: {{ totalItemsInCart }}</h3>
+  </div>
+
+  <div class="sub-total" *ngIf="(subTotal$ | async) as subTotal">
+    <h3>Prix HT: {{ subTotal | currency:'EUR':true }}</h3>
+  </div>
+
+  <div class="total-with-taxes" *ngIf="(totalWithTaxes$ | async) as totalWithTaxes">
+    <h3>Prix TTC: {{ totalWithTaxes | currency:'EUR':true }}</h3>
+  </div>
+
+  <button class="primary-button" (click)="checkout()">Paiement</button>
 </div>
