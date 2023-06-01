@@ -1,8 +1,8 @@
 aside {
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
   margin: 1.11rem;
 }
 
@@ -64,6 +64,7 @@ span {
 .dialog-content {
   font-size: large;
   font-weight: bold;
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
