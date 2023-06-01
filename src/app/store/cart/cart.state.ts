@@ -61,7 +61,7 @@ export class CartState {
     { item }: AddToCart
   ) {
     const state = getState();
-    const cartItems = [...state.cartItems];
+    let cartItems = [...state.cartItems];
     const itemIndex = cartItems.findIndex(
       (cartItem) => cartItem.id === item.id
     );
@@ -72,10 +72,9 @@ export class CartState {
         ...cartItems[itemIndex],
         quantity: cartItems[itemIndex].quantity + item.quantity,
       };
-    }
-    // Item does not exist in the cart, add it.
-    if (itemIndex <= -1) {
-      cartItems.push(item);
+    } else {
+      // Item does not exist in the cart, add it.
+      cartItems = [...cartItems, item];
     }
 
     patchState({
@@ -103,6 +102,9 @@ export class CartState {
         ...cartItems[itemIndex],
         quantity: selectedQuantity,
       };
+      patchState({
+        cartItems,
+      });
     } else {
       // Item does not exist in the cart, add it.
       this.itemService.getItemById(itemId).subscribe((item) => {
@@ -125,12 +127,11 @@ export class CartState {
           version: item.version,
         };
         cartItems.push(newItem);
+        patchState({
+          cartItems,
+        });
       });
     }
-
-    patchState({
-      cartItems,
-    });
   }
 
   @Action(RemoveFromCart)

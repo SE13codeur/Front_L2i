@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ICartItem } from '@models/cart';
-import { IItem } from '@models/item';
 import { Select, Store } from '@ngxs/store';
 import {
   CartState,
@@ -14,7 +13,7 @@ import { Observable } from 'rxjs';
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css'],
 })
-export class CartComponent implements OnInit {
+export class CartComponent {
   @Select(CartState.getCartItems) cartItems$:
     | Observable<ICartItem[]>
     | undefined;
@@ -27,8 +26,6 @@ export class CartComponent implements OnInit {
     | undefined;
 
   constructor(private store: Store) {}
-
-  ngOnInit(): void {}
 
   removeItemFromCart(itemId: number): void {
     this.store.dispatch(new RemoveFromCart(itemId));
