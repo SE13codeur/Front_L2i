@@ -1,13 +1,16 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { IItem } from '@models/index';
+import { Store } from '@ngxs/store';
 import {
+  CartItemQuantityService,
   FiltersService,
   ItemService,
   PaginationService,
 } from '@services/index';
-import { BehaviorSubject, Subject, take } from 'rxjs';
+import { CartState } from '@store/index';
+import { BehaviorSubject, Observable, Subject, map, take } from 'rxjs';
 
 @Component({
   selector: 'app-list-item-without-meilisearch',
@@ -16,6 +19,8 @@ import { BehaviorSubject, Subject, take } from 'rxjs';
 })
 export class ListItemWithoutMeilisearchComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @Input() items: IItem[] = [];
+  isInCart: ((id: number) => Observable<boolean>) | undefined;
 
   private originalItemList$ = new BehaviorSubject<IItem[]>([]);
 
@@ -30,7 +35,9 @@ export class ListItemWithoutMeilisearchComponent implements OnInit, OnDestroy {
     private itemService: ItemService,
     private filtersService: FiltersService,
     private paginationService: PaginationService,
-    private router: Router
+    private router: Router,
+    private cartItemQuantityService: CartItemQuantityService,
+    private store: Store
   ) {}
 
   ngOnInit(): void {

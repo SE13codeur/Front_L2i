@@ -8,6 +8,7 @@ import {
   RemoveFromCart,
   UpdateCartItemQuantity,
 } from './cart.action';
+import { Observable, of } from 'rxjs';
 
 export interface CartStateModel {
   cartItems: ICartItem[];
@@ -37,6 +38,19 @@ export class CartState {
   }
 
   @Selector()
+  static isInCart(state: CartStateModel): (id: number) => boolean {
+    return (id: number) => {
+      const cartItem = state.cartItems.find((cartItem) => cartItem.id === id);
+      return cartItem !== undefined;
+    };
+  }
+
+  @Selector()
+  static getCartTotalItems(state: CartStateModel) {
+    return state.cartItems.reduce((total, item) => total + item.quantity, 0);
+  }
+
+  @Selector()
   static getSubTotal(state: CartStateModel) {
     return state.cartItems.reduce(
       (total, item) => total + item.regularPrice * item.quantity,
@@ -48,11 +62,6 @@ export class CartState {
   static getTotalWithTaxes(state: CartStateModel) {
     const subTotal = CartState.getSubTotal(state);
     return subTotal + subTotal * 0.2; // 20% of taxes :(
-  }
-
-  @Selector()
-  static getCartTotalItems(state: CartStateModel) {
-    return state.cartItems.reduce((total, item) => total + item.quantity, 0);
   }
 
   @Action(AddToCart)
