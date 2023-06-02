@@ -12,6 +12,8 @@ import { CartState } from '@store/index';
   styleUrls: ['./cart-item-quantity.component.css'],
 })
 export class CartItemQuantityComponent implements OnInit {
+  @ViewChild('quantitySelect') quantitySelect!: MatSelect;
+
   @Input() item: IItem | undefined;
   @Input() items: IItem[] = [];
   @Input() includeZero: boolean | undefined;
@@ -19,10 +21,6 @@ export class CartItemQuantityComponent implements OnInit {
 
   numbers: number[] = [0, 1, 2, 3, 4, 5, 6, 7];
   selectedQuantity: number = 0;
-
-  // Référence à mat-select
-  @ViewChild('quantitySelect') quantitySelect!: MatSelect;
-
   constructor(
     private store: Store,
     private cartItemQuantityService: CartItemQuantityService
