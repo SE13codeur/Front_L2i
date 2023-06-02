@@ -45,7 +45,7 @@ h1 {
 }
 
 .primary-button {
-  background-color: #2196F3;
+  background-color: #0BB9F0;
   color: white;
   border-radius: 44%;
   padding: 0.5rem 1rem;
@@ -54,7 +54,7 @@ h1 {
 }
 
 .primary-button:hover {
-  background-color: #1E88E5;
+  background-color: #2196F3;
 }
 
 .checkout-section {

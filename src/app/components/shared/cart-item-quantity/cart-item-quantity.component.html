@@ -1,7 +1,12 @@
 <div class="cart-container">
   <mat-icon>shopping_cart</mat-icon>
+  <!-- Bouton d'ajout affiché uniquement si la quantité est 0 -->
+  <button *ngIf="selectedQuantity == 0" mat-icon-button color="primary" (click)="openSelect()">
+    <mat-icon>add</mat-icon>
+  </button>
+  <!-- Field de sélection de la quantité -->
   <mat-form-field (click)="$event.stopPropagation()">
-    <mat-select [value]="selectedQuantity" (selectionChange)="changeItemQuantity($event)">
+    <mat-select #quantitySelect [value]="selectedQuantity" (selectionChange)="changeItemQuantity($event)">
       <mat-option *ngFor="let number of numbers" [value]="number">{{number}}</mat-option>
     </mat-select>
   </mat-form-field>
