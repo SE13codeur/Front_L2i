@@ -7,8 +7,8 @@
           {{ truncateText(item.subtitle, 77) }}
         </p>
         <mat-card-actions class="custom-card-actions">
-          <button mat-icon-button color="primary" (click)="addToFavorites(item, $event)">
-            <mat-icon>favorite</mat-icon>
+          <button mat-icon-button color="primary" (click)="addToFavorites(item.id, $event)">
+            <mat-icon [ngClass]="{'card-icon-favorite': isFavorite[item.id]}">favorite</mat-icon>
           </button>
           <mat-card-header>
             <mat-card-title>{{ item.regularPrice }} €</mat-card-title>

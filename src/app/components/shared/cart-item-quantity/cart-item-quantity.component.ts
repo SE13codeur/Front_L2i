@@ -5,7 +5,7 @@ import { Store } from '@ngxs/store';
 
 import { CartItemQuantityService } from '@services/cart';
 import { CartState } from '@store/index';
-import { Subject } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-cart-item-quantity',
@@ -23,24 +23,19 @@ export class CartItemQuantityComponent implements OnInit {
   selectedQuantity: number = 0;
   private destroy$ = new Subject<void>();
 
-  constructor(
-    private store: Store,
-    private cartItemQuantityService: CartItemQuantityService
-  ) {}
+  constructor(private cartItemQuantityService: CartItemQuantityService) {}
 
   ngOnInit(): void {
     if (this.item) {
-      // Utilisez le getCartItemQuantity du store pour obtenir la quantité
-      const getCartItemQuantityFunc = this.store.selectSnapshot(
-        CartState.getCartItemQuantity
-      );
-      this.selectedQuantity = getCartItemQuantityFunc(this.item.id);
+      this.cartItemQuantityService
+        .getCartItemQuantity(this.item.id)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((quantity) => {
+          this.selectedQuantity = quantity;
 
-      // Get the isInCart function
-      const isInCartFunc = this.store.selectSnapshot(CartState.isInCart);
-
-      // Call the function with item id to check if the item is in the cart
-      this.isInCart = isInCartFunc(this.item.id);
+          // Check if the item is in the cart
+          this.isInCart = quantity > 0;
+        });
     }
   }
 

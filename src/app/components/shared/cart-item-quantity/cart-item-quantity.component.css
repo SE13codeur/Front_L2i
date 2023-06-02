@@ -6,3 +6,18 @@
   width: 1.77rem;
 }
 
+.cart-icon {
+  cursor: default;
+}
+
+.cart-icon-add {
+  color: #999999;
+}
+
+.cart-icon-add:hover {
+  color: #0BB9F0
+}
+
+.mat-select-arrow-wrapper ng-tns-c122-20 {
+  color: #0BB9F0
+}

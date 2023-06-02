@@ -22,22 +22,21 @@ export class ListItemWithoutMeilisearchComponent implements OnInit, OnDestroy {
   @Input() items: IItem[] = [];
   isInCart: ((id: number) => Observable<boolean>) | undefined;
 
-  private originalItemList$ = new BehaviorSubject<IItem[]>([]);
-
-  private readonly destroy$ = new Subject<void>();
   currentSearch: string = '';
   itemList$ = new BehaviorSubject<IItem[]>([]);
   totalItems$ = new BehaviorSubject<number | null>(null);
   itemsPerPage = 12;
   currentPage = 1;
+  isFavorite: { [id: number]: boolean } = {};
+
+  private originalItemList$ = new BehaviorSubject<IItem[]>([]);
+  private readonly destroy$ = new Subject<void>();
 
   constructor(
     private itemService: ItemService,
     private filtersService: FiltersService,
     private paginationService: PaginationService,
-    private router: Router,
-    private cartItemQuantityService: CartItemQuantityService,
-    private store: Store
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -143,8 +142,9 @@ export class ListItemWithoutMeilisearchComponent implements OnInit, OnDestroy {
     this.router.navigate(['/items/books', item.id]);
   }
 
-  addToFavorites(item: IItem, event: Event) {
-    console.log('Item added to favorites:', item);
+  addToFavorites(itemId: number, event: Event) {
+    this.isFavorite[itemId] = !this.isFavorite[itemId];
     event.stopPropagation();
+    console.log('Item added to favorites:', itemId);
   }
 }

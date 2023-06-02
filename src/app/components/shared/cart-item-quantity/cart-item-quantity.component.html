@@ -1,8 +1,8 @@
 <div class="cart-container">
-  <mat-icon>shopping_cart</mat-icon>
+  <mat-icon class="cart-icon">shopping_cart</mat-icon>
   <!-- Bouton d'ajout affiché uniquement si la quantité est 0 -->
   <button *ngIf="selectedQuantity == 0" mat-icon-button color="primary" (click)="addToCart(item, $event); openSelect()">
-    <mat-icon>add</mat-icon>
+    <mat-icon class="cart-icon-add">add</mat-icon>
   </button>
   <!-- Field de sélection de la quantité affiché uniquement si l'item est dans le panier et la quantité est supérieure à 0 -->
   <mat-form-field *ngIf="isInCart" (click)="$event.stopPropagation()">
