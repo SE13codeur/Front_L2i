@@ -5,6 +5,7 @@ import { Store } from '@ngxs/store';
 
 import { CartItemQuantityService } from '@services/cart';
 import { CartState } from '@store/index';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-cart-item-quantity',
@@ -12,16 +13,15 @@ import { CartState } from '@store/index';
   styleUrls: ['./cart-item-quantity.component.css'],
 })
 export class CartItemQuantityComponent implements OnInit {
+  @ViewChild('quantitySelect') quantitySelect!: MatSelect;
+
   @Input() item: IItem | undefined;
   @Input() items: IItem[] = [];
   @Input() includeZero: boolean | undefined;
   isInCart: boolean | undefined;
-
   numbers: number[] = [0, 1, 2, 3, 4, 5, 6, 7];
   selectedQuantity: number = 0;
-
-  // Référence à mat-select
-  @ViewChild('quantitySelect') quantitySelect!: MatSelect;
+  private destroy$ = new Subject<void>();
 
   constructor(
     private store: Store,
@@ -42,6 +42,11 @@ export class CartItemQuantityComponent implements OnInit {
       // Call the function with item id to check if the item is in the cart
       this.isInCart = isInCartFunc(this.item.id);
     }
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   changeItemQuantity(event: any): void {
