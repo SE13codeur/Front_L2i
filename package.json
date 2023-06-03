@@ -26,6 +26,7 @@
     "@ngxs/logger-plugin": "^3.8.1",
     "@ngxs/storage-plugin": "^3.8.1",
     "@ngxs/store": "^3.8.1",
+    "@stripe/stripe-js": "^1.54.0",
     "meilisearch": "^0.32.3",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
