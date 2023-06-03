@@ -7,6 +7,7 @@ import {
   ItemPageComponent,
   SignPageComponent,
   NotFoundPageComponent,
+  PaymentPageComponent,
 } from '@pages/index';
 
 const routes: Routes = [
@@ -14,6 +15,8 @@ const routes: Routes = [
   { path: '', component: HomePageComponent },
   { path: 'items/books', component: ItemPageComponent },
   { path: 'items/books/:id', component: DetailItemPageComponent },
+  { path: 'payment', component: PaymentPageComponent },
+
   {
     path: 'admin/items/books',
     component: AdminItemComponent,

@@ -8,7 +8,6 @@ import {
   RemoveFromCart,
   UpdateCartItemQuantity,
 } from './cart.action';
-import { Observable, of } from 'rxjs';
 
 export interface CartStateModel {
   cartItems: ICartItem[];

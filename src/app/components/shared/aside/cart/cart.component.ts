@@ -1,5 +1,6 @@
 import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { ICartItem } from '@models/cart';
 import { Select, Store } from '@ngxs/store';
 import {
@@ -35,9 +36,13 @@ export class CartComponent {
     this.store.dispatch(new UpdateCartItemQuantity(itemId, newQuantity));
   }
 
-  constructor(private store: Store, private dialog: MatDialog) {}
+  constructor(
+    private store: Store,
+    private dialog: MatDialog,
+    private router: Router
+  ) {}
 
-  checkout(): void {
+  orderValidate(): void {
     this.cartItems$?.subscribe((cartItems) => {
       for (let cartItem of cartItems) {
         if (cartItem.quantity > cartItem.quantityInStock) {
@@ -54,7 +59,7 @@ export class CartComponent {
           return;
         }
       }
-      console.log('Checkout');
+      this.router.navigate(['/payment']);
     });
   }
 }
