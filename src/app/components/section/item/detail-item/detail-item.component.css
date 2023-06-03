@@ -88,3 +88,10 @@ button {
 .reviews-title {
   margin-top: 3.3rem;
 }
+
+@media (max-width: 770px) {
+  .container  {
+    margin-top: 17rem;
+  }
+}
+
