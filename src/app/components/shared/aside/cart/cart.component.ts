@@ -1,10 +1,10 @@
 import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
 import { ICartItem } from '@models/cart';
 import { Select, Store } from '@ngxs/store';
 import {
   CartState,
+  ClearCart,
   RemoveFromCart,
   UpdateCartItemQuantity,
 } from '@store/index';
@@ -28,6 +28,8 @@ export class CartComponent {
     | Observable<number>
     | undefined;
 
+  constructor(private store: Store, private dialog: MatDialog) {}
+
   removeItemFromCart(itemId: number): void {
     this.store.dispatch(new RemoveFromCart(itemId));
   }
@@ -36,11 +38,9 @@ export class CartComponent {
     this.store.dispatch(new UpdateCartItemQuantity(itemId, newQuantity));
   }
 
-  constructor(
-    private store: Store,
-    private dialog: MatDialog,
-    private router: Router
-  ) {}
+  clearCart(): void {
+    this.store.dispatch(new ClearCart());
+  }
 
   orderValidate(): void {
     this.cartItems$?.subscribe((cartItems) => {
@@ -59,7 +59,7 @@ export class CartComponent {
           return;
         }
       }
-      this.router.navigate(['/items/books/payment']);
+      // this.router.navigate(['/items/payment']);
     });
   }
 }
