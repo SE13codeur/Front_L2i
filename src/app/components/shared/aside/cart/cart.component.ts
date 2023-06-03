@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, TemplateRef, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ICartItem } from '@models/cart';
 import { Select, Store } from '@ngxs/store';
 import {
@@ -14,6 +15,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./cart.component.css'],
 })
 export class CartComponent {
+  @ViewChild('errorDialog') errorDialog: TemplateRef<any> | undefined;
   @Select(CartState.getCartItems) cartItems$:
     | Observable<ICartItem[]>
     | undefined;
@@ -25,8 +27,6 @@ export class CartComponent {
     | Observable<number>
     | undefined;
 
-  constructor(private store: Store) {}
-
   removeItemFromCart(itemId: number): void {
     this.store.dispatch(new RemoveFromCart(itemId));
   }
@@ -35,8 +35,26 @@ export class CartComponent {
     this.store.dispatch(new UpdateCartItemQuantity(itemId, newQuantity));
   }
 
+  constructor(private store: Store, private dialog: MatDialog) {}
+
   checkout(): void {
-    // Logic for checking out goes here
-    console.log('Checkout');
+    this.cartItems$?.subscribe((cartItems) => {
+      for (let cartItem of cartItems) {
+        if (cartItem.quantity > cartItem.quantityInStock) {
+          if (this.errorDialog) {
+            const dialogRef = this.dialog.open(this.errorDialog, {
+              data: {
+                message: `La quantité commandée pour ${cartItem.title} est supérieure à celle en stock.`,
+              },
+            });
+            setTimeout(() => {
+              dialogRef.close();
+            }, 4004);
+          }
+          return;
+        }
+      }
+      console.log('Checkout');
+    });
   }
 }
