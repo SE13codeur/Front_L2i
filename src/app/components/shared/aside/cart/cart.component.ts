@@ -59,7 +59,7 @@ export class CartComponent {
           return;
         }
       }
-      this.router.navigate(['/payment']);
+      this.router.navigate(['/items/books/payment']);
     });
   }
 }

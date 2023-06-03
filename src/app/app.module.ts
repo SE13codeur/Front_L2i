@@ -29,7 +29,7 @@ import {
   SignPageComponent,
 } from '@pages/index';
 import { AuthService, CartService, PaginatorFrService } from '@services/index';
-import { CartState, NgxsStoreModule } from './store';
+import { CartState, NgxsStoreModule, OrderState } from './store';
 
 import { HttpClientModule } from '@angular/common/http';
 
@@ -59,7 +59,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 import { NgxsModule } from '@ngxs/store';
-import { OrderState } from '@store/order';
+import {} from '@store/order';
 
 @NgModule({
   declarations: [

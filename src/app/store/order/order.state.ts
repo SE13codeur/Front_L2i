@@ -1,8 +1,6 @@
-import { State, Action, StateContext, Selector } from '@ngxs/store';
 import { IOrder } from '@models/index';
-import { AddOrder, GetOrders, UpdateOrder, DeleteOrder } from './order.action';
-import { tap } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { Action, Selector, State, StateContext } from '@ngxs/store';
+import { AddOrder, DeleteOrder, UpdateOrder } from './order.action';
 
 export interface OrderStateModel {
   orders: IOrder[];
@@ -15,24 +13,9 @@ export interface OrderStateModel {
   },
 })
 export class OrderState {
-  constructor(private http: HttpClient) {}
-
   @Selector()
   static getOrders(state: OrderStateModel) {
     return state.orders;
-  }
-
-  @Action(GetOrders)
-  getOrders(ctx: StateContext<OrderStateModel>) {
-    return this.http.get<IOrder[]>('your-api-endpoint').pipe(
-      tap((orders: IOrder[]) => {
-        const state = ctx.getState();
-        ctx.setState({
-          ...state,
-          orders: orders,
-        });
-      })
-    );
   }
 
   @Action(AddOrder)
@@ -45,7 +28,6 @@ export class OrderState {
       orders: [...state.orders, order],
     });
   }
-
   @Action(UpdateOrder)
   update(
     { getState, setState }: StateContext<OrderStateModel>,
@@ -62,7 +44,6 @@ export class OrderState {
       orders: orderList,
     });
   }
-
   @Action(DeleteOrder)
   delete(
     { getState, setState }: StateContext<OrderStateModel>,
