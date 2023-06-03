@@ -37,6 +37,7 @@
   </table>
 
   <div class="checkout-section">
+    <button class="cart-clear-button" mat-raised-button (click)="clearCart()">Vider le panier</button>
     <h2><span style="text-decoration: underline;">Total TTC</span> : <span style="font-weight: bolder;">{{ (totalWithTaxes$ | async) | currency:'EUR':true }}</span></h2>
     <button class="cart-order-button" mat-raised-button (click)="orderValidate()">Valider la commande</button>
   </div>

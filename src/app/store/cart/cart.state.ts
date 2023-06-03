@@ -60,7 +60,7 @@ export class CartState {
   @Selector()
   static getTotalWithTaxes(state: CartStateModel) {
     const subTotal = CartState.getSubTotal(state);
-    return subTotal + subTotal * 0.2; // 20% of taxes :(
+    return subTotal + subTotal * 0.055; // 5.5% of TVA for books
   }
 
   @Action(AddToCart)
