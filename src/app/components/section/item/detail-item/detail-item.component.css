@@ -1,7 +1,11 @@
 .container {
   max-width: 75rem;
   margin: 0 auto;
-  padding: 1.5rem;
+  padding: 1.11rem;
+  padding-top: 9.99rem;
+  padding-left: 7.07%;
+  padding-right: 7.07%;
+  align-items: center;
 }
 
 .detail-container {
@@ -65,7 +69,12 @@
 }
 
 button {
-  margin-top: 1rem;
+  margin-top: 1.11rem;
+}
+
+.items-back-button {
+  color: whitesmoke;
+  background-color: #0BB9F0;
 }
 
 .yellow-star {
