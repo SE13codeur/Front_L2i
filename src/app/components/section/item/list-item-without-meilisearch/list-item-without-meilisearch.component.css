@@ -2,13 +2,14 @@
   margin: 1.11rem;
 }
 
+
 .custom-card {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   transition: box-shadow 0.3s, transform 0.3s;
   border-radius: 9px;
-  overflow: hidden;
+  overflow: scroll;
   background-color: #ffffff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   flex-basis: calc(25% - 2rem);

@@ -61,3 +61,7 @@ h1 {
   padding-top: 1.11rem;
 }
 
+.cart-container {
+  height: auto;
+  overflow: auto;
+}
