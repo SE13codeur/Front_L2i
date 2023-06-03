@@ -14,5 +14,10 @@ app-nav {
   width: 36%;
 }
 
+@media (max-width: 770px) {
+  .mat-sidenav  {
+    width: 100%;
+  }
+}
 
 
