@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environmentDev } from '@env/environment.dev';
+import { environmentPreProd as environment } from '@env/environment.pre-prod';
 import { IItem } from '@models/index';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
@@ -9,7 +9,7 @@ import { catchError, map, tap } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class ItemService {
-  private itemsUrl = `${environmentDev.apiUrl}/items/books`;
+  private itemsUrl = `${environment.apiUrl}/items/books`;
   private items$ = new BehaviorSubject<IItem[]>([]);
   private searchValue$ = new BehaviorSubject<string>('');
 
