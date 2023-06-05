@@ -19,11 +19,12 @@
     "module": "es2020",
     "lib": ["es2020", "dom"],
     "paths": {
-      "@c/*": ["src/app/components/*"],
-      "@m/*": ["src/app/models/*"],
-      "@p/*": ["src/app/pages/*"],
-      "@s/*": ["src/app/services/*"],
-      "@a/*": ["src/assets/*"],
+      "@store/*": ["src/app/store/*"],
+      "@components/*": ["src/app/components/*"],
+      "@models/*": ["src/app/models/*"],
+      "@pages/*": ["src/app/pages/*"],
+      "@services/*": ["src/app/services/*"],
+      "@assets/*": ["src/assets/*"],
       "@env/*": ["src/environments/*"]
     }
   },

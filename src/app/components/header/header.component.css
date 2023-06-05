@@ -1,5 +1,5 @@
 header {
-    padding-top: 3.3rem;
+    padding-top: 9.99rem;
     padding-bottom: 3.3rem;
 }
 .work-sans {
@@ -66,3 +66,8 @@ header {
   color: #000;
 }
 
+@media (max-width: 770px) {
+  header {
+    margin-top: 11rem;
+  }
+}

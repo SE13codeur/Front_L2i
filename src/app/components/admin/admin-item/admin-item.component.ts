@@ -8,12 +8,15 @@ import {
 } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import IItem, { IAuthor, ICategoryItem, IEditor } from '@m/IItem';
-import { AdminCategoryService } from '@s/admin/admin-category.service';
-import { AdminAuthorService } from '@s/admin/admin-author.service';
-import { AdminEditorService } from '@s/admin/admin-editor.service';
-import { AdminItemService } from '@s/admin/admin-item.service';
-import { ItemService } from '@s/search/item.service';
+
+import { IItem, IAuthor, ICategoryItem, IEditor } from '@models/index';
+import {
+  AdminAuthorService,
+  AdminCategoryService,
+  AdminEditorService,
+  AdminItemService,
+  ItemService,
+} from '@services/index';
 
 @Component({
   selector: 'app-admin-item',
@@ -23,7 +26,7 @@ import { ItemService } from '@s/search/item.service';
 export class AdminItemComponent implements OnInit {
   itemForm!: FormGroup;
   item: IItem | undefined;
-  itemId: string | null = null;
+  itemId: number | null = null;
   authors: IAuthor[] = [];
   editors: IEditor[] = [];
   categories: ICategoryItem[] = [];
@@ -89,7 +92,8 @@ export class AdminItemComponent implements OnInit {
       this.categories = categories;
     });
 
-    this.itemId = this.route.snapshot.paramMap.get('id');
+    let tempId = this.route.snapshot.paramMap.get('id');
+    this.itemId = tempId && !isNaN(parseInt(tempId)) ? parseInt(tempId) : null;
     if (this.itemId) {
       this.populateForm();
     }
