@@ -1,11 +1,16 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
-import IItem from '@m/IItem';
-import { PaginationService } from '@s/pagination/pagination.service';
-import { FiltersService } from '@s/search/filters.service';
-import { ItemService } from '@s/search/item.service';
-import { BehaviorSubject, Subject, take } from 'rxjs';
+import { IItem } from '@models/index';
+import { Store } from '@ngxs/store';
+import {
+  CartItemQuantityService,
+  FiltersService,
+  ItemService,
+  PaginationService,
+} from '@services/index';
+import { CartState } from '@store/index';
+import { BehaviorSubject, Observable, Subject, map, take } from 'rxjs';
 
 @Component({
   selector: 'app-list-item-without-meilisearch',
@@ -14,15 +19,18 @@ import { BehaviorSubject, Subject, take } from 'rxjs';
 })
 export class ListItemWithoutMeilisearchComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @Input() items: IItem[] = [];
+  isInCart: ((id: number) => Observable<boolean>) | undefined;
 
-  private originalItemList$ = new BehaviorSubject<IItem[]>([]);
-
-  private readonly destroy$ = new Subject<void>();
   currentSearch: string = '';
   itemList$ = new BehaviorSubject<IItem[]>([]);
   totalItems$ = new BehaviorSubject<number | null>(null);
   itemsPerPage = 12;
   currentPage = 1;
+  isFavorite: { [id: number]: boolean } = {};
+
+  private originalItemList$ = new BehaviorSubject<IItem[]>([]);
+  private readonly destroy$ = new Subject<void>();
 
   constructor(
     private itemService: ItemService,
@@ -134,13 +142,9 @@ export class ListItemWithoutMeilisearchComponent implements OnInit, OnDestroy {
     this.router.navigate(['/items/books', item.id]);
   }
 
-  addToFavorites(item: IItem, event: Event) {
-    console.log('Item added to favorites:', item);
+  addToFavorites(itemId: number, event: Event) {
+    this.isFavorite[itemId] = !this.isFavorite[itemId];
     event.stopPropagation();
-  }
-
-  addToCart(item: IItem, event: Event) {
-    console.log('Item added to cart:', item);
-    event.stopPropagation();
+    console.log('Item added to favorites:', itemId);
   }
 }

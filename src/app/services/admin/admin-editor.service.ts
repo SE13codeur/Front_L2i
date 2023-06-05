@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { IEditor } from '@m/IItem';
+import { IEditor } from '@models/index';
 import { environmentDev } from '@env/environment.dev';
 
 @Injectable({
@@ -21,12 +21,12 @@ export class AdminEditorService {
     return this.http.post<IEditor>(apiUrl, editor);
   }
 
-  deleteItemEditor(id: string): Observable<void> {
+  deleteItemEditor(id: number): Observable<void> {
     const apiUrl = `${this.adminEditorsUrl}/${id}`;
     return this.http.delete<void>(apiUrl);
   }
 
-  editItemEditor(id: string, editor: IEditor): Observable<IEditor> {
+  editItemEditor(id: number, editor: IEditor): Observable<IEditor> {
     const apiUrl = `${this.adminEditorsUrl}/${id}`;
     return this.http.put<IEditor>(apiUrl, editor);
   }

@@ -1,54 +1,65 @@
-import { LOCALE_ID, NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { MatTableModule } from '@angular/material/table';
 import { registerLocaleData } from '@angular/common';
 import * as fr from '@angular/common/locales/fr';
+import { LOCALE_ID, NgModule } from '@angular/core';
+import { MatTableModule } from '@angular/material/table';
+import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { SignPageComponent } from '@p/sign/sign-page.component';
-import { HomePageComponent } from '@p/home/home-page.component';
-import { NotFoundComponent } from '@p/not-found/not-found.component';
-import { ItemPageComponent } from '@p/item/item-page.component';
+import {
+  AdminItemComponent,
+  AsideComponent,
+  CartComponent,
+  CartItemQuantityComponent,
+  DetailItemComponent,
+  FiltersItemComponent,
+  HeaderComponent,
+  ListItemWithoutMeilisearchComponent,
+  NavComponent,
+  SearchItemComponent,
+  SectionComponent,
+} from '@components/index';
+import {
+  DetailItemPageComponent,
+  HomePageComponent,
+  ItemPageComponent,
+  NotFoundPageComponent,
+  PaymentPageComponent,
+  SignPageComponent,
+} from '@pages/index';
+import { AuthService, CartService, PaginatorFrService } from '@services/index';
+import { CartState, NgxsStoreModule, OrderState } from './store';
 
-import { NavComponent } from '@c/nav/nav.component';
-import { AsideComponent } from '@c/aside/aside.component';
-import { CartComponent } from '@c/aside/cart/cart.component';
-import { HeaderComponent } from '@c/header/header.component';
-import { SectionComponent } from '@c/section/section.component';
-import { SearchItemComponent } from '@c/nav/search-item/search-item.component';
-import { DetailItemComponent } from '@c/section/item/detail-item/detail-item.component';
-import { FiltersItemComponent } from '@c/section/filters-item/filters-item.component';
-
-import { CartService } from '@s/cart/cart.service';
-import { PaginatorFrService } from '@s/pagination/paginator-fr-service.service';
-import { AuthService } from '@s/admin/auth.service';
-
-import { MatCardModule } from '@angular/material/card';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatToolbarModule } from '@angular/material/toolbar';
 import { HttpClientModule } from '@angular/common/http';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
+
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 import {
   MatPaginatorIntl,
   MatPaginatorModule,
 } from '@angular/material/paginator';
-import { NgxSliderModule } from '@angular-slider/ngx-slider';
-import { MatExpansionModule } from '@angular/material/expansion';
 
+import { NgxSliderModule } from '@angular-slider/ngx-slider';
+
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ReactiveFormsModule } from '@angular/forms';
-import { AdminItemComponent } from './components/admin/admin-item/admin-item.component';
-import { ListItemWithoutMeilisearchComponent } from './components/section/item/list-item-without-meilisearch/list-item-without-meilisearch.component';
+import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
+import { NgxsModule } from '@ngxs/store';
+import {} from '@store/order';
 
 @NgModule({
   declarations: [
@@ -59,7 +70,7 @@ import { ListItemWithoutMeilisearchComponent } from './components/section/item/l
     NavComponent,
     SectionComponent,
     DetailItemComponent,
-    NotFoundComponent,
+    NotFoundPageComponent,
     ItemPageComponent,
     CartComponent,
     AsideComponent,
@@ -67,9 +78,15 @@ import { ListItemWithoutMeilisearchComponent } from './components/section/item/l
     FiltersItemComponent,
     AdminItemComponent,
     ListItemWithoutMeilisearchComponent,
+    CartItemQuantityComponent,
+    DetailItemPageComponent,
+    PaymentPageComponent,
   ],
   imports: [
     BrowserModule,
+    NgxsStoreModule,
+    NgxsModule.forRoot([CartState, OrderState]),
+    NgxsStoragePluginModule.forRoot({ key: ['cart', 'orders'] }),
     MatTableModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -91,6 +108,9 @@ import { ListItemWithoutMeilisearchComponent } from './components/section/item/l
     MatExpansionModule,
     MatPaginatorModule,
     MatSnackBarModule,
+    MatSelectModule,
+    FormsModule,
+    MatDialogModule,
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'fr-FR' },

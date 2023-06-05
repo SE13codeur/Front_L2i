@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ICategoryItem } from '@m/IItem';
+import { ICategoryItem } from '@models/index';
 import { environmentDev } from '@env/environment.dev';
 
 @Injectable({
@@ -21,13 +21,13 @@ export class AdminCategoryService {
     return this.http.post<ICategoryItem>(apiUrl, category);
   }
 
-  deleteItemCategory(id: string): Observable<void> {
+  deleteItemCategory(id: number): Observable<void> {
     const apiUrl = `${this.adminCategoriesUrl}/${id}`;
     return this.http.delete<void>(apiUrl);
   }
 
   editItemCategory(
-    id: string,
+    id: number,
     category: ICategoryItem
   ): Observable<ICategoryItem> {
     const apiUrl = `${this.adminCategoriesUrl}/${id}`;
