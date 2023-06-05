@@ -121,7 +121,6 @@ export class AdminItemComponent implements OnInit {
             year: item.year,
             language: item.language,
             version: item.version,
-            newCollection: item.newCollection,
           });
 
           this.snackBar.open('Données chargées avec succès!', 'Fermer', {

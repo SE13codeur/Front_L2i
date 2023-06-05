@@ -19,5 +19,5 @@ export interface IItem {
   year: string;
   language?: string;
   version: number;
-  newCollection?: boolean;
+  isNewCollection?: boolean;
 }

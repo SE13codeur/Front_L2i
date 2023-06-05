@@ -33,6 +33,7 @@ export class DetailItemComponent implements OnInit {
 
   ngOnInit(): void {
     this.item$.subscribe((item) => {
+      console.log('🚀 ~ item:', item);
       this.item = item;
     });
 
