@@ -46,8 +46,10 @@ export class AppComponent implements OnInit, OnDestroy {
       });
   }
 
-  isLoginPage(): boolean {
-    return this.router.url === '/auth/login';
+  isAuthPage(): boolean {
+    return (
+      this.router.url === '/auth/login' || this.router.url === '/auth/register'
+    );
   }
 
   toggleDrawer() {

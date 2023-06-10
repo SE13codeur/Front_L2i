@@ -1,11 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { LoginComponent } from 'src/app/modules/auth/components/index';
 import { NgxsModule } from '@ngxs/store';
 import { AuthRoutingModule } from './auth-routing.module';
 import { AuthState } from './auth.state';
-import { RegisterComponent } from './components/register/register.component';
+import { LoginComponent, RegisterComponent } from '@auth-c/index';
 
 @NgModule({
   declarations: [LoginComponent, RegisterComponent],
@@ -15,6 +14,6 @@ import { RegisterComponent } from './components/register/register.component';
     ReactiveFormsModule,
     NgxsModule.forFeature([AuthState]),
   ],
-  exports: [AuthRoutingModule, LoginComponent],
+  exports: [AuthRoutingModule, LoginComponent, RegisterComponent],
 })
 export class AuthModule {}
