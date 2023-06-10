@@ -28,8 +28,8 @@ import {
 } from '@pages/index';
 import { AuthService, CartService, PaginatorFrService } from '@services/index';
 
-import { AuthModule } from './auth';
 import { CartState, NgxsStoreModule, OrderState } from './store';
+import { AuthModule } from './auth';
 
 import { HttpClientModule } from '@angular/common/http';
 
