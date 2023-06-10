@@ -29,7 +29,6 @@ import {
 import { AuthService, CartService, PaginatorFrService } from '@services/index';
 
 import { CartState, NgxsStoreModule, OrderState } from './store';
-import { AuthModule } from './auth';
 
 import { HttpClientModule } from '@angular/common/http';
 
@@ -82,7 +81,6 @@ import { NgxsModule } from '@ngxs/store';
   imports: [
     BrowserModule,
     NgxsStoreModule,
-    AuthModule,
     NgxsModule.forRoot([CartState, OrderState]),
     NgxsStoragePluginModule.forRoot({ key: ['cart', 'orders', 'auth'] }),
     MatTableModule,

@@ -1,4 +1,4 @@
-import { State, Action, StateContext } from '@ngxs/store';
+import { State, Action, StateContext, Selector } from '@ngxs/store';
 import { tap, catchError } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Login, LoginSuccess, LoginFailed, Logout } from './auth.action';
@@ -21,6 +21,11 @@ export interface AuthStateModel {
 @Injectable()
 export class AuthState {
   constructor(private authService: AuthService) {}
+
+  @Selector()
+  static isAuthenticated(state: AuthStateModel): boolean {
+    return !!state.token;
+  }
 
   @Action(Login)
   login(ctx: StateContext<AuthStateModel>, action: Login) {

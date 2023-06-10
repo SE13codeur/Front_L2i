@@ -1,1 +1,40 @@
-<p>login works!</p>
+<div class="login-container">
+  <div class="login-card">
+    <h2>Connexion</h2>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="input-field">
+        <input
+          formControlName="username"
+          type="text"
+          placeholder="Adresse e-mail"
+        />
+        <div
+          *ngIf="username?.invalid && (username?.dirty || username?.touched)"
+          class="error"
+        >
+          <div *ngIf="username?.errors?.['required']">
+            L'adresse e-mail est requise.
+          </div>
+        </div>
+      </div>
+      <div class="input-field">
+        <input
+          formControlName="password"
+          type="password"
+          placeholder="Mot de passe"
+        />
+        <div
+          *ngIf="password?.invalid && (password?.dirty || password?.touched)"
+          class="error"
+        >
+          <div *ngIf="password?.errors?.['required']">
+            Mot de passe est requis.
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="login-button" [disabled]="loginForm.invalid">
+        Se connecter
+      </button>
+    </form>
+  </div>
+</div>

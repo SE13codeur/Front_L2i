@@ -1,13 +1,22 @@
-<mat-sidenav-container>
-  <mat-sidenav mode="over" [opened]="isDrawerOpened$ | async" class="sidenav-cart">
-    <button mat-icon-button (click)="closeDrawer()">
-      <mat-icon>close</mat-icon>
-    </button>
-    <app-cart></app-cart>
-  </mat-sidenav>
+<ng-container *ngIf="isLoginPage(); else mainLayout">
+  <router-outlet></router-outlet>
+</ng-container>
 
-  <mat-sidenav-content>
-    <app-nav></app-nav>
-    <router-outlet></router-outlet>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+<ng-template #mainLayout>
+  <mat-sidenav-container>
+    <mat-sidenav
+      mode="over"
+      [opened]="isDrawerOpened$ | async"
+      class="sidenav-cart"
+    >
+      <button mat-icon-button (click)="closeDrawer()">
+        <mat-icon>close</mat-icon>
+      </button>
+      <app-cart></app-cart>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <app-nav></app-nav>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</ng-template>
