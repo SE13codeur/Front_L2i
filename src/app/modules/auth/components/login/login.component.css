@@ -6,34 +6,34 @@
   background: linear-gradient(to right, #e0eafc, #cfdef3);
 }
 
-
 .login-card {
   background-color: rgba(255, 255, 255, 0.9);
-  padding: 40px;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 3.03rem;
+  border-radius: 0.77rem;
+  box-shadow: 0 0.33rem 6px rgba(0, 0, 0, 0.1);
   text-align: center;
-  width: 400px;
+  width: 33.3%;
+  max-width: 404px;
 }
 
 .input-field {
-  margin: 20px 0;
+  margin: 1.31rem 0;
 }
 
 .input-field input {
   width: 100%;
-  padding: 10px;
+  padding: 0.89rem;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 0.77rem;
 }
 
 .login-button {
   width: 100%;
-  padding: 10px;
+  padding: 1.11rem;
   background-color: #0BB9F0;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 0.77rem;
   cursor: pointer;
 }
 
@@ -43,11 +43,23 @@
 
 .error {
   color: #FF4080;
-  font-size: 12px;
-  margin-top: 5px;
+  font-size: 1.11rem;
+  margin-top: 0.44rem;
 }
 
 .login-card h2 {
-  margin-bottom: 20px;
-  font-size: 24px;
+  margin-bottom: 1.11rem;
+  font-size: 1.77rem;
+}
+
+@media screen and (max-width: 768px) {
+  .login-card {
+    width: 77%;
+  }
+}
+
+@media screen and (max-width: 202px) {
+  .login-card {
+    width: 89%;
+  }
 }

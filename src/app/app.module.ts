@@ -30,7 +30,7 @@ import { AuthService, CartService, PaginatorFrService } from '@services/index';
 
 import { CartState, NgxsStoreModule, OrderState } from './store';
 
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -58,6 +58,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 import { NgxsModule } from '@ngxs/store';
+import { AuthGuard } from '@core/guards/auth-guard';
+import { TokenInterceptor } from '@core/tokens/interceptor-token';
 
 @NgModule({
   declarations: [
@@ -115,6 +117,12 @@ import { NgxsModule } from '@ngxs/store';
     {
       provide: MatPaginatorIntl,
       useClass: PaginatorFrService,
+    },
+    AuthGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true,
     },
   ],
   bootstrap: [AppComponent],

@@ -1,5 +1,7 @@
 import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { CheckAuthService } from '@auth-s/check-auth.service';
 import { ICartItem } from '@models/cart';
 import { Select, Store } from '@ngxs/store';
 import {
@@ -28,7 +30,14 @@ export class CartComponent {
     | Observable<number>
     | undefined;
 
-  constructor(private store: Store, private dialog: MatDialog) {}
+  isAuthenticated$: Observable<boolean> | undefined;
+
+  constructor(
+    private router: Router,
+    private store: Store,
+    private dialog: MatDialog,
+    private checkAuthService: CheckAuthService
+  ) {}
 
   removeItemFromCart(itemId: number): void {
     this.store.dispatch(new RemoveFromCart(itemId));
@@ -43,23 +52,32 @@ export class CartComponent {
   }
 
   orderValidate(): void {
-    this.cartItems$?.subscribe((cartItems) => {
-      for (let cartItem of cartItems) {
-        if (cartItem.quantity > cartItem.quantityInStock) {
-          if (this.errorDialog) {
-            const dialogRef = this.dialog.open(this.errorDialog, {
-              data: {
-                message: `La quantité commandée pour ${cartItem.title} est supérieure à celle en stock.`,
-              },
-            });
-            setTimeout(() => {
-              dialogRef.close();
-            }, 4004);
+    if (!this.checkAuthService.checkAuthenticationAndRedirect()) {
+      // Redirect to login page and come back to the current state after login
+      this.router.navigate(['/auth/login'], {
+        queryParams: { returnUrl: this.router.routerState.snapshot.url },
+      });
+      return;
+    }
+    if (!!this.checkAuthService.checkAuthenticationAndRedirect()) {
+      this.cartItems$?.subscribe((cartItems) => {
+        for (let cartItem of cartItems) {
+          if (cartItem.quantity > cartItem.quantityInStock) {
+            if (this.errorDialog) {
+              const dialogRef = this.dialog.open(this.errorDialog, {
+                data: {
+                  message: `La quantité commandée pour ${cartItem.title} est supérieure à celle en stock.`,
+                },
+              });
+              setTimeout(() => {
+                dialogRef.close();
+              }, 4004);
+            }
+            return;
           }
-          return;
         }
-      }
-      // this.router.navigate(['/items/payment']);
-    });
+        this.router.navigate(['/items/payment']);
+      });
+    }
   }
 }

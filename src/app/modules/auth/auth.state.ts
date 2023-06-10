@@ -2,7 +2,7 @@ import { State, Action, StateContext, Selector } from '@ngxs/store';
 import { tap, catchError } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Login, LoginSuccess, LoginFailed, Logout } from './auth.action';
-import { AuthService } from '@auth-s/index';
+import { AuthService } from 'src/app/modules/auth/services/index';
 
 export interface AuthStateModel {
   token: string | null;
@@ -25,6 +25,11 @@ export class AuthState {
   @Selector()
   static isAuthenticated(state: AuthStateModel): boolean {
     return !!state.token;
+  }
+
+  @Selector()
+  static token(state: AuthStateModel): string | null {
+    return state.token;
   }
 
   @Action(Login)
