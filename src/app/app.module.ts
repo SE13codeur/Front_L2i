@@ -26,10 +26,11 @@ import {
   ItemPageComponent,
   NotFoundPageComponent,
   PaymentPageComponent,
-  SignPageComponent,
 } from '@pages/index';
 import { AuthService, CartService, PaginatorFrService } from '@services/index';
+
 import { CartState, NgxsStoreModule, OrderState } from './store';
+import { AuthModule } from './auth';
 
 import { HttpClientModule } from '@angular/common/http';
 
@@ -59,14 +60,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 import { NgxsModule } from '@ngxs/store';
-import {} from '@store/order';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     HomePageComponent,
-    SignPageComponent,
     NavComponent,
     SectionComponent,
     DetailItemComponent,
@@ -85,8 +84,9 @@ import {} from '@store/order';
   imports: [
     BrowserModule,
     NgxsStoreModule,
+    AuthModule,
     NgxsModule.forRoot([CartState, OrderState]),
-    NgxsStoragePluginModule.forRoot({ key: ['cart', 'orders'] }),
+    NgxsStoragePluginModule.forRoot({ key: ['cart', 'orders', 'auth'] }),
     MatTableModule,
     AppRoutingModule,
     BrowserAnimationsModule,

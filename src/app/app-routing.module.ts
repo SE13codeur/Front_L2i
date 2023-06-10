@@ -5,13 +5,15 @@ import {
   DetailItemPageComponent,
   HomePageComponent,
   ItemPageComponent,
-  SignPageComponent,
   NotFoundPageComponent,
   PaymentPageComponent,
 } from '@pages/index';
 
 const routes: Routes = [
-  { path: 'sign-in', component: SignPageComponent },
+  {
+    path: 'auth',
+    loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
+  },
   { path: '', component: HomePageComponent },
   { path: 'items/books', component: ItemPageComponent },
   { path: 'items/books/:id', component: DetailItemPageComponent },
