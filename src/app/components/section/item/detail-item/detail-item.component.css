@@ -61,7 +61,7 @@
 .detail-info h1,
 .detail-info h2 {
   margin-top: 0;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.55rem;
 }
 
 .detail-info p {
@@ -75,6 +75,7 @@ button {
 .items-back-button {
   color: whitesmoke;
   background-color: #0BB9F0;
+  border-radius: 7.7%;
 }
 
 .yellow-star {
