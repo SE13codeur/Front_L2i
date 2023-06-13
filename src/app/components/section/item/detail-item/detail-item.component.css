@@ -75,6 +75,7 @@ button {
 .items-back-button {
   color: whitesmoke;
   background-color: #0BB9F0;
+  border-radius: 7.7%;
 }
 
 .yellow-star {

@@ -143,7 +143,11 @@ export class AdminItemComponent implements OnInit {
   }
 
   setAuthorControls(): void {
-    const itemAuthorsIds = this.item?.authors.map((author) => author.id) || [];
+    let itemAuthorsIds: number[] = [];
+    if (this.item && this.item.authors) {
+      itemAuthorsIds = this.item.authors.map((author) => author.id);
+    }
+
     const authorControls = this.authors.map(
       (author) => new FormControl(itemAuthorsIds.includes(author.id))
     );
