@@ -30,6 +30,7 @@ yarn-error.log
 # Angular
 /src/environments/environment.dev.ts
 /src/environments/environment.pre-prod.ts
+/src/environments/environment.prod.ts
 
 # Miscellaneous
 /.angular/cache
@@ -44,5 +45,3 @@ testem.log
 .DS_Store
 Thumbs.db
 
-#vercel
-.vercel

@@ -1,0 +1,14 @@
+<!-- <div *ngFor="let order of orders$ | async">
+  <div>Order Number: {{ order.orderNumber }}</div>
+  <div>Order Date: {{ order.orderDate }}</div>
+  <div *ngFor="let item of order.items">
+    <div>{{ item.item.title }} x {{ item.quantity }}</div>
+    <div>Price (HT): {{ item.itemPriceHT }}</div>
+    <div>Price (TTC): {{ item.itemPriceTTC }}</div>
+  </div>
+  <div>Total Price (HT): {{ order.totalPriceHT }}</div>
+  <div>Total Price (TTC): {{ order.totalPriceTTC }}</div>
+  <div>Delivery Address: {{ order.customerInfo.deliveryAddress }}</div>
+  <div>Billing Address: {{ order.customerInfo.billingAddress }}</div>
+</div> -->
+<button (click)="checkout()">Payer avec Stripe</button>

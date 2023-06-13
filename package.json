@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --configuration=production --output-hashing=all",
+    "build": "node env-subst.js && ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
@@ -21,6 +21,12 @@
     "@angular/platform-browser": "~13.3.0",
     "@angular/platform-browser-dynamic": "~13.3.0",
     "@angular/router": "~13.3.0",
+    "@ngxs/devtools-plugin": "^3.8.1",
+    "@ngxs/form-plugin": "^3.8.1",
+    "@ngxs/logger-plugin": "^3.8.1",
+    "@ngxs/storage-plugin": "^3.8.1",
+    "@ngxs/store": "^3.8.1",
+    "@stripe/stripe-js": "^1.54.0",
     "meilisearch": "^0.32.3",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
