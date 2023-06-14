@@ -15,7 +15,7 @@ const routes: Routes = [
   { path: '', component: HomePageComponent },
   { path: 'items/books', component: ItemPageComponent },
   { path: 'items/books/:id', component: DetailItemPageComponent },
-  { path: 'items/payment', component: PaymentPageComponent },
+  { path: 'items/orders', component: PaymentPageComponent },
 
   {
     path: 'admin/items/books',

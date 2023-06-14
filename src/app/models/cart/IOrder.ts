@@ -1,10 +1,10 @@
-import { ICartItem } from '@models/index';
+import { ICartItem, ICustomerInfos } from '@models/index';
 
 export interface IOrder {
   orderNumber: string;
   orderDate: string;
   items: ICartItem[];
-  customerInfo: 'ICustomerInfo'; // TODO ajouter l'interface
+  customerInfos: ICustomerInfos;
   totalPriceHT: number;
   totalPriceTTC: number;
 }

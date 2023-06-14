@@ -1,5 +1,9 @@
 <mat-sidenav-container>
-  <mat-sidenav mode="over" [opened]="isDrawerOpened$ | async" class="sidenav-cart">
+  <mat-sidenav
+    mode="over"
+    [opened]="isDrawerOpened$ | async"
+    class="sidenav-cart"
+  >
     <button mat-icon-button (click)="closeDrawer()">
       <mat-icon>close</mat-icon>
     </button>

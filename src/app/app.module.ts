@@ -17,6 +17,7 @@ import {
   HeaderComponent,
   ListItemWithoutMeilisearchComponent,
   NavComponent,
+  OrderComponent,
   SearchItemComponent,
   SectionComponent,
 } from '@components/index';
@@ -81,6 +82,7 @@ import {} from '@store/order';
     CartItemQuantityComponent,
     DetailItemPageComponent,
     PaymentPageComponent,
+    OrderComponent,
   ],
   imports: [
     BrowserModule,

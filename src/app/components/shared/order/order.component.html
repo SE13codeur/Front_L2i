@@ -1,0 +1,47 @@
+<div class="order-summary">
+  <h2 class="order-header">Récapitulatif de la commande</h2>
+
+  <div class="shipping-address section">
+    <h3>Adresse de livraison:</h3>
+    <p>{{ shippingAddress }}</p>
+  </div>
+
+  <div class="cart-items section">
+    <h3>Articles:</h3>
+    <mat-card *ngFor="let item of cartItems$ | async" class="product-card">
+      <mat-card-content class="card-content">
+        <div class="image-icon-container">
+          <img
+            [src]="item.imageUrl"
+            alt="{{ item.title }}"
+            class="product-image"
+          />
+        </div>
+        <div class="product-details">
+          <mat-card-title>{{ item.title }}</mat-card-title>
+          <mat-card-subtitle
+            >Prix unitaire TTC: {{ item.regularPrice }} €</mat-card-subtitle
+          >
+          <mat-card-subtitle
+            >Quantité commandée: {{ item.quantity }}</mat-card-subtitle
+          >
+          <mat-card-subtitle>TVA: {{ item.tva.tvaRate }}</mat-card-subtitle>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div class="order-totals section">
+    <h3>Sous-total:</h3>
+    <p>{{ subTotal$ | async }} €</p>
+    <h3>Total TTC:</h3>
+    <p>{{ totalWithTaxes$ | async }} €</p>
+  </div>
+
+  <button class="modify-button" (click)="openCartDrawer()">
+    Modifier le panier
+  </button>
+  <button class="confirm-button" (click)="onConfirmOrder()">
+    Passer au paiement
+  </button>
+</div>

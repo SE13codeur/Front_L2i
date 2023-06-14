@@ -1,6 +1,7 @@
 
 h1 {
   font-weight: bold;
+  text-decoration: underline;
   font-size: larger;
   margin-bottom: 1.11rem;
   color: #333;
@@ -41,7 +42,7 @@ h1 {
 .cart-order-button {
   background-color: #0BB9F0;
   color: whitesmoke;
-  border-radius: 44%;
+  border-radius: 7.7%;
   padding: 0.5rem 1rem;
   cursor: pointer;
   font-size: 1.11rem;
@@ -54,7 +55,7 @@ h1 {
 .cart-clear-button {
   background-color: #FF4080;
   color: whitesmoke;
-  border-radius: 44%;
+  border-radius: 7.7%;
   padding: 0.5rem 1rem;
   cursor: pointer;
   font-size: 1.11rem;

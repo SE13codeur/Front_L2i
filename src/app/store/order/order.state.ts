@@ -28,6 +28,7 @@ export class OrderState {
       orders: [...state.orders, order],
     });
   }
+
   @Action(UpdateOrder)
   update(
     { getState, setState }: StateContext<OrderStateModel>,
@@ -44,6 +45,7 @@ export class OrderState {
       orders: orderList,
     });
   }
+
   @Action(DeleteOrder)
   delete(
     { getState, setState }: StateContext<OrderStateModel>,

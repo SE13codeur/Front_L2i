@@ -1,13 +1,10 @@
 import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { ICartItem } from '@models/cart';
-import { Select, Store } from '@ngxs/store';
-import {
-  CartState,
-  ClearCart,
-  RemoveFromCart,
-  UpdateCartItemQuantity,
-} from '@store/index';
+import { Select } from '@ngxs/store';
+import { CartDrawerService, CartService } from '@services/index';
+import { CartState } from '@store/index';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -28,18 +25,28 @@ export class CartComponent {
     | Observable<number>
     | undefined;
 
-  constructor(private store: Store, private dialog: MatDialog) {}
+  constructor(
+    private dialog: MatDialog,
+    private router: Router,
+    private cartService: CartService,
+    private cartDrawerService: CartDrawerService
+  ) {}
 
   removeItemFromCart(itemId: number): void {
-    this.store.dispatch(new RemoveFromCart(itemId));
+    this.cartService.removeItemFromCart(itemId);
   }
 
   updateCartItemQuantity(itemId: number, newQuantity: number): void {
-    this.store.dispatch(new UpdateCartItemQuantity(itemId, newQuantity));
+    this.cartService.updateCartItemQuantity(itemId, newQuantity);
   }
 
   clearCart(): void {
-    this.store.dispatch(new ClearCart());
+    this.cartService.clearCart();
+    this.closeCartDrawer();
+  }
+
+  closeCartDrawer() {
+    this.cartDrawerService.closeDrawer();
   }
 
   orderValidate(): void {
@@ -59,7 +66,8 @@ export class CartComponent {
           return;
         }
       }
-      // this.router.navigate(['/items/payment']);
+      this.router.navigate(['/items/orders']);
+      this.closeCartDrawer();
     });
   }
 }
