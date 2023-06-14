@@ -133,6 +133,7 @@ export class CartState {
           pages: item.pages,
           year: item.year,
           version: item.version,
+          tva: item.tva,
         };
         cartItems.push(newItem);
         patchState({

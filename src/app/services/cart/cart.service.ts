@@ -37,6 +37,7 @@ export class CartService {
       pages: item.pages,
       year: item.year,
       version: item.version,
+      tva: item.tva,
     };
 
     this.store.dispatch(new AddToCart(cartItem));
