@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { IItem } from '@models/index';
 import { Store } from '@ngxs/store';
 import {
+  AuthService,
   CartItemQuantityService,
   FiltersService,
   ItemService,
@@ -21,6 +22,7 @@ export class ListItemWithoutMeilisearchComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @Input() items: IItem[] = [];
   isInCart: ((id: number) => Observable<boolean>) | undefined;
+  isAdmin = false;
 
   currentSearch: string = '';
   itemList$ = new BehaviorSubject<IItem[]>([]);
@@ -36,8 +38,11 @@ export class ListItemWithoutMeilisearchComponent implements OnInit, OnDestroy {
     private itemService: ItemService,
     private filtersService: FiltersService,
     private paginationService: PaginationService,
+    private authService: AuthService,
     private router: Router
-  ) {}
+  ) {
+    this.isAdmin = this.authService.isAdminAuthenticated();
+  }
 
   ngOnInit(): void {
     this.itemService.getItems().subscribe((items) => {

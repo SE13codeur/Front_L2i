@@ -1,10 +1,10 @@
 <mat-toolbar class="nav-container">
   <div class="nav-wrapper">
     <a class="nav-logo" routerLink="/">
-      <img src="../../../assets/L2i.ico">
+      <img src="../../../assets/L2i.ico" />
     </a>
 
-      <!-- Desktop menu -->
+    <!-- Desktop menu -->
     <div class="menu">
       <button mat-button routerLink="/items/books">Articles</button>
       <button mat-button routerLink="/promos">Promos</button>
@@ -29,7 +29,7 @@
       </button>
 
       <!-- Cart drawer for shopping -->
-      <app-aside (click)="toggleDrawer()"></app-aside>
+      <app-aside *ngIf="!isAdmin" (click)="toggleDrawer()"></app-aside>
     </div>
   </div>
 </mat-toolbar>
