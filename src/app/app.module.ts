@@ -8,6 +8,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import {
+  AccountCustomerDrawerComponent,
   AdminItemComponent,
   AsideComponent,
   CartComponent,
@@ -28,6 +29,7 @@ import {
   NotFoundPageComponent,
   PaymentPageComponent,
   SignPageComponent,
+  UserAccountPageComponent,
 } from '@pages/index';
 import { AuthService, CartService, PaginatorFrService } from '@services/index';
 import { CartState, NgxsStoreModule, OrderState } from './store';
@@ -61,6 +63,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 import { NgxsModule } from '@ngxs/store';
 import {} from '@store/order';
+import { ProfileUserComponent } from './components/user/profile-user/profile-user.component';
+import { OrderUserComponent } from './components/user/order-user/order-user.component';
+import { FavoriteUserComponent } from './components/user/favorite-user/favorite-user.component';
 
 @NgModule({
   declarations: [
@@ -83,6 +88,11 @@ import {} from '@store/order';
     DetailItemPageComponent,
     PaymentPageComponent,
     OrderComponent,
+    AccountCustomerDrawerComponent,
+    UserAccountPageComponent,
+    ProfileUserComponent,
+    OrderUserComponent,
+    FavoriteUserComponent,
   ],
   imports: [
     BrowserModule,

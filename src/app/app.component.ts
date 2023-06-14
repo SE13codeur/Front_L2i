@@ -23,8 +23,7 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private searchFocusService: SearchFocusService,
-    private cartDrawerService: CartDrawerService,
-    private store: Store
+    private cartDrawerService: CartDrawerService
   ) {}
 
   ngOnInit(): void {

@@ -23,10 +23,10 @@
     </button>
 
     <div class="nav-actions">
-      <!-- User button for connection -->
-      <button mat-icon-button routerLink="/">
-        <mat-icon>account_circle</mat-icon>
-      </button>
+      <!-- Customer account drawer -->
+      <app-account-customer-drawer
+        *ngIf="!isAdmin"
+      ></app-account-customer-drawer>
 
       <!-- Cart drawer for shopping -->
       <app-aside *ngIf="!isAdmin" (click)="toggleDrawer()"></app-aside>

@@ -1,6 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AdminItemComponent } from '@components/index';
+import {
+  AdminItemComponent,
+  FavoriteUserComponent,
+  OrderUserComponent,
+  ProfileUserComponent,
+} from '@components/index';
 import {
   DetailItemPageComponent,
   HomePageComponent,
@@ -8,6 +13,7 @@ import {
   SignPageComponent,
   NotFoundPageComponent,
   PaymentPageComponent,
+  UserAccountPageComponent,
 } from '@pages/index';
 
 const routes: Routes = [
@@ -15,8 +21,16 @@ const routes: Routes = [
   { path: '', component: HomePageComponent },
   { path: 'items/books', component: ItemPageComponent },
   { path: 'items/books/:id', component: DetailItemPageComponent },
+  {
+    path: 'user/account',
+    component: UserAccountPageComponent,
+    children: [
+      { path: 'profile', component: ProfileUserComponent },
+      { path: 'orders', component: OrderUserComponent },
+      { path: 'favorites', component: FavoriteUserComponent },
+    ],
+  },
   { path: 'items/orders', component: PaymentPageComponent },
-
   {
     path: 'admin/items/books',
     component: AdminItemComponent,
