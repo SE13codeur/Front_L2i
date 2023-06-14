@@ -1,12 +1,7 @@
 import { Component } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import {
-  IBillingAddress,
-  ICartItem,
-  ICustomerInfos,
-  IOrder,
-} from '@models/index';
+import { ICartItem, ICustomer, ICart } from '@models/index';
 import { Select } from '@ngxs/store';
 import { CartDrawerService, CartService, OrderService } from '@services/index';
 import { CartState } from '@store/index';
@@ -18,7 +13,6 @@ import { Observable, combineLatest } from 'rxjs';
   styleUrls: ['./order.component.css'],
 })
 export class OrderComponent {
-  shippingAddress!: IBillingAddress;
   @Select(CartState.getCartItems)
   cartItems$!: Observable<ICartItem[]>;
   @Select(CartState.getTotalWithTaxes)
@@ -53,23 +47,19 @@ export class OrderComponent {
       next: ({ cartItems, subTotal, totalWithTaxes }) => {
         console.log('forkJoin next', cartItems, subTotal, totalWithTaxes);
 
-        const customerInfos: ICustomerInfos = {
-          firstname: 'Jame',
-          lastname: 'Lyr',
+        const user: ICustomer = {
+          username: 'user',
           email: 'USER.EMAIL',
-          shippingAddress: this.shippingAddress,
         };
 
-        const orderData: IOrder = {
-          orderNumber: 'generate_some_order_number',
-          orderDate: new Date().toISOString(),
-          items: cartItems,
-          customerInfos: customerInfos,
+        const cartData: ICart = {
+          cartItems,
+          user,
           totalPriceHT: subTotal,
           totalPriceTTC: totalWithTaxes,
         };
 
-        this.orderService.createOrder(orderData).subscribe({
+        this.orderService.createOrder(cartData).subscribe({
           next: () => {
             console.log('Order created successfully');
             this.snackBar.open('Commande créée avec succès!', 'Fermer', {

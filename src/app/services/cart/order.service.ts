@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environmentDev as environment } from '@env/environment.dev';
-import { IOrder } from '@models/index';
+import { ICart } from '@models/index';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -12,7 +12,7 @@ export class OrderService {
 
   constructor(private http: HttpClient) {}
 
-  createOrder(order: IOrder): Observable<any> {
+  createOrder(order: ICart): Observable<any> {
     return this.http.post(this.ordersUrl, order);
   }
 }

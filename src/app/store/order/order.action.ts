@@ -1,8 +1,8 @@
-import { IOrder } from '@models/index';
+import { ICart } from '@models/index';
 
 export class AddOrder {
   static readonly type = '[Order] Add';
-  constructor(public order: IOrder) {}
+  constructor(public order: ICart) {}
 }
 
 export class GetOrders {
@@ -11,7 +11,7 @@ export class GetOrders {
 
 export class UpdateOrder {
   static readonly type = '[Order] Update';
-  constructor(public order: IOrder) {}
+  constructor(public order: ICart) {}
 }
 
 export class DeleteOrder {

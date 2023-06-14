@@ -1,3 +1,3 @@
 export * from './ICartItem';
-export * from './IOrder';
-export * from './ICustomerInfos';
+export * from './ICart';
+export * from './ICustomer';
