@@ -1,13 +1,13 @@
 <div class="order-summary">
   <h2 class="order-header">Récapitulatif de la commande</h2>
 
-  <div class="shipping-address section">
+  <div class="shipping-address section aligned-section">
     <h3>Adresse de livraison:</h3>
     <p>{{ shippingAddress }}</p>
   </div>
 
+  <h3>Articles:</h3>
   <div class="cart-items section">
-    <h3>Articles:</h3>
     <mat-card *ngFor="let item of cartItems$ | async" class="product-card">
       <mat-card-content class="card-content">
         <div class="image-icon-container">
@@ -19,9 +19,10 @@
         </div>
         <div class="product-details">
           <mat-card-title>{{ item.title }}</mat-card-title>
-          <mat-card-subtitle
-            >Prix unitaire TTC: {{ item.regularPrice }} €</mat-card-subtitle
-          >
+          <mat-card-subtitle>
+            Prix unitaire TTC: {{ item.regularPrice | number : "1.2-2" }} €
+          </mat-card-subtitle>
+
           <mat-card-subtitle
             >Quantité commandée: {{ item.quantity }}</mat-card-subtitle
           >
@@ -32,10 +33,12 @@
   </div>
 
   <div class="order-totals section">
-    <h3>Sous-total:</h3>
-    <p>{{ subTotal$ | async }} €</p>
-    <h3>Total TTC:</h3>
-    <p>{{ totalWithTaxes$ | async }} €</p>
+    <h3 style="margin: 0">Sous-total :</h3>
+    <p style="margin-bottom: 1.01rem">
+      {{ subTotal$ | async | number : "1.2-2" }} €
+    </p>
+    <h3 style="margin: 0">Total TTC :</h3>
+    <p>{{ totalWithTaxes$ | async | number : "1.2-2" }} €</p>
   </div>
 
   <button class="confirm-button" (click)="onConfirmOrder()">

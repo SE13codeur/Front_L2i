@@ -47,7 +47,7 @@
 }
 
 /* Media Query for mobile devices */
-@media (max-width: 768px) {
+@media (max-width: 888px) {
   .nav-container {
     flex-direction: column;
     height: auto;
