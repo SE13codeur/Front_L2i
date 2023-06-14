@@ -1,24 +1,26 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { ICartItem, ICustomer, ICart } from '@models/index';
 import { Select } from '@ngxs/store';
 import { CartDrawerService, CartService, OrderService } from '@services/index';
 import { CartState } from '@store/index';
-import { Observable, combineLatest } from 'rxjs';
+import { Observable, Subject, combineLatest, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-order',
   templateUrl: './order.component.html',
   styleUrls: ['./order.component.css'],
 })
-export class OrderComponent {
+export class OrderComponent implements OnDestroy {
   @Select(CartState.getCartItems)
   cartItems$!: Observable<ICartItem[]>;
   @Select(CartState.getTotalWithTaxes)
   totalWithTaxes$!: Observable<number>;
   @Select(CartState.getSubTotal)
   subTotal$!: Observable<number>;
+
+  private destroy$ = new Subject<void>();
 
   constructor(
     private orderService: OrderService,
@@ -60,24 +62,27 @@ export class OrderComponent {
           totalPriceTTC: totalWithTaxes,
         };
 
-        this.orderService.createOrder(cartData).subscribe({
-          next: () => {
-            console.log('Order created successfully');
-            this.snackBar.open('Commande créée avec succès!', 'Fermer', {
-              duration: 4400,
-            });
-            this.clearCart();
-          },
-          error: (error) => {
-            console.log('Error creating order', error);
-            this.snackBar.open(
-              'Erreur lors de la création de la commande.',
-              'Fermer',
-              { duration: 4400 }
-            );
-            console.error(error);
-          },
-        });
+        this.orderService
+          .createOrder(cartData)
+          .pipe(takeUntil(this.destroy$))
+          .subscribe({
+            next: () => {
+              console.log('Order created successfully');
+              this.snackBar.open('Commande créée avec succès!', 'Fermer', {
+                duration: 4400,
+              });
+              this.clearCart();
+            },
+            error: (error) => {
+              console.log('Error creating order', error);
+              this.snackBar.open(
+                'Erreur lors de la création de la commande.',
+                'Fermer',
+                { duration: 4400 }
+              );
+              console.error(error);
+            },
+          });
       },
       error: (error) => {
         console.log('Error in forkJoin', error);
@@ -89,5 +94,10 @@ export class OrderComponent {
         console.error('Error fetching totals:', error);
       },
     });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
