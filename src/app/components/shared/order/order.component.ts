@@ -34,6 +34,7 @@ export class OrderComponent {
 
   clearCart(): void {
     this.cartService.clearCart();
+    this.router.navigate(['/items/books']); // TODO : navigate to https://stripe.com/fr/login
   }
 
   onConfirmOrder() {
@@ -88,6 +89,5 @@ export class OrderComponent {
         console.error('Error fetching totals:', error);
       },
     });
-    this.router.navigate(['/items/books']); // TODO : navigate to https://stripe.com/fr/login
   }
 }
