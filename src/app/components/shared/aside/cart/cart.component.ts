@@ -43,6 +43,7 @@ export class CartComponent {
   clearCart(): void {
     this.cartService.clearCart();
     this.closeCartDrawer();
+    this.router.navigate(['/items/books']);
   }
 
   closeCartDrawer() {

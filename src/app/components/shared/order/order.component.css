@@ -7,15 +7,13 @@
   background-color: #f9f9f9;
   padding: 1.11rem;
   overflow-y: auto;
-  z-index: 900;
   box-shadow: -2px 0px 5px rgba(0, 0, 0, 0.3);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  justify-content: center;
 }
-
-
 
 .order-header {
   font-weight: bold;
@@ -49,7 +47,7 @@ h3 {
   background-color: #0BB9F0;
   color: whitesmoke;
   border-radius: 7.7%;
-  padding: 0.5rem 1rem;
+  padding: 0.55rem 1.11rem;
   cursor: pointer;
   font-size: 1.11rem;
   margin: 1.11rem;
@@ -71,9 +69,11 @@ h3 {
 }
 
 .product-card {
-  width: 80%;
   margin-bottom: 1.11rem;
   display: flex;
+  flex-direction: row;
+  align-items: center;
+
 }
 
 .card-content {
