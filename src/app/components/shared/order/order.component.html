@@ -19,13 +19,20 @@
         <div class="product-details">
           <mat-card-title>{{ item.title }}</mat-card-title>
           <mat-card-subtitle>
-            Prix unitaire TTC: {{ item.regularPrice | number : "1.2-2" }} €
+            Prix unitaire HT :
+            {{ item.regularPrice * (1 - item.tva.tvaRate) | number : "1.2-2" }}
+            €
+          </mat-card-subtitle>
+          <mat-card-subtitle>TVA: {{ item.tva.tvaRate }}</mat-card-subtitle>
+          <mat-card-subtitle>
+            Prix unitaire TTC :
+            {{ item.regularPrice | number : "1.2-2" }}
+            €
           </mat-card-subtitle>
 
           <mat-card-subtitle
             >Quantité commandée: {{ item.quantity }}</mat-card-subtitle
           >
-          <mat-card-subtitle>TVA: {{ item.tva.tvaRate }}</mat-card-subtitle>
         </div>
       </mat-card-content>
     </mat-card>

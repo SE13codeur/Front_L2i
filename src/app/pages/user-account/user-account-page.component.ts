@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AccountCustomerDrawerService } from '@services/user';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -7,13 +8,13 @@ import { Observable } from 'rxjs';
   styleUrls: ['./user-account-page.component.css'],
 })
 export class UserAccountPageComponent implements OnInit {
-  isAccountCustomerDrawerOpened$: Observable<boolean> | undefined;
-
-  constructor() {}
+  constructor(
+    public accountCustomerDrawerService: AccountCustomerDrawerService
+  ) {}
 
   ngOnInit(): void {}
 
   closeAccountCustomerDrawer() {
-    console.log('TODO : toggle ACCOUNT CUSTOMER drawer');
+    this.accountCustomerDrawerService.closeDrawer();
   }
 }

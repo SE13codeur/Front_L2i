@@ -8,7 +8,7 @@
     <div class="menu">
       <button mat-button routerLink="/items/books">Articles</button>
       <button mat-button routerLink="/promos">Promos</button>
-      <button mat-button routerLink="/favorites">Favoris</button>
+      <button mat-button routerLink="/items/books/new">Nouveautés</button>
       <button mat-button routerLink="/comments">Avis</button>
     </div>
 
@@ -24,9 +24,13 @@
 
     <div class="nav-actions">
       <!-- Customer account drawer -->
-      <app-account-customer-drawer
+      <button
         *ngIf="!isAdmin"
-      ></app-account-customer-drawer>
+        (click)="openAccountCustomerDrawer()"
+        mat-icon-button
+      >
+        <mat-icon>account_circle</mat-icon>
+      </button>
 
       <!-- Cart drawer for shopping -->
       <app-aside *ngIf="!isAdmin" (click)="toggleDrawer()"></app-aside>

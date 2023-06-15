@@ -15,7 +15,7 @@ import { Observable, Subject, combineLatest, takeUntil } from 'rxjs';
 export class OrderComponent implements OnDestroy {
   @Select(CartState.getCartItems)
   cartItems$!: Observable<ICartItem[]>;
-  @Select(CartState.getTotalWithTaxes)
+  @Select(CartState.getTotalTTC)
   totalWithTaxes$!: Observable<number>;
   @Select(CartState.getSubTotal)
   subTotal$!: Observable<number>;
