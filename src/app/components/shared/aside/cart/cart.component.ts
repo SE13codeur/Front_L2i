@@ -2,9 +2,7 @@ import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ICartItem } from '@models/cart';
-import { Select } from '@ngxs/store';
 import { CartDrawerService, CartService } from '@services/index';
-import { CartState } from '@store/index';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -14,23 +12,22 @@ import { Observable } from 'rxjs';
 })
 export class CartComponent {
   @ViewChild('errorDialog') errorDialog: TemplateRef<any> | undefined;
-  @Select(CartState.getCartItems) cartItems$:
-    | Observable<ICartItem[]>
-    | undefined;
-  @Select(CartState.getCartTotalItems) totalItems$:
-    | Observable<number>
-    | undefined;
-  @Select(CartState.getSubTotal) subTotal$: Observable<number> | undefined;
-  @Select(CartState.getTotalWithTaxes) totalWithTaxes$:
-    | Observable<number>
-    | undefined;
+  cartItems$: Observable<ICartItem[]>;
+  totalItems$: Observable<number>;
+  subTotal$: Observable<number>;
+  totalWithTaxes$: Observable<number>;
 
   constructor(
     private dialog: MatDialog,
     private router: Router,
     private cartService: CartService,
     private cartDrawerService: CartDrawerService
-  ) {}
+  ) {
+    this.cartItems$ = this.cartService.getCartItems();
+    this.totalItems$ = this.cartService.getTotalItems();
+    this.subTotal$ = this.cartService.getSubTotal();
+    this.totalWithTaxes$ = this.cartService.getTotalPrice();
+  }
 
   removeItemFromCart(itemId: number): void {
     this.cartService.removeItemFromCart(itemId);

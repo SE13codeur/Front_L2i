@@ -15,6 +15,7 @@ import {
   PaymentPageComponent,
   UserAccountPageComponent,
 } from '@pages/index';
+import { OrderActivateCartGuard } from './guards';
 
 const routes: Routes = [
   { path: 'sign-in', component: SignPageComponent },
@@ -30,7 +31,11 @@ const routes: Routes = [
       { path: 'favorites', component: FavoriteUserComponent },
     ],
   },
-  { path: 'items/orders', component: PaymentPageComponent },
+  {
+    path: 'items/orders',
+    component: PaymentPageComponent,
+    canActivate: [OrderActivateCartGuard],
+  },
   {
     path: 'admin/items/books',
     component: AdminItemComponent,

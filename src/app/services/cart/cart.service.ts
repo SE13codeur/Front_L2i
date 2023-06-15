@@ -52,6 +52,10 @@ export class CartService {
     this.store.dispatch(new UpdateCartItemQuantity(itemId, newQuantity));
   }
 
+  getTotalItems(): Observable<number> {
+    return this.store.select(CartState.getCartTotalItems);
+  }
+
   removeItemFromCart(itemId: number) {
     this.store.dispatch(new RemoveFromCart(itemId));
   }
