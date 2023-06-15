@@ -66,6 +66,7 @@ import {} from '@store/order';
 import { ProfileUserComponent } from './components/user/profile-user/profile-user.component';
 import { OrderUserComponent } from './components/user/order-user/order-user.component';
 import { FavoriteUserComponent } from './components/user/favorite-user/favorite-user.component';
+import { ReleaseLatestPageComponent } from './pages/release/release-latest/release-latest-page.component';
 
 @NgModule({
   declarations: [
@@ -93,6 +94,7 @@ import { FavoriteUserComponent } from './components/user/favorite-user/favorite-
     ProfileUserComponent,
     OrderUserComponent,
     FavoriteUserComponent,
+    ReleaseLatestPageComponent,
   ],
   imports: [
     BrowserModule,

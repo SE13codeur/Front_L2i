@@ -25,6 +25,14 @@ export class ItemService {
     );
   }
 
+  getNewItems(year: string = '2019'): Observable<any> {
+    return this.http.get(`${this.itemsUrl}/new`, {
+      params: {
+        year: year,
+      },
+    });
+  }
+
   getItemsByPage(
     page: number,
     itemsPerPage: number,

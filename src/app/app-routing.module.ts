@@ -14,6 +14,7 @@ import {
   NotFoundPageComponent,
   PaymentPageComponent,
   UserAccountPageComponent,
+  ReleaseLatestPageComponent,
 } from '@pages/index';
 import { OrderActivateCartGuard } from './guards';
 
@@ -22,7 +23,9 @@ const routes: Routes = [
   { path: '', component: HomePageComponent },
   { path: 'items/books', component: ItemPageComponent },
   { path: 'items/books/:id', component: DetailItemPageComponent },
-  // { path: 'items/books/new', component: ItemPageComponent },
+  { path: 'new', component: ReleaseLatestPageComponent },
+  // { path: 'promos', component: PromosItemPageComponent },
+  // { path: 'comments', component: CommentItemPageComponent },
   {
     path: 'user/account',
     component: UserAccountPageComponent,
