@@ -64,11 +64,7 @@ export class CartService {
     this.store.dispatch(new ClearCart());
   }
 
-  getSubTotal(): Observable<number> {
-    return this.store.select(CartState.getSubTotal);
-  }
-
-  getTotalPrice(): Observable<number> {
-    return this.store.select(CartState.getTotalWithTaxes);
+  getTotalTTC(): Observable<number> {
+    return this.store.select(CartState.getTotalTTC);
   }
 }

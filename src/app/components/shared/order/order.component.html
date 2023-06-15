@@ -1,56 +1,56 @@
-<div class="order-summary">
-  <h2 class="order-header">Récapitulatif de la commande</h2>
+<div class="container">
+  <h1>Récapitulatif de la commande</h1>
 
   <div class="shipping-address section aligned-section">
     <h3>Adresse de livraison:</h3>
   </div>
 
-  <h3>Articles:</h3>
-  <div class="cart-items section">
-    <mat-card *ngFor="let item of cartItems$ | async" class="product-card">
-      <mat-card-content class="card-content">
-        <div class="image-icon-container">
-          <img
-            [src]="item.imageUrl"
-            alt="{{ item.title }}"
-            class="product-image"
-          />
-        </div>
-        <div class="product-details">
-          <mat-card-title>{{ item.title }}</mat-card-title>
-          <mat-card-subtitle>
-            Prix unitaire HT :
-            {{ item.regularPrice * (1 - item.tva.tvaRate) | number : "1.2-2" }}
-            €
-          </mat-card-subtitle>
-          <mat-card-subtitle>TVA: {{ item.tva.tvaRate }}</mat-card-subtitle>
-          <mat-card-subtitle>
-            Prix unitaire TTC :
-            {{ item.regularPrice | number : "1.2-2" }}
-            €
-          </mat-card-subtitle>
+  <table class="cart-table">
+    <thead>
+      <tr>
+        <th>PRODUIT</th>
+        <th>PRIX UNITAIRE HT</th>
+        <th>PRIX UNITAIRE TTC</th>
+        <th>TVA</th>
+        <th>QUANTITÉ</th>
+        <th>SOUS-TOTAL TTC</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of cartItems$ | async">
+        <td>
+          <div class="image-icon-container">
+            <img
+              [src]="item.imageUrl"
+              alt="{{ item.title }}"
+              class="product-image"
+            />
+          </div>
+          <span>{{ item.title }}</span>
+        </td>
+        <td>
+          {{ item.regularPrice * (1 - item.tva.tvaRate) | number : "1.2-2" }} €
+        </td>
+        <td>{{ item.regularPrice | number : "1.2-2" }} €</td>
+        <td>{{ item.tva.tvaRate }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>{{ item.regularPrice * item.quantity | number : "1.2-2" }} €</td>
+      </tr>
+    </tbody>
+  </table>
 
-          <mat-card-subtitle
-            >Quantité commandée: {{ item.quantity }}</mat-card-subtitle
-          >
-        </div>
-      </mat-card-content>
-    </mat-card>
+  <div class="checkout-section">
+    <h2>
+      <span style="text-decoration: underline">Total TTC</span> :
+      <span style="font-weight: bolder"
+        >{{ totalTTC$ | async | number : "1.2-2" }} €</span
+      >
+    </h2>
+    <button class="confirm-button" (click)="onConfirmOrder()">
+      Passer au paiement
+    </button>
+    <button class="modify-button" (click)="openCartDrawer()">
+      Modifier le panier
+    </button>
   </div>
-
-  <div class="order-totals section">
-    <h3 style="margin: 0">Sous-total :</h3>
-    <p style="margin-bottom: 1.01rem">
-      {{ subTotal$ | async | number : "1.2-2" }} €
-    </p>
-    <h3 style="margin: 0">Total TTC :</h3>
-    <p>{{ totalWithTaxes$ | async | number : "1.2-2" }} €</p>
-  </div>
-
-  <button class="confirm-button" (click)="onConfirmOrder()">
-    Passer au paiement
-  </button>
-  <button class="modify-button" (click)="openCartDrawer()">
-    Modifier le panier
-  </button>
 </div>

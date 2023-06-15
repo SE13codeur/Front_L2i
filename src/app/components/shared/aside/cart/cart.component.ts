@@ -14,8 +14,7 @@ export class CartComponent {
   @ViewChild('errorDialog') errorDialog: TemplateRef<any> | undefined;
   cartItems$: Observable<ICartItem[]>;
   totalItems$: Observable<number>;
-  subTotal$: Observable<number>;
-  totalWithTaxes$: Observable<number>;
+  totalTTC$: Observable<number>;
 
   constructor(
     private dialog: MatDialog,
@@ -25,8 +24,7 @@ export class CartComponent {
   ) {
     this.cartItems$ = this.cartService.getCartItems();
     this.totalItems$ = this.cartService.getTotalItems();
-    this.subTotal$ = this.cartService.getSubTotal();
-    this.totalWithTaxes$ = this.cartService.getTotalPrice();
+    this.totalTTC$ = this.cartService.getTotalTTC();
   }
 
   removeItemFromCart(itemId: number): void {
@@ -48,6 +46,7 @@ export class CartComponent {
   }
 
   orderValidate(): void {
+    this.closeCartDrawer();
     this.cartItems$?.subscribe((cartItems) => {
       for (let cartItem of cartItems) {
         if (cartItem.quantity > cartItem.quantityInStock) {
@@ -65,7 +64,6 @@ export class CartComponent {
         }
       }
       this.router.navigate(['/items/orders']);
-      this.closeCartDrawer();
     });
   }
 }

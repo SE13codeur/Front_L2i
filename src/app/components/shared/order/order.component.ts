@@ -16,9 +16,7 @@ export class OrderComponent implements OnDestroy {
   @Select(CartState.getCartItems)
   cartItems$!: Observable<ICartItem[]>;
   @Select(CartState.getTotalTTC)
-  totalWithTaxes$!: Observable<number>;
-  @Select(CartState.getSubTotal)
-  subTotal$!: Observable<number>;
+  totalTTC$!: Observable<number>;
 
   private destroy$ = new Subject<void>();
 
@@ -44,11 +42,10 @@ export class OrderComponent implements OnDestroy {
 
     combineLatest({
       cartItems: this.cartItems$,
-      subTotal: this.subTotal$,
-      totalWithTaxes: this.totalWithTaxes$,
+      totalTTC: this.totalTTC$,
     }).subscribe({
-      next: ({ cartItems, subTotal, totalWithTaxes }) => {
-        console.log('forkJoin next', cartItems, subTotal, totalWithTaxes);
+      next: ({ cartItems, totalTTC }) => {
+        console.log('forkJoin next', cartItems, totalTTC);
 
         const user: ICustomer = {
           username: 'user',
@@ -58,8 +55,6 @@ export class OrderComponent implements OnDestroy {
         const cartData: ICart = {
           cartItems,
           user,
-          totalPriceHT: subTotal,
-          totalPriceTTC: totalWithTaxes,
         };
 
         this.orderService

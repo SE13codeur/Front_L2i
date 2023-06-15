@@ -28,9 +28,9 @@ export class OrderActivateCartGuard implements CanActivate {
           return of(false);
         }
 
-        return this.cartService.getSubTotal().pipe(
-          map((subTotal) => {
-            if (subTotal === 0) {
+        return this.cartService.getTotalTTC().pipe(
+          map((total) => {
+            if (total === 0) {
               this.router.navigate(['/']);
               return false;
             }
