@@ -2,16 +2,16 @@
   <h1>Récapitulatif de la commande</h1>
 
   <div class="shipping-address section aligned-section">
-    <h3>Adresse de livraison:</h3>
+    <h2 style="font-weight: bolder; margin: 1.11rem">Adresse de livraison:</h2>
   </div>
 
   <table class="cart-table">
     <thead>
       <tr>
-        <th>PRODUIT</th>
+        <th>ARTICLE</th>
         <th>PRIX UNITAIRE HT</th>
-        <th>PRIX UNITAIRE TTC</th>
         <th>TVA</th>
+        <th>PRIX UNITAIRE TTC</th>
         <th>QUANTITÉ</th>
         <th>SOUS-TOTAL TTC</th>
       </tr>
@@ -31,26 +31,36 @@
         <td>
           {{ item.regularPrice * (1 - item.tva.tvaRate) | number : "1.2-2" }} €
         </td>
+        <td>{{ item.tva.tvaRate * 100 }} %</td>
         <td>{{ item.regularPrice | number : "1.2-2" }} €</td>
-        <td>{{ item.tva.tvaRate }}</td>
         <td>{{ item.quantity }}</td>
         <td>{{ item.regularPrice * item.quantity | number : "1.2-2" }} €</td>
       </tr>
     </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="5">&nbsp;</td>
+        <td style="text-align: center">
+          <span style="text-decoration: underline">Total TTC</span> :
+        </td>
+      </tr>
+      <tr>
+        <td colspan="5">&nbsp;</td>
+        <td style="text-align: center">
+          <span style="font-weight: bolder">
+            {{ totalTTC$ | async | number : "1.2-2" }} €
+          </span>
+        </td>
+      </tr>
+    </tfoot>
   </table>
 
   <div class="checkout-section">
-    <h2>
-      <span style="text-decoration: underline">Total TTC</span> :
-      <span style="font-weight: bolder"
-        >{{ totalTTC$ | async | number : "1.2-2" }} €</span
-      >
-    </h2>
-    <button class="confirm-button" (click)="onConfirmOrder()">
-      Passer au paiement
-    </button>
     <button class="modify-button" (click)="openCartDrawer()">
       Modifier le panier
+    </button>
+    <button class="confirm-button" (click)="onConfirmOrder()">
+      Passer au paiement
     </button>
   </div>
 </div>

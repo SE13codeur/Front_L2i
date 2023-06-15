@@ -4,7 +4,7 @@
   <table class="cart-table">
     <thead>
       <tr>
-        <th>PRODUIT</th>
+        <th>ARTICLE</th>
         <th>PRIX</th>
         <th>QUANTITÉ</th>
         <th>SOUS-TOTAL</th>
@@ -37,6 +37,14 @@
         <td></td>
         <td></td>
         <td>{{ totalItems$ | async }}</td>
+        <td>
+          <h2>
+            <span style="text-decoration: underline">Total TTC</span> :
+            <span style="font-weight: bolder">{{
+              totalTTC$ | async | currency : "EUR" : true
+            }}</span>
+          </h2>
+        </td>
       </tr>
     </tfoot>
   </table>
@@ -45,12 +53,6 @@
     <button class="cart-clear-button" mat-raised-button (click)="clearCart()">
       Vider le panier
     </button>
-    <h2>
-      <span style="text-decoration: underline">Total TTC</span> :
-      <span style="font-weight: bolder">{{
-        totalTTC$ | async | currency : "EUR" : true
-      }}</span>
-    </h2>
     <button
       class="cart-order-button"
       mat-raised-button
