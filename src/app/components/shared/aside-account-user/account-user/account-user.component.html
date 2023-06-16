@@ -1,13 +1,13 @@
 <div class="container">
-  <div class="drawer-item" routerLink="/account/profile">
+  <div class="drawer-item" routerLink="user/account/profile">
     <mat-icon>person</mat-icon>
     Mon profil
   </div>
-  <div class="drawer-item" routerLink="/account/orders">
+  <div class="drawer-item" (click)="openOrdersPage()">
     <mat-icon>shopping_cart</mat-icon>
     Mes commandes
   </div>
-  <div class="drawer-item" routerLink="/account/favorites">
+  <div class="drawer-item" routerLink="user/account/favorites">
     <mat-icon>favorite</mat-icon>
     Mes favoris
   </div>

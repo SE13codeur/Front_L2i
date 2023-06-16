@@ -1,11 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {
-  AdminItemComponent,
-  FavoriteUserComponent,
-  OrderUserComponent,
-  ProfileUserComponent,
-} from '@components/index';
+import { AdminItemComponent } from '@components/index';
 import {
   DetailItemPageComponent,
   HomePageComponent,
@@ -13,7 +8,6 @@ import {
   SignPageComponent,
   NotFoundPageComponent,
   PaymentPageComponent,
-  UserAccountPageComponent,
   ReleaseLatestPageComponent,
   PromosPageComponent,
 } from '@pages/index';
@@ -37,13 +31,7 @@ const routes: Routes = [
   //     // { path: 'comments', component: CommentItemPageComponent },
   //   ],
   // },
-  { path: 'profile', component: ProfileUserComponent },
-  { path: 'orders', component: OrderUserComponent },
-  { path: 'favorites', component: FavoriteUserComponent },
-  { path: 'user/account', component: UserAccountPageComponent },
-  { path: 'user/account/profile', component: ProfileUserComponent },
-  { path: 'user/account/orders', component: OrderUserComponent },
-  { path: 'user/account/favorites', component: FavoriteUserComponent },
+
   // {
   //   path: 'user/account',
   //   component: UserAccountPageComponent,

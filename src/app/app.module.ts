@@ -29,7 +29,6 @@ import {
   NotFoundPageComponent,
   PaymentPageComponent,
   SignPageComponent,
-  UserAccountPageComponent,
 } from '@pages/index';
 import { AuthService, CartService, PaginatorFrService } from '@services/index';
 import { CartState, NgxsStoreModule, OrderState } from './store';
@@ -62,13 +61,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 import { NgxsModule } from '@ngxs/store';
-import {} from '@store/order';
-import { ProfileUserComponent } from './components/user/profile-user/profile-user.component';
-import { OrderUserComponent } from './components/user/order-user/order-user.component';
-import { FavoriteUserComponent } from './components/user/favorite-user/favorite-user.component';
 import { ReleaseLatestPageComponent } from './pages/release/release-latest/release-latest-page.component';
 import { PromosPageComponent } from './pages/promos/promos-page.component';
 import { AccountUserComponent } from './components/shared/aside-account-user/account-user/account-user.component';
+import { OrderUserPageComponent } from './pages/user-account/order-user-page/order-user-page.component';
+import { OrderListComponent } from './components/shared/order/order-list/order-list.component';
 
 @NgModule({
   declarations: [
@@ -92,13 +89,11 @@ import { AccountUserComponent } from './components/shared/aside-account-user/acc
     PaymentPageComponent,
     OrderComponent,
     AccountUserDrawerComponent,
-    UserAccountPageComponent,
-    ProfileUserComponent,
-    OrderUserComponent,
-    FavoriteUserComponent,
     ReleaseLatestPageComponent,
     PromosPageComponent,
     AccountUserComponent,
+    OrderUserPageComponent,
+    OrderListComponent,
   ],
   imports: [
     BrowserModule,
