@@ -24,8 +24,8 @@
 
     <div class="nav-actions">
       <!-- User account drawer -->
-      <app-account-user-drawer (click)="toggleAccountUserDrawer()">
-      </app-account-user-drawer>
+      <app-account-user-button (click)="toggleAccountUserDrawer()">
+      </app-account-user-button>
 
       <!-- Cart drawer for shopping -->
       <app-aside *ngIf="!isAdmin" (click)="toggleCartDrawer()"></app-aside>

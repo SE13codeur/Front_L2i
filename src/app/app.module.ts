@@ -8,7 +8,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import {
-  AccountUserDrawerComponent,
+  AccountUserButtonComponent,
   AdminItemComponent,
   AsideComponent,
   CartComponent,
@@ -63,7 +63,7 @@ import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 import { NgxsModule } from '@ngxs/store';
 import { ReleaseLatestPageComponent } from './pages/release/release-latest/release-latest-page.component';
 import { PromosPageComponent } from './pages/promos/promos-page.component';
-import { AccountUserComponent } from './components/shared/aside-account-user/account-user/account-user.component';
+import { AccountUserDrawerComponent } from './components/shared/aside-account-user/account-user-drawer/account-user-drawer.component';
 import { OrderUserPageComponent } from './pages/user-account/order-user-page/order-user-page.component';
 import { OrderListComponent } from './components/shared/order/order-list/order-list.component';
 
@@ -88,10 +88,10 @@ import { OrderListComponent } from './components/shared/order/order-list/order-l
     DetailItemPageComponent,
     PaymentPageComponent,
     OrderComponent,
-    AccountUserDrawerComponent,
+    AccountUserButtonComponent,
     ReleaseLatestPageComponent,
     PromosPageComponent,
-    AccountUserComponent,
+    AccountUserDrawerComponent,
     OrderUserPageComponent,
     OrderListComponent,
   ],

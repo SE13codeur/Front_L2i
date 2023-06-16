@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { AccountUserDrawerService } from '@services/index';
 
 @Component({
-  selector: 'app-account-user-drawer',
-  templateUrl: './account-user-drawer.component.html',
-  styleUrls: ['./account-user-drawer.component.css'],
+  selector: 'app-account-user-button',
+  templateUrl: './account-user-button.component.html',
+  styleUrls: ['./account-user-button.component.css'],
 })
-export class AccountUserDrawerComponent {
+export class AccountUserButtonComponent {
   constructor(private accountUserDrawerService: AccountUserDrawerService) {}
 
   openDrawer(event: Event) {
