@@ -8,10 +8,10 @@
 
   <mat-sidenav
     mode="over"
-    [opened]="accountCustomerDrawerService.isOpen$ | async"
+    [opened]="isDrawerOpened$ | async"
     class="sidenav-cart"
   >
-    <button mat-icon-button (click)="closeAccountCustomerDrawer()">
+    <button mat-icon-button (click)="closeDrawer()">
       <mat-icon>close</mat-icon>
     </button>
     <app-account-customer-drawer></app-account-customer-drawer>

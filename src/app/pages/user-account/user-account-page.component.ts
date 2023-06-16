@@ -8,13 +8,21 @@ import { Observable } from 'rxjs';
   styleUrls: ['./user-account-page.component.css'],
 })
 export class UserAccountPageComponent implements OnInit {
+  isDrawerOpened$: Observable<boolean> | undefined;
+
   constructor(
     public accountCustomerDrawerService: AccountCustomerDrawerService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.isDrawerOpened$ = this.accountCustomerDrawerService.isDrawerOpened$;
+  }
 
-  closeAccountCustomerDrawer() {
+  toggleDrawer() {
+    this.accountCustomerDrawerService.toggleDrawer();
+  }
+
+  closeDrawer() {
     this.accountCustomerDrawerService.closeDrawer();
   }
 }

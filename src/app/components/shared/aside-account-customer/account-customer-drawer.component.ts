@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AccountCustomerDrawerService } from '@services/user';
 
 @Component({
   selector: 'app-account-customer-drawer',
@@ -6,11 +7,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./account-customer-drawer.component.css'],
 })
 export class AccountCustomerDrawerComponent implements OnInit {
-  constructor() {}
+  constructor(
+    private accountCustomerDrawerService: AccountCustomerDrawerService
+  ) {}
 
   ngOnInit(): void {}
 
-  openAccountCustomerDrawer(event: Event) {
+  openDrawer(event: Event) {
     event.stopPropagation();
+    this.accountCustomerDrawerService.toggleDrawer();
   }
 }

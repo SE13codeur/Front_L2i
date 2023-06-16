@@ -22,12 +22,12 @@ export class NavComponent {
     this.isAdmin = this.authService.isAdminAuthenticated();
   }
 
-  toggleDrawer() {
+  toggleCartDrawer() {
     this.cartDrawerService.toggleDrawer();
   }
 
-  openAccountCustomerDrawer() {
-    this.accountCustomerDrawerService.openDrawer();
+  toggleAccountCustomerDrawer() {
+    this.accountCustomerDrawerService.toggleDrawer();
   }
 
   goToAddItem(): void {

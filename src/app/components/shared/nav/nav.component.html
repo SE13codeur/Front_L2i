@@ -24,16 +24,11 @@
 
     <div class="nav-actions">
       <!-- Customer account drawer -->
-      <button
-        *ngIf="!isAdmin"
-        (click)="openAccountCustomerDrawer()"
-        mat-icon-button
-      >
-        <mat-icon>account_circle</mat-icon>
-      </button>
+      <app-account-customer-drawer (click)="toggleAccountCustomerDrawer()">
+      </app-account-customer-drawer>
 
       <!-- Cart drawer for shopping -->
-      <app-aside *ngIf="!isAdmin" (click)="toggleDrawer()"></app-aside>
+      <app-aside *ngIf="!isAdmin" (click)="toggleCartDrawer()"></app-aside>
     </div>
   </div>
 </mat-toolbar>

@@ -5,14 +5,18 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class AccountCustomerDrawerService {
-  private isOpen = new BehaviorSubject<boolean>(false);
-  isOpen$ = this.isOpen.asObservable();
+  private isDrawerOpen = new BehaviorSubject<boolean>(false);
+  isDrawerOpened$ = this.isDrawerOpen.asObservable();
 
-  openDrawer() {
-    this.isOpen.next(true);
+  toggleDrawer() {
+    this.isDrawerOpen.next(!this.isDrawerOpen.getValue());
   }
 
   closeDrawer() {
-    this.isOpen.next(false);
+    this.isDrawerOpen.next(false);
+  }
+
+  isDrawerOpened() {
+    return this.isDrawerOpened$;
   }
 }
