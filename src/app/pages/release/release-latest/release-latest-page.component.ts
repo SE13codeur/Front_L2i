@@ -75,9 +75,9 @@ export class ReleaseLatestPageComponent implements OnInit {
     return [...Array(fullStars).fill(1), ...Array(emptyStars).fill(0)];
   }
 
-  // openItemDetails(item: IItem) {
-  //   this.router.navigate(['/items/books', item.id]);
-  // }
+  openItemDetails(item: IItem) {
+    this.router.navigate(['/items/books', item.id]);
+  }
 
   addToFavorites(itemId: number, event: Event) {
     this.isFavorite[itemId] = !this.isFavorite[itemId];

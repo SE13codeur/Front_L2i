@@ -74,7 +74,7 @@ export class AdminItemComponent implements OnInit {
       ],
       language: [this.isAddRouting ? 'french' : this.item?.language],
       version: ['', Validators.required],
-      newCollection: [false],
+      isNewCollection: [false],
     });
   }
 
@@ -121,7 +121,7 @@ export class AdminItemComponent implements OnInit {
             year: item.year,
             language: item.language,
             version: item.version,
-            newCollection: item.newCollection,
+            isNewCollection: item.isNewCollection,
           });
 
           this.snackBar.open('Données chargées avec succès!', 'Fermer', {
