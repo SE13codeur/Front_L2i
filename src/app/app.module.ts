@@ -8,7 +8,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import {
-  AccountCustomerDrawerComponent,
+  AccountUserDrawerComponent,
   AdminItemComponent,
   AsideComponent,
   CartComponent,
@@ -68,6 +68,7 @@ import { OrderUserComponent } from './components/user/order-user/order-user.comp
 import { FavoriteUserComponent } from './components/user/favorite-user/favorite-user.component';
 import { ReleaseLatestPageComponent } from './pages/release/release-latest/release-latest-page.component';
 import { PromosPageComponent } from './pages/promos/promos-page.component';
+import { AccountUserComponent } from './components/shared/aside-account-user/account-user/account-user.component';
 
 @NgModule({
   declarations: [
@@ -90,13 +91,14 @@ import { PromosPageComponent } from './pages/promos/promos-page.component';
     DetailItemPageComponent,
     PaymentPageComponent,
     OrderComponent,
-    AccountCustomerDrawerComponent,
+    AccountUserDrawerComponent,
     UserAccountPageComponent,
     ProfileUserComponent,
     OrderUserComponent,
     FavoriteUserComponent,
     ReleaseLatestPageComponent,
     PromosPageComponent,
+    AccountUserComponent,
   ],
   imports: [
     BrowserModule,

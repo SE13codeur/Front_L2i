@@ -11,7 +11,14 @@ app-nav {
 }
 
 .sidenav-cart {
-  width: 36%;
+  width: 55%;
+  position: fixed;
+  right: 0;
+  z-index: 1000;
+}
+
+.sidenav-account-user {
+  width: 17%;
   position: fixed;
   left: 0;
   right: 0;

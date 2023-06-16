@@ -1,0 +1,11 @@
+aside {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1.11rem;
+}
+
+aside:hover {
+  color: #7b7070;
+}

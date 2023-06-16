@@ -1,0 +1,25 @@
+.mat-sidenav {
+  width: 36%;
+  transition: transform 1..11s ease-in, transform 3.33s ease-out;
+}
+
+app-nav {
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+.sidenav-sidenav-account-user {
+  width: 36%;
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+@media (max-width: 1101px) {
+  .sidenav-sidenav-account-user  {
+    width: 100%;
+  }
+}

@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService, CartDrawerService } from '@services/index';
-import { AccountCustomerDrawerService } from '@services/user';
+import {
+  AccountUserDrawerService,
+  AuthService,
+  CartDrawerService,
+} from '@services/index';
 
 @Component({
   selector: 'app-nav',
@@ -15,7 +18,7 @@ export class NavComponent {
     private router: Router,
     private authService: AuthService,
     private cartDrawerService: CartDrawerService,
-    private accountCustomerDrawerService: AccountCustomerDrawerService
+    private accountUserDrawerService: AccountUserDrawerService
   ) {}
 
   ngOnInit(): void {
@@ -26,8 +29,8 @@ export class NavComponent {
     this.cartDrawerService.toggleDrawer();
   }
 
-  toggleAccountCustomerDrawer() {
-    this.accountCustomerDrawerService.toggleDrawer();
+  toggleAccountUserDrawer() {
+    this.accountUserDrawerService.toggleDrawer();
   }
 
   goToAddItem(): void {

@@ -8,13 +8,13 @@
         <th>PRIX</th>
         <th>QUANTITÉ</th>
         <th>SOUS-TOTAL</th>
+        <th>ACTIONS</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let item of cartItems$ | async; let i = index">
         <td>
           <div class="image-icon-container">
-            <mat-icon (click)="removeItemFromCart(item.id)">delete</mat-icon>
             <img
               [src]="item.imageUrl"
               alt="{{ item.title }}"
@@ -29,6 +29,13 @@
         </td>
         <td>
           {{ item.regularPrice * item.quantity | currency : "EUR" : true }}
+        </td>
+        <td>
+          <mat-icon
+            style="cursor: pointer"
+            (click)="removeItemFromCart(item.id)"
+            >delete</mat-icon
+          >
         </td>
       </tr>
     </tbody>
@@ -45,20 +52,21 @@
             }}</span>
           </h2>
         </td>
+        <td></td>
       </tr>
     </tfoot>
   </table>
 
   <div class="checkout-section">
-    <button class="cart-clear-button" mat-raised-button (click)="clearCart()">
-      Vider le panier
-    </button>
     <button
       class="cart-order-button"
       mat-raised-button
       (click)="orderValidate()"
     >
       Valider la commande
+    </button>
+    <button class="cart-clear-button" mat-raised-button (click)="clearCart()">
+      Vider le panier
     </button>
   </div>
 </div>

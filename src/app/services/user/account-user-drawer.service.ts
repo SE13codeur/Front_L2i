@@ -4,7 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class AccountCustomerDrawerService {
+export class AccountUserDrawerService {
   private isDrawerOpen = new BehaviorSubject<boolean>(false);
   isDrawerOpened$ = this.isDrawerOpen.asObservable();
 

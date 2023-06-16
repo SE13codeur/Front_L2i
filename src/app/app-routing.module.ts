@@ -25,6 +25,7 @@ const routes: Routes = [
   { path: 'items/books', component: ItemPageComponent },
   { path: 'items/books/new', component: ReleaseLatestPageComponent },
   { path: 'items/books/promos', component: PromosPageComponent },
+  // { path: 'items/books/comment', component: CommentsPageComponent },
   { path: 'items/books/:id', component: DetailItemPageComponent },
   // {
   //   path: 'items/books',
