@@ -1,1 +1,33 @@
-<p>order-list works!</p>
+<div class="container">
+  <h1>Historique de mes commandes</h1>
+
+  <table class="cart-table">
+    <thead>
+      <tr>
+        <th>N° DE COMMANDE</th>
+        <th>DATE</th>
+        <th>PRIX TOTAL HT</th>
+        <th>PRIX TOTAL TTC</th>
+        <th>STATUT</th>
+        <th>ACTIONS</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let order of orderList$ | async">
+        <td>
+          {{ order.id }}
+        </td>
+        <td>
+          {{ order.date | date : "dd/MM/yyyy HH:mm:ss" }}
+        </td>
+        <td>
+          {{ order.totalPriceHT | number : "1.2-2" }}
+          €
+        </td>
+        <td>{{ order.totalPriceTTC | number : "1.2-2" }} €</td>
+        <td>{{ order.status }}</td>
+        <td>Détails</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

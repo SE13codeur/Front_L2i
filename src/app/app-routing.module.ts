@@ -10,6 +10,7 @@ import {
   PaymentPageComponent,
   ReleaseLatestPageComponent,
   PromosPageComponent,
+  OrderUserPageComponent,
 } from '@pages/index';
 import { OrderActivateCartGuard } from './guards';
 
@@ -31,6 +32,7 @@ const routes: Routes = [
   //     // { path: 'comments', component: CommentItemPageComponent },
   //   ],
   // },
+  { path: 'user/account/orders', component: OrderUserPageComponent },
 
   // {
   //   path: 'user/account',
