@@ -19,6 +19,7 @@ export interface IItem {
   year: string;
   language?: string;
   version: number;
-  newCollection?: boolean;
   tva: ITVAItem;
+  isNewCollection?: boolean;
+  onSale?: number;
 }

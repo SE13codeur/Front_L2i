@@ -3,7 +3,6 @@
     <div class="detail-image">
       <div class="image-wrapper">
         <img [src]="item.imageUrl" alt="{{ item.title }} cover image" />
-        <div *ngIf="item.isNewCollection" class="new-banner">New</div>
       </div>
       <div class="rating">
         <mat-icon
@@ -36,6 +35,7 @@
       <p><strong>Edition :</strong> {{ item?.editor?.name }}</p>
       <p><strong>Description :</strong> {{ item.description }}</p>
       <p><strong>Prix :</strong> {{ item.regularPrice }} €</p>
+      <p><strong>Soldé :</strong> {{ item.onSale == 1 ? "Oui" : "Non" }}</p>
       <p><strong>Pages :</strong> {{ item.pages }}</p>
       <p><strong>Catégorie :</strong> {{ item?.category?.name }}</p>
       <p><strong>Année :</strong> {{ item.year }}</p>

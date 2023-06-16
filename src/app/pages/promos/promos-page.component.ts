@@ -1,24 +1,22 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
-import { IItem } from '@models/item';
-import { AuthService } from '@services/admin';
-import { ItemService } from '@services/item';
-import { PaginationService } from '@services/pagination';
-import { BehaviorSubject, Observable, Subject, take } from 'rxjs';
+import { IItem } from '@models/index';
+import { AuthService, ItemService, PaginationService } from '@services/index';
+import { BehaviorSubject, Observable, Subject, map, take } from 'rxjs';
 
 @Component({
-  selector: 'app-release-latest-page',
-  templateUrl: './release-latest-page.component.html',
-  styleUrls: ['./release-latest-page.component.css'],
+  selector: 'app-promos-page',
+  templateUrl: './promos-page.component.html',
+  styleUrls: ['./promos-page.component.css'],
 })
-export class ReleaseLatestPageComponent implements OnInit {
+export class PromosPageComponent implements OnInit {
   @Input() items: IItem[] = [];
   isInCart: ((id: number) => Observable<boolean>) | undefined;
   isAdmin = false;
 
   currentSearch: string = '';
-  newItemList$ = new BehaviorSubject<IItem[]>([]);
+  itemsOnSale$ = new BehaviorSubject<IItem[]>([]);
   totalItems$ = new BehaviorSubject<number | null>(null);
   itemsPerPage = 12;
   currentPage = 1;
@@ -37,10 +35,8 @@ export class ReleaseLatestPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.itemService.getItems().subscribe((items) => {
-      const filteredItems = items.filter(
-        (item) => parseInt(item.year, 10) >= 2019
-      );
-      this.newItemList$.next(filteredItems);
+      const itemsOnSale = items.filter((item) => item.onSale == 1);
+      this.itemsOnSale$.next(itemsOnSale);
     });
   }
 

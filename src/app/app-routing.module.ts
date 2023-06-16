@@ -15,6 +15,7 @@ import {
   PaymentPageComponent,
   UserAccountPageComponent,
   ReleaseLatestPageComponent,
+  PromosPageComponent,
 } from '@pages/index';
 import { OrderActivateCartGuard } from './guards';
 
@@ -23,18 +24,34 @@ const routes: Routes = [
   { path: '', component: HomePageComponent },
   { path: 'items/books', component: ItemPageComponent },
   { path: 'items/books/new', component: ReleaseLatestPageComponent },
+  { path: 'items/books/promos', component: PromosPageComponent },
   { path: 'items/books/:id', component: DetailItemPageComponent },
-  // { path: 'promos', component: PromosItemPageComponent },
-  // { path: 'comments', component: CommentItemPageComponent },
-  {
-    path: 'user/account',
-    component: UserAccountPageComponent,
-    children: [
-      { path: 'profile', component: ProfileUserComponent },
-      { path: 'orders', component: OrderUserComponent },
-      { path: 'favorites', component: FavoriteUserComponent },
-    ],
-  },
+  // {
+  //   path: 'items/books',
+  //   component: ItemPageComponent,
+  //   children: [
+  //     { path: 'new', component: ReleaseLatestPageComponent },
+  //     { path: 'promos', component: PromosPageComponent },
+  //     { path: ':id', component: DetailItemPageComponent },
+  //     // { path: 'comments', component: CommentItemPageComponent },
+  //   ],
+  // },
+  { path: 'profile', component: ProfileUserComponent },
+  { path: 'orders', component: OrderUserComponent },
+  { path: 'favorites', component: FavoriteUserComponent },
+  { path: 'user/account', component: UserAccountPageComponent },
+  { path: 'user/account/profile', component: ProfileUserComponent },
+  { path: 'user/account/orders', component: OrderUserComponent },
+  { path: 'user/account/favorites', component: FavoriteUserComponent },
+  // {
+  //   path: 'user/account',
+  //   component: UserAccountPageComponent,
+  //   children: [
+  //     { path: 'profile', component: ProfileUserComponent },
+  //     { path: 'orders', component: OrderUserComponent },
+  //     { path: 'favorites', component: FavoriteUserComponent },
+  //   ],
+  // },
   {
     path: 'items/orders',
     component: PaymentPageComponent,

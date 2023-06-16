@@ -67,6 +67,7 @@ import { ProfileUserComponent } from './components/user/profile-user/profile-use
 import { OrderUserComponent } from './components/user/order-user/order-user.component';
 import { FavoriteUserComponent } from './components/user/favorite-user/favorite-user.component';
 import { ReleaseLatestPageComponent } from './pages/release/release-latest/release-latest-page.component';
+import { PromosPageComponent } from './pages/promos/promos-page.component';
 
 @NgModule({
   declarations: [
@@ -95,6 +96,7 @@ import { ReleaseLatestPageComponent } from './pages/release/release-latest/relea
     OrderUserComponent,
     FavoriteUserComponent,
     ReleaseLatestPageComponent,
+    PromosPageComponent,
   ],
   imports: [
     BrowserModule,
