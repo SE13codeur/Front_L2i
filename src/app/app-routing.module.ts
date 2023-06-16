@@ -22,8 +22,8 @@ const routes: Routes = [
   { path: 'sign-in', component: SignPageComponent },
   { path: '', component: HomePageComponent },
   { path: 'items/books', component: ItemPageComponent },
+  { path: 'items/books/new', component: ReleaseLatestPageComponent },
   { path: 'items/books/:id', component: DetailItemPageComponent },
-  { path: 'new', component: ReleaseLatestPageComponent },
   // { path: 'promos', component: PromosItemPageComponent },
   // { path: 'comments', component: CommentItemPageComponent },
   {
