@@ -22,8 +22,7 @@ td {
 
 .td-details:hover {
   cursor: pointer;
-  text-decoration: underline;
-  background-color:  rgba(33, 150, 243, 0.33);
+  text-decoration-color: #2096F3;
 }
 
 .order-list {

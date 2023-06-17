@@ -49,25 +49,36 @@ export class OrderListComponent implements OnInit {
   }
 
   filterOrdersByStatus(value: string): void {
-    this.selectedStatus = value;
+    console.log('Filter value:', value);
+
+    const statusMapping: { [key: string]: string } = {
+      'En attente de confirmation': 'PENDING',
+      Confirmé: 'CONFIRMED',
+      'En cours de livraison': 'SHIPPING',
+      Livré: 'DELIVERED',
+    };
+
     const orders = this.orderList$.getValue();
-    this.filteredOrderList$.next(
+    const filteredOrders =
       value === 'all'
         ? orders
-        : orders.filter((order) => order.status === value)
-    );
+        : orders.filter((order) => {
+            return order.status === statusMapping[value];
+          });
+
+    this.filteredOrderList$.next(filteredOrders);
   }
 
   getStatusDescription(status: OrderStatus): string {
     switch (status) {
       case OrderStatus.PENDING:
-        return OrderStatus.PENDING;
+        return 'En attente de confirmation';
       case OrderStatus.CONFIRMED:
-        return OrderStatus.CONFIRMED;
+        return 'Confirmé';
       case OrderStatus.SHIPPING:
-        return OrderStatus.SHIPPING;
+        return 'En cours de livraison';
       case OrderStatus.DELIVERED:
-        return OrderStatus.DELIVERED;
+        return 'Livré';
       default:
         return '';
     }

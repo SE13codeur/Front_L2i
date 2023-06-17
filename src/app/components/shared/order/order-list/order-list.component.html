@@ -2,10 +2,12 @@
   <div class="status-selector">
     <select #selectRef (change)="filterOrdersByStatus(selectRef.value)">
       <option value="all">Tous mes commandes</option>
-      <option value="pending">En attente de confirmation</option>
-      <option value="confirmed">Confirmé</option>
-      <option value="shipping">En cours de livraison</option>
-      <option value="delivered">Livré</option>
+      <option value="En attente de confirmation">
+        En attente de confirmation
+      </option>
+      <option value="Confirmé">Confirmé</option>
+      <option value="En cours de livraison">En cours de livraison</option>
+      <option value="Livré">Livré</option>
     </select>
   </div>
 
@@ -15,7 +17,6 @@
         <th>N° de commande</th>
         <th>Date</th>
         <th>Total TTC</th>
-        <th>Status</th>
         <th></th>
       </tr>
     </thead>
@@ -29,7 +30,6 @@
           <td>{{ order.orderNumber }}</td>
           <td>{{ order.date | date : "dd/MM/yyyy" }}</td>
           <td>{{ order.totalPriceTTC | number : "1.2-2" }}</td>
-          <td>{{ getStatusDescription(order.status) }}</td>
           <td class="td-details">Voir les détails</td>
         </tr>
         <tr *ngIf="isOrderExpanded(order)">
