@@ -13,8 +13,8 @@
   padding: 15px;
   width: 200px;
   color: #333;
-  border-radius: 5px;
-  margin: 5px;
+  border-radius: 7.7%;
+  margin: 1.11rem;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
@@ -33,6 +33,9 @@
 }
 
 .logout-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background-color: #FF4080;
   color: white;
   border: none;
@@ -40,7 +43,9 @@
   cursor: pointer;
   transition: background-color 0.3s ease;
   margin-top: 4.4rem;
+  margin-right: 1.1%;
   padding: 1.11rem;
+  gap: 1.11rem;
 }
 
 .logout-button:hover {
@@ -50,7 +55,6 @@
 @media screen and (max-width: 888px) {
   .drawer-item {
     justify-content: center;
-    width: 60px;
   }
 
   .drawer-item-text {

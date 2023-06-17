@@ -4,10 +4,11 @@ import { ICustomer } from '..';
 
 export interface IOrder {
   id?: number;
+  orderNumber: string;
   user?: ICustomer;
   totalPriceHT?: number;
   totalPriceTTC?: number;
-  status?: OrderStatus;
+  status: OrderStatus;
   date?: Date;
   orderLines?: IOrderLine[];
 }

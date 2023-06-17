@@ -73,18 +73,18 @@ p {
 /* Configs: */
 
 .list-identation {
-  padding-left: 1.2em;
+  padding-left: 1.11em;
 }
 
 .list-between-spacing {
-  margin: 0.2em 0;
+  margin: 0.22em 0;
 }
 
 .list-carret-character {
   content: "\f0da";
   font-family: "FontAwesome";
   visibility: visible;
-  font-size: 14px;
+  font-size: 1.11rem;
   position: absolute;
   left: 0;
   top: -1.45em;
@@ -94,23 +94,23 @@ p {
 
 /* CATEGORIES' TREE: */
 
-/* Styles pour mat-expansion-panel */
+/* Styles for mat-expansion-panel */
 .mat-expansion-panel {
-  background-color: #F7F7F7; /* Couleur de fond plus foncée */
+  background-color: #F7F7F7;
 }
 
 .mat-expansion-panel:hover {
-  background-color: #eaeaea; /* Couleur de fond plus foncée */
+  background-color: #eaeaea;
 }
 
-/* Styles pour les div */
+/* Styles for div */
 .filter-section {
-  background-color: #F7F7F7; /* Couleur de fond grise */
-  transition: background-color 0.3s; /* Animation de transition pour le hover */
+  background-color: #F7F7F7;
+  transition: background-color 0.3s;
 }
 
 .category-section:hover {
-  background-color: #E1E1E1; /* Couleur de fond blanche au hover */
+  background-color: #E1E1E1;
 }
 
 ::ng-deep .mat-expansion-panel-header:not([aria-expanded="true"]) .mat-expansion-indicator::after,

@@ -6,4 +6,21 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding: 2rem;
+}
+
+.order-list {
+  width: 100%;
+  margin: 0.5rem 0;
+  border-collapse: collapse;
+}
+
+.order-list th, .order-list td {
+  padding: 0.5rem;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.order-item-expanded {
+  background-color: #f9f9f9;
 }
