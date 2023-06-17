@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ICustomer } from '@models/user';
 
 @Component({
   selector: 'app-account-user-drawer',
@@ -7,11 +8,19 @@ import { Router } from '@angular/router';
   styleUrls: ['./account-user-drawer.component.css'],
 })
 export class AccountUserDrawerComponent implements OnInit {
+  currentUser: ICustomer = {
+    username: 'user',
+    email: 'user@gmail.com',
+    password: 'user',
+  };
+
   constructor(private router: Router) {}
 
   ngOnInit(): void {}
 
   openOrdersPage() {
-    this.router.navigate(['/user/account/orders']);
+    let username = this.currentUser.username; //this.authService.getUsername();
+
+    this.router.navigate(['/items/orders', username]);
   }
 }

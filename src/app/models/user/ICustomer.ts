@@ -3,6 +3,7 @@ export interface ICustomer {
   lastname?: string;
   username: string;
   email: string;
+  password: string;
   phoneNumber?: string;
   shippingAddress?: IAddress;
   billingAddress?: IAddress;

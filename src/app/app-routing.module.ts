@@ -32,7 +32,6 @@ const routes: Routes = [
   //     // { path: 'comments', component: CommentItemPageComponent },
   //   ],
   // },
-  { path: 'user/account/orders', component: OrderUserPageComponent },
 
   // {
   //   path: 'user/account',
@@ -48,6 +47,8 @@ const routes: Routes = [
     component: PaymentPageComponent,
     canActivate: [OrderActivateCartGuard],
   },
+  { path: 'items/orders/:username', component: OrderUserPageComponent },
+
   {
     path: 'admin/items/books',
     component: AdminItemComponent,
