@@ -10,6 +10,10 @@
   align-items: center;
 }
 
+.show-on-mobile {
+  display: none;
+}
+
 tbody {
   text-align: center;
 }
@@ -87,8 +91,8 @@ h1 {
 @media screen and (max-width: 888px) {
   .container {
     margin-left: 0.5rem;
-    top: 5rem;
-  }
+    top: 22rem;
+    height: calc(100% - 22rem);  }
 
   .cart-table th,
   .cart-table td {
@@ -109,10 +113,25 @@ h1 {
 }
 
 /* Media query for mobile devices */
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 555px) {
   .container {
     margin-left: 0.3rem;
-    top: 4rem;
+    top: 22rem;
+    height: calc(100% - 22rem);
+
+  }
+
+  .hide-on-mobile {
+    display: none;
+  }
+
+  .show-on-mobile {
+    display: inline;
+  }
+
+  .th-ht, .th-ttc, .th-qty, .th-sub-ttc {
+    font-size: smaller;
+    padding: 0.22rem;
   }
 
   h1 {

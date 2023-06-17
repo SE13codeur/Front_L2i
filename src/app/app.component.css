@@ -11,23 +11,29 @@ app-nav {
 }
 
 .sidenav-cart {
-  width: 55%;
+  width: 44%;
   position: fixed;
   right: 0;
   z-index: 1000;
 }
 
 .sidenav-account-user {
-  width: 17%;
+  width: 17rem;
   position: fixed;
   left: 0;
-  right: 0;
   z-index: 1000;
 }
 
-@media (max-width: 1101px) {
+@media (max-width: 888px) {
   .sidenav-cart  {
     width: 100%;
+  }
+
+  .sidenav-account-user {
+    width: 7rem;
+    position: fixed;
+    left: 0;
+    z-index: 1000;
   }
 }
 

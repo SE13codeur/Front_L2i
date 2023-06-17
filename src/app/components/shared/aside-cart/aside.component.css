@@ -73,7 +73,7 @@ span {
   height: auto;
   padding: 3.33rem;
   border-radius: 77%;
-  background-color: #eee;
+  background-color: rgba(33, 150, 243, 0.11);
   animation:  scaleAndFadeOut 4.004s ease-in-out forwards;
 }
 
@@ -89,14 +89,17 @@ span {
   0% {
     transform: scale(1.11);
     opacity: 1;
+    background-color: rgba(33, 150, 243, 0.11);
   }
   33% {
     transform: scale(1.21);
     opacity: 0.77;
+    background-color: rgba(33, 150, 243, 0.33);
   }
   66% {
     transform: scale(1.31);
     opacity: 0.33;
+    background-color: rgba(33, 150, 243, 0.77);
   }
   100% {
     transform: scale(1.41);

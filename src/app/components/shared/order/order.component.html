@@ -8,14 +8,31 @@
   <table class="cart-table">
     <thead>
       <tr>
-        <th>ARTICLE</th>
-        <th>PRIX UNITAIRE HT</th>
+        <th class="hide-on-mobile">ARTICLE</th>
+        <th class="show-on-mobile"></th>
+        <th>
+          <span class="hide-on-mobile">PRIX UNITAIRE HT</span>
+          <span class="show-on-mobile">HT</span>
+        </th>
         <th>TVA</th>
-        <th>PRIX UNITAIRE TTC</th>
-        <th>QUANTITÉ</th>
-        <th>SOUS-TOTAL TTC</th>
+        <th>
+          <span class="hide-on-mobile">PRIX UNITAIRE TTC</span>
+          <span class="show-on-mobile">TTC</span>
+        </th>
+        <th>
+          <span class="hide-on-mobile">QUANTITÉ</span>
+          <span class="show-on-mobile">QTÉ</span>
+        </th>
+        <th>
+          <span class="hide-on-mobile">SOUS-TOTAL TTC</span>
+          <span class="show-on-mobile">SOUS-TTC</span>
+        </th>
       </tr>
     </thead>
+    <thead>
+      <tr></tr>
+    </thead>
+
     <tbody>
       <tr *ngFor="let item of cartItems$ | async">
         <td>
