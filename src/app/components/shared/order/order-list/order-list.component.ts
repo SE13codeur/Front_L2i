@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ICustomer } from '@models/index';
-import { IOrder } from '@models/order/index';
+import { IOrder, OrderStatus } from '@models/order/index';
 import { OrderService } from '@services/index';
 import { BehaviorSubject } from 'rxjs';
 
@@ -56,5 +56,20 @@ export class OrderListComponent implements OnInit {
         ? orders
         : orders.filter((order) => order.status === value)
     );
+  }
+
+  getStatusDescription(status: OrderStatus): string {
+    switch (status) {
+      case OrderStatus.PENDING:
+        return OrderStatus.PENDING;
+      case OrderStatus.CONFIRMED:
+        return OrderStatus.CONFIRMED;
+      case OrderStatus.SHIPPING:
+        return OrderStatus.SHIPPING;
+      case OrderStatus.DELIVERED:
+        return OrderStatus.DELIVERED;
+      default:
+        return '';
+    }
   }
 }

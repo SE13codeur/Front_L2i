@@ -4,11 +4,19 @@
   <table class="cart-table">
     <thead>
       <tr>
-        <th>ARTICLE</th>
+        <th>
+          <span class="mobile-hide">ARTICLE</span>
+        </th>
         <th>PRIX</th>
-        <th>QUANTITÉ</th>
-        <th>SOUS-TOTAL</th>
-        <th>ACTIONS</th>
+        <th>
+          <span class="desktop">QUANTITÉ</span>
+          <span class="mobile">Qté</span>
+        </th>
+        <th>
+          <span class="mobile-hide">SOUS-TOTAL</span>
+          <span class="mobile-hide"></span>
+        </th>
+        <th class="mobile-hide">ACTIONS</th>
       </tr>
     </thead>
     <tbody>
@@ -20,17 +28,17 @@
               alt="{{ item.title }}"
               class="product-image"
             />
+            <span class="desktop">{{ item.title }}</span>
           </div>
-          <span>{{ item.title }}</span>
         </td>
         <td>{{ item.regularPrice | currency : "EUR" : true }}</td>
         <td>
           <app-cart-item-quantity [item]="item"></app-cart-item-quantity>
         </td>
-        <td>
+        <td class="mobile-hide">
           {{ item.regularPrice * item.quantity | currency : "EUR" : true }}
         </td>
-        <td>
+        <td class="mobile-hide">
           <mat-icon
             style="cursor: pointer"
             (click)="removeItemFromCart(item.id)"
@@ -41,18 +49,14 @@
     </tbody>
     <tfoot>
       <tr>
-        <td></td>
-        <td></td>
-        <td>{{ totalItems$ | async }}</td>
-        <td>
+        <td colspan="5" class="total">
           <h2>
-            <span style="text-decoration: underline">Total TTC</span> :
-            <span style="font-weight: bolder">{{
-              totalTTC$ | async | currency : "EUR" : true
-            }}</span>
+            <span class="underline">Total TTC</span> :
+            <span class="bold">
+              {{ totalTTC$ | async | currency : "EUR" : true }}
+            </span>
           </h2>
         </td>
-        <td></td>
       </tr>
     </tfoot>
   </table>
@@ -63,20 +67,22 @@
       mat-raised-button
       (click)="orderValidate()"
     >
-      Valider la commande
+      <span class="desktop">Valider la commande</span>
+      <span class="mobile">Valider</span>
     </button>
-    <button class="cart-clear-button" mat-raised-button (click)="clearCart()">
+    <button
+      class="cart-clear-button desktop"
+      mat-raised-button
+      (click)="clearCart()"
+    >
       Vider le panier
+    </button>
+    <button
+      class="cart-order-button mobile"
+      mat-raised-button
+      (click)="clearCart()"
+    >
+      <mat-icon>remove_shopping_cart</mat-icon>
     </button>
   </div>
 </div>
-
-<ng-template #errorDialog let-data="data">
-  <h2 mat-dialog-title>Erreur de commande</h2>
-  <div mat-dialog-content>
-    <p>{{ data.message }}</p>
-  </div>
-  <div mat-dialog-actions>
-    <button mat-button mat-dialog-close>Ok</button>
-  </div>
-</ng-template>

@@ -1,11 +1,13 @@
 <div class="container">
-  <select #selectRef (change)="filterOrdersByStatus(selectRef.value)">
-    <option value="all">Tous les statuts</option>
-    <option value="pending">En attente</option>
-    <option value="confirmed">Confirmé</option>
-    <option value="shipping">Expédié</option>
-    <option value="delivered">Livré</option>
-  </select>
+  <div class="status-selector">
+    <select #selectRef (change)="filterOrdersByStatus(selectRef.value)">
+      <option value="all">Tous mes commandes</option>
+      <option value="pending">En attente de confirmation</option>
+      <option value="confirmed">Confirmé</option>
+      <option value="shipping">En cours de livraison</option>
+      <option value="delivered">Livré</option>
+    </select>
+  </div>
 
   <table class="order-list" *ngIf="filteredOrderList$ | async as orders">
     <thead>
@@ -20,18 +22,45 @@
     <tbody>
       <ng-container *ngFor="let order of orders">
         <tr
+          *ngIf="order.totalPriceHT > 0 || order.totalPriceTTC > 0"
           (click)="toggleOrderDetails(order)"
           [ngClass]="{ 'order-item-expanded': isOrderExpanded(order) }"
         >
           <td>{{ order.orderNumber }}</td>
-          <td>{{ order.date }}</td>
-          <td>{{ order.totalPriceTTC }}</td>
-          <td>{{ order.status }}</td>
-          <td>Voir les détails</td>
+          <td>{{ order.date | date : "dd/MM/yyyy" }}</td>
+          <td>{{ order.totalPriceTTC | number : "1.2-2" }}</td>
+          <td>{{ getStatusDescription(order.status) }}</td>
+          <td class="td-details">Voir les détails</td>
         </tr>
         <tr *ngIf="isOrderExpanded(order)">
           <td colspan="5">
-            <!-- Add order details here -->
+            <table class="order-list">
+              <thead>
+                <tr>
+                  <th>Article</th>
+                  <th>Prix Unitaire HT</th>
+                  <th>TVA</th>
+                  <th>Prix Unitaire TTC</th>
+                  <th>Quantité</th>
+                  <th>Sous-total TTC</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of order.orderLines">
+                  <td>{{ item.book?.title }}</td>
+                  <td>{{ item.unitPriceHT | number : "1.2-2" }} €</td>
+                  <td>{{ item.unitPriceTTC | number : "1.2-2" }} €</td>
+                  <td>{{ item.orderedQuantity }}</td>
+                  <td>
+                    {{
+                      item.unitPriceTTC * item.orderedQuantity
+                        | number : "1.2-2"
+                    }}
+                    €
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </td>
         </tr>
       </ng-container>

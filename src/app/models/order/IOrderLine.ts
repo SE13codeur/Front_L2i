@@ -3,9 +3,9 @@ import { IOrder } from './IOrder';
 
 export interface IOrderLine {
   id?: number;
-  orderedQuantity?: number;
-  unitPriceHT?: number;
-  unitPriceTTC?: number;
+  orderedQuantity: number;
+  unitPriceHT: number;
+  unitPriceTTC: number;
   tva?: ITVAItem;
   order?: IOrder;
   book?: IItem;

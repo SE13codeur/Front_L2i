@@ -80,3 +80,36 @@ h1 {
   height: auto;
   overflow: auto;
 }
+
+@media screen and (max-width: 555px) {
+  .mobile-hide {
+    display: none;
+  }
+
+  .desktop {
+    display: none;
+  }
+
+  button.mobile {
+    display: inline-block;
+    color: black;
+    background-color: #FF4080;
+  }
+
+  .mobile:hover {
+    display: inline-block;
+    background-color: #e2004b;
+  }
+}
+
+@media screen and (min-width: 556px) {
+  .mobile {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 333px) {
+  .mobile-hide {
+    display: none;
+  }
+}
