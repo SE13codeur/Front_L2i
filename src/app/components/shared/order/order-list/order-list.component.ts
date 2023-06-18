@@ -29,27 +29,20 @@ export class OrderListComponent implements OnInit {
 
   isAdmin = false;
 
-  orderNumberAndStatusOfOrdersByUser$: Observable<
-    { orderNumber: string; orderStatus: OrderStatus }[]
-  >;
+  arrayOfOrderNumberAndStatus: {
+    orderNumber: string;
+    orderStatus: OrderStatus;
+  }[] = [];
 
   constructor(
     private orderService: OrderService,
     private orderStatusService: OrderStatusService,
     private authService: AuthService
-  ) {
-    this.orderNumberAndStatusOfOrdersByUser$ = extractOrderNumberAndStatus(
-      this.orderListByUser$
-    );
-  }
+  ) {}
 
   ngOnInit(): void {
-    this.orderNumberAndStatusOfOrdersByUser$.subscribe((data) => {
-      console.log(data);
-    });
     this.fetchOrders();
     this.isAdmin = this.authService.isAdminAuthenticated();
-    // this.orderStatusService.getStatusByOrderNumber(orderNumber, this.orderStatus$);
   }
 
   fetchOrders(statusDescription?: string): void {
@@ -60,11 +53,20 @@ export class OrderListComponent implements OnInit {
           this.selectedStatus = statusDescription;
         }
         this.filterOrdersByStatus(this.selectedStatus);
+
+        this.arrayOfOrderNumberAndStatus = orders.map((order) => ({
+          orderNumber: order.orderNumber,
+          orderStatus: order.status,
+        }));
       },
       error: (error) => {
         console.error('Erreur lors de la récupération des commandes:', error);
       },
     });
+  }
+
+  getStatusByOrderNumber(orderNumber: string) {
+    this.orderStatusService.getStatusByOrderNumber(orderNumber);
   }
 
   toggleOrderDetails(order: IOrder): void {

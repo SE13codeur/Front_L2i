@@ -32,6 +32,8 @@
       </thead>
       <tbody>
         <ng-container *ngFor="let order of orders">
+          <tr></tr>
+
           <tr
             *ngIf="order.totalPriceHT > 0 || order.totalPriceTTC > 0"
             (click)="toggleOrderDetails(order)"
@@ -48,13 +50,7 @@
             <td *ngIf="isAdmin">
               <select
                 #orderStatusSelectRef
-                (change)="
-                  updateOrderStatus(
-                    currentUser,
-                    order.orderNumber,
-                    orderStatusSelectRef.value
-                  )
-                "
+                (change)="getStatusByOrderNumber(order.orderNumber)"
               >
                 <option value="PENDING">En attente de confirmation</option>
                 <option value="CONFIRMED">Confirmé</option>

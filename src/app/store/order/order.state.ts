@@ -1,3 +1,4 @@
+import { IOrder, OrderStatus } from '@models/index';
 import {
   Action,
   Selector,
@@ -5,9 +6,8 @@ import {
   StateContext,
   createSelector,
 } from '@ngxs/store';
-import { IOrder, OrderStatus } from '@models/index';
-import { AddOrder, GetOrderStatus, UpdateOrderStatus } from './order.action';
 import { Observable } from 'rxjs';
+import { AddOrder, UpdateOrderStatus } from './order.action';
 
 export interface OrderStateModel {
   orders: IOrder[];
@@ -71,28 +71,5 @@ export class OrderState {
         orders,
       });
     }
-  }
-
-  @Action(GetOrderStatus)
-  getOrderStatus(
-    { getState, patchState }: StateContext<OrderStateModel>,
-    { orderNumber, currentStatus }: GetOrderStatus
-  ) {
-    const state = getState();
-    const orderStatuses = [...state.orderStatuses];
-    const statusIndex = orderStatuses.findIndex(
-      (statusObj) => statusObj.orderNumber === orderNumber
-    );
-
-    if (statusIndex !== -1) {
-      orderStatuses[statusIndex] = { orderNumber, orderStatus: currentStatus };
-    } else {
-      orderStatuses.push({
-        orderNumber,
-        orderStatus: currentStatus as Observable<string>,
-      });
-    }
-
-    patchState({ orderStatuses });
   }
 }
