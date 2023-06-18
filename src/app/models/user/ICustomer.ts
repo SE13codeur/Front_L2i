@@ -1,9 +1,6 @@
-export interface ICustomer {
-  firstname?: string;
-  lastname?: string;
-  username: string;
-  email: string;
-  password: string;
+import { IUser } from './IUser';
+
+export interface ICustomer extends IUser {
   phoneNumber?: string;
   shippingAddress?: IAddress;
   billingAddress?: IAddress;

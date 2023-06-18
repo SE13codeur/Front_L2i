@@ -22,6 +22,8 @@ export class OrderListComponent implements OnInit {
     username: 'user',
     email: 'user@gmail.com',
     password: 'user',
+    id: 1,
+    role: 'customer',
   };
 
   expandedOrderDetails: number | null | undefined = null;

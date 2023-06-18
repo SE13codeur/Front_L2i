@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 
 import {
   AccountUserButtonComponent,
+  AccountUserDrawerComponent,
   AdminItemComponent,
   AsideComponent,
   CartComponent,
@@ -19,15 +20,20 @@ import {
   ListItemWithoutMeilisearchComponent,
   NavComponent,
   OrderComponent,
+  OrderListComponent,
   SearchItemComponent,
   SectionComponent,
 } from '@components/index';
 import {
   DetailItemPageComponent,
+  FavoritesUserPageComponent,
   HomePageComponent,
   ItemPageComponent,
   NotFoundPageComponent,
+  OrderUserPageComponent,
   PaymentPageComponent,
+  PromosPageComponent,
+  ReleaseLatestPageComponent,
   SignPageComponent,
 } from '@pages/index';
 import { AuthService, CartService, PaginatorFrService } from '@services/index';
@@ -61,13 +67,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 import { NgxsModule } from '@ngxs/store';
-import { ReleaseLatestPageComponent } from './pages/release/release-latest/release-latest-page.component';
-import { PromosPageComponent } from './pages/promos/promos-page.component';
-import { AccountUserDrawerComponent } from './components/shared/aside-account-user/account-user-drawer/account-user-drawer.component';
-import { OrderUserPageComponent } from './pages/user-account/order-user-page/order-user-page.component';
-import { OrderListComponent } from './components/shared/order/order-list/order-list.component';
-import { FavoritesUserPageComponent } from './pages/user-account/favorite-user-page/favorite-user-page.component';
-import { ProfileUserPageComponent } from './pages/user-account/profile-user-page/profile-user-page.component';
 
 @NgModule({
   declarations: [
@@ -97,7 +96,6 @@ import { ProfileUserPageComponent } from './pages/user-account/profile-user-page
     OrderUserPageComponent,
     OrderListComponent,
     FavoritesUserPageComponent,
-    ProfileUserPageComponent,
   ],
   imports: [
     BrowserModule,

@@ -51,6 +51,8 @@ export class OrderComponent implements OnDestroy {
           username: 'user',
           email: 'USER.EMAIL',
           password: 'user',
+          id: 1,
+          role: 'customer',
         };
 
         const cartData: ICart = {
