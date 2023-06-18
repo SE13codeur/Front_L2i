@@ -2,7 +2,7 @@ import { ICart, IOrder, OrderStatus } from '@models/index';
 
 export class AddOrder {
   static readonly type = '[Order] Add';
-  constructor(public order: ICart) {}
+  constructor(public order: IOrder) {}
 }
 
 export class GetOrders {

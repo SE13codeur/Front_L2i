@@ -6,24 +6,10 @@ import {
   createSelector,
 } from '@ngxs/store';
 import { IOrder, OrderStatus } from '@models/index';
-import { UpdateOrderStatus } from './order.action';
+import { AddOrder, UpdateOrderStatus } from './order.action';
 
 export interface OrderStateModel {
   orders: IOrder[];
-}
-
-export class AddOrder {
-  static readonly type = '[Order] Add';
-  constructor(public order: IOrder) {}
-}
-
-export class GetOrders {
-  static readonly type = '[Order] Get';
-}
-
-export class UpdateOrder {
-  static readonly type = '[Order] Update';
-  constructor(public order: IOrder) {}
 }
 
 @State<OrderStateModel>({
