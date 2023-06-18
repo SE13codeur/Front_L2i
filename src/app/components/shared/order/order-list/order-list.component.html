@@ -17,6 +17,7 @@
         <th>N° de commande</th>
         <th>Date</th>
         <th>Total TTC</th>
+        <th *ngIf="isAdmin">Status</th>
         <th></th>
       </tr>
     </thead>
@@ -30,6 +31,22 @@
           <td>{{ order.orderNumber }}</td>
           <td>{{ order.date | date : "dd/MM/yyyy" }}</td>
           <td>{{ order.totalPriceTTC | number : "1.2-2" }}</td>
+          <td>
+            <select
+              *ngIf="isAdmin"
+              #selectRef
+              (change)="filterOrdersByStatus(selectRef.value)"
+            >
+              <option value="En attente de confirmation">
+                En attente de confirmation
+              </option>
+              <option value="Confirmé">Confirmé</option>
+              <option value="En cours de livraison">
+                En cours de livraison
+              </option>
+              <option value="Livré">Livré</option>
+            </select>
+          </td>
           <td class="td-details">Voir les détails</td>
         </tr>
         <tr *ngIf="isOrderExpanded(order)">

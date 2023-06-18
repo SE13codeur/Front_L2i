@@ -3,7 +3,7 @@ import { IOrderLine } from './IOrderLine';
 import { ICustomer } from '..';
 
 export interface IOrder {
-  id?: number;
+  id: number;
   orderNumber: string;
   user?: ICustomer;
   totalPriceHT: number;

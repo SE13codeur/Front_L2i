@@ -19,4 +19,9 @@ export class OrderService {
   getOrdersByUser(user: ICustomer): Observable<IOrder[]> {
     return this.http.get<IOrder[]>(`${this.ordersUrl}/${user.username}`);
   }
+
+  updateOrderStatusFromUser(username: string, newStatus: string) {
+    const url = `${this.ordersUrl}/${username}`;
+    return this.http.put(url, { status: newStatus });
+  }
 }

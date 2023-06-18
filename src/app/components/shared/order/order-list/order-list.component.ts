@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ICustomer } from '@models/index';
 import { IOrder, OrderStatus } from '@models/order/index';
-import { OrderService } from '@services/index';
+import { AuthService, OrderService } from '@services/index';
 import { BehaviorSubject } from 'rxjs';
 
 @Component({
@@ -21,10 +21,17 @@ export class OrderListComponent implements OnInit {
   expandedOrderDetails: number | null | undefined = null;
   selectedStatus: string = 'all';
 
-  constructor(private orderService: OrderService) {}
+  constructor(
+    private orderService: OrderService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
     this.fetchOrders();
+  }
+
+  isAdmin(): boolean {
+    return this.authService.isAdminAuthenticated();
   }
 
   fetchOrders(): void {
@@ -37,6 +44,17 @@ export class OrderListComponent implements OnInit {
         console.error('Error fetching orders:', error);
       },
     });
+  }
+
+  updateOrderStatus(user: ICustomer, newStatus: string): void {
+    if (this.isAdmin()) {
+      this.orderService
+        .updateOrderStatusFromUser(user.username, newStatus)
+        .subscribe(() => {
+          console.log('Order status updated');
+          this.fetchOrders(); // refresh the list
+        });
+    }
   }
 
   toggleOrderDetails(order: IOrder): void {
