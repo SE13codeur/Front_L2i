@@ -4,8 +4,12 @@ aside {
   align-items: center;
   justify-content: center;
   margin: 1.11rem;
+  border-radius: 55%;
+  width: 3.33rem;
+  height: 3.33rem;
 }
 
 aside:hover {
-  color: #2196F3;
+  color: #0BB9F0;
+  background-color: rgba(32, 150, 243, 0.11);
 }

@@ -1,7 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { ICartItem, ICustomer, ICart } from '@models/index';
+import { ICartItem, ICart, ICustomer } from '@models/index';
 import { Select } from '@ngxs/store';
 import { CartDrawerService, CartService, OrderService } from '@services/index';
 import { CartState } from '@store/index';

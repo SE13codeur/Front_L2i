@@ -5,7 +5,7 @@ export enum OrderStatus {
   DELIVERED = 'DELIVERED',
 }
 
-export function getOrderStatusDescription(status: OrderStatus): string {
+export function getOrderStatusDescription(status: string): string {
   switch (status) {
     case OrderStatus.PENDING:
       return 'En attente de confirmation';
@@ -17,5 +17,22 @@ export function getOrderStatusDescription(status: OrderStatus): string {
       return 'Livré';
     default:
       return '';
+  }
+}
+
+export function statusDescriptionToEnum(
+  statusDescription: string
+): OrderStatus {
+  switch (statusDescription) {
+    case 'En attente de confirmation':
+      return OrderStatus.PENDING;
+    case 'Confirmé':
+      return OrderStatus.CONFIRMED;
+    case 'En cours de livraison':
+      return OrderStatus.SHIPPING;
+    case 'Livré':
+      return OrderStatus.DELIVERED;
+    default:
+      return OrderStatus.PENDING;
   }
 }

@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ICustomer } from '@models/index';
-import { IOrder, OrderStatus } from '@models/order/index';
+import {
+  IOrder,
+  getOrderStatusDescription,
+  statusDescriptionToEnum,
+} from '@models/order/index';
 import { AuthService, OrderService } from '@services/index';
 import { BehaviorSubject } from 'rxjs';
 
@@ -32,40 +36,19 @@ export class OrderListComponent implements OnInit {
     this.isAdmin = this.authService.isAdminAuthenticated();
   }
 
-  fetchOrders(): void {
+  fetchOrders(statusDescription?: string): void {
     this.orderService.getOrdersByUser(this.currentUser).subscribe({
       next: (orders) => {
         this.orderList$.next(orders);
+        if (statusDescription) {
+          this.selectedStatus = statusDescription;
+        }
         this.filterOrdersByStatus(this.selectedStatus);
       },
       error: (error) => {
         console.error('Error fetching orders:', error);
       },
     });
-  }
-
-  updateOrderStatus(
-    user: ICustomer,
-    orderNumber: string,
-    newStatus: string
-  ): void {
-    if (this.isAdmin) {
-      const statusMapping: { [key: string]: OrderStatus } = {
-        'En attente de confirmation': OrderStatus.PENDING,
-        Confirmé: OrderStatus.CONFIRMED,
-        'En cours de livraison': OrderStatus.SHIPPING,
-        Livré: OrderStatus.DELIVERED,
-      };
-
-      const enumStatus = statusMapping[newStatus];
-
-      this.orderService
-        .updateOrderStatusFromUser(user.username, orderNumber, enumStatus)
-        .subscribe(() => {
-          console.log('Order status updated');
-          this.fetchOrders(); // refresh the list
-        });
-    }
   }
 
   toggleOrderDetails(order: IOrder): void {
@@ -77,24 +60,31 @@ export class OrderListComponent implements OnInit {
     return this.expandedOrderDetails === order.id;
   }
 
-  filterOrdersByStatus(value: string): void {
-    console.log('Filter value:', value);
-
-    const statusMapping: { [key: string]: string } = {
-      'En attente de confirmation': 'PENDING',
-      Confirmé: 'CONFIRMED',
-      'En cours de livraison': 'SHIPPING',
-      Livré: 'DELIVERED',
-    };
-
+  filterOrdersByStatus(description: string): void {
     const orders = this.orderList$.getValue();
+    const statusEnum = statusDescriptionToEnum(description);
+
     const filteredOrders =
-      value === 'all'
+      description === 'all'
         ? orders
-        : orders.filter((order) => {
-            return order.status === statusMapping[value];
-          });
+        : orders.filter((order) => order.status === statusEnum);
 
     this.filteredOrderList$.next(filteredOrders);
+  }
+
+  updateOrderStatus(
+    user: ICustomer,
+    orderNumber: string,
+    newStatus: string
+  ): void {
+    if (this.isAdmin) {
+      this.orderService
+        .updateOrderStatusFromUser(user.username, orderNumber, newStatus)
+        .subscribe(() => {
+          console.log('Order status updated');
+          const newStatusDescription = getOrderStatusDescription(newStatus);
+          this.fetchOrders(newStatusDescription);
+        });
+    }
   }
 }

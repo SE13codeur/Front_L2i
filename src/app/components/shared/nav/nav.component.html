@@ -17,11 +17,6 @@
       <app-search-item class="search-bar-large"></app-search-item>
     </div>
 
-    <!-- ADD item for admin -->
-    <button *ngIf="isAdmin" (click)="goToAddItem()">
-      <mat-icon>add</mat-icon>
-    </button>
-
     <div class="nav-actions">
       <!-- User account drawer -->
       <app-account-user-button (click)="toggleAccountUserDrawer()">
@@ -29,6 +24,11 @@
 
       <!-- Cart drawer for shopping -->
       <app-aside *ngIf="!isAdmin" (click)="toggleCartDrawer()"></app-aside>
+
+      <!-- ADD item for admin -->
+      <button *ngIf="isAdmin" class="admin-add-item" (click)="goToAddItem()">
+        <mat-icon>add</mat-icon>
+      </button>
     </div>
   </div>
 </mat-toolbar>
