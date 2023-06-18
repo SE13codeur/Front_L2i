@@ -1,9 +1,13 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthState, Logout } from 'src/app/modules/auth/index';
 import { Store } from '@ngxs/store';
-import { AuthService, CartDrawerService } from '@services/index';
+import {
+  AccountUserDrawerService,
+  AuthService,
+  CartDrawerService,
+} from '@services/index';
 import { Observable } from 'rxjs';
+import { AuthState, Logout } from 'src/app/modules/auth/index';
 
 @Component({
   selector: 'app-nav',
@@ -18,6 +22,7 @@ export class NavComponent {
     private router: Router,
     private authService: AuthService,
     private cartDrawerService: CartDrawerService,
+    private accountUserDrawerService: AccountUserDrawerService,
     private store: Store
   ) {
     this.isAuthenticated$ = this.store.select(AuthState.isAuthenticated);
@@ -31,8 +36,12 @@ export class NavComponent {
     this.store.dispatch(new Logout());
   }
 
-  toggleDrawer() {
+  toggleCartDrawer() {
     this.cartDrawerService.toggleDrawer();
+  }
+
+  toggleAccountUserDrawer() {
+    this.accountUserDrawerService.toggleDrawer();
   }
 
   goToAddItem(): void {

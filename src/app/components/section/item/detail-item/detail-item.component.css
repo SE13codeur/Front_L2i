@@ -1,4 +1,6 @@
 .container {
+  top: 7rem;
+  height: calc(100% - 7rem);
   max-width: 75rem;
   margin: 0 auto;
   padding: 1.11rem;
@@ -89,9 +91,9 @@ button {
   margin-top: 3.3rem;
 }
 
-@media (max-width: 770px) {
+@media (max-width: 888px) {
   .container  {
-    margin-top: 17rem;
-  }
+    top: 22rem;
+    height: calc(100% - 22rem);  }
 }
 

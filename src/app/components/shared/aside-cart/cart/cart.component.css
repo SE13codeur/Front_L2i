@@ -1,6 +1,7 @@
 
 h1 {
   font-weight: bold;
+  text-decoration: underline;
   font-size: larger;
   margin-bottom: 1.11rem;
   color: #333;
@@ -9,6 +10,7 @@ h1 {
 .cart-table {
   width: 100%;
   border-collapse: collapse;
+  text-align: center;
 }
 
 .cart-table th,
@@ -41,7 +43,7 @@ h1 {
 .cart-order-button {
   background-color: #0BB9F0;
   color: whitesmoke;
-  border-radius: 44%;
+  border-radius: 7.7%;
   padding: 0.5rem 1rem;
   cursor: pointer;
   font-size: 1.11rem;
@@ -51,10 +53,11 @@ h1 {
 .cart-order-button:hover {
   background-color: #2196F3;
 }
+
 .cart-clear-button {
   background-color: #FF4080;
   color: whitesmoke;
-  border-radius: 44%;
+  border-radius: 7.7%;
   padding: 0.5rem 1rem;
   cursor: pointer;
   font-size: 1.11rem;
@@ -68,8 +71,7 @@ h1 {
 .checkout-section {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  gap: 1.11rem;
+  justify-content: space-around;
   margin-top: 1.11rem;
   padding-top: 1.11rem;
 }
@@ -77,4 +79,37 @@ h1 {
 .cart-container {
   height: auto;
   overflow: auto;
+}
+
+@media screen and (max-width: 555px) {
+  .mobile-hide {
+    display: none;
+  }
+
+  .desktop {
+    display: none;
+  }
+
+  button.mobile {
+    display: inline-block;
+    color: black;
+    background-color: #FF4080;
+  }
+
+  .mobile:hover {
+    display: inline-block;
+    background-color: #e2004b;
+  }
+}
+
+@media screen and (min-width: 556px) {
+  .mobile {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 333px) {
+  .mobile-hide {
+    display: none;
+  }
 }

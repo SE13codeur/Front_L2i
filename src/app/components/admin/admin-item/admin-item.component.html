@@ -3,32 +3,50 @@
     <mat-card-content>
       <mat-form-field>
         <mat-label>URL de l'image</mat-label>
-        <input matInput formControlName="imageUrl">
-        <mat-error *ngIf="itemForm.get('imageUrl')?.invalid && itemForm.get('imageUrl')?.touched">
+        <input matInput formControlName="imageUrl" />
+        <mat-error
+          *ngIf="
+            itemForm.get('imageUrl')?.invalid &&
+            itemForm.get('imageUrl')?.touched
+          "
+        >
           L'URL de l'image est requise.
         </mat-error>
       </mat-form-field>
 
       <mat-form-field>
         <mat-label>isbn13 du livre</mat-label>
-        <input matInput formControlName="isbn13">
-        <mat-error *ngIf="itemForm.get('isbn13')?.invalid && itemForm.get('isbn13')?.touched">
+        <input matInput formControlName="isbn13" />
+        <mat-error
+          *ngIf="
+            itemForm.get('isbn13')?.invalid && itemForm.get('isbn13')?.touched
+          "
+        >
           Un numéro ISBN à 13 chiffres est requis.
         </mat-error>
       </mat-form-field>
 
       <mat-form-field>
         <mat-label>Titre</mat-label>
-        <input matInput formControlName="title">
-        <mat-error *ngIf="itemForm.get('title')?.invalid && itemForm.get('title')?.touched">
+        <input matInput formControlName="title" />
+        <mat-error
+          *ngIf="
+            itemForm.get('title')?.invalid && itemForm.get('title')?.touched
+          "
+        >
           Le titre est requis.
         </mat-error>
       </mat-form-field>
 
       <mat-form-field>
         <mat-label>Sous-titre</mat-label>
-        <input matInput formControlName="subtitle">
-        <mat-error *ngIf="itemForm.get('subtitle')?.invalid && itemForm.get('subtitle')?.touched">
+        <input matInput formControlName="subtitle" />
+        <mat-error
+          *ngIf="
+            itemForm.get('subtitle')?.invalid &&
+            itemForm.get('subtitle')?.touched
+          "
+        >
           Le sous-titre est requis.
         </mat-error>
       </mat-form-field>
@@ -36,23 +54,38 @@
       <mat-form-field>
         <mat-label>Description</mat-label>
         <textarea matInput formControlName="description"></textarea>
-        <mat-error *ngIf="itemForm.get('description')?.invalid && itemForm.get('description')?.touched">
+        <mat-error
+          *ngIf="
+            itemForm.get('description')?.invalid &&
+            itemForm.get('description')?.touched
+          "
+        >
           La description est requise.
         </mat-error>
       </mat-form-field>
 
       <mat-form-field>
         <mat-label>Prix en €</mat-label>
-        <input matInput type="number" formControlName="regularPrice">
-        <mat-error *ngIf="itemForm.get('regularPrice')?.invalid && itemForm.get('regularPrice')?.touched">
+        <input matInput type="number" formControlName="regularPrice" />
+        <mat-error
+          *ngIf="
+            itemForm.get('regularPrice')?.invalid &&
+            itemForm.get('regularPrice')?.touched
+          "
+        >
           Le prix est requis et doit être supérieur à 11€.
         </mat-error>
       </mat-form-field>
 
       <mat-form-field>
         <mat-label>Quantité en stock</mat-label>
-        <input matInput type="number" formControlName="quantityInStock">
-        <mat-error *ngIf="itemForm.get('quantityInStock')?.invalid && itemForm.get('quantityInStock')?.touched">
+        <input matInput type="number" formControlName="quantityInStock" />
+        <mat-error
+          *ngIf="
+            itemForm.get('quantityInStock')?.invalid &&
+            itemForm.get('quantityInStock')?.touched
+          "
+        >
           La quantité en stock est requise.
         </mat-error>
       </mat-form-field>
@@ -60,17 +93,23 @@
       <mat-accordion class="mat-elevation-z8">
         <mat-expansion-panel>
           <mat-expansion-panel-header>
-            <mat-label>
-              Auteurs *
-            </mat-label>
+            <mat-label> Auteurs * </mat-label>
           </mat-expansion-panel-header>
           <div formArrayName="authors" class="custom-mat-form-field">
-            <div *ngFor="let author of authors; let i = index" class="author-checkbox">
+            <div
+              *ngFor="let author of authors; let i = index"
+              class="author-checkbox"
+            >
               <mat-checkbox [formControlName]="i">
-                {{author.firstname}} {{author.lastname}}
+                {{ author.firstname }} {{ author.lastname }}
               </mat-checkbox>
             </div>
-            <mat-error *ngIf="itemForm.get('authors')?.invalid && itemForm.get('authors')?.touched">
+            <mat-error
+              *ngIf="
+                itemForm.get('authors')?.invalid &&
+                itemForm.get('authors')?.touched
+              "
+            >
               Veuillez renseigner au moins un auteur.
             </mat-error>
           </div>
@@ -78,13 +117,17 @@
       </mat-accordion>
 
       <mat-form-field>
-          <mat-label>Éditeur</mat-label>
-          <select matNativeControl formControlName="editor">
-            <option *ngFor="let editor of editors" [value]="editor.id">
-              {{editor.name}}
-            </option>
-          </select>
-        <mat-error *ngIf="itemForm.get('editor')?.invalid && itemForm.get('editor')?.touched">
+        <mat-label>Éditeur</mat-label>
+        <select matNativeControl formControlName="editor">
+          <option *ngFor="let editor of editors" [value]="editor.id">
+            {{ editor.name }}
+          </option>
+        </select>
+        <mat-error
+          *ngIf="
+            itemForm.get('editor')?.invalid && itemForm.get('editor')?.touched
+          "
+        >
           Un éditeur est requis.
         </mat-error>
       </mat-form-field>
@@ -101,42 +144,74 @@
             <option [value]="6">Langue Anglaise</option>
           </optgroup>
         </select>
-        <mat-error *ngIf="itemForm.get('category')?.invalid && itemForm.get('category')?.touched">
+        <mat-error
+          *ngIf="
+            itemForm.get('category')?.invalid &&
+            itemForm.get('category')?.touched
+          "
+        >
           La catégorie est requise.
         </mat-error>
       </mat-form-field>
 
       <mat-form-field>
         <mat-label>Nombre de pages</mat-label>
-        <input matInput type="number" formControlName="pages">
-        <mat-error *ngIf="itemForm.get('pages')?.invalid && itemForm.get('pages')?.touched">
+        <input matInput type="number" formControlName="pages" />
+        <mat-error
+          *ngIf="
+            itemForm.get('pages')?.invalid && itemForm.get('pages')?.touched
+          "
+        >
           Le nombre de pages est requis.
         </mat-error>
       </mat-form-field>
 
       <mat-form-field>
         <mat-label>Année</mat-label>
-        <input matInput type="number" formControlName="year">
-        <mat-error *ngIf="itemForm.get('year')?.invalid && itemForm.get('year')?.touched">
-          L'année est requise.
+        <input matInput type="number" formControlName="year" />
+        <mat-error
+          *ngIf="itemForm.get('year')?.invalid && itemForm.get('year')?.touched"
+        >
+          L'année requise doit être supérieure à 2010.
         </mat-error>
       </mat-form-field>
 
       <mat-form-field>
         <mat-label>Version</mat-label>
-        <input matInput type="number" formControlName="version">
-        <mat-error *ngIf="itemForm.get('version')?.invalid && itemForm.get('version')?.touched">
+        <input matInput type="number" formControlName="version" />
+        <mat-error
+          *ngIf="
+            itemForm.get('version')?.invalid && itemForm.get('version')?.touched
+          "
+        >
           Une version est requise.
         </mat-error>
       </mat-form-field>
 
+      <mat-form-field>
+        <mat-label>Soldé</mat-label>
+        <select matNativeControl formControlName="onSale">
+          <option value="0" selected>Non</option>
+          <option value="1">Oui</option>
+        </select>
+      </mat-form-field>
     </mat-card-content>
 
     <mat-card-actions class="button-row">
-
-      <button mat-raised-button color="accent" (click)="goBack()">Retour</button>
-      <button mat-raised-button color="primary" type="submit" [disabled]="itemForm.invalid || isSubmitting">Submit</button>
-      <button mat-raised-button color="warn" (click)="onReset()">Réinitialiser</button>
+      <button mat-raised-button color="accent" (click)="goBack()">
+        Retour
+      </button>
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="itemForm.invalid || isSubmitting"
+      >
+        Submit
+      </button>
+      <button mat-raised-button color="warn" (click)="onReset()">
+        Réinitialiser
+      </button>
     </mat-card-actions>
   </form>
 </mat-card>

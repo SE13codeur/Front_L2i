@@ -21,7 +21,9 @@ import { OrderState } from './order';
       collapsed: false,
     }),
     NgxsReduxDevtoolsPluginModule.forRoot(),
-    NgxsStoragePluginModule.forRoot({ key: ['cart', 'orders'] }),
+    NgxsStoragePluginModule.forRoot({
+      key: ['cart', 'orders', 'orderStatuses'],
+    }),
   ],
 })
 export class NgxsStoreModule {}

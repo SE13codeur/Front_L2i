@@ -1,7 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Select } from '@ngxs/store';
-import { CartDrawerService, SearchFocusService } from '@services/index';
+import {
+  AccountUserDrawerService,
+  CartDrawerService,
+  SearchFocusService,
+} from '@services/index';
 import { CartState } from '@store/index';
 import { Observable, Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
@@ -13,7 +17,8 @@ import { filter, takeUntil } from 'rxjs/operators';
 })
 export class AppComponent implements OnInit, OnDestroy {
   title = 'front_L2i';
-  isDrawerOpened$: Observable<boolean> | undefined;
+  isCartDrawerOpened$: Observable<boolean> | undefined;
+  isAccountUserDrawerOpened$: Observable<boolean> | undefined;
   @Select(CartState.getCartTotalItems) totalItems$:
     | Observable<number>
     | undefined;
@@ -23,11 +28,14 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private searchFocusService: SearchFocusService,
-    private cartDrawerService: CartDrawerService
+    private cartDrawerService: CartDrawerService,
+    private accountUserDrawerService: AccountUserDrawerService
   ) {}
 
   ngOnInit(): void {
-    this.isDrawerOpened$ = this.cartDrawerService.isDrawerOpened$;
+    this.isCartDrawerOpened$ = this.cartDrawerService.isDrawerOpened$;
+    this.isAccountUserDrawerOpened$ =
+      this.accountUserDrawerService.isDrawerOpened$;
     this.router.events
       .pipe(
         filter((event) => event instanceof NavigationEnd),
@@ -52,12 +60,12 @@ export class AppComponent implements OnInit, OnDestroy {
     );
   }
 
-  toggleDrawer() {
-    this.cartDrawerService.toggleDrawer();
+  closeCartDrawer() {
+    this.cartDrawerService.closeDrawer();
   }
 
-  closeDrawer() {
-    this.cartDrawerService.closeDrawer();
+  closeAccountUserDrawer() {
+    this.accountUserDrawerService.closeDrawer();
   }
 
   ngOnDestroy(): void {

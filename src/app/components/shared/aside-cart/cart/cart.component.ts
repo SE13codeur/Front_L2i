@@ -3,13 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { CheckAuthService } from '@auth-s/check-auth.service';
 import { ICartItem } from '@models/cart';
-import { Select, Store } from '@ngxs/store';
-import {
-  CartState,
-  ClearCart,
-  RemoveFromCart,
-  UpdateCartItemQuantity,
-} from '@store/index';
+import { CartDrawerService, CartService } from '@services/index';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -19,39 +13,44 @@ import { Observable } from 'rxjs';
 })
 export class CartComponent {
   @ViewChild('errorDialog') errorDialog: TemplateRef<any> | undefined;
-  @Select(CartState.getCartItems) cartItems$:
-    | Observable<ICartItem[]>
-    | undefined;
-  @Select(CartState.getCartTotalItems) totalItems$:
-    | Observable<number>
-    | undefined;
-  @Select(CartState.getSubTotal) subTotal$: Observable<number> | undefined;
-  @Select(CartState.getTotalWithTaxes) totalWithTaxes$:
-    | Observable<number>
-    | undefined;
+  cartItems$: Observable<ICartItem[]>;
+  totalItems$: Observable<number>;
+  totalTTC$: Observable<number>;
 
   isAuthenticated$: Observable<boolean> | undefined;
 
   constructor(
-    private router: Router,
-    private store: Store,
     private dialog: MatDialog,
+    private router: Router,
+    private cartService: CartService,
+    private cartDrawerService: CartDrawerService,
     private checkAuthService: CheckAuthService
-  ) {}
+  ) {
+    this.cartItems$ = this.cartService.getCartItems();
+    this.totalItems$ = this.cartService.getTotalItems();
+    this.totalTTC$ = this.cartService.getTotalTTC();
+  }
 
   removeItemFromCart(itemId: number): void {
-    this.store.dispatch(new RemoveFromCart(itemId));
+    this.cartService.removeItemFromCart(itemId);
   }
 
   updateCartItemQuantity(itemId: number, newQuantity: number): void {
-    this.store.dispatch(new UpdateCartItemQuantity(itemId, newQuantity));
+    this.cartService.updateCartItemQuantity(itemId, newQuantity);
   }
 
   clearCart(): void {
-    this.store.dispatch(new ClearCart());
+    this.cartService.clearCart();
+    this.closeCartDrawer();
+    this.router.navigate(['/items/books']);
+  }
+
+  closeCartDrawer() {
+    this.cartDrawerService.closeDrawer();
   }
 
   orderValidate(): void {
+    this.closeCartDrawer();
     if (!this.checkAuthService.checkAuthenticationAndRedirect()) {
       // Redirect to login page and come back to the current state after login
       this.router.navigate(['/auth/login'], {
@@ -76,7 +75,7 @@ export class CartComponent {
             return;
           }
         }
-        this.router.navigate(['/items/payment']);
+        this.router.navigate(['/items/orders']);
       });
     }
   }

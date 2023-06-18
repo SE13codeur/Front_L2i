@@ -61,10 +61,10 @@ export class CartItemQuantityComponent implements OnInit {
   }
 
   openSelect(): void {
-    this.quantitySelect.open();
+    this.quantitySelect?.open();
   }
 
-  addToCart(item: IItem | undefined, event: Event) {
+  addToCart(item: IItem, event: Event) {
     if (item) {
       event.stopPropagation();
       this.cartItemQuantityService.changeCartItemQuantity(item.id, 0);

@@ -8,6 +8,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import {
+  AccountUserButtonComponent,
+  AccountUserDrawerComponent,
   AdminItemComponent,
   AsideComponent,
   CartComponent,
@@ -17,14 +19,21 @@ import {
   HeaderComponent,
   ListItemWithoutMeilisearchComponent,
   NavComponent,
+  OrderComponent,
+  OrderListComponent,
   SearchItemComponent,
   SectionComponent,
 } from '@components/index';
 import {
   DetailItemPageComponent,
+  FavoritesUserPageComponent,
   HomePageComponent,
   ItemPageComponent,
   NotFoundPageComponent,
+  OrderUserPageComponent,
+  PaymentPageComponent,
+  PromosPageComponent,
+  ReleaseLatestPageComponent,
 } from '@pages/index';
 import { AuthService, CartService, PaginatorFrService } from '@services/index';
 
@@ -60,6 +69,7 @@ import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 import { NgxsModule } from '@ngxs/store';
 import { AuthGuard } from '@core/guards/auth-guard';
 import { TokenInterceptor } from '@core/tokens/interceptor-token';
+import { ProfileUserPageComponent } from './pages/user-account/profile-user-page/profile-user-page.component';
 
 @NgModule({
   declarations: [
@@ -71,20 +81,32 @@ import { TokenInterceptor } from '@core/tokens/interceptor-token';
     DetailItemComponent,
     NotFoundPageComponent,
     ItemPageComponent,
-    CartComponent,
     AsideComponent,
+    CartComponent,
     SearchItemComponent,
     FiltersItemComponent,
     AdminItemComponent,
     ListItemWithoutMeilisearchComponent,
     CartItemQuantityComponent,
     DetailItemPageComponent,
+    PaymentPageComponent,
+    OrderComponent,
+    AccountUserButtonComponent,
+    ReleaseLatestPageComponent,
+    PromosPageComponent,
+    AccountUserDrawerComponent,
+    OrderUserPageComponent,
+    OrderListComponent,
+    FavoritesUserPageComponent,
+    ProfileUserPageComponent,
   ],
   imports: [
     BrowserModule,
     NgxsStoreModule,
     NgxsModule.forRoot([CartState, OrderState]),
-    NgxsStoragePluginModule.forRoot({ key: ['cart', 'orders', 'auth'] }),
+    NgxsStoragePluginModule.forRoot({
+      key: ['cart', 'orders', 'orderStatuses', 'auth'],
+    }),
     MatTableModule,
     AppRoutingModule,
     BrowserAnimationsModule,

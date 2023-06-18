@@ -2,7 +2,12 @@ import { Injectable } from '@angular/core';
 import { ICartItem, IItem } from '@models/index';
 import { Store } from '@ngxs/store';
 import { CartState } from '@store/cart/cart.state';
-import { AddToCart, ClearCart, RemoveFromCart } from '@store/index';
+import {
+  AddToCart,
+  UpdateCartItemQuantity,
+  RemoveFromCart,
+  ClearCart,
+} from '@store/index';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -37,9 +42,18 @@ export class CartService {
       pages: item.pages,
       year: item.year,
       version: item.version,
+      tva: item.tva,
     };
 
     this.store.dispatch(new AddToCart(cartItem));
+  }
+
+  updateCartItemQuantity(itemId: number, newQuantity: number): void {
+    this.store.dispatch(new UpdateCartItemQuantity(itemId, newQuantity));
+  }
+
+  getTotalItems(): Observable<number> {
+    return this.store.select(CartState.getCartTotalItems);
   }
 
   removeItemFromCart(itemId: number) {
@@ -50,11 +64,7 @@ export class CartService {
     this.store.dispatch(new ClearCart());
   }
 
-  getSubTotal(): Observable<number> {
-    return this.store.select(CartState.getSubTotal);
-  }
-
-  getTotalPrice(): Observable<number> {
-    return this.store.select(CartState.getTotalWithTaxes);
+  getTotalTTC(): Observable<number> {
+    return this.store.select(CartState.getTotalTTC);
   }
 }
