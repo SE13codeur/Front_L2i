@@ -96,6 +96,7 @@ export class OrderListComponent implements OnInit {
     newStatus: string
   ): void {
     if (this.isAdmin) {
+      this.getStatusByOrderNumber(orderNumber);
       this.orderService
         .updateOrderStatusFromUser(user.username, orderNumber, newStatus)
         .subscribe(() => {

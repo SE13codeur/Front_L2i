@@ -50,7 +50,13 @@
             <td *ngIf="isAdmin">
               <select
                 #orderStatusSelectRef
-                (change)="getStatusByOrderNumber(order.orderNumber)"
+                (change)="
+                  updateOrderStatus(
+                    currentUser,
+                    order.orderNumber,
+                    orderStatusSelectRef.value
+                  )
+                "
               >
                 <option value="PENDING">En attente de confirmation</option>
                 <option value="CONFIRMED">Confirmé</option>
