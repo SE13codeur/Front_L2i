@@ -11,6 +11,8 @@ import {
   ReleaseLatestPageComponent,
   PromosPageComponent,
   OrderUserPageComponent,
+  FavoritesUserPageComponent,
+  ProfileUserPageComponent,
 } from '@pages/index';
 import { OrderActivateCartGuard } from './guards';
 
@@ -46,6 +48,14 @@ const routes: Routes = [
     path: 'items/orders',
     component: PaymentPageComponent,
     canActivate: [OrderActivateCartGuard],
+  },
+  {
+    path: 'items/orders/username/profile',
+    component: ProfileUserPageComponent,
+  },
+  {
+    path: 'items/orders/username/favorites',
+    component: FavoritesUserPageComponent,
   },
   { path: 'items/orders/:username', component: OrderUserPageComponent },
 

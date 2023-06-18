@@ -66,7 +66,8 @@ import { PromosPageComponent } from './pages/promos/promos-page.component';
 import { AccountUserDrawerComponent } from './components/shared/aside-account-user/account-user-drawer/account-user-drawer.component';
 import { OrderUserPageComponent } from './pages/user-account/order-user-page/order-user-page.component';
 import { OrderListComponent } from './components/shared/order/order-list/order-list.component';
-import { FavoriteUserPageComponent } from './pages/user-account/favorite-user-page/favorite-user-page.component';
+import { FavoritesUserPageComponent } from './pages/user-account/favorite-user-page/favorite-user-page.component';
+import { ProfileUserPageComponent } from './pages/user-account/profile-user-page/profile-user-page.component';
 
 @NgModule({
   declarations: [
@@ -95,7 +96,8 @@ import { FavoriteUserPageComponent } from './pages/user-account/favorite-user-pa
     AccountUserDrawerComponent,
     OrderUserPageComponent,
     OrderListComponent,
-    FavoriteUserPageComponent,
+    FavoritesUserPageComponent,
+    ProfileUserPageComponent,
   ],
   imports: [
     BrowserModule,

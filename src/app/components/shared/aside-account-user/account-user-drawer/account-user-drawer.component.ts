@@ -23,4 +23,12 @@ export class AccountUserDrawerComponent implements OnInit {
 
     this.router.navigate(['/items/orders', username]);
   }
+
+  openProfilePage() {
+    this.router.navigate(['/items/orders/username/profile']);
+  }
+
+  openFavoritesPage() {
+    this.router.navigate(['/items/orders/username/favorites']);
+  }
 }
