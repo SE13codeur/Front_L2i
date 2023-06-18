@@ -66,6 +66,7 @@ import { PromosPageComponent } from './pages/promos/promos-page.component';
 import { AccountUserDrawerComponent } from './components/shared/aside-account-user/account-user-drawer/account-user-drawer.component';
 import { OrderUserPageComponent } from './pages/user-account/order-user-page/order-user-page.component';
 import { OrderListComponent } from './components/shared/order/order-list/order-list.component';
+import { FavoriteUserPageComponent } from './pages/user-account/favorite-user-page/favorite-user-page.component';
 
 @NgModule({
   declarations: [
@@ -94,12 +95,15 @@ import { OrderListComponent } from './components/shared/order/order-list/order-l
     AccountUserDrawerComponent,
     OrderUserPageComponent,
     OrderListComponent,
+    FavoriteUserPageComponent,
   ],
   imports: [
     BrowserModule,
     NgxsStoreModule,
     NgxsModule.forRoot([CartState, OrderState]),
-    NgxsStoragePluginModule.forRoot({ key: ['cart', 'orders'] }),
+    NgxsStoragePluginModule.forRoot({
+      key: ['cart', 'orders', 'orderStatuses'],
+    }),
     MatTableModule,
     AppRoutingModule,
     BrowserAnimationsModule,

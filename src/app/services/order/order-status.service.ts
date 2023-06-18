@@ -1,7 +1,12 @@
 import { Injectable } from '@angular/core';
 import { IOrder, OrderStatus } from '@models/index';
 import { Store } from '@ngxs/store';
-import { OrderState, UpdateOrderStatus } from '@store/index';
+import {
+  GetOrderStatus,
+  OrderState,
+  SetOrderStatuses,
+  UpdateOrderStatus,
+} from '@store/index';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -14,7 +19,11 @@ export class OrderStatusService {
     this.store.dispatch(new UpdateOrderStatus(orderNumber, newStatus));
   }
 
-  getOrdersByStatus(status: OrderStatus): Observable<IOrder[]> {
-    return this.store.select(OrderState.getOrdersByStatus(status));
+  getOrdersByStatus(orderStatus: OrderStatus): Observable<IOrder[]> {
+    return this.store.select(OrderState.getOrdersByStatus(orderStatus));
+  }
+
+  getStatusByOrderNumber(orderNumber: string, orderStatus: Observable<string>) {
+    this.store.dispatch(new GetOrderStatus(orderNumber, orderStatus));
   }
 }
