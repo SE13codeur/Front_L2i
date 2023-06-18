@@ -20,6 +20,7 @@ export class OrderListComponent implements OnInit {
 
   expandedOrderDetails: number | null | undefined = null;
   selectedStatus: string = 'all';
+  isAdmin = false;
 
   constructor(
     private orderService: OrderService,
@@ -28,10 +29,7 @@ export class OrderListComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchOrders();
-  }
-
-  isAdmin(): boolean {
-    return this.authService.isAdminAuthenticated();
+    this.isAdmin = this.authService.isAdminAuthenticated();
   }
 
   fetchOrders(): void {
@@ -46,10 +44,23 @@ export class OrderListComponent implements OnInit {
     });
   }
 
-  updateOrderStatus(user: ICustomer, newStatus: string): void {
-    if (this.isAdmin()) {
+  updateOrderStatus(
+    user: ICustomer,
+    orderNumber: string,
+    newStatus: string
+  ): void {
+    if (this.isAdmin) {
+      const statusMapping: { [key: string]: OrderStatus } = {
+        'En attente de confirmation': OrderStatus.PENDING,
+        Confirmé: OrderStatus.CONFIRMED,
+        'En cours de livraison': OrderStatus.SHIPPING,
+        Livré: OrderStatus.DELIVERED,
+      };
+
+      const enumStatus = statusMapping[newStatus];
+
       this.orderService
-        .updateOrderStatusFromUser(user.username, newStatus)
+        .updateOrderStatusFromUser(user.username, orderNumber, enumStatus)
         .subscribe(() => {
           console.log('Order status updated');
           this.fetchOrders(); // refresh the list
@@ -85,20 +96,5 @@ export class OrderListComponent implements OnInit {
           });
 
     this.filteredOrderList$.next(filteredOrders);
-  }
-
-  getStatusDescription(status: OrderStatus): string {
-    switch (status) {
-      case OrderStatus.PENDING:
-        return 'En attente de confirmation';
-      case OrderStatus.CONFIRMED:
-        return 'Confirmé';
-      case OrderStatus.SHIPPING:
-        return 'En cours de livraison';
-      case OrderStatus.DELIVERED:
-        return 'Livré';
-      default:
-        return '';
-    }
   }
 }

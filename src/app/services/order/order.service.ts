@@ -20,8 +20,12 @@ export class OrderService {
     return this.http.get<IOrder[]>(`${this.ordersUrl}/${user.username}`);
   }
 
-  updateOrderStatusFromUser(username: string, newStatus: string) {
+  updateOrderStatusFromUser(
+    username: string,
+    orderNumber: string,
+    newStatus: string
+  ) {
     const url = `${this.ordersUrl}/${username}`;
-    return this.http.put(url, { status: newStatus });
+    return this.http.put(url, { orderNumber: orderNumber, status: newStatus });
   }
 }
