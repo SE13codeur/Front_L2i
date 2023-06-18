@@ -67,6 +67,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 import { NgxsModule } from '@ngxs/store';
+import { ProfileUserPageComponent } from './pages/user-account/profile-user-page/profile-user-page.component';
 
 @NgModule({
   declarations: [
@@ -96,6 +97,7 @@ import { NgxsModule } from '@ngxs/store';
     OrderUserPageComponent,
     OrderListComponent,
     FavoritesUserPageComponent,
+    ProfileUserPageComponent,
   ],
   imports: [
     BrowserModule,
