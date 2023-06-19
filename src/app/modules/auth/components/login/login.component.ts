@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
+import { AuthService } from '@auth-s/index';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -10,7 +12,12 @@ import { Location } from '@angular/common';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private location: Location) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private location: Location,
+    private router: Router,
+    private authService: AuthService
+  ) {
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],
       password: ['', Validators.required],
@@ -28,8 +35,16 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log('login clicked');
     if (this.loginForm.valid) {
-      console.log('Form Value:', this.loginForm.value);
+      this.authService.login(this.loginForm.value).subscribe({
+        next: (response) => {
+          this.router.navigate(['/items/books']);
+        },
+        error: (error) => {
+          console.error('Erreur lors de la connexion:', error);
+        },
+      });
     }
   }
 

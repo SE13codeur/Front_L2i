@@ -8,7 +8,7 @@ import { IUser } from '@auth-m/IUser';
   providedIn: 'root',
 })
 export class AuthService {
-  private itemsUrl = `${environment.apiUrl}`;
+  private itemsUrl = `${environment.apiUrl}/auth`;
 
   constructor(private http: HttpClient) {
     console.log('register initialized');
