@@ -35,7 +35,11 @@ import {
   PromosPageComponent,
   ReleaseLatestPageComponent,
 } from '@pages/index';
-import { AuthService, CartService, PaginatorFrService } from '@services/index';
+import {
+  AdminAuthService,
+  CartService,
+  PaginatorFrService,
+} from '@services/index';
 
 import { CartState, NgxsStoreModule, OrderState } from './store';
 
@@ -69,6 +73,7 @@ import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 import { NgxsModule } from '@ngxs/store';
 import { AuthGuard } from '@core/guards/auth-guard';
 import { ProfileUserPageComponent } from './pages/user-account/profile-user-page/profile-user-page.component';
+import { UserState } from '@store/user/user.state';
 
 @NgModule({
   declarations: [
@@ -102,9 +107,9 @@ import { ProfileUserPageComponent } from './pages/user-account/profile-user-page
   imports: [
     BrowserModule,
     NgxsStoreModule,
-    NgxsModule.forRoot([CartState, OrderState]),
+    NgxsModule.forRoot([CartState, OrderState, UserState]),
     NgxsStoragePluginModule.forRoot({
-      key: ['cart', 'orders', 'orderStatuses', 'auth'],
+      key: ['cart', 'orders', 'orderStatuses', 'auth', 'user'],
     }),
     MatTableModule,
     AppRoutingModule,
@@ -134,7 +139,7 @@ import { ProfileUserPageComponent } from './pages/user-account/profile-user-page
   providers: [
     { provide: LOCALE_ID, useValue: 'fr-FR' },
     CartService,
-    AuthService,
+    AdminAuthService,
     {
       provide: MatPaginatorIntl,
       useClass: PaginatorFrService,

@@ -2,10 +2,12 @@ import { State, Action, StateContext, Selector } from '@ngxs/store';
 import { tap, catchError } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Login, LoginSuccess, LoginFailed, Logout } from './auth.action';
-import { AuthService } from 'src/app/modules/auth/services/index';
+import { Role } from '@models/index';
+import { AuthService } from '@auth-s/index';
 
 export interface AuthStateModel {
   username: string | null;
+  role: Role;
   isAuthenticated: boolean;
   loading: boolean;
   error: any;
@@ -15,6 +17,7 @@ export interface AuthStateModel {
   name: 'auth',
   defaults: {
     username: null,
+    role: Role.CUSTOMER,
     isAuthenticated: false,
     loading: false,
     error: null,
@@ -44,7 +47,9 @@ export class AuthState {
     ctx.patchState({ loading: true });
     return this.authService.login(action.payload).pipe(
       tap((result: any) => {
-        ctx.dispatch(new LoginSuccess(result.username));
+        ctx.dispatch(
+          new LoginSuccess({ username: result.username, role: result.role })
+        );
       }),
       catchError((error) => ctx.dispatch(new LoginFailed()))
     );
@@ -54,6 +59,7 @@ export class AuthState {
   loginSuccess(ctx: StateContext<AuthStateModel>, action: LoginSuccess) {
     ctx.patchState({
       username: action.payload.username,
+      role: action.payload.role,
       isAuthenticated: true,
       loading: false,
     });

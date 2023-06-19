@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environmentDev as environment } from '@env/environment.dev';
-import { IUser } from '@auth-m/IUser';
 import { AuthState } from '@auth/store/auth.state';
 import { Store } from '@ngxs/store';
+import { IUser } from '@models/index';
 
 @Injectable({
   providedIn: 'root',

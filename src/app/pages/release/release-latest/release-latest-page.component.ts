@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { IItem } from '@models/item';
-import { AuthService } from '@services/admin';
+import { AdminAuthService } from '@services/index';
 import { ItemService } from '@services/item';
 import { PaginationService } from '@services/pagination';
 import { BehaviorSubject, Observable, Subject, take } from 'rxjs';
@@ -29,10 +29,10 @@ export class ReleaseLatestPageComponent implements OnInit {
   constructor(
     private itemService: ItemService,
     private paginationService: PaginationService,
-    private authService: AuthService,
+    private adminAuthService: AdminAuthService,
     private router: Router
   ) {
-    this.isAdmin = this.authService.isAdminAuthenticated();
+    this.isAdmin = this.adminAuthService.isAdminAuthenticated();
   }
 
   ngOnInit(): void {

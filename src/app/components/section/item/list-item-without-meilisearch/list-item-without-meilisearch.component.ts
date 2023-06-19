@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { IItem } from '@models/index';
 import { Store } from '@ngxs/store';
 import {
-  AuthService,
+  AdminAuthService,
   CartItemQuantityService,
   FiltersService,
   ItemService,
@@ -38,10 +38,10 @@ export class ListItemWithoutMeilisearchComponent implements OnInit, OnDestroy {
     private itemService: ItemService,
     private filtersService: FiltersService,
     private paginationService: PaginationService,
-    private authService: AuthService,
+    private adminAuthService: AdminAuthService,
     private router: Router
   ) {
-    this.isAdmin = this.authService.isAdminAuthenticated();
+    this.isAdmin = this.adminAuthService.isAdminAuthenticated();
   }
 
   ngOnInit(): void {

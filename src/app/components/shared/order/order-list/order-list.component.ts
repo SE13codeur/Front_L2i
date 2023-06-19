@@ -7,7 +7,11 @@ import {
   getOrderStatusDescription,
   statusDescriptionToEnum,
 } from '@models/order/index';
-import { AuthService, OrderService, OrderStatusService } from '@services/index';
+import {
+  AdminAuthService,
+  OrderService,
+  OrderStatusService,
+} from '@services/index';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 @Component({
@@ -39,12 +43,12 @@ export class OrderListComponent implements OnInit {
   constructor(
     private orderService: OrderService,
     private orderStatusService: OrderStatusService,
-    private authService: AuthService
+    private adminAuthService: AdminAuthService
   ) {}
 
   ngOnInit(): void {
     this.fetchOrders();
-    this.isAdmin = this.authService.isAdminAuthenticated();
+    this.isAdmin = this.adminAuthService.isAdminAuthenticated();
   }
 
   fetchOrders(statusDescription?: string): void {

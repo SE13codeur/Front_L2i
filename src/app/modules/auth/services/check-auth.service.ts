@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthState } from '@auth/store/auth.state';
 import { Store } from '@ngxs/store';
-import { AuthState } from 'src/app/modules/auth/index';
 import { Observable } from 'rxjs';
-import { AuthService } from '@services/admin';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root',

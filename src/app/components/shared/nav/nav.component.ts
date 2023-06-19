@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngxs/store';
 import {
   AccountUserDrawerService,
-  AuthService,
+  AdminAuthService,
   CartDrawerService,
 } from '@services/index';
 import { Observable } from 'rxjs';
@@ -20,7 +20,7 @@ export class NavComponent {
 
   constructor(
     private router: Router,
-    private authService: AuthService,
+    private adminAuthService: AdminAuthService,
     private cartDrawerService: CartDrawerService,
     private accountUserDrawerService: AccountUserDrawerService,
     private store: Store
@@ -29,7 +29,7 @@ export class NavComponent {
   }
 
   ngOnInit(): void {
-    this.isAdmin = this.authService.isAdminAuthenticated();
+    this.isAdmin = this.adminAuthService.isAdminAuthenticated();
   }
 
   logout() {

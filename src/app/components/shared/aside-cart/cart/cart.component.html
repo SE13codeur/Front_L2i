@@ -3,7 +3,7 @@
     <span *ngIf="isAuthenticated$ | async"
       >Bienvenue {{ username$ | async }}</span
     >
-    <span *ngIf="!(isAuthenticated$ | async)"
+    <span style="margin: 1.11rem" *ngIf="!(isAuthenticated$ | async)"
       >Bienvenue : identifiez-vous <mat-icon>login</mat-icon></span
     >
   </h1>
