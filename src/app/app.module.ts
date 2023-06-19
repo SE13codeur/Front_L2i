@@ -68,7 +68,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 import { NgxsModule } from '@ngxs/store';
 import { AuthGuard } from '@core/guards/auth-guard';
-import { TokenInterceptor } from '@core/tokens/interceptor-token';
 import { ProfileUserPageComponent } from './pages/user-account/profile-user-page/profile-user-page.component';
 
 @NgModule({
@@ -140,12 +139,12 @@ import { ProfileUserPageComponent } from './pages/user-account/profile-user-page
       provide: MatPaginatorIntl,
       useClass: PaginatorFrService,
     },
-    AuthGuard,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: TokenInterceptor,
-      multi: true,
-    },
+    // AuthGuard,
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: TokenInterceptor,
+    //   multi: true,
+    // },
   ],
   bootstrap: [AppComponent],
 })

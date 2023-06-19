@@ -15,33 +15,27 @@
     <!-- Search bar -->
     <div class="logo-search-container">
       <app-search-item class="search-bar-large"></app-search-item>
-    </div>
 
-    <div class="nav-actions">
-      <!-- User button for connection -->
-      <ng-container *ngIf="isAuthenticated$ | async; else notLoggedIn">
-        <button mat-icon-button (click)="logout()">
-          <mat-icon>exit_to_app</mat-icon>
+      <div class="nav-actions">
+        <!-- User button for connection -->
+        <ng-container *ngIf="isAuthenticated$ | async">
+          <button mat-icon-button (click)="logout()">
+            <mat-icon>exit_to_app</mat-icon>
+          </button>
+        </ng-container>
+
+        <!-- User account drawer -->
+        <app-account-user-button (click)="toggleAccountUserDrawer()">
+        </app-account-user-button>
+
+        <!-- Cart drawer for shopping -->
+        <app-aside *ngIf="!isAdmin" (click)="toggleCartDrawer()"></app-aside>
+
+        <!-- ADD item for admin -->
+        <button *ngIf="isAdmin" class="admin-add-item" (click)="goToAddItem()">
+          <mat-icon>add</mat-icon>
         </button>
-      </ng-container>
-
-      <ng-template #notLoggedIn>
-        <button mat-icon-button routerLink="/auth/login">
-          <mat-icon>account_circle</mat-icon>
-        </button>
-      </ng-template>
-
-      <!-- User account drawer -->
-      <app-account-user-button (click)="toggleAccountUserDrawer()">
-      </app-account-user-button>
-
-      <!-- Cart drawer for shopping -->
-      <app-aside *ngIf="!isAdmin" (click)="toggleCartDrawer()"></app-aside>
-
-      <!-- ADD item for admin -->
-      <button *ngIf="isAdmin" class="admin-add-item" (click)="goToAddItem()">
-        <mat-icon>add</mat-icon>
-      </button>
+      </div>
     </div>
   </div>
 </mat-toolbar>

@@ -1,7 +1,8 @@
 import { Component, OnDestroy } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { ICartItem, ICart, ICustomer } from '@models/index';
+import { AuthService } from '@auth-s/auth.service';
+import { ICart, ICartItem } from '@models/index';
 import { Select } from '@ngxs/store';
 import { CartDrawerService, CartService, OrderService } from '@services/index';
 import { CartState } from '@store/index';
@@ -18,6 +19,8 @@ export class OrderComponent implements OnDestroy {
   @Select(CartState.getTotalTTC)
   totalTTC$!: Observable<number>;
 
+  username$: Observable<string | null>;
+
   private destroy$ = new Subject<void>();
 
   constructor(
@@ -25,8 +28,11 @@ export class OrderComponent implements OnDestroy {
     private cartService: CartService,
     private cartDrawerService: CartDrawerService,
     private router: Router,
-    private snackBar: MatSnackBar
-  ) {}
+    private snackBar: MatSnackBar,
+    private authService: AuthService
+  ) {
+    this.username$ = this.authService.getUsername();
+  }
 
   openCartDrawer() {
     this.cartDrawerService.toggleDrawer();
@@ -43,47 +49,40 @@ export class OrderComponent implements OnDestroy {
     combineLatest({
       cartItems: this.cartItems$,
       totalTTC: this.totalTTC$,
+      username: this.username$,
     }).subscribe({
-      next: ({ cartItems, totalTTC }) => {
-        console.log('forkJoin next', cartItems, totalTTC);
+      next: ({ cartItems, username, user }) => {
+        if (username) {
+          const cartData: ICart = {
+            cartItems,
+            user,
+          };
 
-        const user: ICustomer = {
-          username: 'user',
-          email: 'USER.EMAIL',
-          password: 'user',
-          id: 1,
-          role: 'customer',
-        };
-
-        const cartData: ICart = {
-          cartItems,
-          user,
-        };
-
-        this.orderService
-          .createOrder(cartData)
-          .pipe(takeUntil(this.destroy$))
-          .subscribe({
-            next: () => {
-              console.log('Order created successfully');
-              this.snackBar.open('Commande créée avec succès!', 'Fermer', {
-                duration: 4400,
-              });
-              this.clearCart();
-            },
-            error: (error) => {
-              console.log('Error creating order', error);
-              this.snackBar.open(
-                'Erreur lors de la création de la commande.',
-                'Fermer',
-                { duration: 4400 }
-              );
-              console.error(error);
-            },
-          });
+          this.orderService
+            .createOrder(cartData)
+            .pipe(takeUntil(this.destroy$))
+            .subscribe({
+              next: () => {
+                console.log('Order created successfully');
+                this.snackBar.open('Commande créée avec succès!', 'Fermer', {
+                  duration: 4400,
+                });
+                this.clearCart();
+              },
+              error: (error) => {
+                console.log('Error creating order', error);
+                this.snackBar.open(
+                  'Erreur lors de la création de la commande.',
+                  'Fermer',
+                  { duration: 4400 }
+                );
+                console.error(error);
+              },
+            });
+        }
       },
       error: (error) => {
-        console.log('Error in forkJoin', error);
+        console.log('Error in combineLatest', error);
         this.snackBar.open(
           'Erreur lors de la récupération des totaux.',
           'Fermer',

@@ -1,5 +1,12 @@
 <div class="container">
-  <h1>Votre panier</h1>
+  <h1>
+    <span *ngIf="isAuthenticated$ | async"
+      >Bienvenue {{ username$ | async }}</span
+    >
+    <span *ngIf="!(isAuthenticated$ | async)"
+      >Bienvenue : identifiez-vous <mat-icon>login</mat-icon></span
+    >
+  </h1>
 
   <table class="cart-table">
     <thead>

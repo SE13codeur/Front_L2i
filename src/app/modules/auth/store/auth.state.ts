@@ -5,7 +5,8 @@ import { Login, LoginSuccess, LoginFailed, Logout } from './auth.action';
 import { AuthService } from 'src/app/modules/auth/services/index';
 
 export interface AuthStateModel {
-  token: string | null;
+  username: string | null;
+  isAuthenticated: boolean;
   loading: boolean;
   error: any;
 }
@@ -13,7 +14,8 @@ export interface AuthStateModel {
 @State<AuthStateModel>({
   name: 'auth',
   defaults: {
-    token: null,
+    username: null,
+    isAuthenticated: false,
     loading: false,
     error: null,
   },
@@ -24,26 +26,37 @@ export class AuthState {
 
   @Selector()
   static isAuthenticated(state: AuthStateModel): boolean {
-    return !!state.token;
+    return state.isAuthenticated;
   }
 
   @Selector()
-  static token(state: AuthStateModel): string | null {
-    return state.token;
+  static username(state: AuthStateModel): string | null {
+    return state.username;
+  }
+
+  @Selector()
+  static getUsername(state: AuthStateModel): string | null {
+    return state.username;
   }
 
   @Action(Login)
   login(ctx: StateContext<AuthStateModel>, action: Login) {
     ctx.patchState({ loading: true });
     return this.authService.login(action.payload).pipe(
-      tap((result: any) => ctx.dispatch(new LoginSuccess(result.token))),
+      tap((result: any) => {
+        ctx.dispatch(new LoginSuccess(result.username));
+      }),
       catchError((error) => ctx.dispatch(new LoginFailed()))
     );
   }
 
   @Action(LoginSuccess)
   loginSuccess(ctx: StateContext<AuthStateModel>, action: LoginSuccess) {
-    ctx.patchState({ token: action.payload.token, loading: false });
+    ctx.patchState({
+      username: action.payload.username,
+      isAuthenticated: true,
+      loading: false,
+    });
   }
 
   @Action(LoginFailed)
@@ -53,6 +66,7 @@ export class AuthState {
 
   @Action(Logout)
   logout(ctx: StateContext<AuthStateModel>) {
-    ctx.patchState({ token: null });
+    // Mettre à jour l'état pour indiquer que l'utilisateur est déconnecté
+    ctx.patchState({ username: null, isAuthenticated: false });
   }
 }

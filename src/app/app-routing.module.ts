@@ -20,7 +20,7 @@ const routes: Routes = [
   {
     path: 'auth',
     loadChildren: () =>
-      import('./modules/auth/auth.module').then((m) => m.AuthModule),
+      import('./modules/auth/store/auth.module').then((m) => m.AuthModule),
   },
   { path: '', component: HomePageComponent },
   { path: 'items/books', component: ItemPageComponent },

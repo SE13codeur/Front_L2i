@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environmentDev as environment } from '@env/environment.dev';
 import { IUser } from '@auth-m/IUser';
+import { AuthState } from '@auth/store/auth.state';
+import { Store } from '@ngxs/store';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +12,7 @@ import { IUser } from '@auth-m/IUser';
 export class AuthService {
   private itemsUrl = `${environment.apiUrl}/auth`;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private store: Store) {
     console.log('register initialized');
   }
 
@@ -20,5 +22,9 @@ export class AuthService {
 
   register(user: IUser) {
     return this.http.post(`${this.itemsUrl}/register`, user);
+  }
+
+  getUsername(): Observable<string | null> {
+    return this.store.select(AuthState.getUsername);
   }
 }

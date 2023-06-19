@@ -2,6 +2,7 @@ import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { CheckAuthService } from '@auth-s/check-auth.service';
+import { AuthService } from '@auth-s/index';
 import { ICartItem } from '@models/cart';
 import { CartDrawerService, CartService } from '@services/index';
 import { Observable } from 'rxjs';
@@ -18,17 +19,20 @@ export class CartComponent {
   totalTTC$: Observable<number>;
 
   isAuthenticated$: Observable<boolean> | undefined;
+  username$: Observable<string | null> | undefined;
 
   constructor(
     private dialog: MatDialog,
     private router: Router,
     private cartService: CartService,
     private cartDrawerService: CartDrawerService,
-    private checkAuthService: CheckAuthService
+    private checkAuthService: CheckAuthService,
+    private authService: AuthService
   ) {
     this.cartItems$ = this.cartService.getCartItems();
     this.totalItems$ = this.cartService.getTotalItems();
     this.totalTTC$ = this.cartService.getTotalTTC();
+    this.username$ = this.authService.getUsername();
   }
 
   removeItemFromCart(itemId: number): void {
