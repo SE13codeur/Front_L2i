@@ -22,7 +22,7 @@ import { OrderState } from './order';
     }),
     NgxsReduxDevtoolsPluginModule.forRoot(),
     NgxsStoragePluginModule.forRoot({
-      key: ['cart', 'orders', 'orderStatuses', 'user'],
+      key: ['cart', 'orders', 'orderStatuses', 'auth', 'user'],
     }),
   ],
 })

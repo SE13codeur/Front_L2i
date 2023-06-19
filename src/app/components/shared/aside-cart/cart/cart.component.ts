@@ -55,14 +55,16 @@ export class CartComponent {
 
   orderValidate(): void {
     this.closeCartDrawer();
-    if (!this.checkAuthService.checkAuthenticationAndRedirect()) {
+    const isAuthenticated =
+      this.checkAuthService.checkAuthenticationAndRedirect();
+    if (!isAuthenticated) {
       // Redirect to login page and come back to the current state after login
       this.router.navigate(['/auth/login'], {
         queryParams: { returnUrl: this.router.routerState.snapshot.url },
       });
       return;
     }
-    if (!!this.checkAuthService.checkAuthenticationAndRedirect()) {
+    if (isAuthenticated) {
       this.cartItems$?.subscribe((cartItems) => {
         for (let cartItem of cartItems) {
           if (cartItem.quantity > cartItem.quantityInStock) {

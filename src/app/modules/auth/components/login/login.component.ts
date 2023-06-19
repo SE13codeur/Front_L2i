@@ -37,8 +37,9 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     console.log('login clicked');
     if (this.loginForm.valid) {
-      this.authService.login(this.loginForm.value).subscribe({
-        next: (response) => {
+      const credentials = this.loginForm.value;
+      this.authService.dispatchLoginAction(credentials).subscribe({
+        next: () => {
           this.router.navigate(['/items/books']);
         },
         error: (error) => {

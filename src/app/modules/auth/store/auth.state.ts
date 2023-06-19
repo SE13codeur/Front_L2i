@@ -4,10 +4,11 @@ import { Injectable } from '@angular/core';
 import { Login, LoginSuccess, LoginFailed, Logout } from './auth.action';
 import { Role } from '@models/index';
 import { AuthService } from '@auth-s/index';
+import { of } from 'rxjs';
 
 export interface AuthStateModel {
   username: string | null;
-  role: Role;
+  role: string;
   isAuthenticated: boolean;
   loading: boolean;
   error: any;
@@ -17,7 +18,7 @@ export interface AuthStateModel {
   name: 'auth',
   defaults: {
     username: null,
-    role: Role.CUSTOMER,
+    role: 'CUSTOMER',
     isAuthenticated: false,
     loading: false,
     error: null,
@@ -33,11 +34,6 @@ export class AuthState {
   }
 
   @Selector()
-  static username(state: AuthStateModel): string | null {
-    return state.username;
-  }
-
-  @Selector()
   static getUsername(state: AuthStateModel): string | null {
     return state.username;
   }
@@ -47,11 +43,21 @@ export class AuthState {
     ctx.patchState({ loading: true });
     return this.authService.login(action.payload).pipe(
       tap((result: any) => {
+        console.log(result);
+        const username = result.username;
+        const role =
+          result.role && result.role.title ? result.role.title : 'CUSTOMER';
         ctx.dispatch(
-          new LoginSuccess({ username: result.username, role: result.role })
+          new LoginSuccess({
+            username,
+            role,
+          })
         );
       }),
-      catchError((error) => ctx.dispatch(new LoginFailed()))
+      catchError((error) => {
+        ctx.dispatch(new LoginFailed());
+        return of(error);
+      })
     );
   }
 
@@ -72,7 +78,6 @@ export class AuthState {
 
   @Action(Logout)
   logout(ctx: StateContext<AuthStateModel>) {
-    // Mettre à jour l'état pour indiquer que l'utilisateur est déconnecté
     ctx.patchState({ username: null, isAuthenticated: false });
   }
 }

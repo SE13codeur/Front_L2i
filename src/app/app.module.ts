@@ -74,6 +74,7 @@ import { NgxsModule } from '@ngxs/store';
 import { AuthGuard } from '@core/guards/auth-guard';
 import { ProfileUserPageComponent } from './pages/user-account/profile-user-page/profile-user-page.component';
 import { UserState } from '@store/user/user.state';
+import { AuthState } from '@auth/index';
 
 @NgModule({
   declarations: [
@@ -107,7 +108,7 @@ import { UserState } from '@store/user/user.state';
   imports: [
     BrowserModule,
     NgxsStoreModule,
-    NgxsModule.forRoot([CartState, OrderState, UserState]),
+    NgxsModule.forRoot([CartState, OrderState, AuthState, UserState]),
     NgxsStoragePluginModule.forRoot({
       key: ['cart', 'orders', 'orderStatuses', 'auth', 'user'],
     }),

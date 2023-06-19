@@ -31,6 +31,9 @@ export class CheckAuthService {
       });
       return false;
     }
+    if (isAuthenticated) {
+      this.authService.getUsername();
+    }
     return true;
   }
 }
