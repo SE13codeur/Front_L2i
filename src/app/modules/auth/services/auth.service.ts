@@ -5,7 +5,7 @@ import { environmentDev as environment } from '@env/environment.dev';
 import { AuthState } from '@auth/store/auth.state';
 import { Store } from '@ngxs/store';
 import { IUser } from '@models/index';
-import { Login } from '@auth/store/auth.action';
+import { Login, Logout } from '@auth/store/auth.action';
 
 @Injectable({
   providedIn: 'root',
@@ -30,6 +30,10 @@ export class AuthService {
     password: string;
   }): Observable<any> {
     return this.store.dispatch(new Login(credentials));
+  }
+
+  dispatchLogoutAction(): Observable<any> {
+    return this.store.dispatch(new Logout());
   }
 
   getUsername(): Observable<string | null> {

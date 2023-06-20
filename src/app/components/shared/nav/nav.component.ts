@@ -16,24 +16,16 @@ import { AuthState, Logout } from 'src/app/modules/auth/index';
 })
 export class NavComponent {
   isAdmin = false;
-  isAuthenticated$: Observable<boolean>;
 
   constructor(
     private router: Router,
     private adminAuthService: AdminAuthService,
     private cartDrawerService: CartDrawerService,
-    private accountUserDrawerService: AccountUserDrawerService,
-    private store: Store
-  ) {
-    this.isAuthenticated$ = this.store.select(AuthState.isAuthenticated);
-  }
+    private accountUserDrawerService: AccountUserDrawerService
+  ) {}
 
   ngOnInit(): void {
     this.isAdmin = this.adminAuthService.isAdminAuthenticated();
-  }
-
-  logout() {
-    this.store.dispatch(new Logout());
   }
 
   toggleCartDrawer() {

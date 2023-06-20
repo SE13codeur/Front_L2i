@@ -10,6 +10,13 @@ aside {
 }
 
 aside:hover {
+  background-color: #EBEBEB;
+}
+
+.logged-in {
   color: #0BB9F0;
+}
+
+.logged-in:hover {
   background-color: rgba(32, 150, 243, 0.11);
 }

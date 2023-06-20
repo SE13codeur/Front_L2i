@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
+import { CheckAuthService } from '@auth-s/index';
 import { AccountUserDrawerService } from '@services/index';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-account-user-button',
@@ -7,7 +9,14 @@ import { AccountUserDrawerService } from '@services/index';
   styleUrls: ['./account-user-button.component.css'],
 })
 export class AccountUserButtonComponent {
-  constructor(private accountUserDrawerService: AccountUserDrawerService) {}
+  isAuthenticated$: Observable<boolean>;
+
+  constructor(
+    private accountUserDrawerService: AccountUserDrawerService,
+    private checkAuthService: CheckAuthService
+  ) {
+    this.isAuthenticated$ = this.checkAuthService.isAuthenticated$;
+  }
 
   openDrawer(event: Event) {
     event.stopPropagation();

@@ -17,13 +17,6 @@
       <app-search-item class="search-bar-large"></app-search-item>
 
       <div class="nav-actions">
-        <!-- User button for connection -->
-        <ng-container *ngIf="isAuthenticated$ | async">
-          <button mat-icon-button (click)="logout()">
-            <mat-icon>exit_to_app</mat-icon>
-          </button>
-        </ng-container>
-
         <!-- User account drawer -->
         <app-account-user-button (click)="toggleAccountUserDrawer()">
         </app-account-user-button>

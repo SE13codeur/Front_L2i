@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '@auth-s/index';
+import { AuthService, CheckAuthService } from '@auth-s/index';
+import { AccountUserDrawerService } from '@services/index';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -11,7 +12,12 @@ import { Observable } from 'rxjs';
 export class AccountUserDrawerComponent implements OnInit {
   username$: Observable<string | null> | undefined;
 
-  constructor(private router: Router, private authService: AuthService) {
+  constructor(
+    private router: Router,
+    private accountUserDrawerService: AccountUserDrawerService,
+    private checkAuthService: CheckAuthService,
+    private authService: AuthService
+  ) {
     this.username$ = this.authService.getUsername();
   }
 
@@ -29,5 +35,16 @@ export class AccountUserDrawerComponent implements OnInit {
 
   openFavoritesPage() {
     this.router.navigate(['/account/user/favorites']);
+  }
+
+  onLogout() {
+    this.authService.dispatchLogoutAction().subscribe({
+      next: () => {
+        this.accountUserDrawerService.closeDrawer();
+      },
+      error: (error) => {
+        console.error('Erreur lors de la déconnexion:', error);
+      },
+    });
   }
 }
