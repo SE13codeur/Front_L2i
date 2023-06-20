@@ -1,15 +1,12 @@
 import { Component, OnDestroy } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { ICart, ICustomer } from '@models/index';
-import {
-  CartDrawerService,
-  CartService,
-  OrderService,
-  UserStoreService,
-} from '@services/index';
-import { Subject, combineLatest } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { AuthService } from '@auth/index';
+import { ICartItem, ICart, ICustomer } from '@models/index';
+import { Select } from '@ngxs/store';
+import { CartDrawerService, CartService, OrderService } from '@services/index';
+import { CartState } from '@store/index';
+import { Observable, Subject, combineLatest, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-order',
@@ -17,9 +14,10 @@ import { takeUntil } from 'rxjs/operators';
   styleUrls: ['./order.component.css'],
 })
 export class OrderComponent implements OnDestroy {
-  cartItems$ = this.cartService.getCartItems();
-  totalTTC$ = this.cartService.getTotalTTC();
-  user$ = this.userStoreService.getUser();
+  @Select(CartState.getCartItems)
+  cartItems$!: Observable<ICartItem[]>;
+  @Select(CartState.getTotalTTC)
+  totalTTC$!: Observable<number>;
 
   private destroy$ = new Subject<void>();
 
@@ -28,8 +26,8 @@ export class OrderComponent implements OnDestroy {
     private cartService: CartService,
     private cartDrawerService: CartDrawerService,
     private router: Router,
-    private userStoreService: UserStoreService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private authService: AuthService
   ) {}
 
   openCartDrawer() {
@@ -44,52 +42,65 @@ export class OrderComponent implements OnDestroy {
   onConfirmOrder() {
     console.log('onConfirmOrder called');
 
-    combineLatest([this.cartItems$, this.totalTTC$, this.user$])
-      .pipe(takeUntil(this.destroy$))
-      .subscribe({
-        next: ([cartItems, _totalTTC, user]) => {
-          if (user) {
-            const cartData: ICart = {
-              cartItems,
-              user,
-            };
+    combineLatest({
+      cartItems: this.cartItems$,
+      totalTTC: this.totalTTC$,
+      user: this.authService.user$,
+    }).subscribe({
+      next: ({ cartItems, totalTTC, user }) => {
+        console.log('combineLatest next', cartItems, totalTTC, user);
 
-            this.orderService
-              .createOrder(cartData)
-              .pipe(takeUntil(this.destroy$))
-              .subscribe({
-                next: () => {
-                  console.log('Order created successfully');
-                  this.snackBar.open('Commande créée avec succès!', 'Fermer', {
-                    duration: 4400,
-                  });
-                  this.clearCart();
-                },
-                error: (error) => {
-                  console.log('Error creating order', error);
-                  this.snackBar.open(
-                    'Erreur lors de la création de la commande.',
-                    'Fermer',
-                    { duration: 4400 }
-                  );
-                  console.error(error);
-                },
-              });
-          }
-        },
-        error: (error) => {
-          console.log('Error in combineLatest', error);
+        if (user) {
+          const cartData: ICart = {
+            cartItems,
+            user,
+          };
+
+          this.orderService
+            .createOrder(cartData)
+            .pipe(takeUntil(this.destroy$))
+            .subscribe({
+              next: () => {
+                console.log('Order created successfully');
+                this.snackBar.open('Commande créée avec succès!', 'Fermer', {
+                  duration: 4400,
+                });
+                this.clearCart();
+              },
+              error: (error) => {
+                console.log('Error creating order', error);
+                this.snackBar.open(
+                  'Erreur lors de la création de la commande.',
+                  'Fermer',
+                  { duration: 4400 }
+                );
+                console.error(error);
+              },
+            });
+        } else {
+          console.log('No user is logged in');
           this.snackBar.open(
-            'Erreur lors de la récupération des totaux.',
+            'Veuillez vous connecter pour passer une commande.',
             'Fermer',
-            { duration: 4400 }
+            {
+              duration: 4400,
+            }
           );
-          console.error('Error fetching totals:', error);
-        },
-      });
+        }
+      },
+      error: (error) => {
+        console.log('Error in combineLatest', error);
+        this.snackBar.open(
+          "Erreur lors de la récupération des totaux ou de l'utilisateur.",
+          'Fermer',
+          { duration: 4400 }
+        );
+        console.error('Error fetching totals or user:', error);
+      },
+    });
   }
 
-  ngOnDestroy(): void {
+  ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
   }

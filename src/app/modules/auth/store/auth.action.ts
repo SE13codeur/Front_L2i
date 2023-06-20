@@ -2,12 +2,16 @@ import { Role } from '@models/index';
 
 export class Login {
   static readonly type = '[Auth] Login';
-  constructor(public payload: { username: string; password: string }) {}
+  constructor(
+    public payload: { username: string; role: string; email: string }
+  ) {}
 }
 
 export class LoginSuccess {
   static readonly type = '[Auth] Login Success';
-  constructor(public payload: { username: string; role: Role }) {}
+  constructor(
+    public payload: { username: string; role: string; email: string }
+  ) {}
 }
 
 export class LoginFailed {

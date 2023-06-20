@@ -9,6 +9,7 @@ import { of } from 'rxjs';
 export interface AuthStateModel {
   username: string | null;
   role: string;
+  email: string;
   isAuthenticated: boolean;
   loading: boolean;
   error: any;
@@ -19,6 +20,7 @@ export interface AuthStateModel {
   defaults: {
     username: null,
     role: 'CUSTOMER',
+    email: '',
     isAuthenticated: false,
     loading: false,
     error: null,
@@ -47,10 +49,12 @@ export class AuthState {
         const username = result.username;
         const role =
           result.role && result.role.title ? result.role.title : 'CUSTOMER';
+        const email = result.email;
         ctx.dispatch(
           new LoginSuccess({
             username,
             role,
+            email,
           })
         );
       }),
@@ -66,6 +70,7 @@ export class AuthState {
     ctx.patchState({
       username: action.payload.username,
       role: action.payload.role,
+      email: action.payload.email,
       isAuthenticated: true,
       loading: false,
     });

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
 import { AuthService } from '@auth-s/index';
 import { Router } from '@angular/router';
+import { IUser } from '@models/index';
 
 @Component({
   selector: 'app-login',
@@ -11,6 +12,7 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
+  user: IUser | null = null;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -24,7 +26,11 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit() {
+    this.authService.user$.subscribe((user) => {
+      this.user = user;
+    });
+  }
 
   get username() {
     return this.loginForm.get('username');
@@ -39,7 +45,8 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       const credentials = this.loginForm.value;
       this.authService.dispatchLoginAction(credentials).subscribe({
-        next: () => {
+        next: (user) => {
+          this.user = user;
           this.router.navigate(['/items/books']);
         },
         error: (error) => {
