@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environmentDev as environment } from '@env/environment.dev';
-import { ICart, ICustomer, IOrder } from '@models/index';
+import { ICart, IOrder } from '@models/index';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -9,7 +9,6 @@ import { Observable } from 'rxjs';
 })
 export class OrderService {
   private ordersUrl = `${environment.apiUrl}/items/orders`;
-  private userOrdersUrl = `${environment.apiUrl}/users/:id/orders`;
 
   constructor(private http: HttpClient) {}
 
@@ -26,7 +25,7 @@ export class OrderService {
   }
 
   updateOrderStatusByOrderId(orderId: number, newStatus: string) {
-    const url = `${this.userOrdersUrl}/${orderId}`;
-    return this.http.put(url, { status: newStatus });
+    const url = `${this.ordersUrl}/${orderId}`;
+    return this.http.patch(url, { status: newStatus });
   }
 }

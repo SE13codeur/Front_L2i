@@ -37,6 +37,7 @@ export class AccountUserDrawerComponent implements OnInit {
       } else {
         console.error(`${user} non disponible`);
       }
+      this.accountUserDrawerService.closeDrawer();
     });
   }
 

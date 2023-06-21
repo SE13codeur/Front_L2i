@@ -13,7 +13,7 @@
       <option value="Livré">Livré</option>
     </select>
 
-    <ng-container *ngIf="filteredOrderList$ | async as orders">
+    <ng-container *ngIf="orderListByUserId$ | async as orders">
       <table class="order-list" *ngIf="orders.length > 0; else noOrders">
         <thead>
           <tr>
