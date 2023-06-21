@@ -14,6 +14,9 @@ import { Observable } from 'rxjs';
 })
 export class CartComponent {
   @ViewChild('errorDialog') errorDialog: TemplateRef<any> | undefined;
+  @ViewChild('dialogContent', { static: false }) dialogContent:
+    | TemplateRef<any>
+    | undefined;
   cartItems$: Observable<ICartItem[]>;
   totalItems$: Observable<number>;
   totalTTC$: Observable<number>;
@@ -52,6 +55,20 @@ export class CartComponent {
 
   closeCartDrawer() {
     this.cartDrawerService.closeDrawer();
+  }
+
+  openDialog() {
+    if (this.dialogContent) {
+      const dialogRef = this.dialog.open(this.dialogContent);
+
+      setTimeout(() => {
+        dialogRef.close();
+      }, 3003);
+
+      dialogRef.afterClosed().subscribe((result) => {
+        console.log(`Dialog result: ${result}`);
+      });
+    }
   }
 
   orderValidate(): void {
