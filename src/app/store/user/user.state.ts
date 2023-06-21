@@ -1,7 +1,9 @@
-import { State, Action, StateContext, Selector } from '@ngxs/store';
-import { ICustomer } from '@models/index';
+import { State, Action, StateContext, Selector, Store } from '@ngxs/store';
+import { ICustomer, IOrder } from '@models/index';
 import { Injectable } from '@angular/core';
-import { ClearUser, SetUser } from './user.action';
+import { ClearUser, GetOrdersByUserId, SetUser } from './user.action';
+import { tap } from 'rxjs';
+import { OrderService } from '@services/index';
 
 export interface UserStateModel {
   user: ICustomer | undefined;
@@ -15,6 +17,8 @@ export interface UserStateModel {
 })
 @Injectable()
 export class UserState {
+  constructor(private orderService: OrderService) {}
+
   @Selector()
   static getUser(state: ICustomer): ICustomer {
     return state;
@@ -23,6 +27,15 @@ export class UserState {
   @Action(SetUser)
   setUser(ctx: StateContext<ICustomer>, { payload }: SetUser) {
     ctx.setState(payload);
+  }
+
+  @Action(GetOrdersByUserId)
+  getOrdersByUserId(ctx: StateContext<IOrder[]>, action: GetOrdersByUserId) {
+    return this.orderService.getOrdersByUserId(action.userId).pipe(
+      tap((orders) => {
+        ctx.setState(orders);
+      })
+    );
   }
 
   @Action(ClearUser)

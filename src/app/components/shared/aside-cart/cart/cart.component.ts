@@ -33,6 +33,7 @@ export class CartComponent {
     this.totalItems$ = this.cartService.getTotalItems();
     this.totalTTC$ = this.cartService.getTotalTTC();
     this.username$ = this.authService.getUsername();
+    this.isAuthenticated$ = this.checkAuthService.isAuthenticated$;
   }
 
   removeItemFromCart(itemId: number): void {
@@ -84,5 +85,10 @@ export class CartComponent {
         this.router.navigate(['/items/orders']);
       });
     }
+  }
+
+  goToLogin() {
+    this.router.navigate(['/auth/login']);
+    this.closeCartDrawer();
   }
 }

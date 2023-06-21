@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService, CheckAuthService } from '@auth-s/index';
+import { IUser } from '@models/index';
 import { AccountUserDrawerService } from '@services/index';
 import { Observable } from 'rxjs';
 
@@ -10,23 +11,33 @@ import { Observable } from 'rxjs';
   styleUrls: ['./account-user-drawer.component.css'],
 })
 export class AccountUserDrawerComponent implements OnInit {
+  user: IUser | null = null;
   username$: Observable<string | null> | undefined;
+  isAuthenticated$: Observable<boolean> | undefined;
 
   constructor(
     private router: Router,
     private accountUserDrawerService: AccountUserDrawerService,
-    private checkAuthService: CheckAuthService,
-    private authService: AuthService
+    private authService: AuthService,
+    private checkAuthService: CheckAuthService
   ) {
     this.username$ = this.authService.getUsername();
+    this.isAuthenticated$ = this.checkAuthService.isAuthenticated$;
   }
 
-  ngOnInit(): void {}
-
+  ngOnInit() {
+    this.authService.user$.subscribe((user) => {
+      this.user = user;
+    });
+  }
   openOrdersPage() {
-    let username = this.username$;
-
-    this.router.navigate(['/items/orders', username]);
+    this.authService.user$.subscribe((user) => {
+      if (user) {
+        this.router.navigate(['/items/orders', user.id]);
+      } else {
+        console.error(`${user} non disponible`);
+      }
+    });
   }
 
   openProfilePage() {

@@ -58,7 +58,7 @@ const routes: Routes = [
     component: PaymentPageComponent,
     canActivate: [OrderActivateCartGuard],
   },
-  { path: 'items/orders/:username', component: OrderUserPageComponent },
+  { path: 'items/orders/:userId', component: OrderUserPageComponent },
   {
     path: 'account/user/profile',
     component: ProfileUserPageComponent,

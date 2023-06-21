@@ -45,3 +45,10 @@ td {
 .order-item-expanded {
   background-color: #f9f9f9;
 }
+
+.no-orders-title {
+  text-align: center;
+  font-size: 2em;
+  color: red;
+  margin-top: 2rem;
+}

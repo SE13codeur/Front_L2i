@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 })
 export class OrderService {
   private ordersUrl = `${environment.apiUrl}/items/orders`;
+  private userOrdersUrl = `${environment.apiUrl}/users/:id/orders`;
 
   constructor(private http: HttpClient) {}
 
@@ -16,16 +17,16 @@ export class OrderService {
     return this.http.post(this.ordersUrl, order);
   }
 
-  getOrdersByUser(user: ICustomer): Observable<IOrder[]> {
-    return this.http.get<IOrder[]>(`${this.ordersUrl}/${user.username}`);
+  getOrderById(orderId: number) {
+    return this.http.get<IOrder>(`${this.ordersUrl}/${orderId}`);
   }
 
-  updateOrderStatusFromUser(
-    username: string,
-    orderNumber: string,
-    newStatus: string
-  ) {
-    const url = `${this.ordersUrl}/${username}`;
-    return this.http.put(url, { orderNumber: orderNumber, status: newStatus });
+  getOrdersByUserId(userId: number): Observable<IOrder[]> {
+    return this.http.get<IOrder[]>(`${this.ordersUrl}/${userId}`);
+  }
+
+  updateOrderStatusByOrderId(orderId: number, newStatus: string) {
+    const url = `${this.userOrdersUrl}/${orderId}`;
+    return this.http.put(url, { status: newStatus });
   }
 }

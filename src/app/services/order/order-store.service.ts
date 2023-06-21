@@ -1,4 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environmentDev as environment } from '@env/environment.dev';
 import { IOrder, OrderStatus } from '@models/index';
 import { Store } from '@ngxs/store';
 import { OrderState, UpdateOrderStatus } from '@store/index';
@@ -7,7 +9,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class OrderStatusService {
+export class OrderStoreService {
   constructor(private store: Store) {}
 
   updateOrderStatus(orderNumber: string, newStatus: OrderStatus): void {
@@ -18,7 +20,7 @@ export class OrderStatusService {
     return this.store.select(OrderState.getOrdersByStatus(orderStatus));
   }
 
-  getStatusByOrderNumber(orderNumber: string) {
-    this.store.select(OrderState.getStatusByOrderNumber(orderNumber));
+  getStatusByOrderId(orderId: string) {
+    this.store.select(OrderState.getStatusByOrderNumber(orderId));
   }
 }
