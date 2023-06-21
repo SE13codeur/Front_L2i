@@ -11,6 +11,7 @@ export interface AuthStateModel {
   role: string;
   email: string;
   isAuthenticated: boolean;
+  isAdmin: boolean;
   loading: boolean;
   error: any;
 }
@@ -22,6 +23,7 @@ export interface AuthStateModel {
     role: 'CUSTOMER',
     email: '',
     isAuthenticated: false,
+    isAdmin: false,
     loading: false,
     error: null,
   },
@@ -33,6 +35,11 @@ export class AuthState {
   @Selector()
   static isAuthenticated(state: AuthStateModel): boolean {
     return state.isAuthenticated;
+  }
+
+  @Selector()
+  static isAdmin(state: AuthStateModel): boolean {
+    return state.isAdmin;
   }
 
   @Selector()
@@ -72,6 +79,7 @@ export class AuthState {
       role: action.payload.role,
       email: action.payload.email,
       isAuthenticated: true,
+      isAdmin: action.payload.role == 'ADMIN',
       loading: false,
     });
   }

@@ -37,7 +37,11 @@ export class OrderListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.isAdmin = this.adminAuthService.isAdminAuthenticated();
+    if (this.adminAuthService.isAdminAuthenticated$) {
+      this.adminAuthService.isAdminAuthenticated$.subscribe((isAdmin) => {
+        this.isAdmin = isAdmin;
+      });
+    }
     this.authService.user$.subscribe((user) => {
       this.user = user;
     });
@@ -77,20 +81,6 @@ export class OrderListComponent implements OnInit {
     });
   }
 
-  getStatusByOrderId(orderId: number): void {
-    this.orderService.getOrderById(orderId).subscribe(
-      (order: IOrder) => {
-        return order.status;
-      },
-      (error) => {
-        console.error(
-          'Erreur lors de la récupération du statut de la commande:',
-          error
-        );
-      }
-    );
-  }
-
   toggleOrderDetails(order: IOrder): void {
     this.expandedOrderDetails =
       this.expandedOrderDetails === order.id ? null : order.id;
@@ -114,7 +104,6 @@ export class OrderListComponent implements OnInit {
 
   updateOrderStatus(userId: number, orderId: number, newStatus: string): void {
     if (this.isAdmin) {
-      this.getStatusByOrderId(orderId);
       this.orderService
         .updateOrderStatusByOrderId(orderId, newStatus)
         .subscribe(() => {

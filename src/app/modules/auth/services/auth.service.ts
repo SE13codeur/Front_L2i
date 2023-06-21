@@ -10,9 +10,6 @@ import { BehaviorSubject, Observable, map } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-@Injectable({
-  providedIn: 'root',
-})
 export class AuthService {
   private itemsUrl = `${environment.apiUrl}/auth`;
   private userStore = new BehaviorSubject<IUser | null>(null);

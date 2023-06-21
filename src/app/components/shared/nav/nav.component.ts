@@ -25,7 +25,11 @@ export class NavComponent {
   ) {}
 
   ngOnInit(): void {
-    this.isAdmin = this.adminAuthService.isAdminAuthenticated();
+    if (this.adminAuthService.isAdminAuthenticated$) {
+      this.adminAuthService.isAdminAuthenticated$.subscribe((isAdmin) => {
+        this.isAdmin = isAdmin;
+      });
+    }
   }
 
   toggleCartDrawer() {

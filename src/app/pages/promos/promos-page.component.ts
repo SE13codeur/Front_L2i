@@ -33,11 +33,14 @@ export class PromosPageComponent implements OnInit {
     private paginationService: PaginationService,
     private adminAuthService: AdminAuthService,
     private router: Router
-  ) {
-    this.isAdmin = this.adminAuthService.isAdminAuthenticated();
-  }
+  ) {}
 
   ngOnInit(): void {
+    if (this.adminAuthService.isAdminAuthenticated$) {
+      this.adminAuthService.isAdminAuthenticated$.subscribe((isAdmin) => {
+        this.isAdmin = isAdmin;
+      });
+    }
     this.itemService.getItems().subscribe((items) => {
       const itemsOnSale = items.filter((item) => item.onSale == 1);
       this.itemsOnSale$.next(itemsOnSale);

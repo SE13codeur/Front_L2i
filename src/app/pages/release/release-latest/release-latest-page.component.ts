@@ -15,7 +15,7 @@ import { BehaviorSubject, Observable, Subject, take } from 'rxjs';
 export class ReleaseLatestPageComponent implements OnInit {
   @Input() items: IItem[] = [];
   isInCart: ((id: number) => Observable<boolean>) | undefined;
-  isAdmin = false;
+  isAdmin!: boolean;
 
   currentSearch: string = '';
   newItemList$ = new BehaviorSubject<IItem[]>([]);
@@ -31,11 +31,14 @@ export class ReleaseLatestPageComponent implements OnInit {
     private paginationService: PaginationService,
     private adminAuthService: AdminAuthService,
     private router: Router
-  ) {
-    this.isAdmin = this.adminAuthService.isAdminAuthenticated();
-  }
+  ) {}
 
   ngOnInit(): void {
+    if (this.adminAuthService.isAdminAuthenticated$) {
+      this.adminAuthService.isAdminAuthenticated$.subscribe((isAdmin) => {
+        this.isAdmin = isAdmin;
+      });
+    }
     this.itemService.getItems().subscribe((items) => {
       const filteredItems = items.filter(
         (item) => parseInt(item.year, 10) >= 2019

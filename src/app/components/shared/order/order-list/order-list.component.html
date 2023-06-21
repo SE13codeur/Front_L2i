@@ -20,7 +20,7 @@
             <th>N° de commande</th>
             <th>Date</th>
             <th>Total TTC</th>
-            <th>Status</th>
+            <th>Statut</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -34,7 +34,7 @@
               <td>{{ order.orderNumber }}</td>
               <td>{{ order.date | date : "dd/MM/yyyy" }}</td>
               <td>{{ order.totalPriceTTC | number : "1.2-2" }} €</td>
-              <td>{{ getStatusByOrderId(order.id) }}</td>
+              <td>{{ order.status }}</td>
               <td class="td-details">Voir les détails</td>
             </tr>
             <tr *ngIf="isOrderExpanded(order)">

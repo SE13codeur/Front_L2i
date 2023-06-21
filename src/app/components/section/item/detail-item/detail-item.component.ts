@@ -19,7 +19,7 @@ export class DetailItemComponent implements OnInit {
   item$: Observable<IItem | null>;
   item: IItem | null = null;
   showReviews = false;
-  isAdmin = true;
+  isAdmin = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -38,11 +38,14 @@ export class DetailItemComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (this.adminAuthService.isAdminAuthenticated$) {
+      this.adminAuthService.isAdminAuthenticated$.subscribe((isAdmin) => {
+        this.isAdmin = isAdmin;
+      });
+    }
     this.item$.subscribe((item) => {
       this.item = item;
     });
-
-    this.isAdmin = this.adminAuthService.isAdminAuthenticated();
   }
 
   getAuthorNames(): string {

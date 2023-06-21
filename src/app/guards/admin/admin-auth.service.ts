@@ -12,7 +12,7 @@ export class AdminAuthGuard implements CanActivate {
   ) {}
 
   canActivate(): boolean {
-    if (this.adminAuthService.isAdminAuthenticated()) {
+    if (this.adminAuthService.isAdminAuthenticated$) {
       return true;
     }
 

@@ -40,11 +40,15 @@ export class ListItemWithoutMeilisearchComponent implements OnInit, OnDestroy {
     private paginationService: PaginationService,
     private adminAuthService: AdminAuthService,
     private router: Router
-  ) {
-    this.isAdmin = this.adminAuthService.isAdminAuthenticated();
-  }
+  ) {}
 
   ngOnInit(): void {
+    if (this.adminAuthService.isAdminAuthenticated$) {
+      this.adminAuthService.isAdminAuthenticated$.subscribe((isAdmin) => {
+        this.isAdmin = isAdmin;
+      });
+    }
+
     this.itemService.getItems().subscribe((items) => {
       this.originalItemList$.next(items);
       this.itemList$.next(items);

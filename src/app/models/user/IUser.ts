@@ -1,6 +1,8 @@
+import { Role } from './Role';
+
 export interface IUser {
   id: number;
-  role: string;
+  role: { id: number; title: Role };
   firstname?: string;
   lastname?: string;
   username: string;
