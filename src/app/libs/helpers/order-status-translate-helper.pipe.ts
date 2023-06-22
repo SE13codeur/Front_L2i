@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'orderStatus',
+  name: 'translateOrderStatus',
 })
 export class OrderStatusPipe implements PipeTransform {
   transform(status: string): string {

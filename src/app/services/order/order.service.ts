@@ -34,8 +34,4 @@ export class OrderService {
     const url = `${this.ordersAdminUrl}/${orderId}`;
     return this.http.put(url, { status: newStatus });
   }
-
-  // getOrderById(orderId: number): Observable<IOrder> {
-  //   return this.http.get<IOrder>(`${this.ordersAdminUrl}/${orderId}`);
-  // }
 }

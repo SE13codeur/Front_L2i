@@ -1,11 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '@auth-s/index';
-import {
-  IOrder,
-  IUser,
-  OrderStatus,
-  statusDescriptionToEnum,
-} from '@models/index';
+import { IOrder, IUser, statusDescriptionToEnum } from '@models/index';
 import { AdminAuthService, OrderService } from '@services/index';
 import { BehaviorSubject } from 'rxjs';
 
