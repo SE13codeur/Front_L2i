@@ -2,7 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environmentDev as environment } from '@env/environment.dev';
 import { ICart, IOrder } from '@models/index';
-import { Observable } from 'rxjs';
+import { Console } from 'console';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +21,7 @@ export class OrderService {
     return this.http.get<IOrder[]>(`${this.ordersUrl}`);
   }
 
-  getOrderById(orderId: number) {
+  getOrderById(orderId: number): Observable<IOrder> {
     return this.http.get<IOrder>(`${this.ordersUrl}/${orderId}`);
   }
 
@@ -28,7 +29,11 @@ export class OrderService {
     return this.http.get<IOrder[]>(`${this.ordersUrl}/${userId}`);
   }
 
-  updateOrderStatusByOrderId(orderId: number, newStatus: string) {
+  updateOrderStatusByOrderId(
+    orderId: number,
+    newStatus: string
+  ): Observable<any> {
+    console.log(orderId, newStatus);
     const url = `${this.ordersUrl}/${orderId}`;
     return this.http.patch(url, { status: newStatus });
   }

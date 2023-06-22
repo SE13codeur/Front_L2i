@@ -15,7 +15,7 @@ import { BehaviorSubject } from 'rxjs';
   styleUrls: ['./order-list.component.css'],
 })
 export class OrderListComponent implements OnInit {
-  orderListByUserId$ = new BehaviorSubject<IOrder[]>([]);
+  orderList$ = new BehaviorSubject<IOrder[]>([]);
   filteredOrderList$ = new BehaviorSubject<IOrder[]>([]);
 
   expandedOrderDetails: number | null | undefined = null;
@@ -40,20 +40,46 @@ export class OrderListComponent implements OnInit {
     if (this.adminAuthService.isAdminAuthenticated$) {
       this.adminAuthService.isAdminAuthenticated$.subscribe((isAdmin) => {
         this.isAdmin = isAdmin;
+        this.getAllOrders();
       });
     }
     this.authService.user$.subscribe((user) => {
       this.user = user;
     });
-    if (this.user) {
+    if (this.user && !this.isAdmin) {
       this.getOrdersByUserId(this.user.id);
     }
+  }
+  public getOrderStatusDescription(status: string): string {
+    switch (status) {
+      case 'PENDING':
+        return 'En attente de confirmation';
+      case 'CONFIRMED':
+        return 'Confirmé';
+      case 'SHIPPING':
+        return 'En cours de livraison';
+      case 'DELIVERED':
+        return 'Livré';
+      default:
+        return '';
+    }
+  }
+
+  getAllOrders(): void {
+    this.orderService.getAllOrders().subscribe({
+      next: (orders) => {
+        this.orderList$.next(orders);
+      },
+      error: (error) => {
+        console.error('Erreur lors de la récupération des commandes:', error);
+      },
+    });
   }
 
   getOrdersByUserId(userId: number): void {
     this.orderService.getOrdersByUserId(userId).subscribe({
       next: (orders) => {
-        this.orderListByUserId$.next(orders);
+        this.orderList$.next(orders);
       },
       error: (error) => {
         console.error('Erreur lors de la récupération des commandes:', error);
@@ -64,7 +90,7 @@ export class OrderListComponent implements OnInit {
   fetchOrdersByUserAndStatus(userId: number, statusDescription?: string): void {
     this.orderService.getOrdersByUserId(userId).subscribe({
       next: (orders) => {
-        this.orderListByUserId$.next(orders);
+        this.orderList$.next(orders);
         if (statusDescription) {
           this.selectedStatus = statusDescription;
         }
@@ -91,7 +117,7 @@ export class OrderListComponent implements OnInit {
   }
 
   filterOrdersByStatus(description: string): void {
-    const orders = this.orderListByUserId$.getValue();
+    const orders = this.orderList$.getValue();
     const statusEnum = statusDescriptionToEnum(description);
 
     const filteredOrders =
@@ -102,15 +128,29 @@ export class OrderListComponent implements OnInit {
     this.filteredOrderList$.next(filteredOrders);
   }
 
-  updateOrderStatus(userId: number, orderId: number, newStatus: string): void {
+  updateOrderStatus(userId: number, orderId: number, newStatus: string) {
     if (this.isAdmin) {
       this.orderService
         .updateOrderStatusByOrderId(orderId, newStatus)
-        .subscribe(() => {
-          console.log('Statut de la commande mis à jour');
-          const newStatusDescription = getOrderStatusDescription(newStatus);
-          this.fetchOrdersByUserAndStatus(userId, newStatusDescription);
+        .subscribe({
+          next: () => {
+            console.log('Statut de la commande mis à jour');
+            const newStatusDescription =
+              this.getOrderStatusDescription(newStatus);
+            this.fetchOrdersByUserAndStatus(userId, newStatusDescription);
+          },
+          error: (error) => {
+            console.error(
+              'Erreur lors de la mise à jour du statut de la commande:',
+              error
+            );
+          },
         });
     }
+  }
+
+  modifyOrderStatusById(orderId: number, newStatus: string): void {
+    console.log('patch clicked');
+    this.orderService.updateOrderStatusByOrderId(orderId, newStatus);
   }
 }

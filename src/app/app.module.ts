@@ -75,6 +75,7 @@ import { AuthGuard } from '@core/guards/auth-guard';
 import { ProfileUserPageComponent } from './pages/user-account/profile-user-page/profile-user-page.component';
 import { UserState } from '@store/user/user.state';
 import { AuthState } from '@auth/index';
+import { TranslatePipe } from '@libs/index';
 
 @NgModule({
   declarations: [
@@ -102,6 +103,7 @@ import { AuthState } from '@auth/index';
     AccountUserDrawerComponent,
     OrderUserPageComponent,
     OrderListComponent,
+    TranslatePipe,
     FavoritesUserPageComponent,
     ProfileUserPageComponent,
   ],
