@@ -4,6 +4,8 @@ import { Location } from '@angular/common';
 import { AuthService } from '@auth-s/index';
 import { Router } from '@angular/router';
 import { IUser } from '@models/index';
+import { CartDrawerService } from '@services/cart';
+import { AccountUserDrawerService } from '@services/index';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +20,9 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private location: Location,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private cartDrawerService: CartDrawerService,
+    private accountUserDrawerService: AccountUserDrawerService
   ) {
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],
@@ -48,6 +52,15 @@ export class LoginComponent implements OnInit {
         next: (user) => {
           this.user = user;
           this.router.navigate(['/items/books']);
+
+          this.authService
+            .getOpenCartAfterLogin()
+            .subscribe((shouldOpenCart) => {
+              if (shouldOpenCart) {
+                this.cartDrawerService.openDrawer();
+                this.authService.setOpenCartAfterLogin(false);
+              }
+            });
         },
         error: (error) => {
           console.error('Erreur lors de la connexion:', error);
@@ -56,7 +69,6 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  // go back to the last page
   goBack(): void {
     this.location.back();
   }

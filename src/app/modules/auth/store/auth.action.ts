@@ -21,3 +21,12 @@ export class LoginFailed {
 export class Logout {
   static readonly type = '[Auth] Logout';
 }
+
+export class SetOpenCartAfterLogin {
+  static readonly type = '[Auth] Set Open Cart After Login';
+  constructor(public payload: boolean) {}
+}
+
+export class ResetOpenCartAfterLogin {
+  static readonly type = '[Auth] Reset Open Cart After Login';
+}

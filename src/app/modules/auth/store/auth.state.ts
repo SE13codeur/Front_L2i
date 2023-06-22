@@ -1,7 +1,14 @@
 import { State, Action, StateContext, Selector } from '@ngxs/store';
 import { tap, catchError } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { Login, LoginSuccess, LoginFailed, Logout } from './auth.action';
+import {
+  Login,
+  LoginSuccess,
+  LoginFailed,
+  Logout,
+  SetOpenCartAfterLogin,
+  ResetOpenCartAfterLogin,
+} from './auth.action';
 import { Role } from '@models/index';
 import { AuthService } from '@auth-s/index';
 import { of } from 'rxjs';
@@ -14,6 +21,7 @@ export interface AuthStateModel {
   isAdmin: boolean;
   loading: boolean;
   error: any;
+  openCartAfterLogin: boolean;
 }
 
 @State<AuthStateModel>({
@@ -26,6 +34,7 @@ export interface AuthStateModel {
     isAdmin: false,
     loading: false,
     error: null,
+    openCartAfterLogin: false,
   },
 })
 @Injectable()
@@ -92,5 +101,15 @@ export class AuthState {
   @Action(Logout)
   logout(ctx: StateContext<AuthStateModel>) {
     ctx.patchState({ username: null, isAuthenticated: false });
+  }
+
+  @Action(SetOpenCartAfterLogin)
+  setOpenCartAfterLogin(ctx: StateContext<AuthStateModel>) {
+    ctx.patchState({ openCartAfterLogin: true });
+  }
+
+  @Action(ResetOpenCartAfterLogin)
+  resetOpenCartAfterLogin(ctx: StateContext<AuthStateModel>) {
+    ctx.patchState({ openCartAfterLogin: false });
   }
 }

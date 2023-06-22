@@ -1,6 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Login, Logout } from '@auth/store/auth.action';
+import {
+  Login,
+  Logout,
+  ResetOpenCartAfterLogin,
+  SetOpenCartAfterLogin,
+} from '@auth/store/auth.action';
 import { AuthState } from '@auth/store/auth.state';
 import { environmentDev as environment } from '@env/environment.dev';
 import { IUser } from '@models/index';
@@ -48,5 +53,17 @@ export class AuthService {
 
   getUsername(): Observable<string | null> {
     return this.store.select(AuthState.getUsername);
+  }
+
+  setOpenCartAfterLogin(value: boolean) {
+    this.store.dispatch(new SetOpenCartAfterLogin(value));
+  }
+
+  resetOpenCartAfterLogin() {
+    this.store.dispatch(new ResetOpenCartAfterLogin());
+  }
+
+  getOpenCartAfterLogin(): Observable<boolean> {
+    return this.store.select((state) => state.auth.openCartAfterLogin);
   }
 }

@@ -76,7 +76,7 @@ export class CartComponent {
     const isAuthenticated =
       this.checkAuthService.checkAuthenticationAndRedirect();
     if (!isAuthenticated) {
-      // Redirect to login page and come back to the current state after login
+      this.authService.setOpenCartAfterLogin(true);
       this.router.navigate(['/auth/login'], {
         queryParams: { returnUrl: this.router.routerState.snapshot.url },
       });
@@ -105,7 +105,12 @@ export class CartComponent {
   }
 
   goToLogin() {
-    this.router.navigate(['/auth/login']);
-    this.closeCartDrawer();
+    this.cartDrawerService.isDrawerOpened().subscribe((isDrawerOpen) => {
+      if (isDrawerOpen) {
+        localStorage.setItem('openCartAfterLogin', 'true');
+        this.closeCartDrawer();
+      }
+      this.router.navigate(['/auth/login']);
+    });
   }
 }
