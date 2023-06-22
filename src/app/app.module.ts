@@ -43,7 +43,7 @@ import {
 
 import { CartState, NgxsStoreModule, OrderState } from './store';
 
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -69,13 +69,13 @@ import { NgxSliderModule } from '@angular-slider/ngx-slider';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AuthState } from '@auth/index';
 import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 import { NgxsModule } from '@ngxs/store';
-import { AuthGuard } from '@core/guards/auth-guard';
-import { ProfileUserPageComponent } from './pages/user-account/profile-user-page/profile-user-page.component';
 import { UserState } from '@store/user/user.state';
-import { AuthState } from '@auth/index';
-import { TranslatePipe } from '@libs/index';
+import { AdminOrderComponent } from './components/admin/admin-order/admin-order.component';
+import { ProfileUserPageComponent } from './pages/user-account/profile-user-page/profile-user-page.component';
+import { OrderStatusPipe } from '@libs/index';
 
 @NgModule({
   declarations: [
@@ -103,9 +103,10 @@ import { TranslatePipe } from '@libs/index';
     AccountUserDrawerComponent,
     OrderUserPageComponent,
     OrderListComponent,
-    TranslatePipe,
     FavoritesUserPageComponent,
     ProfileUserPageComponent,
+    AdminOrderComponent,
+    OrderStatusPipe,
   ],
   imports: [
     BrowserModule,

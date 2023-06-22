@@ -1,1 +1,1 @@
-export * from './helpers/order.translate-helper';
+export * from './helpers/order-status-translate-helper.pipe';

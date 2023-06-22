@@ -2,6 +2,11 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminItemComponent, OrderListComponent } from '@components/index';
 import {
+  AdminAuthGuard,
+  AuthGuard,
+  OrderActivateCartGuard,
+} from '@core/guards';
+import {
   DetailItemPageComponent,
   HomePageComponent,
   ItemPageComponent,
@@ -13,8 +18,6 @@ import {
   FavoritesUserPageComponent,
   ProfileUserPageComponent,
 } from '@pages/index';
-import { AuthGuard } from './core';
-import { OrderActivateCartGuard } from './guards';
 
 const routes: Routes = [
   {
@@ -62,7 +65,6 @@ const routes: Routes = [
     path: 'items/orders/:id',
     component: OrderListComponent,
   },
-  // { path: 'items/orders/:userId', component: OrderUserPageComponent },
   {
     path: 'account/user/profile',
     component: ProfileUserPageComponent,
@@ -78,12 +80,17 @@ const routes: Routes = [
   {
     path: 'admin/items/books',
     component: AdminItemComponent,
-    // canActivate: [AdminAuthGuard],
+    canActivate: [AdminAuthGuard],
   },
   {
     path: 'admin/items/books/:id',
     component: AdminItemComponent,
-    // canActivate: [AdminAuthGuard],
+    canActivate: [AdminAuthGuard],
+  },
+  {
+    path: 'admin/orders/:id',
+    component: AdminItemComponent,
+    canActivate: [AdminAuthGuard],
   },
   { path: '', redirectTo: '/', pathMatch: 'full' },
   { path: '**', component: NotFoundPageComponent },

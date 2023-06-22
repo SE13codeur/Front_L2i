@@ -34,8 +34,23 @@
               <td>{{ order.orderNumber }}</td>
               <td>{{ order.date | date : "dd/MM/yyyy" }}</td>
               <td>{{ order.totalPriceTTC | number : "1.2-2" }} €</td>
-              <td>{{ order.status | orderStatus }}</td>
-
+              <td>
+                <select
+                  #statusSelectRefAdmin
+                  (change)="
+                    modifyOrderStatusById(order.id, statusSelectRefAdmin.value)
+                  "
+                  *ngIf="isAdmin"
+                >
+                  <option value="PENDING">En attente de confirmation</option>
+                  <option value="CONFIRMED">Confirmé</option>
+                  <option value="SHIPPING">En cours de livraison</option>
+                  <option value="DELIVERED">Livré</option>
+                </select>
+                <span *ngIf="!isAdmin">
+                  {{ getOrderStatusDescription(order.status) }}
+                </span>
+              </td>
               <td class="td-details">Voir les détails</td>
             </tr>
             <tr *ngIf="isOrderExpanded(order)">

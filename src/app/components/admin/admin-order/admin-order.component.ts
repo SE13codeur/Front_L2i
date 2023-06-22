@@ -1,20 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '@auth-s/index';
-import { IUser, OrderStatus } from '@models/index';
 import {
   IOrder,
-  getOrderStatusDescription,
+  IUser,
+  OrderStatus,
   statusDescriptionToEnum,
-} from '@models/order/index';
+} from '@models/index';
 import { AdminAuthService, OrderService } from '@services/index';
 import { BehaviorSubject } from 'rxjs';
 
 @Component({
-  selector: 'app-order-list',
-  templateUrl: './order-list.component.html',
-  styleUrls: ['./order-list.component.css'],
+  selector: 'app-admin-order',
+  templateUrl: './admin-order.component.html',
+  styleUrls: ['./admin-order.component.css'],
 })
-export class OrderListComponent implements OnInit {
+export class AdminOrderComponent implements OnInit {
   orderList$ = new BehaviorSubject<IOrder[]>([]);
   filteredOrderList$ = new BehaviorSubject<IOrder[]>([]);
 
@@ -147,5 +147,10 @@ export class OrderListComponent implements OnInit {
           },
         });
     }
+  }
+
+  modifyOrderStatusById(orderId: number, newStatus: string): void {
+    console.log('patch clicked');
+    this.orderService.updateOrderStatusByOrderId(orderId, newStatus);
   }
 }
