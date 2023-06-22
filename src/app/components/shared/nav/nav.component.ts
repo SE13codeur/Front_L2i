@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { Store } from '@ngxs/store';
 import {
   AccountUserDrawerService,
-  AuthService,
+  AdminAuthService,
   CartDrawerService,
 } from '@services/index';
+import { Observable } from 'rxjs';
+import { AuthState, Logout } from 'src/app/modules/auth/index';
 
 @Component({
   selector: 'app-nav',
@@ -16,13 +19,17 @@ export class NavComponent {
 
   constructor(
     private router: Router,
-    private authService: AuthService,
+    private adminAuthService: AdminAuthService,
     private cartDrawerService: CartDrawerService,
     private accountUserDrawerService: AccountUserDrawerService
   ) {}
 
   ngOnInit(): void {
-    this.isAdmin = this.authService.isAdminAuthenticated();
+    if (this.adminAuthService.isAdminAuthenticated$) {
+      this.adminAuthService.isAdminAuthenticated$.subscribe((isAdmin) => {
+        this.isAdmin = isAdmin;
+      });
+    }
   }
 
   toggleCartDrawer() {

@@ -2,7 +2,11 @@ import { Component, Input, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { IItem } from '@models/index';
-import { AuthService, ItemService, PaginationService } from '@services/index';
+import {
+  AdminAuthService,
+  ItemService,
+  PaginationService,
+} from '@services/index';
 import { BehaviorSubject, Observable, Subject, map, take } from 'rxjs';
 
 @Component({
@@ -27,13 +31,16 @@ export class PromosPageComponent implements OnInit {
   constructor(
     private itemService: ItemService,
     private paginationService: PaginationService,
-    private authService: AuthService,
+    private adminAuthService: AdminAuthService,
     private router: Router
-  ) {
-    this.isAdmin = this.authService.isAdminAuthenticated();
-  }
+  ) {}
 
   ngOnInit(): void {
+    if (this.adminAuthService.isAdminAuthenticated$) {
+      this.adminAuthService.isAdminAuthenticated$.subscribe((isAdmin) => {
+        this.isAdmin = isAdmin;
+      });
+    }
     this.itemService.getItems().subscribe((items) => {
       const itemsOnSale = items.filter((item) => item.onSale == 1);
       this.itemsOnSale$.next(itemsOnSale);

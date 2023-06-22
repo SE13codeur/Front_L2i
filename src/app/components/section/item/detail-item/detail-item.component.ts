@@ -2,7 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IItem, IAuthor } from '@models/index';
-import { AdminItemService, AuthService, ItemService } from '@services/index';
+import {
+  AdminItemService,
+  AdminAuthService,
+  ItemService,
+} from '@services/index';
 import { Observable, of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 
@@ -15,13 +19,13 @@ export class DetailItemComponent implements OnInit {
   item$: Observable<IItem | null>;
   item: IItem | null = null;
   showReviews = false;
-  isAdmin = true;
+  isAdmin = false;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private itemService: ItemService,
-    private authService: AuthService,
+    private adminAuthService: AdminAuthService,
     private itemAdminService: AdminItemService,
     private location: Location
   ) {
@@ -34,11 +38,14 @@ export class DetailItemComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (this.adminAuthService.isAdminAuthenticated$) {
+      this.adminAuthService.isAdminAuthenticated$.subscribe((isAdmin) => {
+        this.isAdmin = isAdmin;
+      });
+    }
     this.item$.subscribe((item) => {
       this.item = item;
     });
-
-    this.isAdmin = this.authService.isAdminAuthenticated();
   }
 
   getAuthorNames(): string {

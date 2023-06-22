@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { extractOrderNumberAndStatus } from '@libs/index';
-import { ICustomer } from '@models/index';
+import { AuthService } from '@auth-s/index';
+import { IUser, OrderStatus } from '@models/index';
 import {
   IOrder,
-  OrderStatus,
   getOrderStatusDescription,
   statusDescriptionToEnum,
 } from '@models/order/index';
-import { AuthService, OrderService, OrderStatusService } from '@services/index';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { AdminAuthService, OrderService } from '@services/index';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-order-list',
@@ -16,15 +15,8 @@ import { BehaviorSubject, Observable } from 'rxjs';
   styleUrls: ['./order-list.component.css'],
 })
 export class OrderListComponent implements OnInit {
-  orderListByUser$ = new BehaviorSubject<IOrder[]>([]);
+  orderList$ = new BehaviorSubject<IOrder[]>([]);
   filteredOrderList$ = new BehaviorSubject<IOrder[]>([]);
-  currentUser: ICustomer = {
-    username: 'user',
-    email: 'user@gmail.com',
-    password: 'user',
-    id: 1,
-    role: 'customer',
-  };
 
   expandedOrderDetails: number | null | undefined = null;
   selectedStatus: string = 'all';
@@ -36,21 +28,69 @@ export class OrderListComponent implements OnInit {
     orderStatus: OrderStatus;
   }[] = [];
 
+  user: IUser | null = null;
+
   constructor(
     private orderService: OrderService,
-    private orderStatusService: OrderStatusService,
+    private adminAuthService: AdminAuthService,
     private authService: AuthService
   ) {}
 
   ngOnInit(): void {
-    this.fetchOrders();
-    this.isAdmin = this.authService.isAdminAuthenticated();
+    if (this.adminAuthService.isAdminAuthenticated$) {
+      this.adminAuthService.isAdminAuthenticated$.subscribe((isAdmin) => {
+        this.isAdmin = isAdmin;
+        this.getAllOrders();
+      });
+    }
+    this.authService.user$.subscribe((user) => {
+      this.user = user;
+    });
+    if (this.user && !this.isAdmin) {
+      this.getOrdersByUserId(this.user.id);
+    }
+  }
+  public getOrderStatusDescription(status: string): string {
+    switch (status) {
+      case 'PENDING':
+        return 'En attente de confirmation';
+      case 'CONFIRMED':
+        return 'Confirmé';
+      case 'SHIPPING':
+        return 'En cours de livraison';
+      case 'DELIVERED':
+        return 'Livré';
+      default:
+        return '';
+    }
   }
 
-  fetchOrders(statusDescription?: string): void {
-    this.orderService.getOrdersByUser(this.currentUser).subscribe({
+  getAllOrders(): void {
+    this.orderService.getAllOrders().subscribe({
       next: (orders) => {
-        this.orderListByUser$.next(orders);
+        this.orderList$.next(orders);
+      },
+      error: (error) => {
+        console.error('Erreur lors de la récupération des commandes:', error);
+      },
+    });
+  }
+
+  getOrdersByUserId(userId: number): void {
+    this.orderService.getOrdersByUserId(userId).subscribe({
+      next: (orders) => {
+        this.orderList$.next(orders);
+      },
+      error: (error) => {
+        console.error('Erreur lors de la récupération des commandes:', error);
+      },
+    });
+  }
+
+  fetchOrdersByUserAndStatus(userId: number, statusDescription?: string): void {
+    this.orderService.getOrdersByUserId(userId).subscribe({
+      next: (orders) => {
+        this.orderList$.next(orders);
         if (statusDescription) {
           this.selectedStatus = statusDescription;
         }
@@ -67,10 +107,6 @@ export class OrderListComponent implements OnInit {
     });
   }
 
-  getStatusByOrderNumber(orderNumber: string) {
-    this.orderStatusService.getStatusByOrderNumber(orderNumber);
-  }
-
   toggleOrderDetails(order: IOrder): void {
     this.expandedOrderDetails =
       this.expandedOrderDetails === order.id ? null : order.id;
@@ -81,7 +117,7 @@ export class OrderListComponent implements OnInit {
   }
 
   filterOrdersByStatus(description: string): void {
-    const orders = this.orderListByUser$.getValue();
+    const orders = this.orderList$.getValue();
     const statusEnum = statusDescriptionToEnum(description);
 
     const filteredOrders =
@@ -92,19 +128,23 @@ export class OrderListComponent implements OnInit {
     this.filteredOrderList$.next(filteredOrders);
   }
 
-  updateOrderStatus(
-    user: ICustomer,
-    orderNumber: string,
-    newStatus: string
-  ): void {
+  updateOrderStatus(userId: number, orderId: number, newStatus: string) {
     if (this.isAdmin) {
-      this.getStatusByOrderNumber(orderNumber);
       this.orderService
-        .updateOrderStatusFromUser(user.username, orderNumber, newStatus)
-        .subscribe(() => {
-          console.log('Statut de la commande mis à jour');
-          const newStatusDescription = getOrderStatusDescription(newStatus);
-          this.fetchOrders(newStatusDescription);
+        .updateOrderStatusByOrderId(orderId, newStatus)
+        .subscribe({
+          next: () => {
+            console.log('Statut de la commande mis à jour');
+            const newStatusDescription =
+              this.getOrderStatusDescription(newStatus);
+            this.fetchOrdersByUserAndStatus(userId, newStatusDescription);
+          },
+          error: (error) => {
+            console.error(
+              'Erreur lors de la mise à jour du statut de la commande:',
+              error
+            );
+          },
         });
     }
   }

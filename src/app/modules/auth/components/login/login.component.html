@@ -1,0 +1,46 @@
+<div class="login-container">
+  <div class="login-card">
+    <h2>S'identifier</h2>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="input-field">
+        <input
+          formControlName="username"
+          type="text"
+          placeholder="Nom de l'utilisateur"
+        />
+        <div
+          *ngIf="username?.invalid && (username?.dirty || username?.touched)"
+          class="error"
+        >
+          <div *ngIf="username?.errors?.['required']">
+            Le nom de l'utilisateur est requis.
+          </div>
+        </div>
+      </div>
+      <div class="input-field">
+        <input
+          formControlName="password"
+          type="password"
+          placeholder="Mot de passe"
+        />
+        <div
+          *ngIf="password?.invalid && (password?.dirty || password?.touched)"
+          class="error"
+        >
+          <div *ngIf="password?.errors?.['required']">
+            Mot de passe est requis.
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="login-button" [disabled]="loginForm.invalid">
+        Identifiez-vous
+      </button>
+    </form>
+    <div class="options">
+      <button (click)="goBack()" class="back-button">Retour</button>
+      <a routerLink="/auth/register" class="register-link"
+        >Créer votre compte</a
+      >
+    </div>
+  </div>
+</div>

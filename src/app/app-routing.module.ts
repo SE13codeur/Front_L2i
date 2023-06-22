@@ -1,11 +1,19 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AdminItemComponent } from '@components/index';
+import {
+  AdminItemComponent,
+  AdminOrderComponent,
+  OrderListComponent,
+} from '@components/index';
+import {
+  AdminAuthGuard,
+  AuthGuard,
+  OrderActivateCartGuard,
+} from '@core/guards';
 import {
   DetailItemPageComponent,
   HomePageComponent,
   ItemPageComponent,
-  SignPageComponent,
   NotFoundPageComponent,
   PaymentPageComponent,
   ReleaseLatestPageComponent,
@@ -14,48 +22,39 @@ import {
   FavoritesUserPageComponent,
   ProfileUserPageComponent,
 } from '@pages/index';
-import { OrderActivateCartGuard } from './guards/cart/order-activate-cart.guard';
 
 const routes: Routes = [
-  { path: 'sign-in', component: SignPageComponent },
+  {
+    path: 'auth',
+    loadChildren: () =>
+      import('./modules/auth/store/auth.module').then((m) => m.AuthModule),
+  },
   { path: '', component: HomePageComponent },
   { path: 'items/books', component: ItemPageComponent },
   { path: 'items/books/new', component: ReleaseLatestPageComponent },
   { path: 'items/books/promos', component: PromosPageComponent },
   // { path: 'items/books/comment', component: CommentsPageComponent },
   { path: 'items/books/:id', component: DetailItemPageComponent },
-  // {
-  //   path: 'items/books',
-  //   component: ItemPageComponent,
-  //   children: [
-  //     { path: 'new', component: ReleaseLatestPageComponent },
-  //     { path: 'promos', component: PromosPageComponent },
-  //     { path: ':id', component: DetailItemPageComponent },
-  //     // { path: 'comments', component: CommentItemPageComponent },
-  //   ],
-  // },
-
-  // {
-  //   path: 'user/account',
-  //   component: UserAccountPageComponent,
-  //   children: [
-  //     { path: 'profile', component: ProfileUserComponent },
-  //     { path: 'orders', component: OrderUserComponent },
-  //     { path: 'favorites', component: FavoriteUserComponent },
-  //   ],
-  // },
+  {
+    path: 'items/payment',
+    component: PaymentPageComponent,
+    canActivate: [AuthGuard],
+  },
   {
     path: 'items/orders',
     component: PaymentPageComponent,
     canActivate: [OrderActivateCartGuard],
   },
-  { path: 'items/orders/:username', component: OrderUserPageComponent },
+  {
+    path: 'items/orders/:id',
+    component: OrderListComponent,
+  },
   {
     path: 'account/user/profile',
     component: ProfileUserPageComponent,
   },
   // {
-  //   path: 'iaccount/user/comments',
+  //   path: 'account/user/comments',
   //   component: CommentsUserPageComponent,
   // },
   {
@@ -65,12 +64,22 @@ const routes: Routes = [
   {
     path: 'admin/items/books',
     component: AdminItemComponent,
-    // canActivate: [AdminAuthGuard],
+    canActivate: [AdminAuthGuard],
   },
   {
     path: 'admin/items/books/:id',
     component: AdminItemComponent,
-    // canActivate: [AdminAuthGuard],
+    canActivate: [AdminAuthGuard],
+  },
+  {
+    path: 'admin/orders',
+    component: AdminOrderComponent,
+    canActivate: [AdminAuthGuard],
+  },
+  {
+    path: 'admin/orders/:id',
+    component: AdminOrderComponent,
+    canActivate: [AdminAuthGuard],
   },
   { path: '', redirectTo: '/', pathMatch: 'full' },
   { path: '**', component: NotFoundPageComponent },

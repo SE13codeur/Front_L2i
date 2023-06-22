@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ICustomer } from '@models/user';
-import { IUser } from '@models/user/IUser';
+import { AuthService, CheckAuthService } from '@auth-s/index';
+import { IUser } from '@models/index';
+import { AccountUserDrawerService, AdminAuthService } from '@services/index';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-account-user-drawer',
@@ -9,22 +11,45 @@ import { IUser } from '@models/user/IUser';
   styleUrls: ['./account-user-drawer.component.css'],
 })
 export class AccountUserDrawerComponent implements OnInit {
-  currentUser: IUser = {
-    username: 'user',
-    email: 'user@gmail.com',
-    password: 'user',
-    id: 1,
-    role: 'customer',
-  };
+  user: IUser | null = null;
+  username$: Observable<string | null> | undefined;
+  isAuthenticated$: Observable<boolean> | undefined;
+  isAdmin = false;
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private accountUserDrawerService: AccountUserDrawerService,
+    private authService: AuthService,
+    private checkAuthService: CheckAuthService,
+    private adminAuthService: AdminAuthService
+  ) {
+    this.username$ = this.authService.getUsername();
+    this.isAuthenticated$ = this.checkAuthService.isAuthenticated$;
+  }
 
-  ngOnInit(): void {}
-
+  ngOnInit() {
+    this.authService.user$.subscribe((user) => {
+      this.user = user;
+    });
+    if (this.adminAuthService.isAdminAuthenticated$) {
+      this.adminAuthService.isAdminAuthenticated$.subscribe((isAdmin) => {
+        this.isAdmin = isAdmin;
+      });
+    }
+  }
   openOrdersPage() {
-    let username = this.currentUser.username; //this.authService.getUsername();
-
-    this.router.navigate(['/items/orders', username]);
+    this.authService.user$.subscribe((user) => {
+      if (user) {
+        this.router.navigate(['/items/orders', user.id]);
+      }
+      if (this.isAdmin) {
+        this.router.navigate(['admin/orders']);
+      }
+      if (!user) {
+        console.error(`${user} non disponible`);
+      }
+      this.accountUserDrawerService.closeDrawer();
+    });
   }
 
   openProfilePage() {
@@ -33,5 +58,16 @@ export class AccountUserDrawerComponent implements OnInit {
 
   openFavoritesPage() {
     this.router.navigate(['/account/user/favorites']);
+  }
+
+  onLogout() {
+    this.authService.dispatchLogoutAction().subscribe({
+      next: () => {
+        this.accountUserDrawerService.closeDrawer();
+      },
+      error: (error) => {
+        console.error('Erreur lors de la déconnexion:', error);
+      },
+    });
   }
 }

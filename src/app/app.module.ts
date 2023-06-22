@@ -34,9 +34,13 @@ import {
   PaymentPageComponent,
   PromosPageComponent,
   ReleaseLatestPageComponent,
-  SignPageComponent,
 } from '@pages/index';
-import { AuthService, CartService, PaginatorFrService } from '@services/index';
+import {
+  AdminAuthService,
+  CartService,
+  PaginatorFrService,
+} from '@services/index';
+
 import { CartState, NgxsStoreModule, OrderState } from './store';
 
 import { HttpClientModule } from '@angular/common/http';
@@ -65,23 +69,26 @@ import { NgxSliderModule } from '@angular-slider/ngx-slider';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AuthState } from '@auth/index';
 import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 import { NgxsModule } from '@ngxs/store';
+import { UserState } from '@store/user/user.state';
+import { AdminOrderComponent } from './components/admin/admin-order/admin-order.component';
 import { ProfileUserPageComponent } from './pages/user-account/profile-user-page/profile-user-page.component';
+import { OrderStatusPipe } from '@libs/index';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     HomePageComponent,
-    SignPageComponent,
     NavComponent,
     SectionComponent,
     DetailItemComponent,
     NotFoundPageComponent,
     ItemPageComponent,
-    CartComponent,
     AsideComponent,
+    CartComponent,
     SearchItemComponent,
     FiltersItemComponent,
     AdminItemComponent,
@@ -98,13 +105,15 @@ import { ProfileUserPageComponent } from './pages/user-account/profile-user-page
     OrderListComponent,
     FavoritesUserPageComponent,
     ProfileUserPageComponent,
+    AdminOrderComponent,
+    OrderStatusPipe,
   ],
   imports: [
     BrowserModule,
     NgxsStoreModule,
-    NgxsModule.forRoot([CartState, OrderState]),
+    NgxsModule.forRoot([CartState, OrderState, AuthState, UserState]),
     NgxsStoragePluginModule.forRoot({
-      key: ['cart', 'orders', 'orderStatuses'],
+      key: ['cart', 'orders', 'orderStatuses', 'auth', 'user'],
     }),
     MatTableModule,
     AppRoutingModule,
@@ -134,11 +143,17 @@ import { ProfileUserPageComponent } from './pages/user-account/profile-user-page
   providers: [
     { provide: LOCALE_ID, useValue: 'fr-FR' },
     CartService,
-    AuthService,
+    AdminAuthService,
     {
       provide: MatPaginatorIntl,
       useClass: PaginatorFrService,
     },
+    // AuthGuard,
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: TokenInterceptor,
+    //   multi: true,
+    // },
   ],
   bootstrap: [AppComponent],
 })

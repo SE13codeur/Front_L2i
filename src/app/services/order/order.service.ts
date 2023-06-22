@@ -1,14 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environmentDev as environment } from '@env/environment.dev';
-import { ICart, ICustomer, IOrder } from '@models/index';
-import { Observable } from 'rxjs';
+import { ICart, IOrder } from '@models/index';
+import { Console } from 'console';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class OrderService {
   private ordersUrl = `${environment.apiUrl}/items/orders`;
+  private ordersAdminUrl = `${environment.apiUrl}/admin/orders`;
 
   constructor(private http: HttpClient) {}
 
@@ -16,16 +18,44 @@ export class OrderService {
     return this.http.post(this.ordersUrl, order);
   }
 
-  getOrdersByUser(user: ICustomer): Observable<IOrder[]> {
-    return this.http.get<IOrder[]>(`${this.ordersUrl}/${user.username}`);
+  getOrdersByUserId(userId: number): Observable<IOrder[]> {
+    return this.http.get<IOrder[]>(`${this.ordersUrl}/${userId}`);
   }
 
-  updateOrderStatusFromUser(
-    username: string,
-    orderNumber: string,
-    newStatus: string
-  ) {
-    const url = `${this.ordersUrl}/${username}`;
-    return this.http.put(url, { orderNumber: orderNumber, status: newStatus });
+  getAllOrders(): Observable<IOrder[]> {
+    return this.http.get<IOrder[]>(`${this.ordersAdminUrl}`);
   }
+
+  updateOrderStatusByOrderId(
+    orderId: number,
+    newStatus: string
+  ): Observable<any> {
+    console.log(orderId, newStatus);
+    const url = `${this.ordersAdminUrl}/${orderId}`;
+    return this.http.patch(url, { status: newStatus });
+  }
+
+  // getOrderById(orderId: number): Observable<IOrder> {
+  //   return this.http.get<IOrder>(`${this.ordersAdminUrl}/${orderId}`);
+  // }
 }
+
+//   constructor(private http: HttpClient) {}
+
+//   createOrder(order: ICart): Observable<any> {
+//     return this.http.post(this.orderCreateUrl, order);
+//   }
+
+//   getOrdersByUserId(userId: number): Observable<IOrder[]> {
+//     return this.http.get<IOrder[]>(`${this.ordersUrl}/${userId}`);
+//   }
+
+//   updateOrderStatusByOrderId(
+//     orderId: number,
+//     newStatus: string
+//   ): Observable<any> {
+//     console.log(orderId, newStatus);
+//     const url = `${this.ordersAdminUrl}/${orderId}`;
+//     return this.http.patch(url, { status: newStatus });
+//   }
+// }

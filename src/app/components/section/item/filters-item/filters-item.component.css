@@ -118,19 +118,17 @@ p {
   border-color: #808080 !important;
 }
 
-@media (max-width: 770px) {
+@media (max-width: 888px) {
+  mat-sidenav  {
+    margin-top: 24rem;
+  }
+
   mat-sidenav-content  {
     margin-top: 22rem;
   }
 }
 
-@media (max-width: 770px) {
-  mat-sidenav  {
-    margin-top: 24rem;
-  }
-}
-
-@media (max-width: 465px) {
+@media (max-width: 555px) {
   mat-sidenav  {
     display: none;
   }

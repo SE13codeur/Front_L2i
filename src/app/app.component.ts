@@ -1,14 +1,14 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { filter, takeUntil } from 'rxjs/operators';
+import { Select } from '@ngxs/store';
 import {
   AccountUserDrawerService,
   CartDrawerService,
   SearchFocusService,
 } from '@services/index';
-import { Observable, Subject } from 'rxjs';
-import { Select, Store } from '@ngxs/store';
 import { CartState } from '@store/index';
+import { Observable, Subject } from 'rxjs';
+import { filter, takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -52,6 +52,12 @@ export class AppComponent implements OnInit, OnDestroy {
           this.cartDrawerService.closeDrawer();
         }
       });
+  }
+
+  isAuthPage(): boolean {
+    return (
+      this.router.url === '/auth/login' || this.router.url === '/auth/register'
+    );
   }
 
   closeCartDrawer() {

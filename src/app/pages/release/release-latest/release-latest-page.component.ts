@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { IItem } from '@models/item';
-import { AuthService } from '@services/admin';
+import { AdminAuthService } from '@services/index';
 import { ItemService } from '@services/item';
 import { PaginationService } from '@services/pagination';
 import { BehaviorSubject, Observable, Subject, take } from 'rxjs';
@@ -15,7 +15,7 @@ import { BehaviorSubject, Observable, Subject, take } from 'rxjs';
 export class ReleaseLatestPageComponent implements OnInit {
   @Input() items: IItem[] = [];
   isInCart: ((id: number) => Observable<boolean>) | undefined;
-  isAdmin = false;
+  isAdmin!: boolean;
 
   currentSearch: string = '';
   newItemList$ = new BehaviorSubject<IItem[]>([]);
@@ -29,13 +29,16 @@ export class ReleaseLatestPageComponent implements OnInit {
   constructor(
     private itemService: ItemService,
     private paginationService: PaginationService,
-    private authService: AuthService,
+    private adminAuthService: AdminAuthService,
     private router: Router
-  ) {
-    this.isAdmin = this.authService.isAdminAuthenticated();
-  }
+  ) {}
 
   ngOnInit(): void {
+    if (this.adminAuthService.isAdminAuthenticated$) {
+      this.adminAuthService.isAdminAuthenticated$.subscribe((isAdmin) => {
+        this.isAdmin = isAdmin;
+      });
+    }
     this.itemService.getItems().subscribe((items) => {
       const filteredItems = items.filter(
         (item) => parseInt(item.year, 10) >= 2019

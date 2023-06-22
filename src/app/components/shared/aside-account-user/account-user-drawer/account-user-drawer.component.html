@@ -1,4 +1,5 @@
 <div class="container">
+  <h1 *ngIf="isAuthenticated$ | async">Bienvenue {{ username$ | async }}</h1>
   <div class="drawer-item" (click)="openProfilePage()">
     <mat-icon>person</mat-icon>
     <span class="drawer-item-text">Mon profil</span>
@@ -13,6 +14,6 @@
   </div>
   <button class="logout-button">
     <mat-icon>exit_to_app</mat-icon>
-    <span class="drawer-item-text">Déconnexion</span>
+    <span class="drawer-item-text" (click)="onLogout()">Déconnexion</span>
   </button>
 </div>
