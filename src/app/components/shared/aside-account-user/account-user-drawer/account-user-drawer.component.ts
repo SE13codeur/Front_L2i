@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService, CheckAuthService } from '@auth-s/index';
 import { IUser } from '@models/index';
-import { AccountUserDrawerService } from '@services/index';
+import { AccountUserDrawerService, AdminAuthService } from '@services/index';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -14,12 +14,14 @@ export class AccountUserDrawerComponent implements OnInit {
   user: IUser | null = null;
   username$: Observable<string | null> | undefined;
   isAuthenticated$: Observable<boolean> | undefined;
+  isAdmin = false;
 
   constructor(
     private router: Router,
     private accountUserDrawerService: AccountUserDrawerService,
     private authService: AuthService,
-    private checkAuthService: CheckAuthService
+    private checkAuthService: CheckAuthService,
+    private adminAuthService: AdminAuthService
   ) {
     this.username$ = this.authService.getUsername();
     this.isAuthenticated$ = this.checkAuthService.isAuthenticated$;
@@ -29,12 +31,21 @@ export class AccountUserDrawerComponent implements OnInit {
     this.authService.user$.subscribe((user) => {
       this.user = user;
     });
+    if (this.adminAuthService.isAdminAuthenticated$) {
+      this.adminAuthService.isAdminAuthenticated$.subscribe((isAdmin) => {
+        this.isAdmin = isAdmin;
+      });
+    }
   }
   openOrdersPage() {
     this.authService.user$.subscribe((user) => {
       if (user) {
         this.router.navigate(['/items/orders', user.id]);
-      } else {
+      }
+      if (this.isAdmin) {
+        this.router.navigate(['admin/orders']);
+      }
+      if (!user) {
         console.error(`${user} non disponible`);
       }
       this.accountUserDrawerService.closeDrawer();

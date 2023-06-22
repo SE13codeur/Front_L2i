@@ -50,20 +50,6 @@ export class AdminOrderComponent implements OnInit {
       this.getOrdersByUserId(this.user.id);
     }
   }
-  public getOrderStatusDescription(status: string): string {
-    switch (status) {
-      case 'PENDING':
-        return 'En attente de confirmation';
-      case 'CONFIRMED':
-        return 'Confirmé';
-      case 'SHIPPING':
-        return 'En cours de livraison';
-      case 'DELIVERED':
-        return 'Livré';
-      default:
-        return '';
-    }
-  }
 
   getAllOrders(): void {
     this.orderService.getAllOrders().subscribe({
@@ -135,9 +121,7 @@ export class AdminOrderComponent implements OnInit {
         .subscribe({
           next: () => {
             console.log('Statut de la commande mis à jour');
-            const newStatusDescription =
-              this.getOrderStatusDescription(newStatus);
-            this.fetchOrdersByUserAndStatus(userId, newStatusDescription);
+            this.fetchOrdersByUserAndStatus(userId, newStatus);
           },
           error: (error) => {
             console.error(
@@ -147,10 +131,5 @@ export class AdminOrderComponent implements OnInit {
           },
         });
     }
-  }
-
-  modifyOrderStatusById(orderId: number, newStatus: string): void {
-    console.log('patch clicked');
-    this.orderService.updateOrderStatusByOrderId(orderId, newStatus);
   }
 }

@@ -1,6 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AdminItemComponent, OrderListComponent } from '@components/index';
+import {
+  AdminItemComponent,
+  AdminOrderComponent,
+  OrderListComponent,
+} from '@components/index';
 import {
   AdminAuthGuard,
   AuthGuard,
@@ -36,26 +40,6 @@ const routes: Routes = [
     component: PaymentPageComponent,
     canActivate: [AuthGuard],
   },
-  // {
-  //   path: 'items/books',
-  //   component: ItemPageComponent,
-  //   children: [
-  //     { path: 'new', component: ReleaseLatestPageComponent },
-  //     { path: 'promos', component: PromosPageComponent },
-  //     { path: ':id', component: DetailItemPageComponent },
-  //     // { path: 'comments', component: CommentItemPageComponent },
-  //   ],
-  // },
-
-  // {
-  //   path: 'user/account',
-  //   component: UserAccountPageComponent,
-  //   children: [
-  //     { path: 'profile', component: ProfileUserComponent },
-  //     { path: 'orders', component: OrderUserComponent },
-  //     { path: 'favorites', component: FavoriteUserComponent },
-  //   ],
-  // },
   {
     path: 'items/orders',
     component: PaymentPageComponent,
@@ -70,7 +54,7 @@ const routes: Routes = [
     component: ProfileUserPageComponent,
   },
   // {
-  //   path: 'iaccount/user/comments',
+  //   path: 'account/user/comments',
   //   component: CommentsUserPageComponent,
   // },
   {
@@ -88,8 +72,13 @@ const routes: Routes = [
     canActivate: [AdminAuthGuard],
   },
   {
+    path: 'admin/orders',
+    component: AdminOrderComponent,
+    canActivate: [AdminAuthGuard],
+  },
+  {
     path: 'admin/orders/:id',
-    component: AdminItemComponent,
+    component: AdminOrderComponent,
     canActivate: [AdminAuthGuard],
   },
   { path: '', redirectTo: '/', pathMatch: 'full' },

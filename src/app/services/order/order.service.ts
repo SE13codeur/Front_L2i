@@ -10,6 +10,7 @@ import { Observable, Subject } from 'rxjs';
 })
 export class OrderService {
   private ordersUrl = `${environment.apiUrl}/items/orders`;
+  private ordersAdminUrl = `${environment.apiUrl}/admin/orders`;
 
   constructor(private http: HttpClient) {}
 
@@ -17,16 +18,12 @@ export class OrderService {
     return this.http.post(this.ordersUrl, order);
   }
 
-  getAllOrders(): Observable<IOrder[]> {
-    return this.http.get<IOrder[]>(`${this.ordersUrl}`);
-  }
-
-  getOrderById(orderId: number): Observable<IOrder> {
-    return this.http.get<IOrder>(`${this.ordersUrl}/${orderId}`);
-  }
-
   getOrdersByUserId(userId: number): Observable<IOrder[]> {
     return this.http.get<IOrder[]>(`${this.ordersUrl}/${userId}`);
+  }
+
+  getAllOrders(): Observable<IOrder[]> {
+    return this.http.get<IOrder[]>(`${this.ordersAdminUrl}`);
   }
 
   updateOrderStatusByOrderId(
@@ -34,7 +31,31 @@ export class OrderService {
     newStatus: string
   ): Observable<any> {
     console.log(orderId, newStatus);
-    const url = `${this.ordersUrl}/${orderId}`;
+    const url = `${this.ordersAdminUrl}/${orderId}`;
     return this.http.patch(url, { status: newStatus });
   }
+
+  // getOrderById(orderId: number): Observable<IOrder> {
+  //   return this.http.get<IOrder>(`${this.ordersAdminUrl}/${orderId}`);
+  // }
 }
+
+//   constructor(private http: HttpClient) {}
+
+//   createOrder(order: ICart): Observable<any> {
+//     return this.http.post(this.orderCreateUrl, order);
+//   }
+
+//   getOrdersByUserId(userId: number): Observable<IOrder[]> {
+//     return this.http.get<IOrder[]>(`${this.ordersUrl}/${userId}`);
+//   }
+
+//   updateOrderStatusByOrderId(
+//     orderId: number,
+//     newStatus: string
+//   ): Observable<any> {
+//     console.log(orderId, newStatus);
+//     const url = `${this.ordersAdminUrl}/${orderId}`;
+//     return this.http.patch(url, { status: newStatus });
+//   }
+// }

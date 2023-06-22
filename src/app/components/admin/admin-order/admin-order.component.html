@@ -38,7 +38,11 @@
                 <select
                   #statusSelectRefAdmin
                   (change)="
-                    modifyOrderStatusById(order.id, statusSelectRefAdmin.value)
+                    updateOrderStatus(
+                      order.user?.id ?? 0,
+                      order.id,
+                      statusSelectRefAdmin.value
+                    )
                   "
                   *ngIf="isAdmin"
                 >
@@ -47,9 +51,6 @@
                   <option value="SHIPPING">En cours de livraison</option>
                   <option value="DELIVERED">Livré</option>
                 </select>
-                <span *ngIf="!isAdmin">
-                  {{ getOrderStatusDescription(order.status) }}
-                </span>
               </td>
               <td class="td-details">Voir les détails</td>
             </tr>
