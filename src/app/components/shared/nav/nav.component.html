@@ -1,15 +1,15 @@
 <mat-toolbar class="nav-container">
   <div class="nav-wrapper">
     <a class="nav-logo" routerLink="/">
-      <img src="../../../assets/L2i.ico">
+      <img src="../../../assets/L2i.ico" />
     </a>
 
-      <!-- Desktop menu -->
+    <!-- Desktop menu -->
     <div class="menu">
       <button mat-button routerLink="/items/books">Articles</button>
-      <button mat-button routerLink="/promos">Promos</button>
-      <button mat-button routerLink="/favorites">Favoris</button>
-      <button mat-button routerLink="/comments">Avis</button>
+      <button mat-button routerLink="/items/books/new">Nouveautés</button>
+      <button mat-button routerLink="/items/books/promos">Soldes</button>
+      <button mat-button routerLink="/items/books/comments">Avis</button>
     </div>
 
     <!-- Search bar -->
@@ -17,19 +17,18 @@
       <app-search-item class="search-bar-large"></app-search-item>
     </div>
 
-    <!-- ADD item for admin -->
-    <button *ngIf="isAdmin" (click)="goToAddItem()">
-      <mat-icon>add</mat-icon>
-    </button>
-
     <div class="nav-actions">
-      <!-- User button for connection -->
-      <button mat-icon-button routerLink="/">
-        <mat-icon>account_circle</mat-icon>
-      </button>
+      <!-- User account drawer -->
+      <app-account-user-button (click)="toggleAccountUserDrawer()">
+      </app-account-user-button>
 
       <!-- Cart drawer for shopping -->
-      <app-aside (click)="toggleDrawer()"></app-aside>
+      <app-aside *ngIf="!isAdmin" (click)="toggleCartDrawer()"></app-aside>
+
+      <!-- ADD item for admin -->
+      <button *ngIf="isAdmin" class="admin-add-item" (click)="goToAddItem()">
+        <mat-icon>add</mat-icon>
+      </button>
     </div>
   </div>
 </mat-toolbar>

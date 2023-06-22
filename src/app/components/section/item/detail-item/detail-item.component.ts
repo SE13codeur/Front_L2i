@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IItem, IAuthor } from '@models/index';
 import { AdminItemService, AuthService, ItemService } from '@services/index';
@@ -21,7 +22,8 @@ export class DetailItemComponent implements OnInit {
     private router: Router,
     private itemService: ItemService,
     private authService: AuthService,
-    private itemAdminService: AdminItemService
+    private itemAdminService: AdminItemService,
+    private location: Location
   ) {
     this.item$ = this.route.params.pipe(
       map((params) => params['id']),
@@ -38,10 +40,6 @@ export class DetailItemComponent implements OnInit {
     });
 
     this.isAdmin = this.authService.isAdminAuthenticated();
-  }
-
-  goBackToListItems(): void {
-    this.router.navigate(['/items/books']);
   }
 
   getAuthorNames(): string {
@@ -85,9 +83,19 @@ export class DetailItemComponent implements OnInit {
     }
   }
 
+  goBackToListItems(): void {
+    this.router.navigate(['/items/books']);
+  }
+
   goToEditItem(): void {
     if (this.item) {
       this.router.navigate([`/admin/items/books/${this.item.id}`]);
+    }
+  }
+
+  goBackToPreviousPage(): void {
+    if (this.item) {
+      this.location.back();
     }
   }
 }

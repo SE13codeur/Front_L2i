@@ -8,6 +8,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import {
+  AccountUserButtonComponent,
+  AccountUserDrawerComponent,
   AdminItemComponent,
   AsideComponent,
   CartComponent,
@@ -17,15 +19,21 @@ import {
   HeaderComponent,
   ListItemWithoutMeilisearchComponent,
   NavComponent,
+  OrderComponent,
+  OrderListComponent,
   SearchItemComponent,
   SectionComponent,
 } from '@components/index';
 import {
   DetailItemPageComponent,
+  FavoritesUserPageComponent,
   HomePageComponent,
   ItemPageComponent,
   NotFoundPageComponent,
+  OrderUserPageComponent,
   PaymentPageComponent,
+  PromosPageComponent,
+  ReleaseLatestPageComponent,
   SignPageComponent,
 } from '@pages/index';
 import { AuthService, CartService, PaginatorFrService } from '@services/index';
@@ -59,7 +67,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 import { NgxsModule } from '@ngxs/store';
-import {} from '@store/order';
+import { ProfileUserPageComponent } from './pages/user-account/profile-user-page/profile-user-page.component';
 
 @NgModule({
   declarations: [
@@ -81,12 +89,23 @@ import {} from '@store/order';
     CartItemQuantityComponent,
     DetailItemPageComponent,
     PaymentPageComponent,
+    OrderComponent,
+    AccountUserButtonComponent,
+    ReleaseLatestPageComponent,
+    PromosPageComponent,
+    AccountUserDrawerComponent,
+    OrderUserPageComponent,
+    OrderListComponent,
+    FavoritesUserPageComponent,
+    ProfileUserPageComponent,
   ],
   imports: [
     BrowserModule,
     NgxsStoreModule,
     NgxsModule.forRoot([CartState, OrderState]),
-    NgxsStoragePluginModule.forRoot({ key: ['cart', 'orders'] }),
+    NgxsStoragePluginModule.forRoot({
+      key: ['cart', 'orders', 'orderStatuses'],
+    }),
     MatTableModule,
     AppRoutingModule,
     BrowserAnimationsModule,

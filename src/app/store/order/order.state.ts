@@ -1,21 +1,45 @@
-import { IOrder } from '@models/index';
-import { Action, Selector, State, StateContext } from '@ngxs/store';
-import { AddOrder, DeleteOrder, UpdateOrder } from './order.action';
+import { IOrder, OrderStatus } from '@models/index';
+import {
+  Action,
+  Selector,
+  State,
+  StateContext,
+  createSelector,
+} from '@ngxs/store';
+import { Observable } from 'rxjs';
+import { AddOrder, UpdateOrderStatus } from './order.action';
 
 export interface OrderStateModel {
   orders: IOrder[];
+  orderStatuses: { orderNumber: string; orderStatus: Observable<string> }[];
 }
 
 @State<OrderStateModel>({
   name: 'orders',
   defaults: {
     orders: [],
+    orderStatuses: [],
   },
 })
 export class OrderState {
   @Selector()
   static getOrders(state: OrderStateModel) {
     return state.orders;
+  }
+
+  static getOrdersByStatus(status: OrderStatus) {
+    return createSelector([OrderState], (state: OrderStateModel) => {
+      return state.orders.filter((order) => order.status === status);
+    });
+  }
+
+  static getStatusByOrderNumber(orderNumber: string) {
+    return createSelector([OrderState], (state: OrderStateModel) => {
+      const statusObject = state.orderStatuses.find(
+        (statusObj) => statusObj.orderNumber === orderNumber
+      );
+      return statusObject ? statusObject.orderStatus : null;
+    });
   }
 
   @Action(AddOrder)
@@ -28,34 +52,24 @@ export class OrderState {
       orders: [...state.orders, order],
     });
   }
-  @Action(UpdateOrder)
-  update(
+
+  @Action(UpdateOrderStatus)
+  updateOrderStatus(
     { getState, setState }: StateContext<OrderStateModel>,
-    { order }: UpdateOrder
+    { orderNumber, newStatus }: UpdateOrderStatus
   ) {
     const state = getState();
-    const orderList = [...state.orders];
-    const orderIndex = orderList.findIndex(
-      (item) => item.orderNumber === order.orderNumber
+    const orders = [...state.orders];
+    const orderIndex = orders.findIndex(
+      (order) => order.orderNumber === orderNumber
     );
-    orderList[orderIndex] = order;
-    setState({
-      ...state,
-      orders: orderList,
-    });
-  }
-  @Action(DeleteOrder)
-  delete(
-    { getState, setState }: StateContext<OrderStateModel>,
-    { orderNumber }: DeleteOrder
-  ) {
-    const state = getState();
-    const filteredArray = state.orders.filter(
-      (item) => item.orderNumber !== orderNumber
-    );
-    setState({
-      ...state,
-      orders: filteredArray,
-    });
+
+    if (orderIndex !== -1) {
+      orders[orderIndex] = { ...orders[orderIndex], status: newStatus };
+      setState({
+        ...state,
+        orders,
+      });
+    }
   }
 }

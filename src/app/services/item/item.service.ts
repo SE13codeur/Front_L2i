@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environmentPreProd as environment } from '@env/environment.pre-prod';
+import { environmentDev as environment } from '@env/environment.dev';
 import { IItem } from '@models/index';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
@@ -23,6 +23,14 @@ export class ItemService {
         return of([]);
       })
     );
+  }
+
+  getNewItems(year: string = '2019'): Observable<any> {
+    return this.http.get(`${this.itemsUrl}/new`, {
+      params: {
+        year: year,
+      },
+    });
   }
 
   getItemsByPage(

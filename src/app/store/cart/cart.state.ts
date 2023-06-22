@@ -50,17 +50,11 @@ export class CartState {
   }
 
   @Selector()
-  static getSubTotal(state: CartStateModel) {
+  static getTotalTTC(state: CartStateModel) {
     return state.cartItems.reduce(
       (total, item) => total + item.regularPrice * item.quantity,
       0
     );
-  }
-
-  @Selector()
-  static getTotalWithTaxes(state: CartStateModel) {
-    const subTotal = CartState.getSubTotal(state);
-    return subTotal + subTotal * 0.055; // 5.5% of TVA for books
   }
 
   @Action(AddToCart)
@@ -133,6 +127,7 @@ export class CartState {
           pages: item.pages,
           year: item.year,
           version: item.version,
+          tva: item.tva,
         };
         cartItems.push(newItem);
         patchState({

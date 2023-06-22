@@ -1,0 +1,88 @@
+<div class="container">
+  <h1>Votre panier</h1>
+
+  <table class="cart-table">
+    <thead>
+      <tr>
+        <th>
+          <span class="mobile-hide">ARTICLE</span>
+        </th>
+        <th>PRIX</th>
+        <th>
+          <span class="desktop">QUANTITÉ</span>
+          <span class="mobile">Qté</span>
+        </th>
+        <th>
+          <span class="mobile-hide">SOUS-TOTAL</span>
+          <span class="mobile-hide"></span>
+        </th>
+        <th class="mobile-hide">ACTIONS</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of cartItems$ | async; let i = index">
+        <td>
+          <div class="image-icon-container">
+            <img
+              [src]="item.imageUrl"
+              alt="{{ item.title }}"
+              class="product-image"
+            />
+            <span class="desktop">{{ item.title }}</span>
+          </div>
+        </td>
+        <td>{{ item.regularPrice | currency : "EUR" : true }}</td>
+        <td>
+          <app-cart-item-quantity [item]="item"></app-cart-item-quantity>
+        </td>
+        <td class="mobile-hide">
+          {{ item.regularPrice * item.quantity | currency : "EUR" : true }}
+        </td>
+        <td class="mobile-hide">
+          <mat-icon
+            style="cursor: pointer"
+            (click)="removeItemFromCart(item.id)"
+            >delete</mat-icon
+          >
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="5" class="total">
+          <h2>
+            <span class="underline">Total TTC</span> :
+            <span class="bold">
+              {{ totalTTC$ | async | currency : "EUR" : true }}
+            </span>
+          </h2>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+
+  <div class="checkout-section">
+    <button
+      class="cart-order-button"
+      mat-raised-button
+      (click)="orderValidate()"
+    >
+      <span class="desktop">Valider la commande</span>
+      <span class="mobile">Valider</span>
+    </button>
+    <button
+      class="cart-clear-button desktop"
+      mat-raised-button
+      (click)="clearCart()"
+    >
+      Vider le panier
+    </button>
+    <button
+      class="cart-order-button mobile"
+      mat-raised-button
+      (click)="clearCart()"
+    >
+      <mat-icon>remove_shopping_cart</mat-icon>
+    </button>
+  </div>
+</div>

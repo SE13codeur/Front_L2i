@@ -1,4 +1,4 @@
-import { IOrder } from '@models/index';
+import { IOrder, OrderStatus } from '@models/index';
 
 export class AddOrder {
   static readonly type = '[Order] Add';
@@ -12,6 +12,11 @@ export class GetOrders {
 export class UpdateOrder {
   static readonly type = '[Order] Update';
   constructor(public order: IOrder) {}
+}
+
+export class UpdateOrderStatus {
+  static readonly type = '[Order] Update Status';
+  constructor(public orderNumber: string, public newStatus: OrderStatus) {}
 }
 
 export class DeleteOrder {
