@@ -19,8 +19,4 @@ export class OrderStoreService {
   getOrdersByStatus(orderStatus: OrderStatus): Observable<IOrder[]> {
     return this.store.select(OrderState.getOrdersByStatus(orderStatus));
   }
-
-  getStatusByOrderId(orderId: string) {
-    this.store.select(OrderState.getStatusByOrderNumber(orderId));
-  }
 }

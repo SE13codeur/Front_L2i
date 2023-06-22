@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AdminItemComponent } from '@components/index';
+import { AdminItemComponent, OrderListComponent } from '@components/index';
 import {
   DetailItemPageComponent,
   HomePageComponent,
@@ -58,7 +58,11 @@ const routes: Routes = [
     component: PaymentPageComponent,
     canActivate: [OrderActivateCartGuard],
   },
-  { path: 'items/orders/:userId', component: OrderUserPageComponent },
+  {
+    path: 'items/orders/:id',
+    component: OrderListComponent,
+  },
+  // { path: 'items/orders/:userId', component: OrderUserPageComponent },
   {
     path: 'account/user/profile',
     component: ProfileUserPageComponent,

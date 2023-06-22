@@ -33,15 +33,6 @@ export class OrderState {
     });
   }
 
-  static getStatusByOrderNumber(orderNumber: string) {
-    return createSelector([OrderState], (state: OrderStateModel) => {
-      const statusObject = state.orderStatuses.find(
-        (statusObj) => statusObj.orderNumber === orderNumber
-      );
-      return statusObject ? statusObject.orderStatus : null;
-    });
-  }
-
   @Action(AddOrder)
   add(
     { getState, patchState }: StateContext<OrderStateModel>,
