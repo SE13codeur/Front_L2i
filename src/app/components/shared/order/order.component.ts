@@ -50,10 +50,10 @@ export class OrderComponent implements OnDestroy {
       next: ({ cartItems, totalTTC, user }) => {
         console.log('combineLatest next', cartItems, totalTTC, user);
 
-        if (user) {
+        if (user && 'billingAddress' in user) {
           const cartData: ICart = {
             cartItems,
-            user,
+            user: user as ICustomer,
           };
 
           this.orderService

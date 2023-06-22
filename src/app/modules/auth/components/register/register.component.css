@@ -12,12 +12,13 @@
   border-radius: 0.77rem;
   box-shadow: 0 0.33rem 6px rgba(0, 0, 0, 0.1);
   text-align: center;
-  width: 33.3%;
-  max-width: 404px;
+  width: 77.7%;
+  max-width: 1001px;
 }
 
 .input-field {
   margin: 1.31rem 0;
+  flex: 1;
 }
 
 .input-field input {
@@ -25,6 +26,18 @@
   padding: 0.89rem;
   border: 1px solid #ccc;
   border-radius: 0.77rem;
+}
+
+.account-info, .personal-info {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+@media screen and (min-width: 556px) {
+  .account-info, .personal-info {
+    flex-direction: row;
+  }
 }
 
 .login-button {
@@ -59,7 +72,7 @@
 }
 
 .register-link {
-  color: #FF4080;;
+  color: #FF4080;
   text-decoration: none;
 }
 
@@ -82,7 +95,6 @@
   cursor: pointer;
 }
 
-
 @media screen and (max-width: 768px) {
   .login-card {
     width: 77%;
@@ -92,5 +104,17 @@
 @media screen and (max-width: 202px) {
   .login-card {
     width: 89%;
+  }
+}
+
+.address-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+@media screen and (min-width: 556px) {
+  .address-grid {
+    grid-template-columns: 2fr 2fr 1fr;
   }
 }

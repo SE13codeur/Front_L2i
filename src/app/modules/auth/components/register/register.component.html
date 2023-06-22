@@ -2,53 +2,86 @@
   <div class="login-card">
     <h2>Inscription</h2>
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-      <div class="input-field">
-        <input
-          formControlName="username"
-          type="text"
-          placeholder="Nom de l'utilisateur"
-        />
-        <div
-          *ngIf="username?.invalid && (username?.dirty || username?.touched)"
-          class="error"
-        >
-          <div *ngIf="username?.errors?.['required']">
-            Le nom d'utilisateur est requis.
-          </div>
-          <!-- Vous pouvez ajouter d'autres messages d'erreur ici -->
+      <div class="account-info">
+        <div class="input-field">
+          <input
+            formControlName="username"
+            type="text"
+            placeholder="Nom d'utilisateur"
+          />
+        </div>
+        <div class="input-field">
+          <input
+            formControlName="email"
+            type="email"
+            placeholder="Adresse e-mail"
+          />
+        </div>
+        <div class="input-field">
+          <input
+            formControlName="password"
+            type="password"
+            placeholder="Mot de passe"
+          />
         </div>
       </div>
-      <div class="input-field">
-        <input
-          formControlName="email"
-          type="email"
-          placeholder="Adresse e-mail"
-        />
-        <div
-          *ngIf="email?.invalid && (email?.dirty || email?.touched)"
-          class="error"
-        >
-          <div *ngIf="email?.errors?.['required']">
-            L'adresse e-mail est requise.
-          </div>
-          <div *ngIf="email?.errors?.['email']">
-            Veuillez entrer une adresse e-mail valide.
-          </div>
+      <div class="personal-info">
+        <div class="input-field">
+          <input formControlName="firstname" type="text" placeholder="Prénom" />
+        </div>
+        <div class="input-field">
+          <input formControlName="lastname" type="text" placeholder="Nom" />
+        </div>
+        <div class="input-field">
+          <input
+            formControlName="phoneNumber"
+            type="text"
+            placeholder="Numéro de téléphone"
+          />
         </div>
       </div>
-      <div class="input-field">
-        <input
-          formControlName="password"
-          type="password"
-          placeholder="Mot de passe"
-        />
-        <div
-          *ngIf="password?.invalid && (password?.dirty || password?.touched)"
-          class="error"
-        >
-          <div *ngIf="password?.errors?.['required']">
-            Le mot de passe est requis.
-          </div>
+      <h3>Adresse de facturation</h3>
+      <div formGroupName="billingAddress" class="address-grid">
+        <div class="input-field">
+          <input formControlName="street" type="text" placeholder="Rue" />
+        </div>
+        <div class="input-field">
+          <input formControlName="city" type="text" placeholder="Ville" />
+        </div>
+        <div class="input-field">
+          <input
+            formControlName="postalCode"
+            type="text"
+            placeholder="Code postal"
+          />
+        </div>
+        <div class="input-field">
+          <input formControlName="country" type="text" placeholder="Pays" />
+        </div>
+        <div class="input-field">
+          <input formControlName="state" type="text" placeholder="État" />
+        </div>
+      </div>
+      <h3>Adresse de livraison</h3>
+      <div formGroupName="shippingAddress" class="address-grid">
+        <div class="input-field">
+          <input formControlName="street" type="text" placeholder="Rue" />
+        </div>
+        <div class="input-field">
+          <input formControlName="city" type="text" placeholder="Ville" />
+        </div>
+        <div class="input-field">
+          <input
+            formControlName="postalCode"
+            type="text"
+            placeholder="Code postal"
+          />
+        </div>
+        <div class="input-field">
+          <input formControlName="country" type="text" placeholder="Pays" />
+        </div>
+        <div class="input-field">
+          <input formControlName="state" type="text" placeholder="État" />
         </div>
       </div>
       <button

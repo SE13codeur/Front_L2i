@@ -39,6 +39,23 @@ export class RegisterComponent {
       username: ['', Validators.required],
       password: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
+      firstname: ['', [Validators.required]],
+      lastname: ['', [Validators.required]],
+      phoneNumber: [''],
+      billingAddress: this.formBuilder.group({
+        street: ['', Validators.required],
+        city: ['', Validators.required],
+        postalCode: ['', Validators.required],
+        country: ['', Validators.required],
+        state: [''],
+      }),
+      shippingAddress: this.formBuilder.group({
+        street: [''],
+        city: [''],
+        postalCode: [''],
+        country: [''],
+        state: [''],
+      }),
     });
   }
 

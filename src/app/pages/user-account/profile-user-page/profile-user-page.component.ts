@@ -107,25 +107,31 @@ export class ProfileUserPageComponent implements OnInit {
   }
 
   saveUser(userData: IUser | ICustomer): void {
-    const saveOperation = this.userId
-      ? this.userService.editUser(this.userId, userData)
-      : this.userService.addUser(userData);
+    if ('billingAddress' in userData) {
+      const saveOperation = this.userId
+        ? this.userService.editUser(this.userId, userData as ICustomer)
+        : this.userService.addUser(userData as ICustomer);
 
-    saveOperation.subscribe({
-      next: () => {
-        this.snackBar.open('Utilisateur sauvegardé avec succès!', 'Fermer', {
-          duration: 4004,
-        });
-        this.router.navigate(['/users']);
-      },
-      error: (error: any) => {
-        this.snackBar.open(
-          "Erreur lors de la sauvegarde de l'utilisateur!",
-          'Fermer',
-          { duration: 4004 }
-        );
-      },
-    });
+      saveOperation.subscribe({
+        next: () => {
+          this.snackBar.open('Utilisateur sauvegardé avec succès!', 'Fermer', {
+            duration: 4004,
+          });
+          this.router.navigate(['/users']);
+        },
+        error: (error: any) => {
+          this.snackBar.open(
+            "Erreur lors de la sauvegarde de l'utilisateur!",
+            'Fermer',
+            { duration: 4004 }
+          );
+        },
+      });
+    } else {
+      this.snackBar.open("L'utilisateur n'est pas un client!", 'Fermer', {
+        duration: 4004,
+      });
+    }
   }
 
   onReset(): void {
