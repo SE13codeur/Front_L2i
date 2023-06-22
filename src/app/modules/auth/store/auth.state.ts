@@ -8,6 +8,8 @@ import {
   Logout,
   SetOpenCartAfterLogin,
   ResetOpenCartAfterLogin,
+  SetOpenAccountDrawerAfterLogin,
+  ResetOpenAccountDrawerAfterLogin,
 } from './auth.action';
 import { Role } from '@models/index';
 import { AuthService } from '@auth-s/index';
@@ -22,6 +24,7 @@ export interface AuthStateModel {
   loading: boolean;
   error: any;
   openCartAfterLogin: boolean;
+  openAccountDrawerAfterLogin: boolean;
 }
 
 @State<AuthStateModel>({
@@ -35,6 +38,7 @@ export interface AuthStateModel {
     loading: false,
     error: null,
     openCartAfterLogin: false,
+    openAccountDrawerAfterLogin: false,
   },
 })
 @Injectable()
@@ -111,5 +115,14 @@ export class AuthState {
   @Action(ResetOpenCartAfterLogin)
   resetOpenCartAfterLogin(ctx: StateContext<AuthStateModel>) {
     ctx.patchState({ openCartAfterLogin: false });
+  }
+  @Action(SetOpenAccountDrawerAfterLogin)
+  setOpenAccountDrawerAfterLogin(ctx: StateContext<AuthStateModel>) {
+    ctx.patchState({ openAccountDrawerAfterLogin: true });
+  }
+
+  @Action(ResetOpenAccountDrawerAfterLogin)
+  resetOpenAccountDrawerAfterLogin(ctx: StateContext<AuthStateModel>) {
+    ctx.patchState({ openAccountDrawerAfterLogin: false });
   }
 }

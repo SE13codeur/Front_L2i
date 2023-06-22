@@ -3,7 +3,9 @@ import { Injectable } from '@angular/core';
 import {
   Login,
   Logout,
+  ResetOpenAccountDrawerAfterLogin,
   ResetOpenCartAfterLogin,
+  SetOpenAccountDrawerAfterLogin,
   SetOpenCartAfterLogin,
 } from '@auth/store/auth.action';
 import { AuthState } from '@auth/store/auth.state';
@@ -65,5 +67,17 @@ export class AuthService {
 
   getOpenCartAfterLogin(): Observable<boolean> {
     return this.store.select((state) => state.auth.openCartAfterLogin);
+  }
+
+  setOpenAccountDrawerAfterLogin(value: boolean) {
+    this.store.dispatch(new SetOpenAccountDrawerAfterLogin(value));
+  }
+
+  resetOpenAccountDrawerAfterLogin() {
+    this.store.dispatch(new ResetOpenAccountDrawerAfterLogin());
+  }
+
+  getOpenAccountDrawerAfterLogin(): Observable<boolean> {
+    return this.store.select((state) => state.auth.openAccountDrawerAfterLogin);
   }
 }

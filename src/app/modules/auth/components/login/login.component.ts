@@ -48,23 +48,20 @@ export class LoginComponent implements OnInit {
     console.log('login clicked');
     if (this.loginForm.valid) {
       const credentials = this.loginForm.value;
-      this.authService.dispatchLoginAction(credentials).subscribe({
-        next: (user) => {
-          this.user = user;
-          this.router.navigate(['/items/books']);
-
+      this.authService.getOpenCartAfterLogin().subscribe((shouldOpenCart) => {
+        if (shouldOpenCart) {
+          this.cartDrawerService.openDrawer();
+          this.authService.setOpenCartAfterLogin(false);
+        } else {
           this.authService
-            .getOpenCartAfterLogin()
-            .subscribe((shouldOpenCart) => {
-              if (shouldOpenCart) {
-                this.cartDrawerService.openDrawer();
-                this.authService.setOpenCartAfterLogin(false);
+            .getOpenAccountDrawerAfterLogin()
+            .subscribe((shouldOpenAccountDrawer) => {
+              if (shouldOpenAccountDrawer) {
+                this.accountUserDrawerService.openDrawer();
+                this.authService.setOpenAccountDrawerAfterLogin(false);
               }
             });
-        },
-        error: (error) => {
-          console.error('Erreur lors de la connexion:', error);
-        },
+        }
       });
     }
   }

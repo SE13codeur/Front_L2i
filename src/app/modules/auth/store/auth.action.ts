@@ -30,3 +30,11 @@ export class SetOpenCartAfterLogin {
 export class ResetOpenCartAfterLogin {
   static readonly type = '[Auth] Reset Open Cart After Login';
 }
+export class SetOpenAccountDrawerAfterLogin {
+  static readonly type = '[Auth] Set Open Account After Login';
+  constructor(public payload: boolean) {}
+}
+
+export class ResetOpenAccountDrawerAfterLogin {
+  static readonly type = '[Auth] Reset Open Account After Login';
+}
