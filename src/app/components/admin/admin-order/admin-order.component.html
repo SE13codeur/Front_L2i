@@ -13,7 +13,7 @@
       <option value="Livré">Livré</option>
     </select>
 
-    <ng-container *ngIf="orderList$ | async as orders">
+    <ng-container *ngIf="filteredOrderList$ | async as orders">
       <table class="order-list" *ngIf="orders.length > 0; else noOrders">
         <thead>
           <tr>
@@ -38,20 +38,37 @@
                 <select
                   #statusSelectRefAdmin
                   (change)="
-                    updateOrderStatus(
-                      order.user?.id ?? 0,
-                      order.id,
-                      statusSelectRefAdmin.value
-                    )
+                    updateOrderStatus(order.id, statusSelectRefAdmin.value)
                   "
                   *ngIf="isAdmin"
                 >
-                  <option value="PENDING">En attente de confirmation</option>
-                  <option value="CONFIRMED">Confirmé</option>
-                  <option value="SHIPPING">En cours de livraison</option>
-                  <option value="DELIVERED">Livré</option>
+                  <option
+                    [selected]="order.status === 'PENDING'"
+                    value="PENDING"
+                  >
+                    En attente de confirmation
+                  </option>
+                  <option
+                    [selected]="order.status === 'CONFIRMED'"
+                    value="CONFIRMED"
+                  >
+                    Confirmé
+                  </option>
+                  <option
+                    [selected]="order.status === 'SHIPPING'"
+                    value="SHIPPING"
+                  >
+                    En cours de livraison
+                  </option>
+                  <option
+                    [selected]="order.status === 'DELIVERED'"
+                    value="DELIVERED"
+                  >
+                    Livré
+                  </option>
                 </select>
               </td>
+
               <td class="td-details">Voir les détails</td>
             </tr>
             <tr *ngIf="isOrderExpanded(order)">

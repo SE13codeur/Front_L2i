@@ -64,6 +64,7 @@ export class AccountUserDrawerComponent implements OnInit {
     this.authService.dispatchLogoutAction().subscribe({
       next: () => {
         this.accountUserDrawerService.closeDrawer();
+        this.router.navigate(['/items/books']);
       },
       error: (error) => {
         console.error('Erreur lors de la déconnexion:', error);

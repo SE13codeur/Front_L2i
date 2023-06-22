@@ -32,30 +32,10 @@ export class OrderService {
   ): Observable<any> {
     console.log(orderId, newStatus);
     const url = `${this.ordersAdminUrl}/${orderId}`;
-    return this.http.patch(url, { status: newStatus });
+    return this.http.put(url, { status: newStatus });
   }
 
   // getOrderById(orderId: number): Observable<IOrder> {
   //   return this.http.get<IOrder>(`${this.ordersAdminUrl}/${orderId}`);
   // }
 }
-
-//   constructor(private http: HttpClient) {}
-
-//   createOrder(order: ICart): Observable<any> {
-//     return this.http.post(this.orderCreateUrl, order);
-//   }
-
-//   getOrdersByUserId(userId: number): Observable<IOrder[]> {
-//     return this.http.get<IOrder[]>(`${this.ordersUrl}/${userId}`);
-//   }
-
-//   updateOrderStatusByOrderId(
-//     orderId: number,
-//     newStatus: string
-//   ): Observable<any> {
-//     console.log(orderId, newStatus);
-//     const url = `${this.ordersAdminUrl}/${orderId}`;
-//     return this.http.patch(url, { status: newStatus });
-//   }
-// }

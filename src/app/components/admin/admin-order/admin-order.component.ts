@@ -23,11 +23,6 @@ export class AdminOrderComponent implements OnInit {
 
   isAdmin = false;
 
-  arrayOfOrderNumberAndStatus: {
-    orderNumber: string;
-    orderStatus: OrderStatus;
-  }[] = [];
-
   user: IUser | null = null;
 
   constructor(
@@ -40,21 +35,24 @@ export class AdminOrderComponent implements OnInit {
     if (this.adminAuthService.isAdminAuthenticated$) {
       this.adminAuthService.isAdminAuthenticated$.subscribe((isAdmin) => {
         this.isAdmin = isAdmin;
-        this.getAllOrders();
+        if (this.isAdmin) {
+          this.getAllOrders();
+        }
       });
     }
     this.authService.user$.subscribe((user) => {
       this.user = user;
+      if (this.user && !this.isAdmin) {
+        this.getOrdersByUserId(this.user.id);
+      }
     });
-    if (this.user && !this.isAdmin) {
-      this.getOrdersByUserId(this.user.id);
-    }
   }
 
   getAllOrders(): void {
     this.orderService.getAllOrders().subscribe({
       next: (orders) => {
         this.orderList$.next(orders);
+        this.filterOrdersByStatus('all');
       },
       error: (error) => {
         console.error('Erreur lors de la récupération des commandes:', error);
@@ -81,11 +79,6 @@ export class AdminOrderComponent implements OnInit {
           this.selectedStatus = statusDescription;
         }
         this.filterOrdersByStatus(this.selectedStatus);
-
-        this.arrayOfOrderNumberAndStatus = orders.map((order) => ({
-          orderNumber: order.orderNumber,
-          orderStatus: order.status,
-        }));
       },
       error: (error) => {
         console.error('Erreur lors de la récupération des commandes:', error);
@@ -114,14 +107,14 @@ export class AdminOrderComponent implements OnInit {
     this.filteredOrderList$.next(filteredOrders);
   }
 
-  updateOrderStatus(userId: number, orderId: number, newStatus: string) {
+  updateOrderStatus(orderId: number, newStatus: string) {
     if (this.isAdmin) {
       this.orderService
         .updateOrderStatusByOrderId(orderId, newStatus)
         .subscribe({
           next: () => {
+            this.authService.user$;
             console.log('Statut de la commande mis à jour');
-            this.fetchOrdersByUserAndStatus(userId, newStatus);
           },
           error: (error) => {
             console.error(
