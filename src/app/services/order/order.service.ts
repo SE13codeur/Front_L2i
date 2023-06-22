@@ -1,9 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environmentDev as environment } from '@env/environment.dev';
-import { ICart, IOrder } from '@models/index';
-import { Console } from 'console';
-import { Observable, Subject } from 'rxjs';
+import { ICart, IOrder, IOrderLineDTO } from '@models/index';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -11,6 +10,7 @@ import { Observable, Subject } from 'rxjs';
 export class OrderService {
   private ordersUrl = `${environment.apiUrl}/items/orders`;
   private ordersAdminUrl = `${environment.apiUrl}/admin/orders`;
+  private orderlinesUrl = `${environment.apiUrl}/items/orderlines`;
 
   constructor(private http: HttpClient) {}
 
@@ -33,5 +33,9 @@ export class OrderService {
     console.log(orderId, newStatus);
     const url = `${this.ordersAdminUrl}/${orderId}`;
     return this.http.put(url, { status: newStatus });
+  }
+
+  getOrderlinesByOrderId(orderId: number): Observable<IOrderLineDTO[]> {
+    return this.http.get<IOrderLineDTO[]>(`${this.orderlinesUrl}/${orderId}`);
   }
 }

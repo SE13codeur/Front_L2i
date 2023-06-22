@@ -35,7 +35,9 @@
               <td>{{ order.date | date : "dd/MM/yyyy" }}</td>
               <td>{{ order.totalPriceTTC | number : "1.2-2" }} €</td>
               <td>{{ order.status | translateOrderStatus }}</td>
-              <td class="td-details">Voir les détails</td>
+              <td class="td-details" (click)="getOrderlinesByOrderId(order.id)">
+                Voir les détails
+              </td>
             </tr>
             <tr *ngIf="isOrderExpanded(order)">
               <td colspan="5">
@@ -51,9 +53,14 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let item of order.orderLines">
-                      <td>{{ item.book?.title }}</td>
+                    <tr *ngFor="let item of currentOrderlinesDTODetails">
+                      <td>
+                        <img [src]="item.bookImageUrl" alt="Book image" />{{
+                          item.bookTitle
+                        }}
+                      </td>
                       <td>{{ item.unitPriceHT | number : "1.2-2" }} €</td>
+                      <td>{{ item.tvaRate * 100 }} %</td>
                       <td>{{ item.unitPriceTTC | number : "1.2-2" }} €</td>
                       <td>{{ item.orderedQuantity }}</td>
                       <td>

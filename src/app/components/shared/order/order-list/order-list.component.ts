@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '@auth-s/index';
-import { IUser, OrderStatus } from '@models/index';
+import { IUser } from '@models/index';
 import {
   IOrder,
-  getOrderStatusDescription,
+  IOrderLineDTO,
   statusDescriptionToEnum,
 } from '@models/order/index';
-import { AdminAuthService, OrderService } from '@services/index';
+import { OrderService } from '@services/index';
 import { BehaviorSubject } from 'rxjs';
 
 @Component({
@@ -21,6 +21,7 @@ export class OrderListComponent implements OnInit {
   expandedOrderDetails: number | null | undefined = null;
   selectedStatus: string = 'all';
   selectedFilter = 'all';
+  currentOrderlinesDTODetails: IOrderLineDTO[] = [];
 
   isAdmin = false;
 
@@ -28,7 +29,6 @@ export class OrderListComponent implements OnInit {
 
   constructor(
     private orderService: OrderService,
-    private adminAuthService: AdminAuthService,
     private authService: AuthService
   ) {}
 
@@ -87,5 +87,19 @@ export class OrderListComponent implements OnInit {
         : orders.filter((order) => order.status === statusEnum);
 
     this.filteredOrderList$.next(filteredOrders);
+  }
+
+  getOrderlinesByOrderId(orderId: number): void {
+    this.orderService.getOrderlinesByOrderId(orderId).subscribe({
+      next: (orderLines) => {
+        this.currentOrderlinesDTODetails = orderLines;
+      },
+      error: (error) => {
+        console.error(
+          'Erreur lors de la récupération des lignes de commande:',
+          error
+        );
+      },
+    });
   }
 }
