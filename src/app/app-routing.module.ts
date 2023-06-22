@@ -14,7 +14,7 @@ import {
   FavoritesUserPageComponent,
   ProfileUserPageComponent,
 } from '@pages/index';
-import { OrderActivateCartGuard } from './guards';
+import { OrderActivateCartGuard } from './guards/cart/order-activate-cart.guard';
 
 const routes: Routes = [
   { path: 'sign-in', component: SignPageComponent },
