@@ -1,4 +1,4 @@
-import { IItem } from './item/index';
+import { IItem } from './index';
 
 export interface IAuthor {
   id: number;

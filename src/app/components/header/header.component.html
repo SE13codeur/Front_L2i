@@ -1,26 +1,20 @@
-<header>
-  <div class="carousel relative container mx-auto"  style="max-width: 1600px">
-    <div class="carousel-inner relative overflow-hidden w-full">
-      <div *ngFor="let book of books; let i = index">
-        <!--Slides-->
-        <input class="carousel-open" type="radio" id="carousel-{{i + 1}}" name="carousel" aria-hidden="true" hidden="" [attr.checked]="i === 0 ? 'checked' : null" (change)="currentSlide = i">
-        <div class="carousel-item absolute opacity-0" style="height:50vh;">
-          <div class="block h-full w-full mx-auto flex pt-6 md:pt-0 md:items-center book-image-container" [style]="{'background-image': 'url(' + book.image + ')', 'background-size': 'contain', 'background-repeat': 'no-repeat', 'background-position': 'center center'}">
-            <div class="container mx-auto">
-              <div class="flex flex-col w-full lg:w-1/2 md:ml-16 items-center md:items-start px-6 tracking-wide">
-              </div>
-            </div>
-          </div>
-        </div>
-        <label *ngIf="i > 0" for="carousel-{{i}}" class="prev control-{{i + 1}} w-10 h-10 ml-2 md:ml-10 absolute cursor-pointer hidden text-3xl font-bold text-black hover:text-white rounded-full bg-white hover:bg-gray-900 leading-tight text-center z-10 inset-y-0 left-0 my-auto">‹</label>
-        <label *ngIf="i < books.length - 1" for="carousel-{{i + 2}}" class="next control-{{i + 1}} w-10 h-10 mr-2 md:mr-10 absolute cursor-pointer hidden text-3xl font-bold text-black hover:text-white rounded-full bg-white hover:bg-gray-900 leading-tight text-center z-10 inset-y-0 right-0 my-auto">›</label>
-      </div>
-
-      <ol class="carousel-indicators">
-        <li class="inline-block mr-3" *ngFor="let book of books; let i = index">
-          <label for="carousel-{{i + 1}}" class="carousel-bullet cursor-pointer block text-4xl text-gray-400 hover:text-gray-900" [ngClass]="{'carousel-bullet-active': currentSlide === i}">•</label>
-        </li>
-      </ol>
+<div class="slider">
+  <div class="arrows">
+    <div class="arrow" (click)="goToPrevious()">❰</div>
+    <div class="arrow" (click)="goToNext()">❱</div>
+  </div>
+  <div
+    class="slide"
+    [ngStyle]="{ 'background-image': getCurrentSlideUrl() }"
+  ></div>
+  <div class="dotsContainer">
+    <div
+      *ngFor="let book of books; let slideIndex = index"
+      class="dot"
+      (click)="goToSlide(slideIndex)"
+      [ngClass]="{ 'dot-active': currentIndex === slideIndex }"
+    >
+      ●
     </div>
   </div>
-</header>
+</div>

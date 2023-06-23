@@ -1,73 +1,53 @@
-header {
-    padding-top: 9.99rem;
-    padding-bottom: 3.3rem;
-}
-.work-sans {
-  font-family: 'Work Sans', sans-serif;
-}
-
-.carousel-item > div {
-  height: 50vh;
-  background-size: cover;
-  background-position: center;
+.slider {
+  position: relative;
+  top: 3.3rem;
+  height: 98vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 0%;
 }
 
-.carousel-item > div {
-  height: 50vh;
-  object-fit: contain;
-  background-position: center center;
-  background-repeat: no-repeat;
-}
-
-#menu-toggle:checked + #menu {
-  display: block;
-}
-
-.hover\:grow {
-  transition: all 0.3s;
-  transform: scale(1);
-}
-
-.hover\:grow:hover {
-  transform: scale(1.02);
-}
-
-.carousel-open:checked + .carousel-item {
-  position: static;
-  opacity: 100;
-}
-
-.carousel-bullet-active {
-  font-weight: bold;
-  color: #000;
-}
-
-#carousel-1:checked ~ .control-1,
-#carousel-2:checked ~ .control-2,
-#carousel-3:checked ~ .control-3 {
-  display: block;
-}
-
-.carousel-indicators {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+.arrows {
   position: absolute;
-  bottom: 2%;
+  top: 50%;
   left: 0;
   right: 0;
-  text-align: center;
-  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 2em;
+  z-index: 1;
 }
 
-#carousel-1:checked ~ .control-1 ~ .carousel-indicators li:nth-child(1) .carousel-bullet,
-#carousel-2:checked ~ .control-2 ~ .carousel-indicators li:nth-child(2) .carousel-bullet,
-#carousel-3:checked ~ .control-3 ~ .carousel-indicators li:nth-child(3) .carousel-bullet {
-  color: #000;
+.arrow {
+  cursor: pointer;
+  color: white;
+  font-size: 2em;
 }
 
-@media (max-width: 770px) {
-  header {
-    margin-top: 11rem;
-  }
+.slide {
+  width: 100%;
+  height: 100%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.dotsContainer {
+  position: absolute;
+  bottom: 1em;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.dot {
+  cursor: pointer;
+  color: #bbb;
+  font-size: 2em;
+}
+
+.dot-active {
+  color: white;
 }

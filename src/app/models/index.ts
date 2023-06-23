@@ -1,5 +1,4 @@
-export * from './IAuthor';
-export * from './IEditor';
+export * from './header/ISlide';
 export * from './cart';
 export * from './item';
 export * from './order';

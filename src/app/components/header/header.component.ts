@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { ISlide } from '@models/index';
 
 interface BookMockModel {
   title: string;
@@ -15,6 +16,8 @@ interface BookMockModel {
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent {
+  @Input() slides: ISlide[] = [];
+
   currentSlide = 0;
   books: BookMockModel[] = [
     {
@@ -43,23 +46,48 @@ export class HeaderComponent {
     },
   ];
 
-  nextSlide() {
-    this.currentSlide = (this.currentSlide + 1) % this.books.length;
-    this.updateSlide();
+  currentIndex: number = 0;
+  timeoutId?: number;
+
+  ngOnInit(): void {
+    this.resetTimer();
   }
 
-  prevSlide() {
-    this.currentSlide =
-      (this.currentSlide - 1 + this.books.length) % this.books.length;
-    this.updateSlide();
+  ngOnDestroy(): void {
+    window.clearTimeout(this.timeoutId);
   }
 
-  updateSlide() {
-    const radioButton = document.getElementById(
-      'carousel-' + (this.currentSlide + 1)
-    ) as HTMLInputElement;
-    if (radioButton) {
-      radioButton.checked = true;
+  resetTimer(): void {
+    if (this.timeoutId) {
+      window.clearTimeout(this.timeoutId);
     }
+    this.timeoutId = window.setTimeout(() => this.goToNext(), 3000);
+  }
+
+  goToPrevious(): void {
+    const isFirstSlide = this.currentIndex === 0;
+    const newIndex = isFirstSlide
+      ? this.books.length - 1
+      : this.currentIndex - 1;
+
+    this.resetTimer();
+    this.currentIndex = newIndex;
+  }
+
+  goToNext(): void {
+    const isLastSlide = this.currentIndex === this.books.length - 1;
+    const newIndex = isLastSlide ? 0 : this.currentIndex + 1;
+
+    this.resetTimer();
+    this.currentIndex = newIndex;
+  }
+
+  goToSlide(slideIndex: number): void {
+    this.resetTimer();
+    this.currentIndex = slideIndex;
+  }
+
+  getCurrentSlideUrl(): string {
+    return `url('${this.books[this.currentIndex].image}')`;
   }
 }
