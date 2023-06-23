@@ -21,7 +21,7 @@
             <th>Date</th>
             <th>Total TTC</th>
             <th>Statut</th>
-            <th>Actions</th>
+            <th colspan="2">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -37,6 +37,14 @@
               <td>{{ order.status | translateOrderStatus }}</td>
               <td class="td-details" (click)="getOrderlinesByOrderId(order.id)">
                 Voir les détails
+              </td>
+              <td>
+                <button (click)="downloadInvoice(order, $event)">
+                  <span style="display: flex; align-items: center">
+                    <mat-icon>download</mat-icon>
+                    <span>Télécharger la facture</span>
+                  </span>
+                </button>
               </td>
             </tr>
             <tr *ngIf="isOrderExpanded(order)">

@@ -7,6 +7,7 @@ import {
   statusDescriptionToEnum,
 } from '@models/order/index';
 import { OrderService } from '@services/index';
+import jsPDF from 'jspdf';
 import { BehaviorSubject } from 'rxjs';
 
 @Component({
@@ -101,5 +102,41 @@ export class OrderListComponent implements OnInit {
         );
       },
     });
+  }
+
+  downloadInvoice(order: any, event: Event) {
+    event.stopPropagation();
+    const doc = new jsPDF();
+
+    doc.setFontSize(18);
+    doc.text('Facture', 11, 8);
+    doc.setFontSize(11);
+    doc.setTextColor(100);
+
+    let currentY = 20;
+
+    doc.text(`Numéro de commande : ${order.orderNumber}`, 10, currentY);
+    currentY += 10;
+    doc.text(`Date : ${order.date}`, 10, currentY);
+    currentY += 10;
+    doc.text(`Total TTC : ${order.totalPriceTTC} €`, 10, currentY);
+    currentY += 10;
+
+    doc.text('Détails de commande:', 10, currentY);
+    currentY += 10;
+
+    for (let item of order.items) {
+      doc.text(`Article : ${item.bookTitle}`, 10, currentY);
+      doc.text(`Prix Unitaire TTC : ${item.unitPriceTTC} €`, 10, currentY + 10);
+      doc.text(`Quantité : ${item.orderedQuantity}`, 10, currentY + 20);
+      doc.text(
+        `Sous-total TTC : ${item.unitPriceTTC * item.orderedQuantity} €`,
+        10,
+        currentY + 30
+      );
+      currentY += 40;
+    }
+
+    doc.save(`facture_${order.orderNumber}.pdf`);
   }
 }
