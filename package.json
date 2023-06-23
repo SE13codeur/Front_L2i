@@ -28,6 +28,7 @@
     "@ngxs/store": "^3.8.1",
     "@stripe/stripe-js": "^1.54.0",
     "jspdf": "^2.5.1",
+    "jspdf-autotable": "^3.5.29",
     "meilisearch": "^0.32.3",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",

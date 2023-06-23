@@ -59,6 +59,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 import {
   MatPaginatorIntl,
@@ -139,6 +141,8 @@ import { OrderStatusPipe } from '@libs/index';
     MatSelectModule,
     FormsModule,
     MatDialogModule,
+    MatMenuModule,
+    MatGridListModule,
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'fr-FR' },

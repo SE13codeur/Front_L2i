@@ -92,8 +92,7 @@ h1 {
 @media screen and (max-width: 888px) {
   .container {
     margin-left: 0.5rem;
-    top: 22rem;
-    height: calc(100% - 22rem);  }
+  }
 
   .cart-table th,
   .cart-table td {
@@ -114,12 +113,9 @@ h1 {
 }
 
 /* Media query for mobile devices */
-@media screen and (max-width: 555px) {
+@media screen and (max-width: 888px) {
   .container {
     margin-left: 0.3rem;
-    top: 22rem;
-    height: calc(100% - 22rem);
-
   }
 
   .hide-on-mobile {

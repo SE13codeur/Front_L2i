@@ -6,8 +6,6 @@ body {
   max-width: 600px;
   margin: 0.44rem auto;
   text-align: center;
-  top: 7rem;
-  height: calc(100% - 7rem);
 }
 
 .mat-card-actions.button-row {

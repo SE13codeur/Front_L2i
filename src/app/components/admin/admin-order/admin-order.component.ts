@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '@auth-s/index';
-import { IOrder, IUser, statusDescriptionToEnum } from '@models/index';
+import { getStatusIcon, statusDescriptionToEnum } from '@libs/helpers/order';
+import { IOrder, IOrderLineDTO, IUser } from '@models/index';
 import { AdminAuthService, OrderService } from '@services/index';
-import { BehaviorSubject } from 'rxjs';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
+import { BehaviorSubject, map } from 'rxjs';
 
 @Component({
   selector: 'app-admin-order',
@@ -15,10 +18,9 @@ export class AdminOrderComponent implements OnInit {
 
   expandedOrderDetails: number | null | undefined = null;
   selectedStatus: string = 'all';
-
   isAdmin = false;
-
   user: IUser | null = null;
+  currentOrderlinesDTODetails: IOrderLineDTO[] = [];
 
   constructor(
     private orderService: OrderService,
@@ -74,6 +76,7 @@ export class AdminOrderComponent implements OnInit {
           this.selectedStatus = statusDescription;
         }
         this.filterOrdersByStatus(this.selectedStatus);
+        this.getStatusIcon(this.selectedStatus);
       },
       error: (error) => {
         console.error('Erreur lors de la récupération des commandes:', error);
@@ -93,13 +96,24 @@ export class AdminOrderComponent implements OnInit {
   filterOrdersByStatus(description: string): void {
     const orders = this.orderList$.getValue();
     const statusEnum = statusDescriptionToEnum(description);
-
     const filteredOrders =
       description === 'all'
         ? orders
         : orders.filter((order) => order.status === statusEnum);
 
     this.filteredOrderList$.next(filteredOrders);
+    this.filteredOrderList$
+      .asObservable()
+      .pipe(
+        map((orders) =>
+          orders.sort(
+            (a, b) =>
+              new Date(b.date || '2023-07-12').getTime() -
+              new Date(a.date || '2023-07-12').getTime()
+          )
+        )
+      )
+      .subscribe((sortedOrders) => this.filteredOrderList$.next(sortedOrders));
   }
 
   updateOrderStatus(orderId: number, newStatus: string) {
@@ -119,5 +133,50 @@ export class AdminOrderComponent implements OnInit {
           },
         });
     }
+  }
+
+  getOrderlinesByOrderId(orderId: number): void {
+    this.orderService.getOrderlinesByOrderId(orderId).subscribe({
+      next: (orderLines) => {
+        this.currentOrderlinesDTODetails = orderLines;
+      },
+      error: (error) => {
+        console.error('Error while fetching order lines:', error);
+      },
+    });
+  }
+
+  downloadInvoice(order: any, event: Event) {
+    event.stopPropagation();
+
+    const doc = new jsPDF();
+
+    doc.setFontSize(18);
+    doc.text('Invoice', 11, 8);
+    doc.setFontSize(11);
+    doc.setTextColor(100);
+
+    doc.text(`Order Number : ${order.orderNumber}`, 10, 20);
+    doc.text(`Date : ${order.date}`, 10, 30);
+    doc.text(`Total TTC : ${order.totalPriceTTC} €`, 10, 40);
+
+    const orderDetails = order.items.map((item: any) => ({
+      Product: item.bookTitle,
+      'Unit Price TTC': `${item.unitPriceTTC} €`,
+      Quantity: item.orderedQuantity,
+      'Subtotal TTC': `${item.unitPriceTTC * item.orderedQuantity} €`,
+    }));
+
+    autoTable(doc, {
+      head: [['Product', 'Unit Price TTC', 'Quantity', 'Subtotal TTC']],
+      body: orderDetails,
+      startY: 50,
+    });
+
+    doc.save(`invoice_${order.orderNumber}.pdf`);
+  }
+
+  getStatusIcon(status: string) {
+    getStatusIcon(status);
   }
 }

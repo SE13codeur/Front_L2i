@@ -12,6 +12,10 @@
   margin-bottom: 1.11rem;
 }
 
+.status-icon{
+  display: none;
+}
+
 td {
   text-align: center;
 }
@@ -27,16 +31,27 @@ td {
 
 .order-list {
   width: 100%;
-  margin: 1rem 0;
+  margin: 1.11rem 0;
   border-collapse: collapse;
 }
 
 .order-list th,
 .order-list td {
-  padding: 0.5rem;
-  text-align: left;
+  padding: 1.11rem;
+  text-align: center;
   border-bottom: 1px solid #ddd;
 }
+
+.order-list tr {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.22);
+  margin: 10px 0;
+  transition: box-shadow 0.3s ease;
+}
+
+.order-list tr:hover {
+  box-shadow: 0 2px 6px rgba(0,0,0,0.33);
+}
+
 
 .order-list th {
   background-color: #f5f5f5;
@@ -51,4 +66,14 @@ td {
   font-size: 2em;
   color: red;
   margin-top: 2rem;
+}
+
+@media (max-width: 707px) {
+  .status-text {
+    display: none;
+  }
+
+  .status-icon{
+    display: block;
+  }
 }

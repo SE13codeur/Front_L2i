@@ -2,16 +2,13 @@ import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { IItem } from '@models/index';
-import { Store } from '@ngxs/store';
 import {
   AdminAuthService,
-  CartItemQuantityService,
   FiltersService,
   ItemService,
   PaginationService,
 } from '@services/index';
-import { CartState } from '@store/index';
-import { BehaviorSubject, Observable, Subject, map, take } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, take } from 'rxjs';
 
 @Component({
   selector: 'app-list-item-without-meilisearch',

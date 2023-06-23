@@ -3,8 +3,8 @@
 }
 
 mat-sidenav {
-  width: 250px;
-  margin-top: 7.7rem;
+  margin-top: 8.9rem;
+  width: 255px;
   margin-right: 36%;
   position: fixed;
   left: 0;
@@ -118,17 +118,19 @@ p {
   border-color: #808080 !important;
 }
 
-@media (max-width: 888px) {
+@media (max-width: 806px) {
   mat-sidenav  {
-    margin-top: 24rem;
-  }
-
-  mat-sidenav-content  {
-    margin-top: 22rem;
+    width: 333px;
   }
 }
 
-@media (max-width: 555px) {
+@media (max-width: 660px) {
+  mat-sidenav  {
+    width: 255px;
+  }
+}
+
+@media (max-width: 505px) {
   mat-sidenav  {
     display: none;
   }

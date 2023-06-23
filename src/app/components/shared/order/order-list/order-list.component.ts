@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '@auth-s/index';
+import { getStatusIcon, statusDescriptionToEnum } from '@libs/helpers/order';
 import { IUser } from '@models/index';
-import {
-  IOrder,
-  IOrderLineDTO,
-  statusDescriptionToEnum,
-} from '@models/order/index';
+import { IOrder, IOrderLineDTO } from '@models/order/index';
 import { OrderService } from '@services/index';
 import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 import { BehaviorSubject } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-order-list',
@@ -18,14 +17,11 @@ import { BehaviorSubject } from 'rxjs';
 export class OrderListComponent implements OnInit {
   orderList$ = new BehaviorSubject<IOrder[]>([]);
   filteredOrderList$ = new BehaviorSubject<IOrder[]>([]);
-
   expandedOrderDetails: number | null | undefined = null;
   selectedStatus: string = 'all';
   selectedFilter = 'all';
   currentOrderlinesDTODetails: IOrderLineDTO[] = [];
-
   isAdmin = false;
-
   user: IUser | null = null;
 
   constructor(
@@ -49,7 +45,7 @@ export class OrderListComponent implements OnInit {
         this.filterOrdersByStatus('all');
       },
       error: (error) => {
-        console.error('Erreur lors de la récupération des commandes:', error);
+        console.error('Error while fetching orders:', error);
       },
     });
   }
@@ -62,9 +58,10 @@ export class OrderListComponent implements OnInit {
           this.selectedStatus = statusDescription;
         }
         this.filterOrdersByStatus(this.selectedStatus);
+        this.getStatusIcon(this.selectedStatus);
       },
       error: (error) => {
-        console.error('Erreur lors de la récupération des commandes:', error);
+        console.error('Error while fetching orders:', error);
       },
     });
   }
@@ -81,13 +78,24 @@ export class OrderListComponent implements OnInit {
   filterOrdersByStatus(description: string): void {
     const orders = this.orderList$.getValue();
     const statusEnum = statusDescriptionToEnum(description);
-
     const filteredOrders =
       description === 'all'
         ? orders
         : orders.filter((order) => order.status === statusEnum);
 
     this.filteredOrderList$.next(filteredOrders);
+    this.filteredOrderList$
+      .asObservable()
+      .pipe(
+        map((orders) =>
+          orders.sort(
+            (a, b) =>
+              new Date(b.date || '2023-07-12').getTime() -
+              new Date(a.date || '2023-07-12').getTime()
+          )
+        )
+      )
+      .subscribe((sortedOrders) => this.filteredOrderList$.next(sortedOrders));
   }
 
   getOrderlinesByOrderId(orderId: number): void {
@@ -96,47 +104,42 @@ export class OrderListComponent implements OnInit {
         this.currentOrderlinesDTODetails = orderLines;
       },
       error: (error) => {
-        console.error(
-          'Erreur lors de la récupération des lignes de commande:',
-          error
-        );
+        console.error('Error while fetching order lines:', error);
       },
     });
   }
 
   downloadInvoice(order: any, event: Event) {
     event.stopPropagation();
+
     const doc = new jsPDF();
 
     doc.setFontSize(18);
-    doc.text('Facture', 11, 8);
+    doc.text('Invoice', 11, 8);
     doc.setFontSize(11);
     doc.setTextColor(100);
 
-    let currentY = 20;
+    doc.text(`Order Number : ${order.orderNumber}`, 10, 20);
+    doc.text(`Date : ${order.date}`, 10, 30);
+    doc.text(`Total TTC : ${order.totalPriceTTC} €`, 10, 40);
 
-    doc.text(`Numéro de commande : ${order.orderNumber}`, 10, currentY);
-    currentY += 10;
-    doc.text(`Date : ${order.date}`, 10, currentY);
-    currentY += 10;
-    doc.text(`Total TTC : ${order.totalPriceTTC} €`, 10, currentY);
-    currentY += 10;
+    const orderDetails = order.items.map((item: any) => ({
+      Product: item.bookTitle,
+      'Unit Price TTC': `${item.unitPriceTTC} €`,
+      Quantity: item.orderedQuantity,
+      'Subtotal TTC': `${item.unitPriceTTC * item.orderedQuantity} €`,
+    }));
 
-    doc.text('Détails de commande:', 10, currentY);
-    currentY += 10;
+    autoTable(doc, {
+      head: [['Product', 'Unit Price TTC', 'Quantity', 'Subtotal TTC']],
+      body: orderDetails,
+      startY: 50,
+    });
 
-    for (let item of order.items) {
-      doc.text(`Article : ${item.bookTitle}`, 10, currentY);
-      doc.text(`Prix Unitaire TTC : ${item.unitPriceTTC} €`, 10, currentY + 10);
-      doc.text(`Quantité : ${item.orderedQuantity}`, 10, currentY + 20);
-      doc.text(
-        `Sous-total TTC : ${item.unitPriceTTC * item.orderedQuantity} €`,
-        10,
-        currentY + 30
-      );
-      currentY += 40;
-    }
+    doc.save(`invoice_${order.orderNumber}.pdf`);
+  }
 
-    doc.save(`facture_${order.orderNumber}.pdf`);
+  getStatusIcon(status: string) {
+    getStatusIcon(status);
   }
 }

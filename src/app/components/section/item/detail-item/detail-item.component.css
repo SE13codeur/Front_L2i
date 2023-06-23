@@ -1,7 +1,5 @@
 .container {
   height: 100%;
-  top: 7rem;
-  height: calc(100% - 7rem);
   max-width: 77rem;
   margin: 0;
   margin-top: 7.77rem;
@@ -96,11 +94,6 @@ button {
 }
 
 @media (max-width: 888px) {
-  .container  {
-    top: 22rem;
-    height: calc(100% - 22rem);
-    margin-top: 19rem;
-  }
   .image-wrapper {
     top: 7.7rem;
     height: calc(100% - 7.7rem);

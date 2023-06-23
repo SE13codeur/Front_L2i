@@ -12,6 +12,35 @@
       <button mat-button routerLink="/items/books/comments">Avis</button>
     </div>
 
+    <!-- Mobile menu -->
+    <div class="mobile-menu">
+      <button
+        mat-icon-button
+        [matMenuTriggerFor]="menu"
+        aria-label="Example icon-button with a menu"
+      >
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item routerLink="/items/books">
+          <mat-icon>menu_book</mat-icon>
+          <span>Articles</span>
+        </button>
+        <button mat-menu-item routerLink="/items/books/new">
+          <mat-icon>trending_up</mat-icon>
+          <span>Nouveautés</span>
+        </button>
+        <button mat-menu-item routerLink="/items/books/promos">
+          <mat-icon>euro</mat-icon>
+          <span>Soldes</span>
+        </button>
+        <button mat-menu-item routerLink="/items/books/comments">
+          <mat-icon>speaker_notes</mat-icon>
+          <span>Avis</span>
+        </button>
+      </mat-menu>
+    </div>
+
     <!-- Search bar -->
     <div class="logo-search-container">
       <app-search-item class="search-bar-large"></app-search-item>

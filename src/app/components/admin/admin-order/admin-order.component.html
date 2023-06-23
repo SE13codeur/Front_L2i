@@ -21,7 +21,7 @@
             <th>Date</th>
             <th>Total TTC</th>
             <th>Statut</th>
-            <th>Actions</th>
+            <th colspan="2">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -68,8 +68,20 @@
                   </option>
                 </select>
               </td>
-
-              <td class="td-details">Voir les détails</td>
+              <td class="td-details" (click)="getOrderlinesByOrderId(order.id)">
+                <span>
+                  <mat-icon class="mobile">visibility</mat-icon>
+                  <span class="detail-text">Voir les détails</span>
+                </span>
+              </td>
+              <td>
+                <button (click)="downloadInvoice(order, $event)">
+                  <span>
+                    <mat-icon class="mobile">download</mat-icon>
+                    <span class="download-text">Télécharger la facture</span>
+                  </span>
+                </button>
+              </td>
             </tr>
             <tr *ngIf="isOrderExpanded(order)">
               <td colspan="6">
