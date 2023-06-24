@@ -2,8 +2,8 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   grid-gap: 1.11rem;
-  margin-left: 4.4%;
-  margin-top: 2.2rem;
+  margin-left: 1.11%;
+  margin-top: 1.11rem;
 }
 
 .custom-card {
@@ -93,33 +93,33 @@ mat-card-title {
   }
 }
 
-@media screen and (max-width: 806px) {
-  .container {
-    margin-left: 22.7%;
-  }
-}
-
-@media screen and (max-width: 606px) {
-  .container {
-    margin-left: 14%;
-  }
-}
-
-@media screen and (max-width: 555px) {
+@media screen and (max-width: 888px) {
   .container {
     margin-left: 4.4%;
   }
 }
 
-@media screen and (max-width: 505px) {
+@media screen and (max-width: 777px) {
   .container {
-    margin-left: 22%;
+    margin-left:17%
   }
 }
 
-@media screen and (max-width: 365px) {
+@media screen and (max-width: 606px) {
   .container {
-    margin-left: 8.9%;
+    margin-left: 3.33%
+  }
+}
+
+@media screen and (max-width: 505px) {
+  .container {
+    margin-left: 0%
+  }
+}
+
+@media screen and (max-width: 468px) {
+  .container {
+    margin-left: 17%
   }
 }
 

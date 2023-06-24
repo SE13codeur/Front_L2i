@@ -2,9 +2,8 @@
   height: 100vh !important;}
 
 mat-sidenav {
-  margin-top: 8.9rem;
-  width: 255px;
-  margin-right: 36%;
+  margin-top: 7.77rem;
+  width: 233px;
   position: fixed;
   left: 0;
   right: 0;
@@ -117,19 +116,24 @@ p {
   border-color: #808080 !important;
 }
 
-@media (max-width: 806px) {
+@media (max-width: 777px) {
   mat-sidenav  {
-    width: 333px;
+    width: 355px;
   }
 }
 
-@media (max-width: 660px) {
+@media (max-width: 707px) {
   mat-sidenav  {
     width: 255px;
   }
 }
 
-@media (max-width: 505px) {
+@media (max-width: 555px) {
+  mat-sidenav  {
+    width: 202px;  }
+}
+
+@media (max-width: 468px) {
   mat-sidenav  {
     display: none;
   }
