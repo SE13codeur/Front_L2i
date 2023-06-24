@@ -1,12 +1,12 @@
 export function getStatusIcon(status: string) {
   switch (status) {
-    case 'En attente de confirmation':
+    case 'PENDING':
       return 'hourglass_empty';
-    case 'Confirmé':
+    case 'CONFIRMED':
       return 'check_circle';
-    case 'En cours de livraison':
+    case 'SHIPPING':
       return 'local_shipping';
-    case 'Livré':
+    case 'DELIVERED':
       return 'done_all';
     default:
       return 'info';
