@@ -1,8 +1,9 @@
 .footer {
+  position: relative !important;
   height: 44vh !important;
   background-color: black;
   color: #fff;
-  padding: 3em 0;
+  margin: 7.77 0rem;
   font-size: 14px;
   display: flex;
   flex-direction: column;

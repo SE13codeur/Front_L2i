@@ -1,5 +1,7 @@
 .sidenav-container {
-  height: 100vh !important;}
+  height: 100vh !important;
+
+}
 
 mat-sidenav {
   margin-top: 7.77rem;

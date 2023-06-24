@@ -1,10 +1,11 @@
 .container {
+  height: 100h !important;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   grid-gap: 1.11rem;
+  margin-bottom: 3.33rem;
   margin-left: 1.11%;
   margin-top: 1.11rem;
-  margin-bottom: 3.33rem;
 }
 
 .custom-card {
