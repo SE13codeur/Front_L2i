@@ -1,13 +1,6 @@
 <footer class="footer">
   <div class="footer-content">
-    <div
-      style="
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-      "
-    >
+    <div>
       <button style="cursor: pointer" (click)="scrollToTop()">
         <span
           style="
@@ -42,9 +35,18 @@
     </div>
 
     <div class="footer-section">
-      <h3 class="footer-title">
-        Besoin d'aide<mat-icon>contact_support</mat-icon>
-      </h3>
+      <span
+        style="
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: center;
+        "
+      >
+        <span class="footer-title">
+          Besoin d'aide<mat-icon>contact_support</mat-icon>
+        </span>
+      </span>
       <ul class="footer-links">
         <li><a href="#">Retours articles</a></li>
         <li><a href="#">Tarifs et livraison</a></li>

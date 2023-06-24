@@ -1,5 +1,5 @@
-<div class="login-container">
-  <div class="login-card">
+<div class="register-container">
+  <div class="register-card">
     <h2>Inscription</h2>
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
       <div class="account-info">
@@ -86,7 +86,7 @@
       </div>
       <button
         type="submit"
-        class="login-button"
+        class="register-button"
         [disabled]="registerForm.invalid"
       >
         Créer votre compte

@@ -33,8 +33,12 @@
   gap: 3.3rem;
 }
 
+.menu button{
+  font-size: 1.11rem;
+}
+
 .menu :hover {
-  font-size: 1.1rem;
+  font-size: 1.31rem;
   color: #fff;
   background-color: #14BAF0;
   transform: scale(1.11);
@@ -64,7 +68,7 @@
   align-items: center;
   justify-content: flex-end;
   flex-grow: 0.111;
-    gap: 3.33rem;
+  gap: 3.33rem;
 }
 
 .search-bar-large {

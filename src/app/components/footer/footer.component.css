@@ -1,33 +1,50 @@
 .footer {
   position: relative !important;
-  height: auto !important; /* allow the height to be dynamic */
+  height: 100vh !important;
   background-color: black;
   color: #fff;
-  margin: 0 0rem; /* reduce or remove margin */
+  margin: 0 0rem;
   font-size: 14px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-evenly;
-  overflow: auto; /* add overflow */
-  padding: 1.11rem 0; /* add some padding top and bottom */
+  justify-content: center;
+  overflow: auto;
+  padding: 1.11rem 0;
 }
 
 .footer-content {
-  gap: 1.11rem; /* reduce gap */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.11rem;
 }
 
-.footer-section h3 {
-  font-size: 1rem; /* reduce title font size */
+.footer-legal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1.11rem;
+}
+
+.footer-title {
+  font-size: 1.11rem;
 }
 
 .footer-links li a {
-  font-size: 0.8rem; /* reduce link font size */
+  font-size: 0.8rem;
 }
 
 .footer-logo {
-  max-width: 60px; /* reduce logo size */
-  margin-bottom: 1.11rem; /* add some bottom margin */
+  max-width: 60px;
+  margin-bottom: 1.11rem;
+}
+
+a {
+  text-decoration: none;
+  color: aliceblue;
 }
 
 @media (max-width: 555px) {
@@ -41,15 +58,15 @@
   }
 
   .footer-links {
-    padding: 0 1rem; /* reduce padding */
+    padding: 0 1rem;
   }
 
   .footer-links li a {
-    font-size: 0.8rem; /* reduce font size */
+    font-size: 0.8rem;
   }
 
   .footer-logo {
-    max-width: 50px; /* reduce logo size */
+    max-width: 50px;
   }
 
   .footer-legal {
@@ -61,11 +78,7 @@
   }
 
   .footer-links-small li a {
-    font-size: 0.7rem; /* reduce font size */
+    font-size: 0.7rem;
   }
 
-  a {
-    text-decoration: none;
-    color: aliceblue;
-  }
 }
