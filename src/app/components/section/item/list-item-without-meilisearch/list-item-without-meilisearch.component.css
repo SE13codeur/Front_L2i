@@ -101,7 +101,8 @@ mat-card-title {
 
 @media screen and (max-width: 777px) {
   .container {
-    margin-left:17%
+    margin-left: 17%;
+    margin-top: 7.77rem;
   }
 }
 

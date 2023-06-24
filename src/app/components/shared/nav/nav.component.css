@@ -1,9 +1,5 @@
 .nav-container {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
+  height: 7rem;
 }
 
 .nav-wrapper {
@@ -26,11 +22,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-grow: 1;
 }
 
 .nav-logo img {
-  height: 2.5rem;
+  height: 3.33rem;
   width: auto;
   margin-right: 3.3rem;
   margin-left: 3.3rem;
@@ -45,10 +40,6 @@
 
 .search-bar-large {
   flex-grow: 7.7;
-}
-
-.nav-aside {
-  margin-right: 3.3rem;
 }
 
 .admin-add-item {
@@ -77,47 +68,72 @@
   background-color: grey;
 }
 
-@media (min-width: 889px) {
+@media (max-width: 936px) {
   .menu {
-    display: flex;
+    gap: 1.11rem;
   }
+}
+
+@media (max-width: 836px) {
+  .menu {
+    gap: 0.44rem;
+  }
+}
+
+@media (max-width: 809px) {
+  .menu {
+    gap: 0;
+  }
+}
+
+@media (min-width: 778px) {
 
   .mobile-menu {
     display: none;
   }
 }
 
-@media (max-width: 888px) {
+/* Media Query for mobile devices */
+@media (max-width: 777px) {
+  .nav-container {
+    flex-direction: column;
+    height: 11rem;
+  }
+
+  .nav-wrapper {
+    flex-direction: column;
+  }
+
   .menu {
+    gap: 1.11rem;
     display: none;
   }
 
   .mobile-menu {
     display: block;
   }
-}
 
-@media (max-width: 444px) {
-  .nav-container {
-
+  .logo-search-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content:left;
+    margin: 0;
+    margin-right: 3.33rem;
   }
 
-  .menu {
-    display: none;
-    gap: 0;
-    padding: 0;
+  .search-bar-large {
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    flex-grow: 0;
     margin: 0;
   }
 
-  .mobile-menu {
-    display: block;
+  .nav-actions {
+    flex-grow: 0;
+    margin: 0;
+    gap: 0;
   }
 
-  .nav-wrapper{
-    display: flex;
-    flex-direction: column;
-    height: auto;
-  }
 }
-
-

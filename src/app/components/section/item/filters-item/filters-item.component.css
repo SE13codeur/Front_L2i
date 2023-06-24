@@ -119,6 +119,7 @@ p {
 @media (max-width: 777px) {
   mat-sidenav  {
     width: 355px;
+    margin-top: 14rem;
   }
 }
 
