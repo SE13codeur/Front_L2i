@@ -46,8 +46,9 @@ export class HeaderComponent {
     },
   ];
 
-  currentIndex: number = 0;
+  private _currentIndex = 0;
   timeoutId?: number;
+  backgroundImageUrl: string = this.books[0].image;
 
   ngOnInit(): void {
     this.resetTimer();
@@ -57,11 +58,26 @@ export class HeaderComponent {
     window.clearTimeout(this.timeoutId);
   }
 
+  get currentIndex(): number {
+    return this._currentIndex;
+  }
+
+  set currentIndex(index: number) {
+    this._currentIndex = index;
+    this.backgroundImageUrl = `url('${this.books[this._currentIndex].image}')`;
+  }
+
+  getCurrentSlideUrl(): string {
+    const imageUrl = `url('${this.books[this.currentIndex].image}')`;
+    this.backgroundImageUrl = imageUrl;
+    return imageUrl;
+  }
+
   resetTimer(): void {
     if (this.timeoutId) {
       window.clearTimeout(this.timeoutId);
     }
-    this.timeoutId = window.setTimeout(() => this.goToNext(), 3000);
+    this.timeoutId = window.setTimeout(() => this.goToNext(), 7007);
   }
 
   goToPrevious(): void {
@@ -85,9 +101,5 @@ export class HeaderComponent {
   goToSlide(slideIndex: number): void {
     this.resetTimer();
     this.currentIndex = slideIndex;
-  }
-
-  getCurrentSlideUrl(): string {
-    return `url('${this.books[this.currentIndex].image}')`;
   }
 }

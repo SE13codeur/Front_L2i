@@ -1,20 +1,24 @@
-<div class="slider">
-  <div class="arrows">
-    <div class="arrow" (click)="goToPrevious()">❰</div>
-    <div class="arrow" (click)="goToNext()">❱</div>
-  </div>
-  <div
-    class="slide"
-    [ngStyle]="{ 'background-image': getCurrentSlideUrl() }"
-  ></div>
-  <div class="dotsContainer">
+<div class="background" [style.backgroundImage]="backgroundImageUrl"></div>
+
+<header>
+  <div class="slider">
+    <div class="arrows">
+      <div class="arrow" (click)="goToPrevious()">❰</div>
+      <div class="arrow" (click)="goToNext()">❱</div>
+    </div>
     <div
-      *ngFor="let book of books; let slideIndex = index"
-      class="dot"
-      (click)="goToSlide(slideIndex)"
-      [ngClass]="{ 'dot-active': currentIndex === slideIndex }"
-    >
-      ●
+      class="slide"
+      [ngStyle]="{ 'background-image': getCurrentSlideUrl() }"
+    ></div>
+    <div class="dotsContainer">
+      <div
+        *ngFor="let book of books; let slideIndex = index"
+        class="dot"
+        (click)="goToSlide(slideIndex)"
+        [ngClass]="{ 'dot-active': currentIndex === slideIndex }"
+      >
+        ●
+      </div>
     </div>
   </div>
-</div>
+</header>
