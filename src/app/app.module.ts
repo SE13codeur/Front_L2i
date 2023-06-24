@@ -78,6 +78,7 @@ import { UserState } from '@store/user/user.state';
 import { AdminOrderComponent } from './components/admin/admin-order/admin-order.component';
 import { ProfileUserPageComponent } from './pages/user-account/profile-user-page/profile-user-page.component';
 import { OrderStatusPipe } from '@libs/index';
+import { EventBannerComponent } from './components/footer/event-banner/event-banner.component';
 
 @NgModule({
   declarations: [
@@ -109,6 +110,7 @@ import { OrderStatusPipe } from '@libs/index';
     ProfileUserPageComponent,
     AdminOrderComponent,
     OrderStatusPipe,
+    EventBannerComponent,
   ],
   imports: [
     BrowserModule,

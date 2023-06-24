@@ -1,7 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@600;900&display=swap');
 
 body, html {
-  height: 100vh !important;
   margin: 0;
   background: #f3f3f3;
   font-family: 'Nunito Sans', sans-serif;
@@ -12,6 +11,7 @@ body, html {
 }
 
 .center {
+  height: 100vh !important;
   text-align: center;
 }
 

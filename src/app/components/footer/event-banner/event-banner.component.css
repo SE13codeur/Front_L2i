@@ -1,0 +1,29 @@
+.event-banner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  background-color: black;
+  padding: 1em;
+  height: 3.3rem;
+  overflow: hidden;
+  white-space: nowrap;
+  z-index: 1000;
+}
+
+.scroll-text {
+  position: relative;
+  left: 100%;
+  font-size: 1.11rem;
+  color: #ffffff;
+  animation: scroll-left 17s linear infinite;
+  cursor: pointer;
+}
+
+@keyframes scroll-left {
+  0% { left: 100%; }
+  100% { left: -100%; }
+}
