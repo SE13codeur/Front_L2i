@@ -4,6 +4,7 @@
   grid-gap: 1.11rem;
   margin-left: 1.11%;
   margin-top: 1.11rem;
+  margin-bottom: 3.33rem;
 }
 
 .custom-card {
@@ -50,9 +51,9 @@ mat-card-image {
 .item-description {
   cursor: pointer;
   color: #333;
-  font-size: 0.9rem;
+  font-size: 0.89rem;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-around;
   align-items: center;
 }
 
@@ -63,7 +64,7 @@ mat-card-image {
 }
 
 mat-icon {
-  font-size: 1.2rem;
+  font-size: 1.11rem;
   color: rgba(0, 0, 0, 0.4);
 }
 
@@ -77,11 +78,38 @@ mat-card-title {
   font-weight: bold;
 }
 
-.mat-paginator {
-  margin-top: 1.77rem;
-  margin-right: 1.11rem;
-  font-size: 1.11rem;
+.paginator-container {
+  display: flex;
+  align-items: center;
+  justify-content: c;
 }
+
+.mat-paginator {
+  margin-left: auto;
+  background-color: #f9f9f9;
+  padding: 0.89rem 0;
+  border-radius: 7.7%;
+  margin-top: 1.11rem;
+}
+
+.mat-paginator .mat-paginator-navigation-previous,
+.mat-paginator .mat-paginator-navigation-next {
+  color: #333;
+}
+
+.mat-paginator .mat-paginator-range-label {
+  color: #666;
+}
+
+.mat-select-trigger {
+  font-size: 0.89rem;
+  color: #333;
+}
+
+::ng-deep .mat-select-panel {
+  font-size: 0.89rem;
+}
+
 
 ::ng-deep .mat-select-min-line {
   font-size: 1.11rem;
