@@ -39,8 +39,11 @@ export class NavComponent {
   }
 
   private updateSearchPlaceholder() {
-    this.searchPlaceholder = window.innerWidth < 888 ? '...' : 'Rechercher';
-    this.searchPlaceholder = window.innerWidth < 777 ? 'Rechercher' : '...';
+    if (window.innerWidth > 889 || window.innerWidth < 777) {
+      this.searchPlaceholder = 'Rechercher';
+    } else {
+      this.searchPlaceholder = '...';
+    }
   }
 
   @HostListener('window:scroll', ['$event'])

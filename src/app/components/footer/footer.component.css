@@ -1,80 +1,71 @@
 .footer {
   position: relative !important;
-  height: 44vh !important;
+  height: auto !important; /* allow the height to be dynamic */
   background-color: black;
   color: #fff;
-  margin: 7.77 0rem;
+  margin: 0 0rem; /* reduce or remove margin */
   font-size: 14px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
+  overflow: auto; /* add overflow */
+  padding: 1.11rem 0; /* add some padding top and bottom */
 }
 
 .footer-content {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-around;
-  max-width: 1200px;
-  margin: 1.11rem;
-  padding-bottom: 1.11%;
-  gap: 3.33rem;
+  gap: 1.11rem; /* reduce gap */
 }
 
-.footer-section {
-  flex: 1;
-}
-
-.back-to-top {
-  text-align: center;
-  margin-bottom: 3em;
-}
-
-.back-to-top-link {
-  color: #fff;
-  text-decoration: none;
-}
-
-.footer-title {
-  margin-bottom: 1em;
-}
-
-.footer-links {
-  list-style: none;
-  padding: 0;
+.footer-section h3 {
+  font-size: 1rem; /* reduce title font size */
 }
 
 .footer-links li a {
-  color: #fff;
-  text-decoration: none;
+  font-size: 0.8rem; /* reduce link font size */
 }
 
 .footer-logo {
-  max-width: 120px;
+  max-width: 60px; /* reduce logo size */
+  margin-bottom: 1.11rem; /* add some bottom margin */
 }
 
-.footer-legal {
-  font-size: 0.75rem;
-  color: #767676;
-  text-align: center;
-  margin-top: 1em;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+@media (max-width: 555px) {
+  .footer-content {
+    flex-direction: column;
+    gap: 1.11rem;
+  }
 
-.footer-links-small {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1em;
-  list-style-type: none;
-  padding: 0;
-}
+  .footer-section {
+    text-align: center;
+  }
 
+  .footer-links {
+    padding: 0 1rem; /* reduce padding */
+  }
 
+  .footer-links li a {
+    font-size: 0.8rem; /* reduce font size */
+  }
 
-.footer-links-small li a {
-  color: #767676;
+  .footer-logo {
+    max-width: 50px; /* reduce logo size */
+  }
+
+  .footer-legal {
+    margin-top: 2em;
+  }
+
+  .footer-links-small {
+    gap: 0.5em;
+  }
+
+  .footer-links-small li a {
+    font-size: 0.7rem; /* reduce font size */
+  }
+
+  a {
+    text-decoration: none;
+    color: aliceblue;
+  }
 }
