@@ -3,6 +3,10 @@
   transition: transform 1..11s ease-in, transform 3.33s ease-out;
 }
 
+mat-drawer-content mat-sidenav-content {
+  margin: 0;
+}
+
 app-nav {
   position: fixed;
   left: 0;

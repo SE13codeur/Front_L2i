@@ -9,18 +9,18 @@
 }
 
 .input-field {
-  border: none;
-  border-bottom: 2px solid #ddd;
-  outline: none;
-  padding: 0.5rem;
-  font-size: 1rem;
+  padding: 0.55rem;
+  font-size: 1.11rem;
   width: 100%;
+  color: aliceblue;
+  background-color: #717171;
+  border: none;
+  gap: 0.55rem;
 }
 
 .search-button {
   position: absolute;
   top: 50%;
-  right: 0.5rem;
   transform: translateY(-50%);
   background-color: #fff;
   border: none;
@@ -29,13 +29,15 @@
   font-size: 1.25rem;
 }
 
-@media (max-width: 1001px) {
-  #searchInput::placeholder {
-    color: transparent;
+#searchInput::placeholder {
+    color: aliceblue;
   }
-  .input-field {
-    border: none;
-    border-bottom: transparent;
+
+@media (max-width: 1001px) {
+
+  .menu {
+    display: block;
+    gap: 0;
   }
 
 }

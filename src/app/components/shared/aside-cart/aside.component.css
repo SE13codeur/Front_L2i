@@ -12,6 +12,7 @@ aside:hover {
 
 .animation-cart-empty {
   transition: transform 1.11s;
+  transform: scale(1.31)
 }
 
 .animation-cart-empty:hover {
@@ -20,7 +21,7 @@ aside:hover {
 
 .ping {
   animation: blink 3.33s linear infinite;
-  transform: scale(1.11);
+  transform: scale(1.31);
   margin-right: 0.777rem;
   border-radius: 77%;
 }

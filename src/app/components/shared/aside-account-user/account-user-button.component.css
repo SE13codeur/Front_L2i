@@ -15,6 +15,7 @@ aside:hover {
 
 .logged-in {
   color: #0BB9F0;
+  transform: scale(1.31)
 }
 
 .logged-in:hover {

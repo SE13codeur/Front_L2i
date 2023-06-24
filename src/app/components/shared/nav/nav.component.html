@@ -1,10 +1,11 @@
 <mat-toolbar class="nav-container">
   <div class="nav-wrapper">
-    <a class="nav-logo" routerLink="/">
-      <img src="../../../assets/L2i.ico" />
-    </a>
+    <!-- Logo and Menu -->
+    <div class="logo-menu-container">
+      <a class="nav-logo" routerLink="/">
+        <img src="../../../assets/L2i.ico" />
+      </a>
 
-    <div>
       <!-- Desktop menu -->
       <div class="menu">
         <button mat-button routerLink="/items/books">Articles</button>
@@ -44,22 +45,27 @@
     </div>
 
     <!-- Search bar -->
-    <div class="logo-search-container">
-      <app-search-item class="search-bar-large"></app-search-item>
+    <div class="search-container">
+      <app-search-item
+        class="search-bar-large"
+        [placeholder]="searchPlaceholder"
+      ></app-search-item>
+    </div>
 
-      <div class="nav-actions">
-        <!-- User account drawer -->
-        <app-account-user-button (click)="toggleAccountUserDrawer()">
-        </app-account-user-button>
+    <!-- Actions -->
+    <div class="nav-actions">
+      <!-- User account drawer -->
+      <app-account-user-button
+        (click)="toggleAccountUserDrawer()"
+      ></app-account-user-button>
 
-        <!-- Cart drawer for shopping -->
-        <app-aside *ngIf="!isAdmin" (click)="toggleCartDrawer()"></app-aside>
+      <!-- Cart drawer for shopping -->
+      <app-aside *ngIf="!isAdmin" (click)="toggleCartDrawer()"></app-aside>
 
-        <!-- ADD item for admin -->
-        <button *ngIf="isAdmin" class="admin-add-item" (click)="goToAddItem()">
-          <mat-icon>add</mat-icon>
-        </button>
-      </div>
+      <!-- ADD item for admin -->
+      <button *ngIf="isAdmin" class="admin-add-item" (click)="goToAddItem()">
+        <mat-icon>add</mat-icon>
+      </button>
     </div>
   </div>
 </mat-toolbar>

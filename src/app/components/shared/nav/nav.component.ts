@@ -1,13 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, HostListener, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
-import { Store } from '@ngxs/store';
 import {
   AccountUserDrawerService,
   AdminAuthService,
   CartDrawerService,
 } from '@services/index';
-import { Observable } from 'rxjs';
-import { AuthState, Logout } from 'src/app/modules/auth/index';
 
 @Component({
   selector: 'app-nav',
@@ -16,8 +13,11 @@ import { AuthState, Logout } from 'src/app/modules/auth/index';
 })
 export class NavComponent {
   isAdmin = false;
+  searchPlaceholder = 'Rechercher';
 
   constructor(
+    private el: ElementRef,
+    private renderer: Renderer2,
     private router: Router,
     private adminAuthService: AdminAuthService,
     private cartDrawerService: CartDrawerService,
@@ -29,6 +29,29 @@ export class NavComponent {
       this.adminAuthService.isAdminAuthenticated$.subscribe((isAdmin) => {
         this.isAdmin = isAdmin;
       });
+    }
+    this.updateSearchPlaceholder();
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.updateSearchPlaceholder();
+  }
+
+  private updateSearchPlaceholder() {
+    this.searchPlaceholder = window.innerWidth < 888 ? '...' : 'Rechercher';
+    this.searchPlaceholder = window.innerWidth < 777 ? 'Rechercher' : '...';
+  }
+
+  @HostListener('window:scroll', ['$event'])
+  onWindowScroll() {
+    let yOffset = window.pageYOffset;
+    let element = this.el.nativeElement.querySelector('.nav-container');
+
+    if (yOffset > 0) {
+      this.renderer.addClass(element, 'nav-container-scrolled');
+    } else {
+      this.renderer.removeClass(element, 'nav-container-scrolled');
     }
   }
 
