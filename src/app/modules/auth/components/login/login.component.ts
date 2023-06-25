@@ -4,6 +4,7 @@ import { Location } from '@angular/common';
 import { AuthService } from '@auth-s/index';
 import { Router } from '@angular/router';
 import { IUser, ICustomer } from '@models/index';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
@@ -18,6 +19,7 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private location: Location,
     private router: Router,
+    private snackBar: MatSnackBar,
     private authService: AuthService
   ) {
     this.loginForm = this.formBuilder.group({
@@ -49,18 +51,34 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       const credentials = this.loginForm.value;
       this.authService.dispatchLoginAction(credentials).subscribe({
-        next: (user) => {
-          this.user = user;
-          this.router.navigate(['/items/books']);
+        next: (isLoggedIn) => {
+          if (isLoggedIn) {
+            this.router.navigate(['/items/books']);
+            let successMessage = `Heureux de vous revoir ${this.user?.username} ! Félicitation, vous êtes connectés !`;
+            this.snackBar.open(successMessage, 'Fermer', { duration: 5005 });
+          }
         },
         error: (error) => {
-          console.error('Erreur lors de la connexion:', error);
+          let errorMessage =
+            'Le pseudo ou mot de passe est incorrect. Veuillez réessayer.';
+          if (error.status === 401) {
+            errorMessage =
+              'Le pseudo ou mot de passe est incorrect. Veuillez réessayer.';
+          }
+          if (error.status === 400) {
+            errorMessage =
+              'Les informations que vous avez fournies sont incorrectes. Veuillez vérifier et réessayer.';
+          }
+          if (error.status === 500) {
+            errorMessage =
+              'Il y a un problème avec le serveur. Veuillez réessayer plus tard.';
+          }
+          this.snackBar.open(errorMessage, 'Fermer', { duration: 5005 });
         },
       });
     }
   }
 
-  // go back to the last page
   goBack(): void {
     this.location.back();
   }

@@ -3,17 +3,13 @@
     <h2>S'identifier</h2>
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <div class="input-field">
-        <input
-          formControlName="username"
-          type="text"
-          placeholder="Username de l'utilisateur"
-        />
+        <input formControlName="username" type="text" placeholder="Pseudo" />
         <div
           *ngIf="username?.invalid && (username?.dirty || username?.touched)"
           class="error"
         >
           <div *ngIf="username?.errors?.['required']">
-            Le nom de l'utilisateur est requis.
+            Le pseudo est requis.
           </div>
         </div>
       </div>

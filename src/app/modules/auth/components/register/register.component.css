@@ -1,5 +1,4 @@
 .register-container {
-  position: relative;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -118,9 +117,10 @@
 }
 
 @media screen and (max-width: 777px) {
-
   .register-container {
     position: relative;
+    top: 11.1rem;
+    height: calc(100% - 11.1rem);
   }
 
 }
