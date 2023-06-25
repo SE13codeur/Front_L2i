@@ -42,43 +42,48 @@ const routes: Routes = [
   {
     path: 'items/orders',
     component: PaymentPageComponent,
-    canActivate: [OrderActivateCartGuard],
+    canActivate: [AuthGuard],
   },
   {
     path: 'items/orders/:id',
     component: OrderListComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'account/user/profile',
     component: ProfileUserPageComponent,
+    canActivate: [AuthGuard],
   },
   // {
   //   path: 'account/user/comments',
   //   component: CommentsUserPageComponent,
+  //   canActivate: [AuthGuard],
+
   // },
   {
     path: 'account/user/favorites',
     component: FavoritesUserPageComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'admin/items/books',
     component: AdminItemComponent,
-    canActivate: [AdminAuthGuard],
+    canActivate: [AuthGuard],
   },
   {
     path: 'admin/items/books/:id',
     component: AdminItemComponent,
-    canActivate: [AdminAuthGuard],
+    canActivate: [AuthGuard],
   },
   {
     path: 'admin/orders',
     component: AdminOrderComponent,
-    canActivate: [AdminAuthGuard],
+    canActivate: [AuthGuard],
   },
   {
     path: 'admin/orders/:id',
     component: AdminOrderComponent,
-    canActivate: [AdminAuthGuard],
+    canActivate: [AuthGuard],
   },
   { path: '', redirectTo: '/', pathMatch: 'full' },
   { path: '**', component: NotFoundPageComponent },
