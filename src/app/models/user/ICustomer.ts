@@ -2,7 +2,7 @@ import { IUser } from './IUser';
 
 export interface ICustomer extends IUser {
   phoneNumber?: string;
-  billingAddress: IAddress;
+  billingAddress?: IAddress;
   shippingAddress?: IAddress;
 }
 

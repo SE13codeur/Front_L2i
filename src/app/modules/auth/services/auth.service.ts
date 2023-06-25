@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Login, Logout } from '@auth/store/auth.action';
 import { AuthState } from '@auth/store/auth.state';
 import { environmentDev as environment } from '@env/environment.dev';
-import { IUser } from '@models/index';
+import { IUser, ICustomer } from '@models/index';
 import { Store } from '@ngxs/store';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 
@@ -12,7 +12,7 @@ import { BehaviorSubject, Observable, map } from 'rxjs';
 })
 export class AuthService {
   private itemsUrl = `${environment.apiUrl}/auth`;
-  private userStore = new BehaviorSubject<IUser | null>(null);
+  private userStore = new BehaviorSubject<IUser | ICustomer | null>(null);
   public readonly user$ = this.userStore.asObservable();
 
   constructor(private http: HttpClient, private store: Store) {}
@@ -21,16 +21,18 @@ export class AuthService {
     username: string;
     role: string;
     email: string;
-  }): Observable<IUser> {
-    return this.http.post<IUser>(`${this.itemsUrl}/login`, credentials).pipe(
-      map((user) => {
-        this.userStore.next(user);
-        return user;
-      })
-    );
+  }): Observable<IUser | ICustomer> {
+    return this.http
+      .post<IUser | ICustomer>(`${this.itemsUrl}/login`, credentials)
+      .pipe(
+        map((user) => {
+          this.userStore.next(user);
+          return user;
+        })
+      );
   }
 
-  register(user: IUser) {
+  register(user: IUser | ICustomer) {
     return this.http.post(`${this.itemsUrl}/register`, user);
   }
 

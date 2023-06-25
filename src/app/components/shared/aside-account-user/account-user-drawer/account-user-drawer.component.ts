@@ -54,6 +54,7 @@ export class AccountUserDrawerComponent implements OnInit {
 
   openProfilePage() {
     this.router.navigate(['/account/user/profile']);
+    this.accountUserDrawerService.closeDrawer();
   }
 
   openFavoritesPage() {
@@ -65,6 +66,7 @@ export class AccountUserDrawerComponent implements OnInit {
       next: () => {
         this.accountUserDrawerService.closeDrawer();
         this.router.navigate(['/items/books']);
+        this.isAdmin = false;
       },
       error: (error) => {
         console.error('Erreur lors de la déconnexion:', error);

@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from '@auth-s/index';
 import { ICustomer, IUser } from '@models/user';
-import { UserService } from '@services/user';
+import { AccountUserDrawerService, UserService } from '@services/user';
 @Component({
   selector: 'app-profile-user-page',
   templateUrl: './profile-user-page.component.html',
@@ -11,17 +12,17 @@ import { UserService } from '@services/user';
 })
 export class ProfileUserPageComponent implements OnInit {
   userForm!: FormGroup;
-  user: IUser | ICustomer | undefined;
-  userId: number | null = null;
+  user: ICustomer | null = null;
   isSubmitting = false;
   isCustomer: boolean = false;
 
   constructor(
     private fb: FormBuilder,
-    private userService: UserService,
     private router: Router,
-    private route: ActivatedRoute,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private userService: UserService,
+    private authService: AuthService,
+    private accountUserDrawerService: AccountUserDrawerService
   ) {
     this.createForm();
   }
@@ -32,30 +33,51 @@ export class ProfileUserPageComponent implements OnInit {
       lastname: [''],
       username: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
+      password: ['', [Validators.required, Validators.minLength(8)]],
       phoneNumber: [''],
-      shippingAddress: this.fb.group({
-        street: [''],
-        city: [''],
+      billingAddress: this.fb.group({
+        street: ['', Validators.required],
+        city: ['', Validators.required],
+        postalCode: ['', Validators.required],
+        country: ['', Validators.required],
         state: [''],
-        postalCode: [''],
-        country: [''],
+      }),
+      shippingAddress: this.fb.group({
+        street: ['', Validators.required],
+        city: ['', Validators.required],
+        postalCode: ['', Validators.required],
+        country: ['', Validators.required],
+        state: [''],
       }),
     });
   }
 
   ngOnInit(): void {
-    let tempId = this.route.snapshot.paramMap.get('id');
-    this.userId = tempId && !isNaN(parseInt(tempId)) ? parseInt(tempId) : null;
-
-    if (this.userId) {
-      this.populateForm();
+    this.authService.user$.subscribe((user) => {
+      this.user = user;
+      this.userForm.patchValue({
+        firstname: user?.firstname,
+        lastname: user?.lastname,
+        username: user?.username,
+        email: user?.email,
+        password: user?.password,
+        phoneNumber: this.isCustomer ? (user as ICustomer).phoneNumber : '',
+        billingAddress: this.isCustomer
+          ? (user as ICustomer).billingAddress
+          : undefined,
+        shippingAddress: this.isCustomer
+          ? (user as ICustomer).shippingAddress
+          : undefined,
+      });
+    });
+    if (this.user?.role.title == 'CUSTOMER') {
+      this.isCustomer = true;
     }
   }
 
   populateForm(): void {
-    if (this.userId) {
-      this.userService.getUserById(this.userId).subscribe({
+    if (this.user) {
+      this.userService.getUserById(this.user.id).subscribe({
         next: (user: IUser | ICustomer) => {
           this.user = user;
           this.isCustomer = 'phoneNumber' in user;
@@ -108,8 +130,8 @@ export class ProfileUserPageComponent implements OnInit {
 
   saveUser(userData: IUser | ICustomer): void {
     if ('billingAddress' in userData) {
-      const saveOperation = this.userId
-        ? this.userService.editUser(this.userId, userData as ICustomer)
+      const saveOperation = this.user
+        ? this.userService.editUser(this.user.id, userData as ICustomer)
         : this.userService.addUser(userData as ICustomer);
 
       saveOperation.subscribe({
@@ -117,7 +139,7 @@ export class ProfileUserPageComponent implements OnInit {
           this.snackBar.open('Utilisateur sauvegardé avec succès!', 'Fermer', {
             duration: 4004,
           });
-          this.router.navigate(['/users']);
+          this.router.navigate(['/account/user/profile']);
         },
         error: (error: any) => {
           this.snackBar.open(
@@ -142,10 +164,11 @@ export class ProfileUserPageComponent implements OnInit {
   }
 
   goBack(): void {
-    if (this.userId) {
-      this.router.navigate(['/users', this.userId]);
+    if (this.user) {
+      this.router.navigate(['/items/books']);
+      this.accountUserDrawerService.toggleDrawer();
     } else {
-      this.router.navigate(['/users']);
+      this.router.navigate(['/auth/login']);
     }
   }
 }

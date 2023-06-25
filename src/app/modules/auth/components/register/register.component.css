@@ -1,9 +1,9 @@
 .register-container {
   height: 100vh !important;
+  margin-top: 7.7rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh !important;
   background: linear-gradient(to right, #e0eafc, #cfdef3);
 }
 

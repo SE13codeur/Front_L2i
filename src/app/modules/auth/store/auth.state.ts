@@ -91,6 +91,6 @@ export class AuthState {
 
   @Action(Logout)
   logout(ctx: StateContext<AuthStateModel>) {
-    ctx.patchState({ username: null, isAuthenticated: false });
+    ctx.patchState({ username: null, isAuthenticated: false, isAdmin: false });
   }
 }

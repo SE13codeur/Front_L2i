@@ -12,15 +12,14 @@ import {
 } from '@core/guards';
 import {
   DetailItemPageComponent,
+  FavoritesUserPageComponent,
   HomePageComponent,
   ItemPageComponent,
   NotFoundPageComponent,
   PaymentPageComponent,
-  ReleaseLatestPageComponent,
-  PromosPageComponent,
-  OrderUserPageComponent,
-  FavoritesUserPageComponent,
   ProfileUserPageComponent,
+  PromosPageComponent,
+  ReleaseLatestPageComponent,
 } from '@pages/index';
 
 const routes: Routes = [

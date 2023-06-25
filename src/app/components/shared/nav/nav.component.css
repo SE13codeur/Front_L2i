@@ -9,7 +9,7 @@
 }
 
 .nav-container-scrolled {
-  background-color: rgba(0, 0, 0, 0.55) !important;
+  background-color: rgba(0, 0, 0, 0.333) !important;
 }
 
 .nav-wrapper {
@@ -87,7 +87,7 @@
   width: 2.02rem;
   height: 2.02rem;
   border-radius: 55%;
-  color: #fff;
+  color: #0BB9F0;
 }
 
 .admin-add-item:hover {
@@ -112,7 +112,7 @@
     align-items: center;
     justify-content: center;
     gap: 0;
-      adding: 0;
+    padding: 0;
 
   }
 }

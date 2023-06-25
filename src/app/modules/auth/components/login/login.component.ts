@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
 import { AuthService } from '@auth-s/index';
 import { Router } from '@angular/router';
-import { IUser } from '@models/index';
+import { IUser, ICustomer } from '@models/index';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +12,7 @@ import { IUser } from '@models/index';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
-  user: IUser | null = null;
+  user: IUser | ICustomer | null = null;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -22,6 +22,7 @@ export class LoginComponent implements OnInit {
   ) {
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],
+      email: ['', Validators.required],
       password: ['', Validators.required],
     });
   }
@@ -34,6 +35,10 @@ export class LoginComponent implements OnInit {
 
   get username() {
     return this.loginForm.get('username');
+  }
+
+  get email() {
+    return this.loginForm.get('email');
   }
 
   get password() {
