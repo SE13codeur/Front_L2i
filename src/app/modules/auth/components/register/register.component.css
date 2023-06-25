@@ -1,7 +1,7 @@
 .register-container {
-  height: 100vh !important;
-  margin-top: 7.7rem;
+  position: relative;
   display: flex;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
   background: linear-gradient(to right, #e0eafc, #cfdef3);
@@ -35,9 +35,12 @@
   gap: 20px;
 }
 
-@media screen and (min-width: 556px) {
+@media screen and (min-width: 777px) {
   .account-info, .personal-info {
     flex-direction: row;
+  }
+  .address-grid {
+    grid-template-columns: 1fr 1fr 2fr 1fr;
   }
 }
 
@@ -114,8 +117,10 @@
   gap: 20px;
 }
 
-@media screen and (min-width: 556px) {
-  .address-grid {
-    grid-template-columns: 2fr 2fr 1fr;
+@media screen and (max-width: 777px) {
+
+  .register-container {
+    position: relative;
   }
+
 }

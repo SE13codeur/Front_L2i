@@ -1,5 +1,6 @@
 .login-container {
   height: 100vh !important;
+  position: relative;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -84,14 +85,18 @@
 }
 
 
-@media screen and (max-width: 888px) {
+@media screen and (max-width: 777px) {
+  .login-container {
+    margin-top: 7.7rem;
+  }
   .login-card {
     width: 77%;
   }
 }
 
-@media screen and (max-width: 202px) {
+@media screen and (max-width: 303px) {
   .login-card {
     width: 89%;
   }
+
 }

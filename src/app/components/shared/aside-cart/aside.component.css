@@ -11,12 +11,14 @@ aside:hover {
 }
 
 .animation-cart-empty {
+  color: #C5E1FC;
   transition: transform 1.11s;
   transform: scale(1.31)
 }
 
 .animation-cart-empty:hover {
   transform: rotate(1080deg);
+  color: #0BB9F0
 }
 
 .ping {
@@ -24,6 +26,11 @@ aside:hover {
   transform: scale(1.31);
   margin-right: 0.777rem;
   border-radius: 77%;
+}
+
+.ping:hover {
+  transition: transform 1..11s ease-in, transform 3.33s ease-out;
+  transform: scale(1.51);
 }
 
 .ping-hidden {
@@ -47,6 +54,10 @@ span {
   padding-left: 0.111rem;
   display: inline-block;
   animation: scalePulse 1.11s ease-in-out infinite;
+}
+
+span:hover {
+  color: #FF4080;
 }
 
 @keyframes scalePulse {

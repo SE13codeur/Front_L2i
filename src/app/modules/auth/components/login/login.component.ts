@@ -46,7 +46,6 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('login clicked');
     if (this.loginForm.valid) {
       const credentials = this.loginForm.value;
       this.authService.dispatchLoginAction(credentials).subscribe({
