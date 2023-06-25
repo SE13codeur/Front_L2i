@@ -54,20 +54,24 @@ export class LoginComponent implements OnInit {
         next: (isLoggedIn) => {
           if (isLoggedIn) {
             this.router.navigate(['/items/books']);
-            let successMessage = `Heureux de vous revoir ${this.user?.username} ! Félicitation, vous êtes connectés !`;
+            let successMessage = `Heureux de vous revoir ${this.user?.username}, connexion réussie !`;
             this.snackBar.open(successMessage, 'Fermer', { duration: 5005 });
           }
         },
         error: (error) => {
           let errorMessage =
             'Le pseudo ou mot de passe est incorrect. Veuillez réessayer.';
+          if (error.status === 400) {
+            errorMessage =
+              'Les informations que vous avez fournies sont incorrectes. Veuillez vérifier et réessayer.';
+          }
           if (error.status === 401) {
             errorMessage =
               'Le pseudo ou mot de passe est incorrect. Veuillez réessayer.';
           }
-          if (error.status === 400) {
+          if (error.status === 409) {
             errorMessage =
-              'Les informations que vous avez fournies sont incorrectes. Veuillez vérifier et réessayer.';
+              'Un utilisateur avec ce pseudo ou cette adresse e-mail existe déjà.';
           }
           if (error.status === 500) {
             errorMessage =

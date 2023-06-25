@@ -1,37 +1,64 @@
 <div class="register-container">
   <div class="register-card">
     <h2>Inscription</h2>
+    <h3>Informations personnelles</h3>
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
       <div class="account-info">
         <div class="input-field">
-          <input
-            formControlName="username"
-            type="text"
-            placeholder="Nom d'utilisateur"
-          />
+          <input formControlName="username" type="text" placeholder="Pseudo" />
+          <div *ngIf="username.errors && username.touched">
+            <div *ngIf="username.errors['required']">Le pseudo est requis.</div>
+          </div>
         </div>
+
         <div class="input-field">
           <input
             formControlName="email"
             type="email"
             placeholder="Adresse e-mail"
           />
+          <div *ngIf="email.errors && email.touched">
+            <div *ngIf="email.errors['required']">
+              L'adresse e-mail est requise.
+            </div>
+            <div *ngIf="email.errors['email']">
+              L'adresse e-mail n'est pas valide.
+            </div>
+          </div>
         </div>
+
         <div class="input-field">
           <input
             formControlName="password"
             type="password"
             placeholder="Mot de passe"
           />
+          <div *ngIf="password.errors && password.touched">
+            <div *ngIf="password.errors['required']">
+              Le mot de passe est requis.
+            </div>
+            <div *ngIf="password.errors['minlength']">
+              Le mot de passe doit comporter au moins 8 caractères.
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="personal-info">
+
         <div class="input-field">
           <input formControlName="firstname" type="text" placeholder="Prénom" />
+          <div *ngIf="firstname.errors && firstname.touched">
+            <div *ngIf="firstname.errors['required']">
+              Le prénom est requis.
+            </div>
+          </div>
         </div>
+
         <div class="input-field">
           <input formControlName="lastname" type="text" placeholder="Nom" />
+          <div *ngIf="lastname.errors && lastname.touched">
+            <div *ngIf="lastname.errors['required']">Le Nom est requis.</div>
+          </div>
         </div>
+
         <div class="input-field">
           <input
             formControlName="phoneNumber"
@@ -44,9 +71,19 @@
       <div formGroupName="billingAddress" class="address-grid">
         <div class="input-field">
           <input formControlName="street" type="text" placeholder="Rue" />
+          <div *ngIf="billingStreet.errors && billingStreet.touched">
+            <div *ngIf="billingStreet.errors['required']">
+              La rue est requise.
+            </div>
+          </div>
         </div>
         <div class="input-field">
           <input formControlName="city" type="text" placeholder="Ville" />
+          <div *ngIf="billingCity.errors && billingCity.touched">
+            <div *ngIf="billingCity.errors['required']">
+              La ville est requise.
+            </div>
+          </div>
         </div>
         <div class="input-field">
           <input
@@ -54,14 +91,25 @@
             type="text"
             placeholder="Code postal"
           />
+          <div *ngIf="billingPostalCode.errors && billingPostalCode.touched">
+            <div *ngIf="billingPostalCode.errors['required']">
+              Le code postal est requis.
+            </div>
+          </div>
+        </div>
+        <div class="input-field">
+          <input formControlName="state" type="text" placeholder="Région" />
         </div>
         <div class="input-field">
           <input formControlName="country" type="text" placeholder="Pays" />
-        </div>
-        <div class="input-field">
-          <input formControlName="state" type="text" placeholder="État" />
+          <div *ngIf="billingCountry.errors && billingCountry.touched">
+            <div *ngIf="billingCountry.errors['required']">
+              Le pays est requis.
+            </div>
+          </div>
         </div>
       </div>
+
       <h3>Adresse de livraison</h3>
       <div formGroupName="shippingAddress" class="address-grid">
         <div class="input-field">
@@ -78,12 +126,13 @@
           />
         </div>
         <div class="input-field">
-          <input formControlName="country" type="text" placeholder="Pays" />
+          <input formControlName="state" type="text" placeholder="Région" />
         </div>
         <div class="input-field">
-          <input formControlName="state" type="text" placeholder="État" />
+          <input formControlName="country" type="text" placeholder="Pays" />
         </div>
       </div>
+
       <button
         type="submit"
         class="register-button"
@@ -92,6 +141,7 @@
         Créer votre compte
       </button>
     </form>
+
     <div class="options">
       <button (click)="goBack()" class="back-button">Retour</button>
       <a routerLink="/auth/login" class="register-link">S'identifier</a>
