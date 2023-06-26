@@ -1,4 +1,6 @@
 .container {
+  height: 100vh !important;
+  position: relative;
   margin-top: 7rem;
   padding: 2.2rem;
   display: flex;

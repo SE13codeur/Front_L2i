@@ -54,7 +54,7 @@ export class LoginComponent implements OnInit {
         next: (isLoggedIn) => {
           if (isLoggedIn) {
             this.router.navigate(['/items/books']);
-            let successMessage = `Heureux de vous revoir ${this.user?.username}, connexion réussie !`;
+            let successMessage = `Félicitations ${this.user?.username} ! Connexion réussie !`;
             this.snackBar.open(successMessage, 'Fermer', { duration: 5005 });
           }
         },

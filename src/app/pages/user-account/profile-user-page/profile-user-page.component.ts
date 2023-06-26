@@ -6,7 +6,7 @@ import { AuthService } from '@auth-s/index';
 import { IAddress, IUser } from '@models/user';
 import { AddressService } from '@services/index';
 import { AccountUserDrawerService, UserService } from '@services/user';
-import { Observable, of, switchMap, tap } from 'rxjs';
+import { of, switchMap, tap } from 'rxjs';
 @Component({
   selector: 'app-profile-user-page',
   templateUrl: './profile-user-page.component.html',
@@ -147,7 +147,7 @@ export class ProfileUserPageComponent implements OnInit {
 
   onReset(): void {
     this.userForm.reset();
-    this.snackBar.open('Formulaire réinitialisé!', 'Fermer', {
+    this.snackBar.open('Formulaire réinitialisé !', 'Fermer', {
       duration: 4004,
     });
   }

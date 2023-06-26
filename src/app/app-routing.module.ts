@@ -56,6 +56,11 @@ const routes: Routes = [
     component: AddressComponent,
     canActivate: [AuthGuard],
   },
+  {
+    path: 'account/user/profile/address/:id',
+    component: AddressComponent,
+    canActivate: [AuthGuard],
+  },
   // {
   //   path: 'account/user/comments',
   //   component: CommentsUserPageComponent,

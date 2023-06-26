@@ -1,5 +1,12 @@
-<h3>Vos adresses enregistrées</h3>
-<div formGroupName="address" class="address-grid">
+<form [formGroup]="addressForm" (ngSubmit)="onSubmit()" class="address-grid">
+  <h3>Enregistrer une nouvelle adresse</h3>
+  <div class="input-field">
+    <input
+      formControlName="title"
+      type="text"
+      placeholder="Titre de votre adresse"
+    />
+  </div>
   <div class="input-field">
     <input formControlName="street" type="text" placeholder="Rue" />
     <div *ngIf="street.errors && street.touched">
@@ -13,7 +20,7 @@
     </div>
   </div>
   <div class="input-field">
-    <input formControlName="postalCode" type="text" placeholder="Code postal" />
+    <input formControlName="zipCode" type="text" placeholder="Code postal" />
     <div *ngIf="zipCode.errors && zipCode.touched">
       <div *ngIf="zipCode.errors['required']">Le code postal est requis.</div>
     </div>
@@ -27,4 +34,20 @@
       <div *ngIf="country.errors['required']">Le pays est requis.</div>
     </div>
   </div>
-</div>
+  <mat-card-actions class="button-row">
+    <button mat-raised-button color="accent" (click)="goBackToPreviousPage()">
+      Retour
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="addressForm.invalid"
+    >
+      Valider
+    </button>
+    <button mat-raised-button class="reset-profil-form" (click)="onReset()">
+      Réinitialiser
+    </button>
+  </mat-card-actions>
+</form>

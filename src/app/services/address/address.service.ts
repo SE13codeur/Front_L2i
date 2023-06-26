@@ -19,8 +19,8 @@ export class AddressService {
 
   constructor(private http: HttpClient) {}
 
-  addAddress(addressData: IAddress): Observable<IAddress> {
-    return this.http.post<IAddress>(this.addressUrl, addressData);
+  addAddress(addressData: IAddress) {
+    return this.http.post(this.addressUrl, addressData);
   }
 
   getAddressesByUserId(userId: number): void {

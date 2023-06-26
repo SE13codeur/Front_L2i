@@ -1,9 +1,11 @@
+import { State, Action, StateContext, Selector } from '@ngxs/store';
+import { tap, catchError } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
+import { Login, LoginSuccess, LoginFailed, Logout } from './auth.action';
+import { Role } from '@models/index';
 import { AuthService } from '@auth-s/index';
-import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { of } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
-import { Login, LoginFailed, LoginSuccess, Logout } from './auth.action';
+import { request } from 'https';
 
 export interface AuthStateModel {
   username: string | null;
@@ -77,10 +79,10 @@ export class AuthState {
       username: action.payload.username,
       role: action.payload.role,
       email: action.payload.email,
-
       isAuthenticated: true,
       isAdmin: action.payload.role == 'ADMIN',
       loading: false,
+      error: Response.error().statusText,
     });
   }
 
@@ -91,6 +93,6 @@ export class AuthState {
 
   @Action(Logout)
   logout(ctx: StateContext<AuthStateModel>) {
-    ctx.patchState({ username: null, isAuthenticated: false, isAdmin: false });
+    ctx.patchState({ username: null, isAuthenticated: false });
   }
 }

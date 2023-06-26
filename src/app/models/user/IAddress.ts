@@ -6,4 +6,5 @@ export interface IAddress {
   state?: string;
   zipCode: string;
   country: string;
+  userId: number | undefined;
 }
