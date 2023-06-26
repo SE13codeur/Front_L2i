@@ -1,14 +1,14 @@
+import { Location } from '@angular/common';
 import { Component } from '@angular/core';
 import {
   FormBuilder,
+  FormControl,
   FormGroup,
   Validators,
-  FormControl,
 } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AuthService } from '@auth-s/index';
-import { Location } from '@angular/common';
-import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-register',
@@ -42,22 +42,6 @@ export class RegisterComponent {
     return this.registerForm.get('phoneNumber') as FormControl;
   }
 
-  get billingStreet(): FormControl {
-    return this.registerForm.get('billingAddress.street') as FormControl;
-  }
-
-  get billingCity(): FormControl {
-    return this.registerForm.get('billingAddress.city') as FormControl;
-  }
-
-  get billingPostalCode(): FormControl {
-    return this.registerForm.get('billingAddress.postalCode') as FormControl;
-  }
-
-  get billingCountry(): FormControl {
-    return this.registerForm.get('billingAddress.country') as FormControl;
-  }
-
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -72,36 +56,11 @@ export class RegisterComponent {
       firstname: ['', [Validators.required]],
       lastname: ['', [Validators.required]],
       phoneNumber: [''],
-      billingAddress: this.formBuilder.group({
-        street: ['', Validators.required],
-        city: ['', Validators.required],
-        postalCode: ['', Validators.required],
-        country: ['', Validators.required],
-        state: [''],
-      }),
-      shippingAddress: this.formBuilder.group({
-        street: [''],
-        city: [''],
-        postalCode: [''],
-        country: [''],
-        state: [''],
-      }),
     });
   }
 
   onSubmit(): void {
     if (this.registerForm.valid) {
-      // let user = this.registerForm.value;
-      // Combine les adresses de facturation et d'expédition en un tableau
-      // user.addresses = [];
-      // if (user.billingAddress) {
-      //   user.addresses.push(user.billingAddress);
-      //   delete user.billingAddress;
-      // }
-      // if (user.shippingAddress) {
-      //   user.addresses.push(user.shippingAddress);
-      //   delete user.shippingAddress;
-      // }
       this.authService.register(this.registerForm.value).subscribe({
         next: () => {
           this.router.navigate(['/auth/login']);

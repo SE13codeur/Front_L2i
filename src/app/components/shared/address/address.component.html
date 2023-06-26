@@ -1,0 +1,30 @@
+<h3>Vos adresses enregistrées</h3>
+<div formGroupName="address" class="address-grid">
+  <div class="input-field">
+    <input formControlName="street" type="text" placeholder="Rue" />
+    <div *ngIf="street.errors && street.touched">
+      <div *ngIf="street.errors['required']">La rue est requise.</div>
+    </div>
+  </div>
+  <div class="input-field">
+    <input formControlName="city" type="text" placeholder="Ville" />
+    <div *ngIf="city.errors && city.touched">
+      <div *ngIf="city.errors['required']">La ville est requise.</div>
+    </div>
+  </div>
+  <div class="input-field">
+    <input formControlName="postalCode" type="text" placeholder="Code postal" />
+    <div *ngIf="zipCode.errors && zipCode.touched">
+      <div *ngIf="zipCode.errors['required']">Le code postal est requis.</div>
+    </div>
+  </div>
+  <div class="input-field">
+    <input formControlName="state" type="text" placeholder="Région" />
+  </div>
+  <div class="input-field">
+    <input formControlName="country" type="text" placeholder="Pays" />
+    <div *ngIf="country.errors && country.touched">
+      <div *ngIf="country.errors['required']">Le pays est requis.</div>
+    </div>
+  </div>
+</div>

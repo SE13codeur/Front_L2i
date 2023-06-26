@@ -1,12 +1,12 @@
 import { State, Action, StateContext, Selector, Store } from '@ngxs/store';
-import { ICustomer, IOrder } from '@models/index';
+import { IUser, IOrder } from '@models/index';
 import { Injectable } from '@angular/core';
 import { ClearUser, GetOrdersByUserId, SetUser } from './user.action';
 import { tap } from 'rxjs';
 import { OrderService } from '@services/index';
 
 export interface UserStateModel {
-  user: ICustomer | undefined;
+  user: IUser | undefined;
 }
 
 @State<UserStateModel>({
@@ -20,12 +20,12 @@ export class UserState {
   constructor(private orderService: OrderService) {}
 
   @Selector()
-  static getUser(state: ICustomer): ICustomer {
+  static getUser(state: IUser): IUser {
     return state;
   }
 
   @Action(SetUser)
-  setUser(ctx: StateContext<ICustomer>, { payload }: SetUser) {
+  setUser(ctx: StateContext<IUser>, { payload }: SetUser) {
     ctx.setState(payload);
   }
 

@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Login, Logout } from '@auth/store/auth.action';
 import { AuthState } from '@auth/store/auth.state';
 import { environmentDev as environment } from '@env/environment.dev';
-import { IUser, ICustomer } from '@models/index';
+import { IUser } from '@models/index';
 import { Store } from '@ngxs/store';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -13,7 +13,7 @@ import { catchError, map } from 'rxjs/operators';
 })
 export class AuthService {
   private itemsUrl = `${environment.apiUrl}/auth`;
-  private userStore = new BehaviorSubject<IUser | ICustomer | null>(null);
+  private userStore = new BehaviorSubject<IUser | IUser | null>(null);
   public readonly user$ = this.userStore.asObservable();
 
   constructor(private http: HttpClient, private store: Store) {}
@@ -24,7 +24,7 @@ export class AuthService {
     email: string;
   }): Observable<boolean> {
     return this.http
-      .post<IUser | ICustomer>(`${this.itemsUrl}/login`, credentials, {
+      .post<IUser>(`${this.itemsUrl}/login`, credentials, {
         observe: 'response',
       })
       .pipe(
@@ -40,7 +40,7 @@ export class AuthService {
       );
   }
 
-  register(user: IUser | ICustomer) {
+  register(user: IUser) {
     return this.http
       .post(`${this.itemsUrl}/register`, user)
       .pipe(catchError(this.handleError));

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngxs/store';
-import { ICustomer, IUser } from '@models/index';
+import { IUser } from '@models/index';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 import { ClearUser, SetUser } from '@store/user';
 import { HttpClient } from '@angular/common/http';
@@ -13,7 +13,7 @@ export class UserStoreService {
 
   constructor(private store: Store, private http: HttpClient) {}
 
-  setUser(user: ICustomer) {
+  setUser(user: IUser) {
     this.store.dispatch(new SetUser(user));
   }
 
@@ -21,7 +21,7 @@ export class UserStoreService {
     this.store.dispatch(new ClearUser());
   }
 
-  getUser(): Observable<ICustomer> {
+  getUser(): Observable<IUser> {
     return this.store.select((state) => state.user);
   }
 

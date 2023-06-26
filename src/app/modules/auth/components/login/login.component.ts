@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
 import { AuthService } from '@auth-s/index';
 import { Router } from '@angular/router';
-import { IUser, ICustomer } from '@models/index';
+import { IUser } from '@models/index';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
@@ -13,7 +13,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
-  user: IUser | ICustomer | null = null;
+  user: IUser | null = null;
 
   constructor(
     private formBuilder: FormBuilder,

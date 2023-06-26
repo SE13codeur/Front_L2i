@@ -2,7 +2,7 @@ import { Component, OnDestroy } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AuthService } from '@auth/index';
-import { ICartItem, ICart, ICustomer } from '@models/index';
+import { ICartItem, ICart, IUser } from '@models/index';
 import { Select } from '@ngxs/store';
 import { CartDrawerService, CartService, OrderService } from '@services/index';
 import { CartState } from '@store/index';
@@ -53,7 +53,7 @@ export class OrderComponent implements OnDestroy {
         if (user && 'billingAddress' in user) {
           const cartData: ICart = {
             cartItems,
-            user: user as ICustomer,
+            user: user as IUser,
           };
 
           this.orderService

@@ -1,8 +1,8 @@
-import { ICustomer } from '@models/index';
+import { IUser } from '@models/index';
 
 export class SetUser {
   static readonly type = '[User] Set';
-  constructor(public payload: ICustomer) {}
+  constructor(public payload: IUser) {}
 }
 
 export class GetOrdersByUserId {

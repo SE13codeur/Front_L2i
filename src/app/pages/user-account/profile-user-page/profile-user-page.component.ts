@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthService } from '@auth-s/index';
-import { ICustomer, IUser } from '@models/user';
+import { IUser } from '@models/user';
 import { AccountUserDrawerService, UserService } from '@services/user';
 @Component({
   selector: 'app-profile-user-page',
@@ -12,7 +12,7 @@ import { AccountUserDrawerService, UserService } from '@services/user';
 })
 export class ProfileUserPageComponent implements OnInit {
   userForm!: FormGroup;
-  user: ICustomer | null = null;
+  user: IUser | null = null;
   isSubmitting = false;
   isCustomer: boolean = false;
 
@@ -35,20 +35,7 @@ export class ProfileUserPageComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
       phoneNumber: [''],
-      billingAddress: this.fb.group({
-        street: ['', Validators.required],
-        city: ['', Validators.required],
-        postalCode: ['', Validators.required],
-        country: ['', Validators.required],
-        state: [''],
-      }),
-      shippingAddress: this.fb.group({
-        street: ['', Validators.required],
-        city: ['', Validators.required],
-        postalCode: ['', Validators.required],
-        country: ['', Validators.required],
-        state: [''],
-      }),
+      addresses: [],
     });
   }
 
@@ -61,27 +48,16 @@ export class ProfileUserPageComponent implements OnInit {
         username: user?.username,
         email: user?.email,
         password: user?.password,
-        phoneNumber: this.isCustomer ? (user as ICustomer).phoneNumber : '',
-        billingAddress: this.isCustomer
-          ? (user as ICustomer).billingAddress
-          : undefined,
-        shippingAddress: this.isCustomer
-          ? (user as ICustomer).shippingAddress
-          : undefined,
+        addresses: user?.addresses,
       });
     });
-    if (this.user?.role.title == 'CUSTOMER') {
-      this.isCustomer = true;
-    }
   }
 
   populateForm(): void {
     if (this.user) {
       this.userService.getUserById(this.user.id).subscribe({
-        next: (user: IUser | ICustomer) => {
+        next: (user: IUser) => {
           this.user = user;
-          this.isCustomer = 'phoneNumber' in user;
-
           // Update form controls
           this.userForm.patchValue({
             firstname: user.firstname,
@@ -89,10 +65,6 @@ export class ProfileUserPageComponent implements OnInit {
             username: user.username,
             email: user.email,
             password: user.password,
-            phoneNumber: this.isCustomer ? (user as ICustomer).phoneNumber : '',
-            shippingAddress: this.isCustomer
-              ? (user as ICustomer).shippingAddress
-              : '',
           });
 
           this.snackBar.open('Données chargées avec succès!', 'Fermer', {
@@ -108,7 +80,7 @@ export class ProfileUserPageComponent implements OnInit {
         },
       });
     } else {
-      this.snackBar.open("Aucun ID d'utilisateur fourni!", 'Fermer', {
+      this.snackBar.open("Aucun ID d'utilisateur fourni !", 'Fermer', {
         duration: 4004,
       });
     }
@@ -128,11 +100,11 @@ export class ProfileUserPageComponent implements OnInit {
     }
   }
 
-  saveUser(userData: IUser | ICustomer): void {
+  saveUser(userData: IUser): void {
     if ('billingAddress' in userData) {
       const saveOperation = this.user
-        ? this.userService.editUser(this.user.id, userData as ICustomer)
-        : this.userService.addUser(userData as ICustomer);
+        ? this.userService.editUser(this.user.id, userData as IUser)
+        : this.userService.addUser(userData as IUser);
 
       saveOperation.subscribe({
         next: () => {

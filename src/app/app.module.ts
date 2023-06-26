@@ -80,6 +80,7 @@ import { UserState } from '@store/user/user.state';
 import { AdminOrderComponent } from './components/admin/admin-order/admin-order.component';
 import { ProfileUserPageComponent } from './pages/user-account/profile-user-page/profile-user-page.component';
 import { OrderStatusPipe } from '@libs/index';
+import { AddressComponent } from './components/shared/address/address.component';
 
 @NgModule({
   declarations: [
@@ -113,6 +114,7 @@ import { OrderStatusPipe } from '@libs/index';
     OrderStatusPipe,
     EventBannerComponent,
     FooterComponent,
+    AddressComponent,
   ],
   imports: [
     BrowserModule,

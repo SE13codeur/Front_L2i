@@ -1,3 +1,4 @@
+import { IAddress } from './IAddress';
 import { Role } from './Role';
 
 export interface IUser {
@@ -8,4 +9,5 @@ export interface IUser {
   username: string;
   email: string;
   password: string;
+  addresses?: IAddress[];
 }
