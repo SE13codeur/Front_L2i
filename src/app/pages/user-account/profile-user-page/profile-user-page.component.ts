@@ -3,8 +3,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AuthService } from '@auth-s/index';
-import { IUser } from '@models/user';
+import { IAddress, IUser } from '@models/user';
+import { AddressService } from '@services/index';
 import { AccountUserDrawerService, UserService } from '@services/user';
+import { Observable, of, switchMap, tap } from 'rxjs';
 @Component({
   selector: 'app-profile-user-page',
   templateUrl: './profile-user-page.component.html',
@@ -14,7 +16,7 @@ export class ProfileUserPageComponent implements OnInit {
   userForm!: FormGroup;
   user: IUser | null = null;
   isSubmitting = false;
-  isCustomer: boolean = false;
+  addresses!: IAddress[];
 
   constructor(
     private fb: FormBuilder,
@@ -22,6 +24,7 @@ export class ProfileUserPageComponent implements OnInit {
     private snackBar: MatSnackBar,
     private userService: UserService,
     private authService: AuthService,
+    private addressService: AddressService,
     private accountUserDrawerService: AccountUserDrawerService
   ) {
     this.createForm();
@@ -34,23 +37,37 @@ export class ProfileUserPageComponent implements OnInit {
       username: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
-      phoneNumber: [''],
-      addresses: [],
     });
   }
 
   ngOnInit(): void {
-    this.authService.user$.subscribe((user) => {
-      this.user = user;
-      this.userForm.patchValue({
-        firstname: user?.firstname,
-        lastname: user?.lastname,
-        username: user?.username,
-        email: user?.email,
-        password: user?.password,
-        addresses: user?.addresses,
+    this.authService.user$
+      .pipe(
+        tap((user) => {
+          this.user = user;
+          this.userForm.patchValue({
+            firstname: user?.firstname,
+            lastname: user?.lastname,
+            username: user?.username,
+            email: user?.email,
+            password: user?.password,
+          });
+        }),
+        switchMap((user) => {
+          if (user) {
+            this.addressService.getAddressesByUserId(user.id);
+            return this.addressService.addresses$;
+          } else {
+            return of([]);
+          }
+        })
+      )
+      .subscribe((addresses) => {
+        this.addresses = addresses;
+        if (this.user) {
+          this.user.addresses = addresses;
+        }
       });
-    });
   }
 
   populateForm(): void {
@@ -133,6 +150,13 @@ export class ProfileUserPageComponent implements OnInit {
     this.snackBar.open('Formulaire réinitialisé!', 'Fermer', {
       duration: 4004,
     });
+  }
+
+  goToAddressForm(): void {
+    if (this.user) {
+      this.router.navigate(['/account/user/profile/address']);
+      this.accountUserDrawerService.closeDrawer();
+    }
   }
 
   goBack(): void {

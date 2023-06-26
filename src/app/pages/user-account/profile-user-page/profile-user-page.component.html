@@ -69,45 +69,16 @@
         </mat-error>
       </mat-form-field>
 
-      <!-- Phone Number -->
-      <mat-form-field *ngIf="isCustomer">
-        <mat-label>Numéro de téléphone</mat-label>
-        <input matInput formControlName="phoneNumber" />
+      <!-- Address -->
+      <mat-form-field>
+        <mat-label>Adresses</mat-label>
+        <select>
+          <option *ngFor="let address of addresses" [value]="address.id">
+            {{ address.title ?? address.city }}
+          </option>
+        </select>
       </mat-form-field>
-
-      <!-- Billing Address -->
-      <div formGroupName="billingAddress" *ngIf="isCustomer">
-        <div><strong>Adresse de facturation</strong></div>
-        <!-- Street -->
-        <mat-form-field>
-          <mat-label>Rue</mat-label>
-          <input matInput formControlName="street" />
-        </mat-form-field>
-
-        <!-- City -->
-        <mat-form-field>
-          <mat-label>Ville</mat-label>
-          <input matInput formControlName="city" />
-        </mat-form-field>
-
-        <!-- State -->
-        <mat-form-field>
-          <mat-label>Région</mat-label>
-          <input matInput formControlName="state" />
-        </mat-form-field>
-
-        <!-- Postal Code -->
-        <mat-form-field>
-          <mat-label>Code postal</mat-label>
-          <input matInput formControlName="postalCode" />
-        </mat-form-field>
-
-        <!-- Country -->
-        <mat-form-field>
-          <mat-label>Pays</mat-label>
-          <input matInput formControlName="country" />
-        </mat-form-field>
-      </div>
+      <button (click)="goToAddressForm()"><mat-icon>add</mat-icon></button>
     </mat-card-content>
 
     <mat-card-actions class="button-row">

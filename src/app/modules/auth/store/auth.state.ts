@@ -21,7 +21,6 @@ export interface AuthStateModel {
     username: null,
     role: 'CUSTOMER',
     email: '',
-
     isAuthenticated: false,
     isAdmin: false,
     loading: false,

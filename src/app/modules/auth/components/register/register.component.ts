@@ -38,10 +38,6 @@ export class RegisterComponent {
     return this.registerForm.get('password') as FormControl;
   }
 
-  get phoneNumber(): FormControl {
-    return this.registerForm.get('phoneNumber') as FormControl;
-  }
-
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -55,7 +51,6 @@ export class RegisterComponent {
       email: ['', [Validators.required, Validators.email]],
       firstname: ['', [Validators.required]],
       lastname: ['', [Validators.required]],
-      phoneNumber: [''],
     });
   }
 

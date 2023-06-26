@@ -1,15 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {
+  AddressComponent,
   AdminItemComponent,
   AdminOrderComponent,
   OrderListComponent,
 } from '@components/index';
-import {
-  AdminAuthGuard,
-  AuthGuard,
-  OrderActivateCartGuard,
-} from '@core/guards';
+import { AuthGuard } from '@core/guards';
 import {
   DetailItemPageComponent,
   FavoritesUserPageComponent,
@@ -52,6 +49,11 @@ const routes: Routes = [
   {
     path: 'account/user/profile',
     component: ProfileUserPageComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'account/user/profile/address',
+    component: AddressComponent,
     canActivate: [AuthGuard],
   },
   // {
