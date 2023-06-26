@@ -1,4 +1,6 @@
 .register-container {
+  position:relative;
+  height: 100vh !important;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -30,17 +32,14 @@
 
 .account-info, .personal-info {
   display: flex;
-  flex-direction: column;
-  gap: 20px;
+  flex-direction: row;
+  gap: 1.11rem;
 }
 
-@media screen and (min-width: 777px) {
-  .account-info, .personal-info {
-    flex-direction: row;
-  }
-  .address-grid {
-    grid-template-columns: 1fr 1fr 2fr 1fr;
-  }
+.address-grid {
+  display: flex;
+  flex-direction: row;
+  gap: 0.22rem;
 }
 
 .register-button {
@@ -51,6 +50,7 @@
   border: none;
   border-radius: 0.77rem;
   cursor: pointer;
+  margin-top: 1.11rem;
 }
 
 .register-button:hover {
@@ -98,7 +98,24 @@
   cursor: pointer;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 777px) {
+  .register-container {
+    height: auto !important;
+    position: relative;
+    top: 9.8rem;
+    height: calc(100% - 9.3rem);
+  }
+
+  .input-field {
+    margin: 0.111rem 0;
+  }
+
+  .account-info, .personal-info, .address-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.44rem;
+  }
+
   .register-card {
     width: 77%;
   }
@@ -108,19 +125,4 @@
   .register-card {
     width: 89%;
   }
-}
-
-.address-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 20px;
-}
-
-@media screen and (max-width: 777px) {
-  .register-container {
-    position: relative;
-    top: 11.1rem;
-    height: calc(100% - 11.1rem);
-  }
-
 }

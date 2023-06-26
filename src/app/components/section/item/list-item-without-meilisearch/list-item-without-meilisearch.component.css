@@ -1,14 +1,11 @@
 .container {
+  min-height: 100vh !important;
   position: relative;
-  z-index: 11;
-  overflow: auto;
-  height: calc(100vh - 131px) !important;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   grid-gap: 1.11rem;
   margin-left: 1.11%;
   margin-top: 1.11rem;
-  padding-bottom: 131px;
 }
 
 .custom-card {
@@ -26,13 +23,11 @@
   width: 240px;
 }
 
-
 .custom-card:hover {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   transform: scale(1.11);
   z-index: 1;
 }
-
 
 .custom-card-actions {
   display: flex;
@@ -49,7 +44,6 @@ mat-card-image {
   height: auto;
   object-fit: cover;
   width: 100%;
-
 }
 
 .item-description {
@@ -85,7 +79,8 @@ mat-card-title {
 .paginator-container {
   display: flex;
   align-items: center;
-  justify-content: c;
+  justify-content: flex-end;
+  margin: 3.33rem;
 }
 
 .mat-paginator {
@@ -155,4 +150,3 @@ mat-card-title {
     margin-left: 17%
   }
 }
-
