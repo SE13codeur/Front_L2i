@@ -93,12 +93,16 @@ export class OrderComponent implements OnInit, OnDestroy {
       cartItems: this.cartItems$,
       totalTTC: this.totalTTC$,
       user: this.authService.user$,
+      billingAddressId: of(this.selectedBillingAddress?.id),
+      shippingAddressId: of(this.selectedShippingAddress?.id),
     }).subscribe({
       next: ({ cartItems, totalTTC, user }) => {
         if (user) {
           const cartData: ICart = {
             cartItems,
             user: user as IUser,
+            billingAddressId: this.selectedBillingAddress?.id,
+            shippingAddressId: this.selectedShippingAddress?.id,
           };
 
           this.orderService
