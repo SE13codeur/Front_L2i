@@ -1,57 +1,88 @@
-<form [formGroup]="addressForm" (ngSubmit)="onSubmit()" class="address-grid">
-  <h3>Enregistrer une nouvelle adresse</h3>
-  <div class="input-field">
-    <input
-      formControlName="title"
-      type="text"
-      placeholder="Titre de votre adresse"
-    />
-  </div>
-  <div class="input-field">
-    <input formControlName="street" type="text" placeholder="Rue" />
-    <div *ngIf="street.errors && street.touched">
-      <div *ngIf="street.errors['required']">La rue est requise.</div>
-    </div>
-  </div>
-  <div class="input-field">
-    <input formControlName="city" type="text" placeholder="Ville" />
-    <div *ngIf="city.errors && city.touched">
-      <div *ngIf="city.errors['required']">La ville est requise.</div>
-    </div>
-  </div>
-  <div class="input-field">
-    <input formControlName="zipCode" type="text" placeholder="Code postal" />
-    <div *ngIf="zipCode.errors && zipCode.touched">
-      <div *ngIf="zipCode.errors['required']">Le code postal est requis.</div>
-    </div>
-  </div>
-  <div class="input-field">
-    <input formControlName="state" type="text" placeholder="Région" />
-  </div>
-  <div class="input-field">
-    <input formControlName="country" type="text" placeholder="Pays" />
-    <div *ngIf="country.errors && country.touched">
-      <div *ngIf="country.errors['required']">Le pays est requis.</div>
-    </div>
-  </div>
-  <mat-card-actions class="button-row">
-    <button
-      mat-raised-button
-      class="goBack-button"
-      (click)="goBackToPreviousPage()"
+<div class="address-container">
+  <div class="address-card">
+    <form
+      [formGroup]="addressForm"
+      (ngSubmit)="onSubmit()"
+      class="address-grid"
     >
-      Retour
-    </button>
-    <button
-      mat-raised-button
-      class="validate-button"
-      type="submit"
-      [disabled]="addressForm.invalid"
-    >
-      Valider
-    </button>
-    <button mat-raised-button class="reset-address-form" (click)="onReset()">
-      Réinitialiser
-    </button>
-  </mat-card-actions>
-</form>
+      <h2>Enregistrer une nouvelle adresse</h2>
+      <div class="address-info">
+        <div class="input-field">
+          <input
+            formControlName="title"
+            type="text"
+            placeholder="Titre de votre adresse"
+          />
+        </div>
+        <div class="input-field">
+          <input formControlName="street" type="text" placeholder="Rue" />
+          <div *ngIf="street.errors && street.touched">
+            <div *ngIf="street.errors['required']">La rue est requise.</div>
+          </div>
+        </div>
+        <div class="input-field">
+          <input formControlName="city" type="text" placeholder="Ville" />
+          <div *ngIf="city.errors && city.touched">
+            <div class="input-error" *ngIf="city.errors['required']">
+              La ville est requise.
+            </div>
+          </div>
+        </div>
+        <div class="input-field">
+          <input
+            formControlName="zipCode"
+            type="text"
+            placeholder="Code postal"
+          />
+          <div *ngIf="zipCode.errors && zipCode.touched">
+            <div class="input-error" *ngIf="zipCode.errors['required']">
+              Le code postal est requis.
+            </div>
+            <div class="input-error" *ngIf="zipCode.errors['pattern']">
+              Le code postal doit contenir exactement 5 chiffres.
+            </div>
+            <div class="input-error" *ngIf="zipCode.errors['pattern']">
+              Le code postal doit contenir uniquement des chiffres.
+            </div>
+          </div>
+        </div>
+
+        <div class="input-field">
+          <input formControlName="state" type="text" placeholder="Région" />
+        </div>
+        <div class="input-field">
+          <input formControlName="country" type="text" placeholder="Pays" />
+          <div *ngIf="country.errors && country.touched">
+            <div class="input-error" *ngIf="country.errors['required']">
+              Le pays est requis.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="button-row">
+        <button
+          mat-raised-button
+          class="goBack-button"
+          (click)="goBackToPreviousPage()"
+        >
+          Retour
+        </button>
+        <button
+          mat-raised-button
+          class="validate-button"
+          type="submit"
+          [disabled]="addressForm.invalid"
+        >
+          Valider
+        </button>
+        <button
+          mat-raised-button
+          class="reset-address-form"
+          (click)="onReset()"
+        >
+          Réinitialiser
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -56,7 +56,7 @@ export class AddressComponent {
       title: [''],
       street: ['', Validators.required],
       city: ['', Validators.required],
-      zipCode: ['', Validators.required],
+      zipCode: ['', [Validators.required, Validators.pattern('^[0-9]{5}$')]],
       country: ['', Validators.required],
       state: [''],
     });

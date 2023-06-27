@@ -1,27 +1,55 @@
-.address-grid {
+.address-container {
   position:relative;
   height: 100vh !important;
+  top: 4.4rem;
+  height: calc(100% - 4.4rem);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 0.22rem;
   background: linear-gradient(to right, #e0eafc, #cfdef3);
+}
+
+.address-card {
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 0.89rem;
+  border-radius: 0.77rem;
+  box-shadow: 0 0.33rem 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 33.3rem;
+  height: auto;
+  max-width: 1001px;
+}
+
+h2 {
+  color: #0BB9F0;
 }
 
 .input-field {
   margin: 0.89rem 0;
+  flex: 1;
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 44%;
-  background-color: rgba(255, 255, 255, 0.9);
-  padding: 0.89rem;
-  border-radius: 0.77rem;
-  box-shadow: 0 0.33rem 6px rgba(0, 0, 0, 0.1);
+  width: 55%;
 }
+
+.address-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.11rem;
+}
+
+.input-error {
+  width: 100%;
+  text-align: center;
+  color: #e2004b;
+}
+
 
 .input-field input {
   width: 100%;
@@ -30,10 +58,12 @@
   border-radius: 0.77rem;
 }
 
-.input-field div {
-  width: 100%;
-  text-align: center;
-  color: #e2004b;
+.button-row {
+  margin: 1.11rem !important;
+}
+
+.button-row button {
+  margin: 0 0.55rem;
 }
 
 .goBack-button {

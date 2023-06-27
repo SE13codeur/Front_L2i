@@ -114,46 +114,27 @@
       {{ address.title ?? address.city }}
     </option>
   </select>
-  <table *ngIf="selectedAddress" mat-table [dataSource]="[selectedAddress]">
-    <!-- Titre Column -->
-    <ng-container matColumnDef="title">
-      <th mat-header-cell *matHeaderCellDef>Titre</th>
-      <td mat-cell *matCellDef="let address">{{ address.title }}</td>
-    </ng-container>
+  <div *ngIf="selectedAddress" class="address-table">
+    <div class="address-table-row">
+      <div class="address-table-header">Titre</div>
+      <div class="address-table-header">Rue</div>
+      <div class="address-table-header">Ville</div>
+      <div class="address-table-header">Code postal</div>
+      <div class="mobile-mode address-table-header">Région</div>
+      <div class="address-table-header">Pays</div>
+    </div>
+    <div class="address-table-row">
+      <div class="address-table-cell">{{ selectedAddress.title }}</div>
+      <div class="address-table-cell">{{ selectedAddress.street }}</div>
+      <div class="address-table-cell">{{ selectedAddress.city }}</div>
+      <div class="address-table-cell">{{ selectedAddress.zipCode }}</div>
+      <div class="mobile-mode address-table-cell">
+        {{ selectedAddress.state }}
+      </div>
+      <div class="address-table-cell">{{ selectedAddress.country }}</div>
+    </div>
+  </div>
 
-    <!-- Rue Column -->
-    <ng-container matColumnDef="street">
-      <th mat-header-cell *matHeaderCellDef>Rue</th>
-      <td mat-cell *matCellDef="let address">{{ address.street }}</td>
-    </ng-container>
-
-    <!-- Ville Column -->
-    <ng-container matColumnDef="city">
-      <th mat-header-cell *matHeaderCellDef>Ville</th>
-      <td mat-cell *matCellDef="let address">{{ address.city }}</td>
-    </ng-container>
-
-    <!-- State Column -->
-    <ng-container matColumnDef="state">
-      <th mat-header-cell *matHeaderCellDef>État</th>
-      <td mat-cell *matCellDef="let address">{{ address.state }}</td>
-    </ng-container>
-
-    <!-- Code postal Column -->
-    <ng-container matColumnDef="zipCode">
-      <th mat-header-cell *matHeaderCellDef>Code postal</th>
-      <td mat-cell *matCellDef="let address">{{ address.zipCode }}</td>
-    </ng-container>
-
-    <!-- Pays Column -->
-    <ng-container matColumnDef="country">
-      <th mat-header-cell *matHeaderCellDef>Pays</th>
-      <td mat-cell *matCellDef="let address">{{ address.country }}</td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-  </table>
   <h3 *ngIf="addresses.length < 1">
     Veuillez ajouter une adresse à votre profil !
   </h3>
