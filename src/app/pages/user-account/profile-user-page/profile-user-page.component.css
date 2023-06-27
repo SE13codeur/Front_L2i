@@ -1,54 +1,113 @@
-.container {
-  position: relative;
+.profile-container {
+  position:relative;
+  height: 100vh !important;
   top: 7.7rem;
   height: calc(100% - 7.7rem);
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to right, #e0eafc, #cfdef3);
+}
+
+.profile-card {
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 0.89rem;
+  border-radius: 0.77rem;
+  box-shadow: 0 0.33rem 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 27rem;
+  max-width: 1001px;
+}
+
+.account-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.input-field {
+  margin: 0.89rem 0;
+  flex: 1;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
+  width: 44%;
 }
 
-.mat-form-field {
-  width: 77.7%;
-  margin-bottom: 1.11rem;
-}
-
-.mat-form-field label {
-  display: block;
-  font-weight: 600;
-}
-
-.mat-form-field input,
-.mat-form-field select {
+.input-error {
   width: 100%;
-  border-radius: 7.7rem;
-  font-size: 1.11rem;
+  text-align: center;
+  color: #e2004b;
 }
 
-.mat-form-field  {
+
+.input-field input {
   width: 100%;
-  min-height: 100px;
-  border-radius: 7.7rem;
-  font-size: 1.11rem;
+  padding: 0.89rem;
+  border: 1px solid #ccc;
+  border-radius: 0.77rem;
 }
 
-.mat-card-actions button {
-  padding: 0.77rem 1.4rem;
-  font-size: 1.11rem;
-  margin: 1.11rem;
-}
-
-.address-group {
+.account-info, .personal-info {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 1.11rem;
+}
+
+.address-grid {
+  display: flex;
+  flex-direction: row;
+  gap: 0.22rem;
+}
+
+.profile-button {
+  width: 66%;
+  padding: 1.11rem;
+  background-color: #0BB9F0;
+  color: white;
+  border: none;
+  border-radius: 0.77rem;
+  cursor: pointer;
+  margin-top: 1.11rem;
+}
+
+.profile-button:hover {
+  background-color: #2196F3;
+}
+
+.error {
+  color: #FF4080;
+  font-size: 1.11rem;
+  margin-top: 0.44rem;
+}
+
+.profile-card h2 {
+  margin-bottom: 1.11rem;
+  font-size: 1.77rem;
+}
+
+.options {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.profile-link {
+  color: #FF4080;
+  text-decoration: none;
+}
+
+.profile-link:hover {
+  color: #e2004b;
+  text-decoration: none;
 }
 
 .goBack-button {
   color: white;
-  background-color: #e2004b;
+  background-color: #FF4080;
 }
 
 .goBack-button:hover {
@@ -68,12 +127,12 @@
 
 .reset-profil-form {
   color: white;
-  background-color: #FF4080;
+  background-color: #e2004b;
 }
 
 .reset-profil-form:hover {
   color: white;
-  background-color: #e2004b;
+  background-color: red;
 }
 
 .add-address {
@@ -84,7 +143,7 @@
   margin: 2rem;
   width: 2.5rem;
   height: 2.5rem;
-  border-radius: 50%;
+  border-radius: 55%;
   color: #0BB9F0;
 }
 
@@ -94,25 +153,43 @@
 }
 
 table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 2rem 0;
+  width: 55rem;
+  border-radius: 55% !important;
 }
 
-table th,
-table td {
-  border: 1px solid #ccc;
-  padding: 0.7rem;
-  text-align: left;
+table th {
+  font-size: large;
+  color: #0BB9F0;
 }
 
-@media (max-width: 777px) {
-  .container {
-    padding: 2rem;
+@media screen and (max-width: 777px) {
+  .profile-container {
+    position: relative;
+    top: 14rem;
+    height: calc(100% - 14rem);
   }
 
-  .address-group .mat-form-field {
-    flex: none;
-    width: 100%;
+  .input-field {
+    margin: 0.44rem 0;
+  }
+  .account-info, .personal-info, .address-grid {
+    gap: 0;
+  }
+
+  .profile-card {
+    width: 77%;
+  }
+
+  .profile-container table {
+    display: flex;
+    flex-direction: column;
+  }
+
+
+}
+
+@media screen and (max-width: 303px) {
+  .profile-card {
+    width: 89%;
   }
 }

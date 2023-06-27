@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AuthService } from '@auth-s/index';
@@ -14,6 +19,27 @@ import { of, switchMap, tap } from 'rxjs';
 })
 export class ProfileUserPageComponent implements OnInit {
   userForm!: FormGroup;
+
+  get username(): FormControl {
+    return this.userForm.get('username') as FormControl;
+  }
+
+  get firstname(): FormControl {
+    return this.userForm.get('firstname') as FormControl;
+  }
+
+  get lastname(): FormControl {
+    return this.userForm.get('lastname') as FormControl;
+  }
+
+  get email(): FormControl {
+    return this.userForm.get('email') as FormControl;
+  }
+
+  get password(): FormControl {
+    return this.userForm.get('password') as FormControl;
+  }
+
   user: IUser | null = null;
   isSubmitting = false;
   addresses!: IAddress[];
@@ -26,7 +52,6 @@ export class ProfileUserPageComponent implements OnInit {
     'state',
     'zipCode',
     'country',
-    'userId',
   ];
 
   constructor(
@@ -93,9 +118,9 @@ export class ProfileUserPageComponent implements OnInit {
           this.user = user;
           // Update form controls
           this.userForm.patchValue({
+            username: user.username,
             firstname: user.firstname,
             lastname: user.lastname,
-            username: user.username,
             email: user.email,
             password: user.password,
           });

@@ -46,8 +46,7 @@ export class AddressComponent {
     private router: Router,
     private snackBar: MatSnackBar,
     private authService: AuthService,
-    private addressService: AddressService,
-    private accountUserDrawerService: AccountUserDrawerService
+    private addressService: AddressService
   ) {
     this.authService.user$.subscribe((user) => {
       this.user = user;
@@ -89,7 +88,6 @@ export class AddressComponent {
             duration: 4004,
           });
           this.router.navigate(['/account/user/profile']);
-          this.accountUserDrawerService.toggleDrawer();
         },
         error: (error: any) => {
           this.snackBar.open(
@@ -116,7 +114,6 @@ export class AddressComponent {
   goBackToPreviousPage(): void {
     if (this.user) {
       this.router.navigate(['/account/user/profile']);
-      this.accountUserDrawerService.toggleDrawer();
     }
   }
 }

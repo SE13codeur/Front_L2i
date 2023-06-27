@@ -24,17 +24,4 @@ export class UserStoreService {
   getUser(): Observable<IUser> {
     return this.store.select((state) => state.user);
   }
-
-  dispatchLoginAction(credentials: {
-    username: string;
-    password: string;
-    email: string;
-  }): Observable<IUser> {
-    return this.http.post<IUser>(`apiUrl/login`, credentials).pipe(
-      map((user) => {
-        this.userStore.next(user);
-        return user;
-      })
-    );
-  }
 }
