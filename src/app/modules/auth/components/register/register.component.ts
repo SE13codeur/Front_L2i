@@ -59,7 +59,7 @@ export class RegisterComponent {
       this.authService.register(this.registerForm.value).subscribe({
         next: () => {
           this.router.navigate(['/auth/login']);
-          let successMessage = `Félicitation, votre inscription est réussie !`;
+          let successMessage = `Confirmation, votre inscription est réussie !`;
           this.snackBar.open(successMessage, 'Fermer', { duration: 5005 });
         },
         error: (error) => {

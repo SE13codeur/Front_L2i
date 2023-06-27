@@ -5,6 +5,7 @@ import { AuthService } from '@auth-s/index';
 import { Router } from '@angular/router';
 import { IUser } from '@models/index';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AccountUserDrawerService } from '@services/index';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,8 @@ export class LoginComponent implements OnInit {
     private location: Location,
     private router: Router,
     private snackBar: MatSnackBar,
-    private authService: AuthService
+    private authService: AuthService,
+    private accountUserDrawerService: AccountUserDrawerService
   ) {
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],
@@ -54,8 +56,9 @@ export class LoginComponent implements OnInit {
         next: (isLoggedIn) => {
           if (isLoggedIn) {
             this.router.navigate(['/items/books']);
-            let successMessage = `Félicitations ${this.user?.username} ! Connexion réussie !`;
+            let successMessage = `Bienvenue ${this.user?.username}, connexion réussie !`;
             this.snackBar.open(successMessage, 'Fermer', { duration: 5005 });
+            this.accountUserDrawerService.openDrawer();
           }
         },
         error: (error) => {

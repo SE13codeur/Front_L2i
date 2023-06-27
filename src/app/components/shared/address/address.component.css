@@ -36,6 +36,11 @@
   color: #e2004b;
 }
 
+.reset-address-form {
+  color: white;
+  background-color: #e2004b;
+}
+
 @media screen and (max-width: 777px) {
   .address-grid {
     flex-direction: column;

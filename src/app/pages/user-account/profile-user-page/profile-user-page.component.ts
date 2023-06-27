@@ -17,6 +17,17 @@ export class ProfileUserPageComponent implements OnInit {
   user: IUser | null = null;
   isSubmitting = false;
   addresses!: IAddress[];
+  selectedAddress!: IAddress | null;
+
+  displayedColumns: string[] = [
+    'title',
+    'street',
+    'city',
+    'state',
+    'zipCode',
+    'country',
+    'userId',
+  ];
 
   constructor(
     private fb: FormBuilder,
@@ -70,6 +81,11 @@ export class ProfileUserPageComponent implements OnInit {
       });
   }
 
+  displayAddressDetails(id: number): void {
+    const address = this.addresses.find((address) => address.id === id);
+    this.selectedAddress = address || null;
+  }
+
   populateForm(): void {
     if (this.user) {
       this.userService.getUserById(this.user.id).subscribe({
@@ -85,20 +101,20 @@ export class ProfileUserPageComponent implements OnInit {
           });
 
           this.snackBar.open('Données chargées avec succès!', 'Fermer', {
-            duration: 4004,
+            duration: 5005,
           });
         },
         error: (error: any) => {
           this.snackBar.open(
             'Erreur lors du chargement des données!',
             'Fermer',
-            { duration: 4004 }
+            { duration: 5005 }
           );
         },
       });
     } else {
       this.snackBar.open("Aucun ID d'utilisateur fourni !", 'Fermer', {
-        duration: 4004,
+        duration: 5005,
       });
     }
   }
@@ -106,49 +122,49 @@ export class ProfileUserPageComponent implements OnInit {
   onSubmit(): void {
     if (this.userForm.valid) {
       this.isSubmitting = true;
-      this.snackBar.open('Envoi des données...', 'Fermer', { duration: 4004 });
+      this.snackBar.open('Envoi des données...', 'Fermer', { duration: 5005 });
 
       const userData = this.userForm.value;
       this.saveUser(userData);
     } else {
       this.snackBar.open('Formulaire non valide!', 'Fermer', {
-        duration: 4004,
+        duration: 5005,
       });
     }
   }
 
   saveUser(userData: IUser): void {
-    if ('billingAddress' in userData) {
-      const saveOperation = this.user
-        ? this.userService.editUser(this.user.id, userData as IUser)
-        : this.userService.addUser(userData as IUser);
+    if (this.user) {
+      userData.id = this.user.id;
+
+      const saveOperation = this.userService.editUser(this.user.id, userData);
 
       saveOperation.subscribe({
         next: () => {
-          this.snackBar.open('Utilisateur sauvegardé avec succès!', 'Fermer', {
-            duration: 4004,
+          this.snackBar.open('Données sauvegardées avec succès!', 'Fermer', {
+            duration: 5005,
           });
-          this.router.navigate(['/account/user/profile']);
         },
         error: (error: any) => {
           this.snackBar.open(
             "Erreur lors de la sauvegarde de l'utilisateur!",
             'Fermer',
-            { duration: 4004 }
+            { duration: 5005 }
           );
         },
       });
     } else {
-      this.snackBar.open("L'utilisateur n'est pas un client!", 'Fermer', {
-        duration: 4004,
+      this.snackBar.open('Veuillez vous reconnecter !', 'Fermer', {
+        duration: 5005,
       });
+      this.router.navigate(['/auth/login']);
     }
   }
 
   onReset(): void {
     this.userForm.reset();
     this.snackBar.open('Formulaire réinitialisé !', 'Fermer', {
-      duration: 4004,
+      duration: 5005,
     });
   }
 

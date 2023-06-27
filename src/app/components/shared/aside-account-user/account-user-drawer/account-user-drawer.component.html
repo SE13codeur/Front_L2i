@@ -12,8 +12,8 @@
     <mat-icon>favorite</mat-icon>
     <span class="drawer-item-text">Mes favoris</span>
   </div>
-  <button class="logout-button">
+  <button (click)="onLogout()" class="logout-button">
     <mat-icon>exit_to_app</mat-icon>
-    <span class="drawer-item-text" (click)="onLogout()">Déconnexion</span>
+    <span class="drawer-item-text">Déconnexion</span>
   </button>
 </div>

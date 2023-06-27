@@ -19,6 +19,10 @@ export class AccountUserDrawerService {
     });
   }
 
+  openDrawer() {
+    this.isDrawerOpen.next(true);
+  }
+
   closeDrawer() {
     this.isDrawerOpen.next(false);
   }
