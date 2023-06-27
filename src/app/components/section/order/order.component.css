@@ -1,13 +1,84 @@
 .container {
   height: 100vh !important;
-  margin-top: 7.7rem;
+  top: 14rem;
+  height: calc(100% - 14rem);
   position: relative;
   margin-left: 1.11rem;
   width: 100%;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex-direction: column ;
   align-items: center;
+  justify-content: center;
+}
+
+.address-card {
+  display: flex;
+  flex-direction: row ;
+  align-items: center;
+  justify-content: center;
+}
+
+.address-card select {
+  margin: 0 5.5rem;
+}
+
+.add-address {
+  cursor: pointer;
+  margin: 2rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 55%;
+  color: #0BB9F0;
+  background-color: aliceblue;
+}
+
+.add-address:hover {
+  color: #FF4080;
+}
+
+.selection-address {
+  flex-direction: column ;
+}
+
+select {
+  border-radius: 7.7rem;
+  height: 3.03rem;
+  padding: 0.55rem;
+}
+
+.address-table {
+  margin-top: 1.11rem;
+  display: flex;
+  flex-direction: column;
+  width: 89%;
+  border: 2.02px solid #0bb9f0;
+  border-radius: 0.77rem;
+  box-shadow: 0 0.33rem 6px rgba(0, 0, 0, 0.1);
+}
+
+.address-table-row {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #ccc;
+}
+
+.address-table-row:last-child {
+  border-bottom: none;
+}
+
+.address-table-header {
+  font-weight: bold;
+  text-align: center;
+  flex: 1;
+  background-color: rgba(11, 185, 240, 0.55);
+  color: aliceblue;
+  padding: 0.77rem 0;
+}
+
+.address-table-cell {
+  text-align: center;
+  flex: 1;
+  padding: 0.77rem 0;
 }
 
 .show-on-mobile {
@@ -27,6 +98,7 @@ h1 {
 }
 
 .cart-table {
+  margin-top: 3.33rem;
   width: 100%;
   border-collapse: collapse;
 }
@@ -93,6 +165,10 @@ h1 {
     margin-left: 0.5rem;
   }
 
+  .address-card select {
+    margin: 0 1.11rem;
+  }
+
   .cart-table th,
   .cart-table td {
     padding: 0.5rem;
@@ -109,12 +185,18 @@ h1 {
     padding: 0.4rem 0.8rem;
     margin: 0.5rem;
   }
+
 }
 
 /* Media query for mobile devices */
-@media screen and (max-width: 888px) {
+@media screen and (max-width: 777px) {
   .container {
     margin-left: 0.3rem;
+  }
+
+  .address-card {
+    flex-direction: column ;
+    gap: 1.11rem;
   }
 
   .hide-on-mobile {

@@ -1,23 +1,48 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AuthService } from '@auth/index';
-import { ICartItem, ICart, IUser } from '@models/index';
+import { ICartItem, ICart, IUser, IAddress } from '@models/index';
 import { Select } from '@ngxs/store';
-import { CartDrawerService, CartService, OrderService } from '@services/index';
+import {
+  AddressService,
+  CartDrawerService,
+  CartService,
+  OrderService,
+} from '@services/index';
 import { CartState } from '@store/index';
-import { Observable, Subject, combineLatest, takeUntil } from 'rxjs';
+import {
+  Observable,
+  Subject,
+  combineLatest,
+  of,
+  switchMap,
+  takeUntil,
+  tap,
+} from 'rxjs';
 
 @Component({
   selector: 'app-order',
   templateUrl: './order.component.html',
   styleUrls: ['./order.component.css'],
 })
-export class OrderComponent implements OnDestroy {
+export class OrderComponent implements OnInit, OnDestroy {
   @Select(CartState.getCartItems)
   cartItems$!: Observable<ICartItem[]>;
   @Select(CartState.getTotalTTC)
   totalTTC$!: Observable<number>;
+  user!: IUser | null;
+  addresses!: IAddress[];
+  selectedBillingAddress!: IAddress | null;
+  selectedShippingAddress!: IAddress | null;
+  displayedColumns: string[] = [
+    'title',
+    'street',
+    'city',
+    'state',
+    'zipCode',
+    'country',
+  ];
 
   private destroy$ = new Subject<void>();
 
@@ -27,8 +52,32 @@ export class OrderComponent implements OnDestroy {
     private cartDrawerService: CartDrawerService,
     private router: Router,
     private snackBar: MatSnackBar,
-    private authService: AuthService
+    private authService: AuthService,
+    private addressService: AddressService
   ) {}
+
+  ngOnInit(): void {
+    this.authService.user$
+      .pipe(
+        tap((user) => {
+          this.user = user;
+        }),
+        switchMap((user) => {
+          if (user) {
+            this.addressService.getAddressesByUserId(user.id);
+            return this.addressService.addresses$;
+          } else {
+            return of([]);
+          }
+        })
+      )
+      .subscribe((addresses) => {
+        this.addresses = addresses;
+        if (this.user) {
+          this.user.addresses = addresses;
+        }
+      });
+  }
 
   openCartDrawer() {
     this.cartDrawerService.toggleDrawer();
@@ -40,17 +89,13 @@ export class OrderComponent implements OnDestroy {
   }
 
   onConfirmOrder() {
-    console.log('onConfirmOrder called');
-
     combineLatest({
       cartItems: this.cartItems$,
       totalTTC: this.totalTTC$,
       user: this.authService.user$,
     }).subscribe({
       next: ({ cartItems, totalTTC, user }) => {
-        console.log('combineLatest next', cartItems, totalTTC, user);
-
-        if (user && 'billingAddress' in user) {
+        if (user) {
           const cartData: ICart = {
             cartItems,
             user: user as IUser,
@@ -61,7 +106,6 @@ export class OrderComponent implements OnDestroy {
             .pipe(takeUntil(this.destroy$))
             .subscribe({
               next: () => {
-                console.log('Order created successfully');
                 this.snackBar.open('Commande créée avec succès!', 'Fermer', {
                   duration: 4400,
                 });
@@ -98,6 +142,22 @@ export class OrderComponent implements OnDestroy {
         console.error('Error fetching totals or user:', error);
       },
     });
+  }
+
+  goToAddressForm(): void {
+    if (this.user) {
+      this.router.navigate(['/account/user/profile/address']);
+    }
+  }
+
+  displayBillingAddressDetails(id: number): void {
+    const address = this.addresses.find((address) => address.id === id);
+    this.selectedBillingAddress = address || null;
+  }
+
+  displayShippingAddressDetails(id: number): void {
+    const address = this.addresses.find((address) => address.id === id);
+    this.selectedShippingAddress = address || null;
   }
 
   ngOnDestroy() {

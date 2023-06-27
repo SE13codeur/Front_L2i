@@ -1,9 +1,106 @@
 <div class="container">
-  <h1>Récapitulatif de la commande</h1>
+  <h2 style="color: #0bb9f0">Récapitulatif de la commande</h2>
+  <span class="address-card">
+    <button class="add-address" (click)="goToAddressForm()">
+      <mat-icon>add</mat-icon>
+    </button>
+    <h3>Adresses</h3>
+  </span>
+  <div class="address-card">
+    <div class="selection-address">
+      <select
+        #billingAddressSelectRef
+        (change)="displayBillingAddressDetails(+billingAddressSelectRef.value)"
+      >
+        <option [disabled]="true" [selected]="true">
+          Veuillez sélectioner une adresse de facturation
+        </option>
+        <option *ngFor="let address of addresses" [value]="address.id">
+          {{ address.title ?? address.city }}
+        </option>
+      </select>
+      <div *ngIf="selectedBillingAddress" class="address-table">
+        <div class="address-table-row">
+          <div class="address-table-header">Titre</div>
+          <div class="address-table-header">Rue</div>
+          <div class="address-table-header">Ville</div>
+          <div class="address-table-header">Code postal</div>
+          <div class="mobile-mode address-table-header">Région</div>
+          <div class="address-table-header">Pays</div>
+        </div>
+        <div class="address-table-row">
+          <div class="address-table-cell">
+            {{ selectedBillingAddress.title }}
+          </div>
+          <div class="address-table-cell">
+            {{ selectedBillingAddress.street }}
+          </div>
+          <div class="address-table-cell">
+            {{ selectedBillingAddress.city }}
+          </div>
+          <div class="address-table-cell">
+            {{ selectedBillingAddress.zipCode }}
+          </div>
+          <div class="mobile-mode address-table-cell">
+            {{ selectedBillingAddress.state }}
+          </div>
+          <div class="address-table-cell">
+            {{ selectedBillingAddress.country }}
+          </div>
+        </div>
+      </div>
+    </div>
 
-  <div class="shipping-address section aligned-section">
-    <h2 style="font-weight: bolder; margin: 1.11rem">Adresse de livraison:</h2>
+    <div class="selection-address">
+      <select
+        #shippingAddressSelectRef
+        (change)="
+          displayShippingAddressDetails(+shippingAddressSelectRef.value)
+        "
+      >
+        <option [disabled]="true" [selected]="true">
+          Veuillez sélectioner une adresse de livraison
+        </option>
+        <option *ngFor="let address of addresses" [value]="address.id">
+          {{ address.title ?? address.city }}
+        </option>
+      </select>
+      <div *ngIf="selectedShippingAddress" class="address-table">
+        <div class="address-table-row">
+          <div class="address-table-header">Titre</div>
+          <div class="address-table-header">Rue</div>
+          <div class="address-table-header">Ville</div>
+          <div class="address-table-header">Code postal</div>
+          <div class="mobile-mode address-table-header">Région</div>
+          <div class="address-table-header">Pays</div>
+        </div>
+        <div class="address-table-row">
+          <div class="address-table-cell">
+            {{ selectedShippingAddress.title }}
+          </div>
+          <div class="address-table-cell">
+            {{ selectedShippingAddress.street }}
+          </div>
+          <div class="address-table-cell">
+            {{ selectedShippingAddress.city }}
+          </div>
+          <div class="address-table-cell">
+            {{ selectedShippingAddress.zipCode }}
+          </div>
+          <div class="mobile-mode address-table-cell">
+            {{ selectedShippingAddress.state }}
+          </div>
+          <div class="address-table-cell">
+            {{ selectedShippingAddress.country }}
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
+
+  <h3 style="color: #ff4080; margin-top: 3.33rem" *ngIf="addresses.length < 1">
+    Veuillez ajouter une adresse à votre profil !
+  </h3>
 
   <table class="cart-table">
     <thead>

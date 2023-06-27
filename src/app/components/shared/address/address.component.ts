@@ -10,7 +10,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AuthService } from '@auth-s/index';
 import { IAddress, IUser } from '@models/index';
-import { AccountUserDrawerService, AddressService } from '@services/index';
+import { AddressService } from '@services/index';
 @Component({
   selector: 'app-address',
   templateUrl: './address.component.html',
@@ -46,7 +46,8 @@ export class AddressComponent {
     private router: Router,
     private snackBar: MatSnackBar,
     private authService: AuthService,
-    private addressService: AddressService
+    private addressService: AddressService,
+    private location: Location
   ) {
     this.authService.user$.subscribe((user) => {
       this.user = user;
@@ -87,7 +88,7 @@ export class AddressComponent {
           this.snackBar.open('Adresse sauvegardée avec succès !', 'Fermer', {
             duration: 4004,
           });
-          this.router.navigate(['/account/user/profile']);
+          this.goBackToPreviousPage();
         },
         error: (error: any) => {
           this.snackBar.open(
@@ -113,7 +114,7 @@ export class AddressComponent {
 
   goBackToPreviousPage(): void {
     if (this.user) {
-      this.router.navigate(['/account/user/profile']);
+      this.location.back();
     }
   }
 }

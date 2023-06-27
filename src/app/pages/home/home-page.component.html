@@ -1,3 +1,10 @@
 <app-header></app-header>
 <app-event-banner></app-event-banner>
-<app-footer></app-footer>
+<mat-accordion style="position: relative; z-index: -1">
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title><mat-icon>infos</mat-icon> </mat-panel-title>
+    </mat-expansion-panel-header>
+    <app-footer></app-footer>
+  </mat-expansion-panel>
+</mat-accordion>

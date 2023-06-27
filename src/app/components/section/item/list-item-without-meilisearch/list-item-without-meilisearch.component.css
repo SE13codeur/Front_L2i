@@ -1,5 +1,5 @@
 .container {
-  min-height: 100vh !important;
+  height: 100vh !important;
   position: relative;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -21,6 +21,7 @@
   cursor: pointer;
   height: 404px;
   width: 240px;
+  margin-bottom: 1.11rem;
 }
 
 .custom-card:hover {
