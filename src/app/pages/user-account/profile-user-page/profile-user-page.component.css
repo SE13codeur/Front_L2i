@@ -1,8 +1,8 @@
 .profile-container {
   position:relative;
   height: 100vh !important;
-  top: 7.7rem;
-  height: calc(100% - 7.7rem);
+  top: 5.5rem;
+  height: calc(100% - 5.5rem);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -27,7 +27,6 @@
 }
 
 .input-field {
-  margin: 0.89rem 0;
   flex: 1;
   text-align: center;
   display: flex;
@@ -100,6 +99,14 @@
   text-decoration: none;
 }
 
+.button-row {
+  margin: 1.11rem !important;
+}
+
+.button-row button {
+  margin: 0 0.55rem;
+}
+
 .profile-link:hover {
   color: #e2004b;
   text-decoration: none;
@@ -145,21 +152,52 @@
   height: 2.5rem;
   border-radius: 55%;
   color: #0BB9F0;
+  background-color: aliceblue;
 }
 
 .add-address:hover {
   color: #FF4080;
-  background-color: rgba(255, 64, 127, 0.11);
 }
 
-table {
-  width: 55rem;
-  border-radius: 55% !important;
+select {
+  border-radius: 7.7rem;
+  height: 3.03rem;
+  padding: 0.55rem;
 }
 
-table th {
-  font-size: large;
-  color: #0BB9F0;
+.address-table {
+  margin-top: 1.11rem;
+  display: flex;
+  flex-direction: column;
+  width: 89%;
+  border: 2.02px solid #0bb9f0;
+  border-radius: 0.77rem;
+  box-shadow: 0 0.33rem 6px rgba(0, 0, 0, 0.1);
+}
+
+.address-table-row {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #ccc;
+}
+
+.address-table-row:last-child {
+  border-bottom: none;
+}
+
+.address-table-header {
+  font-weight: bold;
+  text-align: center;
+  flex: 1;
+  background-color: rgba(11, 185, 240, 0.55);
+  color: aliceblue;
+  padding: 0.77rem 0;
+}
+
+.address-table-cell {
+  text-align: center;
+  flex: 1;
+  padding: 0.77rem 0;
 }
 
 @media screen and (max-width: 777px) {
@@ -167,6 +205,10 @@ table th {
     position: relative;
     top: 14rem;
     height: calc(100% - 14rem);
+  }
+
+  .mobile-mode {
+    display: none;
   }
 
   .input-field {
