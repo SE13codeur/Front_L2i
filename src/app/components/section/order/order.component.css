@@ -1,7 +1,7 @@
 .container {
   height: 100vh !important;
-  top: 14rem;
-  height: calc(100% - 14rem);
+  top: 5.5rem;
+  height: calc(100% - 5.5rem);
   position: relative;
   margin-left: 1.11rem;
   width: 100%;
@@ -9,13 +9,20 @@
   flex-direction: column ;
   align-items: center;
   justify-content: center;
+  margin-bottom: 17vh !important;
+}
+
+h2 {
+  color: rgba(11, 185, 240, 0.77);
+  text-decoration: underline;
 }
 
 .address-card {
   display: flex;
   flex-direction: row ;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
+  margin-right: 5.5rem;
 }
 
 .address-card select {
@@ -29,11 +36,18 @@
   height: 2.5rem;
   border-radius: 55%;
   color: #0BB9F0;
-  background-color: aliceblue;
+  border: 2.2px solid rgba(255, 64, 128, 0.11);
+
 }
 
 .add-address:hover {
   color: #FF4080;
+  border: 2.2px solid rgba(255, 64, 128, 0.44);
+}
+
+h3 {
+  text-decoration: underline;
+  text-decoration-color: rgba(255, 64, 128, 0.44);;
 }
 
 .selection-address {
@@ -47,19 +61,18 @@ select {
 }
 
 .address-table {
-  margin-top: 1.11rem;
   display: flex;
   flex-direction: column;
+  margin-top: 1.11rem;
   width: 89%;
-  border: 2.02px solid #0bb9f0;
+  border: 0.111rem solid rgba(11, 185, 240, 0.44);
   border-radius: 0.77rem;
-  box-shadow: 0 0.33rem 6px rgba(0, 0, 0, 0.1);
 }
 
 .address-table-row {
   display: flex;
-  justify-content: space-between;
-  border-bottom: 1px solid #ccc;
+  justify-content: space-around;
+  padding: 1.11rem;
 }
 
 .address-table-row:last-child {
@@ -70,8 +83,8 @@ select {
   font-weight: bold;
   text-align: center;
   flex: 1;
-  background-color: rgba(11, 185, 240, 0.55);
-  color: aliceblue;
+  color: black;
+  background-color: azure;
   padding: 0.77rem 0;
 }
 
@@ -81,20 +94,20 @@ select {
   padding: 0.77rem 0;
 }
 
+@media screen and (max-width: 777px) {
+  .address-table {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+
 .show-on-mobile {
   display: none;
 }
 
 tbody {
   text-align: center;
-}
-
-h1 {
-  font-weight: bold;
-  text-decoration: underline;
-  font-size: larger;
-  margin-bottom: 1.11rem;
-  color: #333;
 }
 
 .cart-table {
@@ -106,7 +119,7 @@ h1 {
 .cart-table th,
 .cart-table td {
   padding: 1rem;
-  border-bottom: 1px solid #F5F5F5;
+  border-bottom: 1px solid aliceblue;
 }
 
 .product-image {
@@ -150,6 +163,49 @@ h1 {
   background-color: #e2004b;
 }
 
+.order-table {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1.11rem;
+  width: 89%;
+  border: 0.111rem solid rgba(11, 185, 240, 0.44);
+  border-radius: 0.77rem;
+}
+
+.order-table-row {
+  display: flex;
+  justify-content: space-around;
+  padding: 1.11rem;
+}
+
+.order-table-header,
+.order-table-cell {
+  flex-basis: 20%;
+  padding: 0.5em;
+  text-align: center;
+}
+
+.order-table-row:nth-child(odd) {
+  background-color: azure;
+}
+
+.hide-on-mobile {
+  display: none;
+}
+
+.show-on-mobile {
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .hide-on-mobile {
+    display: block;
+  }
+  .show-on-mobile {
+    display: none;
+  }
+}
+
 .checkout-section {
   display: flex;
   align-items: center;
@@ -191,7 +247,10 @@ h1 {
 /* Media query for mobile devices */
 @media screen and (max-width: 777px) {
   .container {
-    margin-left: 0.3rem;
+    margin: 0rem;
+    top: 7.7rem;
+    height: calc(100% - 7.7rem);
+    margin-bottom: 100vh !important;
   }
 
   .address-card {
@@ -233,4 +292,12 @@ h1 {
     padding: 0.3rem 0.6rem;
     margin: 0.3rem;
   }
+}
+
+  @media screen and (max-width: 404px) {
+    .container {
+      top: 7.7rem;
+      height: calc(100% - 7.7rem);
+      margin-bottom: 100vh !important;
+    }
 }

@@ -1,11 +1,11 @@
 .container {
-  height: 100vh !important;
-  position: relative;
+  position: static;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  grid-gap: 1.11rem;
-  margin-left: 1.11%;
-  margin-top: 1.11rem;
+  grid-gap: 3.03rem;
+  margin-left: 3.33%;
+  margin-right: 3.33%;
+  margin-top: 3.33rem;
 }
 
 .custom-card {
@@ -79,16 +79,15 @@ mat-card-title {
 
 .paginator-container {
   display: flex;
-  align-items: center;
+  flex-direction: row !important;
+  align-items: flex-end;
   justify-content: flex-end;
-  margin: 3.33rem;
 }
 
 .mat-paginator {
   margin-left: auto;
-  background-color: #f9f9f9;
-  padding: 0.89rem 0;
   border-radius: 7.7%;
+  margin-bottom: 11.1vh !important;
 }
 
 .mat-paginator .mat-paginator-navigation-previous,

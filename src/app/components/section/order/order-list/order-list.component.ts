@@ -115,7 +115,7 @@ export class OrderListComponent implements OnInit {
     const doc = new jsPDF();
 
     doc.setFontSize(18);
-    doc.text('Invoice', 11, 8);
+    doc.text('FACTURE', 11, 8);
     doc.setFontSize(11);
     doc.setTextColor(100);
 
@@ -123,15 +123,15 @@ export class OrderListComponent implements OnInit {
     doc.text(`Date : ${order.date}`, 10, 30);
     doc.text(`Total TTC : ${order.totalPriceTTC} €`, 10, 40);
 
-    const orderDetails = order.items.map((item: any) => ({
-      Product: item.bookTitle,
-      'Unit Price TTC': `${item.unitPriceTTC} €`,
+    const orderDetails = (order.items || []).map((item: any) => ({
+      Article: item.bookTitle,
+      'Prix unitaire': `${item.unitPriceTTC} €`,
       Quantity: item.orderedQuantity,
-      'Subtotal TTC': `${item.unitPriceTTC * item.orderedQuantity} €`,
+      'Sous total TTC': `${item.unitPriceTTC * item.orderedQuantity} €`,
     }));
 
     autoTable(doc, {
-      head: [['Product', 'Unit Price TTC', 'Quantity', 'Subtotal TTC']],
+      head: [['Article', 'Prix Unitaire TTC', 'Quantité', 'Sous total TTC']],
       body: orderDetails,
       startY: 50,
     });
