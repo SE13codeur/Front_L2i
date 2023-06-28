@@ -54,11 +54,15 @@ export class LoginComponent implements OnInit {
       const credentials = this.loginForm.value;
       this.authService.dispatchLoginAction(credentials).subscribe({
         next: (isLoggedIn) => {
-          if (isLoggedIn) {
+          if (isLoggedIn && this.user) {
             this.router.navigate(['/items/books']);
-            let successMessage = `Bienvenue ${this.user?.username}, connexion réussie !`;
+            let successMessage = `Bienvenue ${this.user.username}, connexion réussie !`;
             this.snackBar.open(successMessage, 'Fermer', { duration: 5005 });
             this.accountUserDrawerService.openDrawer();
+          } else {
+            let errorMessage =
+              'Le pseudo, mail, ou mot de passe est incorrect. Veuillez réessayer.';
+            this.snackBar.open(errorMessage, 'Fermer', { duration: 5005 });
           }
         },
         error: (error) => {
