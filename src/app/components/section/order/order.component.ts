@@ -97,6 +97,14 @@ export class OrderComponent implements OnInit, OnDestroy {
       shippingAddressId: of(this.selectedShippingAddress?.id),
     }).subscribe({
       next: ({ cartItems, totalTTC, user }) => {
+        if (!this.selectedBillingAddress || !this.selectedShippingAddress) {
+          this.snackBar.open(
+            'Veuillez renseigner une adresse de facturation et de livraison.',
+            'Fermer',
+            { duration: 4400 }
+          );
+          return;
+        }
         if (user) {
           const cartData: ICart = {
             cartItems,
