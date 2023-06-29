@@ -32,4 +32,8 @@ export class AddressService {
   getAllAddresses(): Observable<IAddress[]> {
     return this.http.get<IAddress[]>(`${this.addressUrl}`);
   }
+
+  getAddressById(addressId: number | undefined): Observable<IAddress> {
+    return this.http.get<IAddress>(`${this.addressUrl}/order/${addressId}`);
+  }
 }

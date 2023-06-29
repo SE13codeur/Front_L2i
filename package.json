@@ -27,6 +27,7 @@
     "@ngxs/storage-plugin": "^3.8.1",
     "@ngxs/store": "^3.8.1",
     "@stripe/stripe-js": "^1.54.0",
+    "date-fns": "^2.30.0",
     "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.5.29",
     "meilisearch": "^0.32.3",
