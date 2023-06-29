@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '@auth-s/index';
 import { statusDescriptionToEnum } from '@libs/helpers/order';
-import { IUser, IOrder, IOrderLineDTO, IOrderLine } from '@models/index';
+import { IOrder, IOrderLineDTO, IUser } from '@models/index';
 import { AddressService, OrderService } from '@services/index';
+import { format } from 'date-fns';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { format } from 'date-fns';
 
 @Component({
   selector: 'app-order-list',
@@ -26,8 +26,7 @@ export class OrderListComponent implements OnInit {
 
   constructor(
     private orderService: OrderService,
-    private authService: AuthService,
-    private addressService: AddressService
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {

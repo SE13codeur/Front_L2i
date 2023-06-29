@@ -7,8 +7,10 @@ import {
 } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { AuthService } from '@auth-s/index';
 import { Role, IUser } from '@models/index';
-import { AdminUserService } from '@services/index';
+import { AdminAuthService, AdminUserService } from '@services/index';
+import { switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-admin-user',
@@ -17,9 +19,10 @@ import { AdminUserService } from '@services/index';
 })
 export class AdminUserComponent implements OnInit {
   userForm!: FormGroup;
-  user: IUser | undefined;
+  user: IUser | null = null;
   userId: number | null = null;
   isSubmitting = false;
+  isAdmin = false;
 
   get username(): FormControl {
     return this.userForm.get('username') as FormControl;
@@ -49,8 +52,14 @@ export class AdminUserComponent implements OnInit {
     private fb: FormBuilder,
     private adminUserService: AdminUserService,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private authService: AuthService,
+    private adminAuthService: AdminAuthService
   ) {
+    if (this.adminAuthService.isAdminAuthenticated$) {
+      this.isAdmin = true;
+    }
+
     this.createForm();
   }
 
@@ -61,13 +70,16 @@ export class AdminUserComponent implements OnInit {
       password: ['', [Validators.required, Validators.minLength(8)]],
       firstname: ['', Validators.required],
       lastname: ['', Validators.required],
-      role: ['CUSTOMER', Validators.required],
+      role: ['', Validators.required],
     });
   }
 
   ngOnInit(): void {
-    // code to fetch the user if you have user id
-    // and then populate the form
+    this.authService.user$.pipe().subscribe(() => {
+      if (this.user) {
+        this.isAdmin = true;
+      }
+    });
   }
 
   onSubmit(): void {
@@ -76,10 +88,6 @@ export class AdminUserComponent implements OnInit {
       this.snackBar.open('Envoi des données...', 'Fermer', { duration: 4004 });
 
       const userData = this.userForm.value;
-      userData.role = {
-        id: userData.role === 'ADMIN' ? 2 : 1,
-        title: userData.role as Role,
-      };
 
       this.saveUser(userData);
     } else {

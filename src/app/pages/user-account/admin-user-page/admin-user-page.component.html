@@ -1,6 +1,37 @@
 <div class="list-user-container">
-  <h3>Liste des utilisateurs</h3>
-  <button class="add-user" (click)="goToAdminUserForm()">
-    <mat-icon>person_add</mat-icon>
-  </button>
+  <span
+    style="
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+    "
+  >
+    <h2>Liste des utilisateurs</h2>
+    <button class="add-user" (click)="goToAdminUserForm()">
+      <mat-icon>person_add</mat-icon>
+    </button>
+  </span>
+
+  <div class="user-table">
+    <div class="user-table-row">
+      <div class="user-table-header">PSEUDO</div>
+      <div class="user-table-header">EMAIL</div>
+      <div class="user-table-header">PRÉNOM</div>
+      <div class="user-table-header">NOM</div>
+      <div class="user-table-header">RÔLE</div>
+    </div>
+
+    <div class="user-table-row" *ngFor="let user of users$ | async">
+      <div class="user-table-cell">
+        {{ user.username }}
+      </div>
+      <div class="user-table-cell">
+        {{ user.email }}
+      </div>
+      <div class="user-table-cell">{{ user.firstname }}</div>
+      <div class="user-table-cell">{{ user.lastname }}</div>
+      <div class="user-table-cell">{{ user.role.title }}</div>
+    </div>
+  </div>
 </div>

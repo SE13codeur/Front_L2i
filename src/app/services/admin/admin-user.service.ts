@@ -33,6 +33,10 @@ export class AdminUserService {
     }
   }
 
+  getAllUsers(): Observable<IUser[]> {
+    return this.http.get<IUser[]>(`${this.adminUsersUrl}`);
+  }
+
   editUser(user: IUser): Observable<IUser | null> {
     if (this.adminAuthService.isAdminAuthenticated$) {
       return this.adminAuthService.isAdminAuthenticated$.pipe(
