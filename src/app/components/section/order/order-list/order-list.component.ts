@@ -120,52 +120,51 @@ export class OrderListComponent implements OnInit {
 
     const doc = new jsPDF();
 
-    // const logoUrl = 'src/assets/L2i.ico';
-    // const logo = new Image();
-    // logo.src = logoUrl;
-    // await new Promise((resolve) => {
-    //   logo.onload = resolve;
-    // });
-    // const canvas = document.createElement('canvas');
-    // canvas.width = logo.width;
-    // canvas.height = logo.height;
-    // const context = canvas.getContext('2d');
-    // context?.drawImage(logo, 0, 0, logo.width, logo.height);
-    // const logoDataUrl = canvas.toDataURL('image/png');
-    // doc.addImage(logoDataUrl, 'PNG', 10, 10, 30, 30);
+    const logoUrl = '../../../../../assets/L2i.png';
+    const logo = new Image();
+    logo.src = logoUrl;
+    await new Promise((resolve) => {
+      logo.onload = resolve;
+    });
+    const canvas = document.createElement('canvas');
+    canvas.width = logo.width;
+    canvas.height = logo.height;
+    const context = canvas.getContext('2d');
+    context?.drawImage(logo, 0, 0, logo.width, logo.height);
+    const logoDataUrl = canvas.toDataURL('image/png');
+    doc.addImage(logoDataUrl, 'PNG', 10, 10, 30, 30);
 
-    console.log('🚀 ~ order:', order);
     doc.setFontSize(18);
-    doc.text('FACTURE', 80, 8, { align: 'center' });
+    doc.text('FACTURE', 89, 17);
     doc.setFontSize(11);
     doc.setTextColor(100);
 
-    doc.text(`Order Number : ${order.orderNumber}`, 10, 20);
+    doc.text(`Order Number : ${order.orderNumber}`, 10, 60);
     doc.text(
       `Date : ${
         order.date ? format(new Date(order.date), 'dd/MM/yyyy') : 'N/A'
       }`,
       10,
-      30
+      70
     );
-    doc.text(`Total HT : ${order.totalPriceHT} €`, 10, 40);
-    doc.text(`Total TTC : ${order.totalPriceTTC} €`, 10, 50);
+    doc.text(`Total HT : ${order.totalPriceHT} €`, 10, 80);
+    doc.text(`Total TTC : ${order.totalPriceTTC} €`, 10, 90);
     doc.text(
       `Client : ${order.user?.firstname} ${order.user?.lastname}`,
       10,
-      60
+      100
     );
 
-    // doc.text(
-    //   `Adresse de facturation : ${order.billingAddress?.street}, ${order.billingAddress?.city}, ${order.billingAddress?.zipCode}, ${order.billingAddress?.country}`,
-    //   10,
-    //   70
-    // );
-    // doc.text(
-    //   `Adresse d'expédition : ${order.shippingAddress?.street}, ${order.shippingAddress?.city}, ${order.shippingAddress?.zipCode}, ${order.shippingAddress?.country}`,
-    //   10,
-    //   80
-    // );
+    doc.text(
+      `Adresse de facturation : ${order.billingAddress?.street}, ${order.billingAddress?.city}, ${order.billingAddress?.zipCode}, ${order.billingAddress?.country}`,
+      10,
+      110
+    );
+    doc.text(
+      `Adresse d'expédition : ${order.shippingAddress?.street}, ${order.shippingAddress?.city}, ${order.shippingAddress?.zipCode}, ${order.shippingAddress?.country}`,
+      10,
+      120
+    );
 
     autoTable(doc, {
       head: [
@@ -186,7 +185,7 @@ export class OrderListComponent implements OnInit {
         `${item.orderedQuantity}`,
         `${(item.orderedQuantity * item.unitPriceTTC).toFixed(2)} €`,
       ]),
-      startY: 111,
+      startY: 140,
     });
 
     const finalY = (doc as any).lastAutoTable.finalY;
@@ -220,66 +219,3 @@ export class OrderListComponent implements OnInit {
     }
   }
 }
-
-//  async orderPdf(order: any) {
-//   const doc = new jsPDF();
-
-//   const logoUrl = 'assets/img/LogoV2.jpg';
-//   const response = await fetch(logoUrl);
-//   const blob = await response.blob();
-//   const reader = new FileReader();
-//   reader.readAsDataURL(blob);
-//   reader.onloadend = function() {
-//     const base64data = reader.result;
-//     doc.addImage(base64data as string, 'JPEG', 10, 10, 50, 50);
-
-//   doc.setFontSize(20);
-//   doc.text('Entreprise L2I', 70, 30);
-//   doc.setFontSize(12);
-//   doc.text('146-148 Rue de Picpus', 70, 40);
-//   doc.text('75012 Paris', 70, 50);
-
-//   doc.setFontSize(12);
-//   doc.text(order.fullname, 130, 70, { align: "left" });
-//   if (order.addressComplement) {
-//     doc.text(order.addressComplement, 130, 80, { align: "left" });
-//   }
-//   doc.text(order.street , 130, 90, { align: "left" });
-//   doc.text(`${order.zipCode} ${order.city}`, 130, 100, { align: "left" });
-//   doc.text(order.country, 130, 110, { align: "left" });
-
-//   doc.setFontSize(14);
-//   doc.text(`Facture numéro : ${order.numberFact}`, 10, 120);
-
-//   const dateWithoutExclamationMarks = order.date.replace(/!!/g, '');
-//   const dateParts = dateWithoutExclamationMarks.split('-');
-//   const formattedDate = `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}`;
-//   doc.text(`Date : ${formattedDate}`, 10, 130);
-
-//   autoTable(doc,{
-//     head: [['Article', 'Quantité', 'Prix unitaire', 'Total']],
-//     body: order.lines.map((line: any) => [
-//       line.title,
-//       line.quantityOrder,
-//       `${line.priceIncludingTaxes.toFixed(2)} €`,
-//       `${(line.priceIncludingTaxes * line.quantityOrder).toFixed(2)} €`
-//     ]),
-//     startY: 140
-//   });
-
-//   const totalTVA = order.totalIncludingTaxes - order.totalExcludingTaxes;
-//   const finalY = (doc as any).lastAutoTable.finalY;
-
-//   doc.setFontSize(16);
-//   doc.text('Total HT :', 10, finalY + 20);
-//   doc.text(`${order.totalExcludingTaxes.toFixed(2)} €`, 50, finalY + 20);
-
-//   doc.text('TVA :', 10, finalY + 30);
-//   doc.text(`  ${totalTVA.toFixed(2)} €`, 50, finalY + 30);
-
-//   doc.text('Total TTC :', 10, finalY + 40);
-//   doc.text(`${order.totalIncludingTaxes.toFixed(2)} €`, 50, finalY + 40);
-
-//   doc.save(`Facture L2I n°${order.numberFact}.pdf`);
-// }
-// }

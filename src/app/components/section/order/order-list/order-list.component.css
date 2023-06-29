@@ -72,7 +72,10 @@ td {
 
 @media (max-width: 777px) {
   .container {
-    margin-top: 11.1rem;
+    margin-top: 22rem;
+    top: 22rem;
+    height: calc(100% - 22rem);
+    margin-bottom: 100vh !important;
   }
 
   .status-text {
@@ -82,4 +85,16 @@ td {
   .status-icon{
     display: block;
   }
+}
+
+@media (max-width: 404px) {
+
+  .status-text {
+    display: none;
+  }
+
+  .status-icon{
+    display: block;
+  }
+
 }

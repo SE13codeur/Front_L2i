@@ -220,8 +220,8 @@ tbody {
 
   .container {
     margin: 0rem;
-    top: 14rem;
-    height: calc(100% - 14rem);
+    top: 22rem;
+    height: calc(100% - 22rem);
     margin-bottom: 100vh !important;
   }
 
@@ -268,8 +268,8 @@ tbody {
 
 @media screen and (max-width: 404px) {
   .container {
-    top: 19rem;
-    height: calc(100% - 19rem);
+    top: 22rem;
+    height: calc(100% - 22rem);
     margin-bottom: 100vh !important;
   }
 
