@@ -14,46 +14,132 @@
   background-color: rgba(255, 255, 255, 0.9);
   padding: 0.89rem;
   border-radius: 0.77rem;
-  box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034), 0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06), 0 22.3px 17.9px rgba(0, 0, 0, 0.072), 0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12);
-  max-width: 300px;
-  margin: auto;
+  box-shadow: 0 0.33rem 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 27rem;
+  max-width: 1001px;
+}
+
+.input-field {
+  margin: 0.89rem 0;
+  flex: 1;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 44%;
+}
+
+.account-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.11rem;
+}
+
+
+.input-error {
+  width: 100%;
+  text-align: center;
+  color: #e2004b;
+}
+
+
+.input-field input {
+  width: 100%;
+  padding: 0.89rem;
+  border: 1px solid #ccc;
+  border-radius: 0.77rem;
+}
+
+.user-button {
+  width: 66%;
+  padding: 1.11rem;
+  background-color: #0BB9F0;
+  color: white;
+  border: none;
+  border-radius: 0.77rem;
+  cursor: pointer;
+  margin-top: 1.11rem;
+}
+
+.user-button:hover {
+  background-color: #2196F3;
+}
+
+.error {
+  color: #FF4080;
+  font-size: 1.11rem;
+  margin-top: 0.44rem;
 }
 
 .user-card h2 {
-  text-align: center;
-  margin-bottom: 1.1rem;
+  margin-bottom: 1.11rem;
+  font-size: 1.77rem;
 }
 
-.user-card .account-info {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 1.3rem;
+select {
+  border-radius: 0.77rem;
+  height: 3.03rem;
+  padding: 0.55rem;
+  border: 1px solid #ccc;
+
 }
 
-.user-card .input-field {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 0.5rem;
-}
-
-.user-card .input-error {
-  color: red;
-  margin-top: 0.3rem;
-}
-
-.user-card .options {
+.options {
+  margin-top: 1rem;
   display: flex;
   justify-content: space-between;
 }
 
-.user-card .user-button {
-  margin-bottom: 0.7rem;
+.user-link {
+  color: #FF4080;
+  text-decoration: none;
 }
 
-.user-card .back-button {
-  color: #1a73e8;
-  background: none;
+.user-link:hover {
+  color: #e2004b;
+  text-decoration: none;
+}
+
+.back-button {
+  background-color: transparent;
   border: none;
-  padding: 0;
+  color: rgba(0, 0, 0, 0.44);
   cursor: pointer;
+}
+
+.back-button:hover {
+  background-color: transparent;
+  border: none;
+  color: rgba(0, 0, 0, 0.77);
+  cursor: pointer;
+}
+
+@media screen and (max-width: 777px) {
+  .user-container {
+    height: 100vh !important;
+    position: relative;
+    top: 11.1rem;
+    height: calc(100% - 11.1rem);
+  }
+
+  .input-field {
+    margin: 0.44rem 0;
+  }
+  .account-info, .personal-info, .address-grid {
+    gap: 0;
+  }
+
+  .user-card {
+    width: 77%;
+  }
+}
+
+@media screen and (max-width: 202px) {
+  .user-card {
+    width: 89%;
+  }
 }

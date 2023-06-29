@@ -1,7 +1,6 @@
 <div class="user-container">
   <div class="user-card">
-    <h2>Administration Utilisateur</h2>
-    <h3>Informations utilisateur</h3>
+    <h2>Nouvel Utilisateur</h2>
     <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
       <div class="account-info">
         <div class="input-field">
@@ -62,10 +61,20 @@
             </div>
           </div>
         </div>
+
+        <div class="input-field">
+          <select formControlName="role">
+            <option [disabled]="true" [selected]="true">
+              Veuillez sélectioner un rôle
+            </option>
+            <option value="CUSTOMER">Client</option>
+            <option value="ADMIN">Administrateur</option>
+          </select>
+        </div>
       </div>
 
       <button type="submit" class="user-button" [disabled]="userForm.invalid">
-        Enregistrer
+        Ajouter
       </button>
     </form>
 
