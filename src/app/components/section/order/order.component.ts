@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AuthService } from '@auth/index';
-import { ICartItem, ICart, IUser, IAddress } from '@models/index';
+import { ICartItem, ICart, IUser, IAddress, IOrder } from '@models/index';
 import { Select } from '@ngxs/store';
 import {
   AddressService,
@@ -12,11 +12,14 @@ import {
 } from '@services/index';
 import { CartState } from '@store/index';
 import {
+  EMPTY,
   Observable,
   Subject,
+  catchError,
   combineLatest,
   of,
   switchMap,
+  take,
   takeUntil,
   tap,
 } from 'rxjs';
@@ -33,6 +36,7 @@ export class OrderComponent implements OnInit, OnDestroy {
   totalTTC$!: Observable<number>;
   user!: IUser | null;
   addresses!: IAddress[];
+  isSubmitting: boolean = false;
   selectedBillingAddress!: IAddress | null;
   selectedShippingAddress!: IAddress | null;
   displayedColumns: string[] = [
@@ -89,41 +93,54 @@ export class OrderComponent implements OnInit, OnDestroy {
   }
 
   onConfirmOrder() {
-    combineLatest({
-      cartItems: this.cartItems$,
-      totalTTC: this.totalTTC$,
-      user: this.authService.user$,
-      billingAddressId: of(this.selectedBillingAddress?.id),
-      shippingAddressId: of(this.selectedShippingAddress?.id),
-    }).subscribe({
-      next: ({ cartItems, totalTTC, user }) => {
-        if (!this.selectedBillingAddress || !this.selectedShippingAddress) {
-          this.snackBar.open(
-            'Veuillez renseigner une adresse de facturation et de livraison.',
-            'Fermer',
-            { duration: 4400 }
-          );
-          return;
-        }
-        if (user) {
-          const cartData: ICart = {
-            cartItems,
-            user: user as IUser,
-            billingAddressId: this.selectedBillingAddress?.id,
-            shippingAddressId: this.selectedShippingAddress?.id,
-          };
+    this.cartItems$
+      .pipe(
+        take(1),
+        switchMap((cartItems) => {
+          if (cartItems.length === 0) {
+            this.snackBar.open(
+              'Votre panier est vide. Veuillez ajouter des articles avant de passer une commande.',
+              'Fermer',
+              { duration: 4400 }
+            );
+            return EMPTY;
+          }
 
-          this.orderService
-            .createOrder(cartData)
-            .pipe(takeUntil(this.destroy$))
-            .subscribe({
-              next: () => {
+          return combineLatest({
+            cartItems: of(cartItems),
+            totalTTC: this.totalTTC$,
+            user: this.authService.user$,
+            billingAddressId: of(this.selectedBillingAddress?.id),
+            shippingAddressId: of(this.selectedShippingAddress?.id),
+          });
+        }),
+        switchMap(({ cartItems, totalTTC, user }) => {
+          if (!this.selectedBillingAddress || !this.selectedShippingAddress) {
+            this.snackBar.open(
+              'Veuillez renseigner une adresse de facturation et de livraison.',
+              'Fermer',
+              { duration: 4400 }
+            );
+            return EMPTY;
+          }
+
+          if (user) {
+            const cartData: ICart = {
+              cartItems,
+              user: user as IUser,
+              billingAddressId: this.selectedBillingAddress?.id,
+              shippingAddressId: this.selectedShippingAddress?.id,
+            };
+
+            return this.orderService.createOrder(cartData).pipe(
+              takeUntil(this.destroy$),
+              tap(() => {
                 this.snackBar.open('Commande créée avec succès!', 'Fermer', {
                   duration: 4400,
                 });
                 this.clearCart();
-              },
-              error: (error) => {
+              }),
+              catchError((error) => {
                 console.log('Error creating order', error);
                 this.snackBar.open(
                   'Erreur lors de la création de la commande.',
@@ -131,29 +148,23 @@ export class OrderComponent implements OnInit, OnDestroy {
                   { duration: 4400 }
                 );
                 console.error(error);
-              },
-            });
-        } else {
-          console.log('No user is logged in');
-          this.snackBar.open(
-            'Veuillez vous connecter pour passer une commande.',
-            'Fermer',
-            {
-              duration: 4400,
-            }
-          );
-        }
-      },
-      error: (error) => {
-        console.log('Error in combineLatest', error);
-        this.snackBar.open(
-          "Erreur lors de la récupération des totaux ou de l'utilisateur.",
-          'Fermer',
-          { duration: 4400 }
-        );
-        console.error('Error fetching totals or user:', error);
-      },
-    });
+                return EMPTY;
+              })
+            );
+          } else {
+            console.log('No user is logged in');
+            this.snackBar.open(
+              'Veuillez vous connecter pour passer une commande.',
+              'Fermer',
+              {
+                duration: 4400,
+              }
+            );
+            return EMPTY;
+          }
+        })
+      )
+      .subscribe();
   }
 
   goToAddressForm(): void {
