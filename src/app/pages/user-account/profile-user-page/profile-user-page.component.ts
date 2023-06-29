@@ -9,7 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AuthService } from '@auth-s/index';
 import { IAddress, IUser } from '@models/user';
-import { AddressService } from '@services/index';
+import { AddressService, AdminAuthService } from '@services/index';
 import { AccountUserDrawerService, UserService } from '@services/user';
 import { of, switchMap, tap } from 'rxjs';
 @Component({
@@ -53,6 +53,7 @@ export class ProfileUserPageComponent implements OnInit {
     'zipCode',
     'country',
   ];
+  isAdmin = false;
 
   constructor(
     private fb: FormBuilder,
@@ -60,9 +61,14 @@ export class ProfileUserPageComponent implements OnInit {
     private snackBar: MatSnackBar,
     private userService: UserService,
     private authService: AuthService,
+    private accountUserDrawerService: AccountUserDrawerService,
     private addressService: AddressService,
-    private accountUserDrawerService: AccountUserDrawerService
+    private adminAuthService: AdminAuthService
   ) {
+    if (this.adminAuthService.isAdminAuthenticated$) {
+      this.isAdmin = true;
+    }
+
     this.createForm();
   }
 

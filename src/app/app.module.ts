@@ -81,6 +81,8 @@ import { AdminOrderComponent } from './components/admin/admin-order/admin-order.
 import { ProfileUserPageComponent } from './pages/user-account/profile-user-page/profile-user-page.component';
 import { OrderStatusPipe } from '@libs/index';
 import { AddressComponent } from './components/shared/address/address.component';
+import { AdminUserComponent } from './components/admin/admin-user/admin-user.component';
+import { AdminUserPageComponent } from './pages/user-account/admin-user-page/admin-user-page.component';
 
 @NgModule({
   declarations: [
@@ -115,6 +117,8 @@ import { AddressComponent } from './components/shared/address/address.component'
     EventBannerComponent,
     FooterComponent,
     AddressComponent,
+    AdminUserComponent,
+    AdminUserPageComponent,
   ],
   imports: [
     BrowserModule,

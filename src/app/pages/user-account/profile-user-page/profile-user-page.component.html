@@ -90,52 +90,54 @@
   </div>
 
   <!-- Address -->
-  <span
-    style="
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: center;
-    "
-  >
-    <h3>Vos adresses enregistrées</h3>
-    <button class="add-address" (click)="goToAddressForm()">
-      <mat-icon>add</mat-icon>
-    </button>
-  </span>
-  <select
-    #addressSelectRef
-    (change)="displayAddressDetails(+addressSelectRef.value)"
-  >
-    <option [disabled]="true" [selected]="true">
-      Veuillez sélectioner une adresse
-    </option>
-    <option *ngFor="let address of addresses" [value]="address.id">
-      {{ address.title ?? address.city }}
-    </option>
-  </select>
-  <div *ngIf="selectedAddress" class="address-table">
-    <div class="address-table-row">
-      <div class="address-table-header">Titre</div>
-      <div class="address-table-header">Rue</div>
-      <div class="address-table-header">Ville</div>
-      <div class="address-table-header">Code postal</div>
-      <div class="mobile-mode address-table-header">Région</div>
-      <div class="address-table-header">Pays</div>
-    </div>
-    <div class="address-table-row">
-      <div class="address-table-cell">{{ selectedAddress.title }}</div>
-      <div class="address-table-cell">{{ selectedAddress.street }}</div>
-      <div class="address-table-cell">{{ selectedAddress.city }}</div>
-      <div class="address-table-cell">{{ selectedAddress.zipCode }}</div>
-      <div class="mobile-mode address-table-cell">
-        {{ selectedAddress.state }}
+  <span *ngIf="!isAdmin">
+    <span
+      style="
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+      "
+    >
+      <h3>Vos adresses enregistrées</h3>
+      <button class="add-address" (click)="goToAddressForm()">
+        <mat-icon>add</mat-icon>
+      </button>
+    </span>
+    <select
+      #addressSelectRef
+      (change)="displayAddressDetails(+addressSelectRef.value)"
+    >
+      <option [disabled]="true" [selected]="true">
+        Veuillez sélectioner une adresse
+      </option>
+      <option *ngFor="let address of addresses" [value]="address.id">
+        {{ address.title ?? address.city }}
+      </option>
+    </select>
+    <div *ngIf="selectedAddress" class="address-table">
+      <div class="address-table-row">
+        <div class="address-table-header">Titre</div>
+        <div class="address-table-header">Rue</div>
+        <div class="address-table-header">Ville</div>
+        <div class="address-table-header">Code postal</div>
+        <div class="mobile-mode address-table-header">Région</div>
+        <div class="address-table-header">Pays</div>
       </div>
-      <div class="address-table-cell">{{ selectedAddress.country }}</div>
+      <div class="address-table-row">
+        <div class="address-table-cell">{{ selectedAddress.title }}</div>
+        <div class="address-table-cell">{{ selectedAddress.street }}</div>
+        <div class="address-table-cell">{{ selectedAddress.city }}</div>
+        <div class="address-table-cell">{{ selectedAddress.zipCode }}</div>
+        <div class="mobile-mode address-table-cell">
+          {{ selectedAddress.state }}
+        </div>
+        <div class="address-table-cell">{{ selectedAddress.country }}</div>
+      </div>
     </div>
-  </div>
 
-  <h3 *ngIf="addresses.length < 1">
-    Veuillez ajouter une adresse à votre profil !
-  </h3>
+    <h3 *ngIf="addresses.length < 1">
+      Veuillez ajouter une adresse à votre profil !
+    </h3>
+  </span>
 </div>

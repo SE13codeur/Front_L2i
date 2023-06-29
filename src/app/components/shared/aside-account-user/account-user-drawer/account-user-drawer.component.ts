@@ -37,6 +37,7 @@ export class AccountUserDrawerComponent implements OnInit {
       });
     }
   }
+
   openOrdersPage() {
     this.authService.user$.subscribe((user) => {
       if (user) {
@@ -46,19 +47,56 @@ export class AccountUserDrawerComponent implements OnInit {
         this.router.navigate(['admin/orders']);
       }
       if (!user) {
-        console.error(`${user} non disponible`);
+        this.router.navigate(['items/books']);
+      }
+      this.accountUserDrawerService.closeDrawer();
+    });
+  }
+
+  openAdminOrdersPage() {
+    this.authService.user$.subscribe((user) => {
+      if (user && this.isAdmin) {
+        this.router.navigate(['admin/orders']);
+      }
+      if (!user) {
+        this.router.navigate(['items/books']);
       }
       this.accountUserDrawerService.closeDrawer();
     });
   }
 
   openProfilePage() {
-    this.router.navigate(['/account/user/profile']);
-    this.accountUserDrawerService.closeDrawer();
+    this.authService.user$.subscribe((user) => {
+      if (!user) {
+        this.router.navigate(['items/books']);
+      }
+      if (user) {
+        this.router.navigate(['/account/user/profile']);
+      }
+      this.accountUserDrawerService.closeDrawer();
+    });
   }
 
   openFavoritesPage() {
-    this.router.navigate(['/account/user/favorites']);
+    this.authService.user$.subscribe((user) => {
+      if (!user) {
+        this.router.navigate(['items/books']);
+      }
+      this.router.navigate(['/account/user/favorites']);
+    });
+    this.accountUserDrawerService.closeDrawer();
+  }
+
+  openUsersPage() {
+    this.authService.user$.subscribe((user) => {
+      if (user && this.isAdmin) {
+        this.router.navigate(['/admin/user/list']);
+      }
+      if (!user) {
+        this.router.navigate(['items/books']);
+      }
+      this.accountUserDrawerService.closeDrawer();
+    });
   }
 
   onLogout() {

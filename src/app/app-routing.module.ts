@@ -4,10 +4,12 @@ import {
   AddressComponent,
   AdminItemComponent,
   AdminOrderComponent,
+  AdminUserComponent,
   OrderListComponent,
 } from '@components/index';
 import { AuthGuard } from '@core/guards';
 import {
+  AdminUserPageComponent,
   DetailItemPageComponent,
   FavoritesUserPageComponent,
   HomePageComponent,
@@ -90,6 +92,16 @@ const routes: Routes = [
   {
     path: 'admin/orders/:id',
     component: AdminOrderComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'admin/user/list',
+    component: AdminUserPageComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'admin/users',
+    component: AdminUserComponent,
     canActivate: [AuthGuard],
   },
   { path: '', redirectTo: '/', pathMatch: 'full' },
