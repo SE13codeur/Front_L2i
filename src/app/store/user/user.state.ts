@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AuthService } from '@auth-s/index';
-import { IUser } from '@models/index';
+import { IItem, IUser } from '@models/index';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import {
   AddToFavoriteItems,
@@ -10,7 +10,7 @@ import {
 
 export interface UserStateModel {
   user: IUser | undefined;
-  favoriteItems: number[];
+  favoriteItems: IItem[];
 }
 
 @State<UserStateModel>({
@@ -43,7 +43,7 @@ export class UserState {
 
   @Selector()
   static isFavoriteItem(state: UserStateModel) {
-    return (itemId: number) => state.favoriteItems.includes(itemId);
+    return (item: IItem) => state.favoriteItems.includes(item);
   }
 
   @Action(AddToFavoriteItems)

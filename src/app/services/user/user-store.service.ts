@@ -28,9 +28,9 @@ export class UserStoreService {
     this.store.dispatch(new SetUser(user));
   }
 
-  addToFavorites(itemId: number) {
+  addToFavorites(item: IItem) {
     if (this.checkAuthhService.checkAuthenticationAndRedirect()) {
-      this.store.dispatch(new AddToFavoriteItems(itemId));
+      this.store.dispatch(new AddToFavoriteItems(item));
     }
   }
 
@@ -38,9 +38,9 @@ export class UserStoreService {
     return this.store.select((state) => state.user.favoriteItems);
   }
 
-  removeFromFavorites(itemId: number) {
+  removeFromFavorites(item: IItem) {
     if (this.checkAuthhService.checkAuthenticationAndRedirect()) {
-      this.store.dispatch(new RemoveFromFavoriteItems(itemId));
+      this.store.dispatch(new RemoveFromFavoriteItems(item));
     }
   }
 

@@ -1,4 +1,4 @@
-import { IUser } from '@models/index';
+import { IItem, IUser } from '@models/index';
 
 export class InitUser {
   static readonly type = '[User] Init';
@@ -11,10 +11,10 @@ export class SetUser {
 }
 export class AddToFavoriteItems {
   static readonly type = '[User] Add To Favorite Items';
-  constructor(public payload: number) {}
+  constructor(public payload: IItem) {}
 }
 
 export class RemoveFromFavoriteItems {
   static readonly type = '[User] Remove From Favorite Items';
-  constructor(public payload: number) {}
+  constructor(public payload: IItem) {}
 }
