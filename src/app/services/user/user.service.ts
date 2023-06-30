@@ -19,12 +19,4 @@ export class UserService {
   updateUser(user: IUser): Observable<IUser> {
     return this.http.put<IUser>(`${this.userUrl}/${user.id}`, user);
   }
-
-  addUser(userData: IUser): Observable<IUser> {
-    return this.http.post<IUser>(this.userUrl, userData);
-  }
-
-  editUser(userId: number, userData: IUser): Observable<IUser> {
-    return this.http.put<IUser>(`${this.userUrl}/${userId}`, userData);
-  }
 }

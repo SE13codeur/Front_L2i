@@ -168,7 +168,7 @@ export class ProfileUserPageComponent implements OnInit {
     if (this.user) {
       userData.id = this.user.id;
 
-      const saveOperation = this.userService.editUser(this.user.id, userData);
+      const saveOperation = this.userService.updateUser(this.user);
 
       saveOperation.subscribe({
         next: () => {
