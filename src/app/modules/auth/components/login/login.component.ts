@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { IUser } from '@models/index';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AccountUserDrawerService } from '@services/index';
+import { NavigationHistoryService } from '@libs/navigation-history.service';
 
 @Component({
   selector: 'app-login',
@@ -18,11 +19,11 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private location: Location,
     private router: Router,
     private snackBar: MatSnackBar,
     private authService: AuthService,
-    private accountUserDrawerService: AccountUserDrawerService
+    private accountUserDrawerService: AccountUserDrawerService,
+    private navigationHistoryService: NavigationHistoryService
   ) {
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],
@@ -55,7 +56,7 @@ export class LoginComponent implements OnInit {
       this.authService.dispatchLoginAction(credentials).subscribe({
         next: (isLoggedIn) => {
           if (isLoggedIn && this.user) {
-            this.router.navigate(['/items/books']);
+            this.goBack();
             let successMessage = `Bienvenue ${this.user.username}, connexion réussie !`;
             this.snackBar.open(successMessage, 'Fermer', { duration: 5005 });
             this.accountUserDrawerService.openDrawer();
@@ -90,7 +91,12 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  goBack(): void {
-    this.location.back();
+  goBack() {
+    const lastTwoUrls = this.navigationHistoryService.getLastTwoUrls();
+    if (lastTwoUrls.includes('/auth/register')) {
+      this.router.navigate(['/items/books']);
+    } else {
+      this.router.navigateByUrl(this.navigationHistoryService.getPreviousUrl());
+    }
   }
 }

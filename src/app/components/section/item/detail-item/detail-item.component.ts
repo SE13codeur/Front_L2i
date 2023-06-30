@@ -9,6 +9,7 @@ import {
 } from '@services/index';
 import { Observable, of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
+import { NavigationHistoryService } from '@libs/navigation-history.service';
 
 @Component({
   selector: 'app-detail-item',
@@ -27,6 +28,7 @@ export class DetailItemComponent implements OnInit {
     private itemService: ItemService,
     private adminAuthService: AdminAuthService,
     private itemAdminService: AdminItemService,
+    private navigationHistoryService: NavigationHistoryService,
     private location: Location
   ) {
     this.item$ = this.route.params.pipe(
@@ -100,7 +102,10 @@ export class DetailItemComponent implements OnInit {
   }
 
   goBackToPreviousPage(): void {
-    if (this.item) {
+    const lastUrl = this.navigationHistoryService.getPreviousUrl();
+    if (lastUrl.includes('/auth/login')) {
+      this.router.navigate(['/items/books']);
+    } else {
       this.location.back();
     }
   }

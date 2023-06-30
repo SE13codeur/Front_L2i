@@ -1,47 +1,70 @@
-import { State, Action, StateContext, Selector, Store } from '@ngxs/store';
-import { IUser, IOrder } from '@models/index';
 import { Injectable } from '@angular/core';
-import { ClearUser, GetOrdersByUserId, SetUser } from './user.action';
-import { tap } from 'rxjs';
-import { OrderService } from '@services/index';
+import { IUser } from '@models/index';
+import { Action, Selector, State, StateContext } from '@ngxs/store';
+import {
+  AddToFavoriteItems,
+  InitUser,
+  RemoveFromFavoriteItems,
+  SetUser,
+} from './user.action';
+import { map } from 'rxjs';
+import { AuthService } from '@auth-s/index';
 
 export interface UserStateModel {
   user: IUser | undefined;
+  favoriteItems: number[];
 }
 
 @State<UserStateModel>({
   name: 'user',
   defaults: {
     user: undefined,
+    favoriteItems: [],
   },
 })
 @Injectable()
 export class UserState {
-  constructor(private orderService: OrderService) {}
+  constructor(private authService: AuthService) {}
+
+  @Action(InitUser)
+  initUser(ctx: StateContext<UserStateModel>) {
+    this.authService.user$.subscribe((user) => {
+      if (user) {
+        ctx.setState({
+          ...ctx.getState(),
+          user,
+        });
+      }
+    });
+  }
 
   @Selector()
   static getUser(state: IUser): IUser {
     return state;
   }
 
-  @Action(SetUser)
-  setUser(ctx: StateContext<IUser>, { payload }: SetUser) {
-    ctx.setState(payload);
+  @Selector()
+  static isFavoriteItem(state: UserStateModel) {
+    return (itemId: number) => state.favoriteItems.includes(itemId);
   }
 
-  @Action(GetOrdersByUserId)
-  getOrdersByUserId(ctx: StateContext<IOrder[]>, action: GetOrdersByUserId) {
-    return this.orderService.getOrdersByUserId(action.userId).pipe(
-      tap((orders) => {
-        ctx.setState(orders);
-      })
-    );
+  @Action(AddToFavoriteItems)
+  addToFavoriteItems(
+    { getState, patchState }: StateContext<UserStateModel>,
+    { payload }: AddToFavoriteItems
+  ) {
+    patchState({
+      favoriteItems: [...getState().favoriteItems, payload],
+    });
   }
 
-  @Action(ClearUser)
-  clearUser(ctx: StateContext<UserStateModel>) {
-    ctx.patchState({
-      user: undefined,
+  @Action(RemoveFromFavoriteItems)
+  removeFromFavoriteItems(
+    { getState, patchState }: StateContext<UserStateModel>,
+    { payload }: RemoveFromFavoriteItems
+  ) {
+    patchState({
+      favoriteItems: getState().favoriteItems.filter((id) => id !== payload),
     });
   }
 }

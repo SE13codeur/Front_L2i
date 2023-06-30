@@ -147,10 +147,4 @@ export class ListItemWithoutMeilisearchComponent implements OnInit, OnDestroy {
   openItemDetails(item: IItem) {
     this.router.navigate(['/items/books', item.id]);
   }
-
-  addToFavorites(itemId: number, event: Event) {
-    this.isFavorite[itemId] = !this.isFavorite[itemId];
-    event.stopPropagation();
-    console.log('Item added to favorites:', itemId);
-  }
 }

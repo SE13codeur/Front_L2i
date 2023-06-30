@@ -34,7 +34,11 @@
 }
 
 .adminActions {
-  padding-top: 3.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3.3rem;
+  gap: 1.11rem;
 }
 
 .new-banner {

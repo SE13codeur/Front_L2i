@@ -1,15 +1,20 @@
 import { IUser } from '@models/index';
 
+export class InitUser {
+  static readonly type = '[User] Init';
+  constructor(public payload: IUser) {}
+}
+
 export class SetUser {
   static readonly type = '[User] Set';
   constructor(public payload: IUser) {}
 }
-
-export class GetOrdersByUserId {
-  static readonly type = '[Order] Get orders by user id';
-  constructor(public userId: number) {}
+export class AddToFavoriteItems {
+  static readonly type = '[User] Add To Favorite Items';
+  constructor(public payload: number) {}
 }
 
-export class ClearUser {
-  static readonly type = '[User] Clear';
+export class RemoveFromFavoriteItems {
+  static readonly type = '[User] Remove From Favorite Items';
+  constructor(public payload: number) {}
 }

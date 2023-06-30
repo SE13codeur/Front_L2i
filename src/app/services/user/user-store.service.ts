@@ -1,27 +1,53 @@
 import { Injectable } from '@angular/core';
-import { Store } from '@ngxs/store';
+import { CheckAuthService } from '@auth-s/index';
 import { IUser } from '@models/index';
-import { BehaviorSubject, Observable, map } from 'rxjs';
-import { ClearUser, SetUser } from '@store/user';
-import { HttpClient } from '@angular/common/http';
+import { Select, Store } from '@ngxs/store';
+import {
+  AddToFavoriteItems,
+  RemoveFromFavoriteItems,
+  SetUser,
+  UserState,
+} from '@store/user';
+import { Observable, map } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
 export class UserStoreService {
-  private userStore = new BehaviorSubject<IUser | null>(null);
+  @Select(UserState.getUser) user$!: Observable<IUser>;
 
-  constructor(private store: Store, private http: HttpClient) {}
+  constructor(
+    private store: Store,
+    private checkAuthhService: CheckAuthService
+  ) {}
+
+  getUser(): Observable<IUser> {
+    return this.store.select((state) => state.user);
+  }
 
   setUser(user: IUser) {
     this.store.dispatch(new SetUser(user));
   }
 
-  clearUser() {
-    this.store.dispatch(new ClearUser());
+  addToFavorites(itemId: number) {
+    if (this.checkAuthhService.checkAuthenticationAndRedirect()) {
+      this.store.dispatch(new AddToFavoriteItems(itemId));
+    }
   }
 
-  getUser(): Observable<IUser> {
-    return this.store.select((state) => state.user);
+  removeFromFavorites(itemId: number) {
+    if (this.checkAuthhService.checkAuthenticationAndRedirect()) {
+      this.store.dispatch(new RemoveFromFavoriteItems(itemId));
+    }
+  }
+
+  isItemFavorite(itemId: number): Observable<boolean> {
+    return this.user$.pipe(
+      map((user) => {
+        if (user && user.favoriteItems) {
+          return user.favoriteItems.includes(itemId);
+        } else {
+          return false;
+        }
+      })
+    );
   }
 }

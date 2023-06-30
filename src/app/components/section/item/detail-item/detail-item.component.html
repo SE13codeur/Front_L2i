@@ -16,6 +16,7 @@
       </div>
       <!-- CART BUTTON-->
       <div class="adminActions" *ngIf="!isAdmin">
+        <app-favorite-button></app-favorite-button>
         <app-cart-item-quantity [item]="item"></app-cart-item-quantity>
       </div>
       <div class="adminActions" *ngIf="isAdmin">

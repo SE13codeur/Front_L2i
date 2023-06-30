@@ -83,6 +83,7 @@ import { OrderStatusPipe } from '@libs/index';
 import { AddressComponent } from './components/shared/address/address.component';
 import { AdminUserComponent } from './components/admin/admin-user/admin-user.component';
 import { AdminUserPageComponent } from './pages/user-account/admin-user-page/admin-user-page.component';
+import { FavoriteButtonComponent } from './components/shared/favorite/item/favorite-button/favorite-button.component';
 
 @NgModule({
   declarations: [
@@ -119,6 +120,7 @@ import { AdminUserPageComponent } from './pages/user-account/admin-user-page/adm
     AddressComponent,
     AdminUserComponent,
     AdminUserPageComponent,
+    FavoriteButtonComponent,
   ],
   imports: [
     BrowserModule,

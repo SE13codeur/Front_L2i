@@ -36,10 +36,6 @@
   align-items: center;
 }
 
-.card-icon-favorite {
-  color: #FF4080;
-}
-
 mat-card-image {
   align-items: center;
   height: auto;
