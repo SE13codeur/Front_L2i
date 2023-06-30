@@ -1,14 +1,12 @@
 import { Injectable } from '@angular/core';
+import { AuthService } from '@auth-s/index';
 import { IUser } from '@models/index';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import {
   AddToFavoriteItems,
   InitUser,
   RemoveFromFavoriteItems,
-  SetUser,
 } from './user.action';
-import { map } from 'rxjs';
-import { AuthService } from '@auth-s/index';
 
 export interface UserStateModel {
   user: IUser | undefined;

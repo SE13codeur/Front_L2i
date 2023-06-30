@@ -1,0 +1,152 @@
+.favorite-container {
+  height: 100vh !important;
+  position: static;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-gap: 3.03rem;
+  margin-left: 3.33%;
+  margin-right: 3.33%;
+  margin-top: 11.1rem;
+}
+
+.custom-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  border-radius: 7.7%;
+  overflow: scroll;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s, transform 0.3s;
+  cursor: pointer;
+  height: 404px;
+  width: 240px;
+  margin-bottom: 1.11rem;
+}
+
+.custom-card:hover {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  transform: scale(1.11);
+  z-index: 1;
+}
+
+.custom-card-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+mat-card-image {
+  align-items: center;
+  height: auto;
+  object-fit: cover;
+  width: 100%;
+}
+
+.card-icon-favorite {
+  color: #FF4080 !important;
+}
+
+.item-description {
+  cursor: pointer;
+  color: #333;
+  font-size: 0.89rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.rating {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+mat-icon {
+  font-size: 1.11rem;
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.yellow-star {
+  color: gold;
+}
+
+mat-card-title {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.paginator-container {
+  display: flex;
+  flex-direction: row !important;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+
+.mat-paginator {
+  margin-left: auto;
+  border-radius: 7.7%;
+  margin-bottom: 11.1vh !important;
+}
+
+.mat-paginator .mat-paginator-navigation-previous,
+.mat-paginator .mat-paginator-navigation-next {
+  color: #333;
+}
+
+.mat-paginator .mat-paginator-range-label {
+  color: #666;
+}
+
+.mat-select-trigger {
+  font-size: 0.89rem;
+  color: #333;
+}
+
+::ng-deep .mat-select-panel {
+  font-size: 0.89rem;
+}
+
+
+::ng-deep .mat-select-min-line {
+  font-size: 1.11rem;
+}
+
+@media screen and (max-width: 1036px) {
+  .container {
+    margin-left: 7.7%;
+  }
+}
+
+@media screen and (max-width: 888px) {
+  .container {
+    margin-left: 4.4%;
+  }
+}
+
+@media screen and (max-width: 777px) {
+  .container {
+    margin-left: 17%;
+    margin-top: 7.77rem;
+  }
+}
+
+@media screen and (max-width: 606px) {
+  .container {
+    margin-left: 3.33%
+  }
+}
+
+@media screen and (max-width: 505px) {
+  .container {
+    margin-left: 0%
+  }
+}
+
+@media screen and (max-width: 468px) {
+  .container {
+    margin-left: 17%
+  }
+}

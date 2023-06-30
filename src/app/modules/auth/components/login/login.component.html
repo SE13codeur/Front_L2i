@@ -24,7 +24,10 @@
           class="error"
         >
           <div *ngIf="email?.errors?.['required']">
-            L'email de l'utilisateur est requis.
+            L'adresse mail est requise.
+          </div>
+          <div class="input-error" *ngIf="email?.errors?.['email']">
+            L'adresse mail n'est pas valide.
           </div>
         </div>
       </div>

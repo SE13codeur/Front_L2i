@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CheckAuthService } from '@auth-s/index';
-import { IUser } from '@models/index';
+import { IItem, IUser } from '@models/index';
 import { Select, Store } from '@ngxs/store';
 import {
   AddToFavoriteItems,
@@ -13,6 +13,7 @@ import { Observable, map } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 export class UserStoreService {
   @Select(UserState.getUser) user$!: Observable<IUser>;
+  @Select(UserState.isFavoriteItem) favoriteItems$!: Observable<number[]>;
 
   constructor(
     private store: Store,
@@ -31,6 +32,10 @@ export class UserStoreService {
     if (this.checkAuthhService.checkAuthenticationAndRedirect()) {
       this.store.dispatch(new AddToFavoriteItems(itemId));
     }
+  }
+
+  getFavoriteItems(): Observable<number[]> {
+    return this.store.select((state) => state.user.favoriteItems);
   }
 
   removeFromFavorites(itemId: number) {
