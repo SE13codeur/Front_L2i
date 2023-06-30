@@ -25,20 +25,16 @@ export class FavoritesUserPageComponent implements OnInit {
       .getFavoriteItems()
       .pipe(
         switchMap((itemIds: number[]) => {
-          // Filter out null values
           const validItemIds = itemIds.filter((id) => id !== null);
 
-          // Convert the array of IDs into an array of Observables that get item details
           const itemObservables = validItemIds.map((itemId) =>
             this.itemService.getItemById(itemId)
           );
 
-          // Combine all the Observables into one that emits an array of item details
           return combineLatest(itemObservables);
         })
       )
       .subscribe((items: IItem[]) => {
-        // Now items is an array of IItem, which can be passed to favoriteItems$
         this.favoriteItems$.next(items);
       });
   }
