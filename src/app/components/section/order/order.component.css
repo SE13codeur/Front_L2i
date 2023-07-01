@@ -13,8 +13,10 @@
 }
 
 h2 {
-  color: rgba(11, 185, 240, 0.77);
-  text-decoration: underline;
+color: black;  text-decoration: underline;
+font-weight: bolder;
+text-decoration: underline;
+text-decoration-color: rgba(11, 185, 240, 0.44);
 }
 
 .address-card {

@@ -52,9 +52,16 @@ export class UserState {
     { getState, patchState }: StateContext<UserStateModel>,
     { payload }: AddToFavoriteItems
   ) {
-    patchState({
-      favoriteItems: [...getState().favoriteItems, payload],
-    });
+    const currentFavoriteItems = getState().favoriteItems;
+    const isItemAlreadyFavorite = currentFavoriteItems.some(
+      (item) => item.id === payload.id
+    );
+
+    if (!isItemAlreadyFavorite) {
+      patchState({
+        favoriteItems: [...currentFavoriteItems, payload],
+      });
+    }
   }
 
   @Action(RemoveFromFavoriteItems)

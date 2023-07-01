@@ -1,12 +1,22 @@
-.favorite-container {
+.container {
   height: 100vh !important;
-  position: static;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  top: 14rem;
+  height: calc(100% - 14rem);
+  position: relative;
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)) !important;
+  align-items: center;
+  justify-content: center;
   grid-gap: 3.03rem;
   margin-left: 3.33%;
   margin-right: 3.33%;
-  margin-top: 11.1rem;
+  margin-bottom: 17vh !important;
+}
+
+h2 {
+  color: rgba(11, 185, 240, 0.77);
+  text-decoration: underline;
+  text-decoration-color: rgba(255, 64, 128, 0.44);
 }
 
 .custom-card {

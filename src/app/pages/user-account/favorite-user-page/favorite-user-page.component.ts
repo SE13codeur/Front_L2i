@@ -16,13 +16,15 @@ export class FavoritesUserPageComponent implements OnInit {
 
   constructor(
     private userStoreService: UserStoreService,
-    private itemService: ItemService,
     private router: Router
   ) {}
 
   ngOnInit(): void {
     this.userStoreService.getFavoriteItems().subscribe((items: IItem[]) => {
-      this.favoriteItems$.next(items);
+      const uniqueItems = items.filter(
+        (item, index, self) => index === self.findIndex((t) => t.id === item.id)
+      );
+      this.favoriteItems$.next(uniqueItems);
     });
   }
 
