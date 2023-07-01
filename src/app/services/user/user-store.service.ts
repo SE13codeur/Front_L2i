@@ -48,7 +48,7 @@ export class UserStoreService {
     return of();
   }
 
-  getFavoriteItems(): Observable<number[]> {
+  getFavoriteItems(): Observable<IItem[]> {
     return this.store.select((state) => state.user.favoriteItems);
   }
 

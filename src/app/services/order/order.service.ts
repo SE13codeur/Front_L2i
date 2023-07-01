@@ -30,7 +30,6 @@ export class OrderService {
     orderId: number,
     newStatus: string
   ): Observable<any> {
-    console.log(orderId, newStatus);
     const url = `${this.ordersAdminUrl}/${orderId}`;
     return this.http.put(url, { status: newStatus });
   }

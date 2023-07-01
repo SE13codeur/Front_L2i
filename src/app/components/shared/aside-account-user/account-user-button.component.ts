@@ -21,6 +21,5 @@ export class AccountUserButtonComponent {
   openDrawer(event: Event) {
     event.stopPropagation();
     this.accountUserDrawerService.toggleDrawer();
-    console.log('drawer clicked');
   }
 }

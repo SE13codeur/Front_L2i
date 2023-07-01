@@ -21,22 +21,9 @@ export class FavoritesUserPageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.userStoreService
-      .getFavoriteItems()
-      .pipe(
-        switchMap((itemIds: number[]) => {
-          const validItemIds = itemIds.filter((id) => id !== null);
-
-          const itemObservables = validItemIds.map((itemId) =>
-            this.itemService.getItemById(itemId)
-          );
-
-          return combineLatest(itemObservables);
-        })
-      )
-      .subscribe((items: IItem[]) => {
-        this.favoriteItems$.next(items);
-      });
+    this.userStoreService.getFavoriteItems().subscribe((items: IItem[]) => {
+      this.favoriteItems$.next(items);
+    });
   }
 
   truncateText(text: string, maxLength: number): string {
