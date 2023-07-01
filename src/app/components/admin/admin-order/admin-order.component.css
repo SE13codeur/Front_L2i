@@ -142,14 +142,6 @@ td {
   display: none;
 }
 
-.mobile {
-  display: inline-block;
-}
-
-.download-text {
-  display: none;
-}
-
 .download-invoice-button {
   height: 2.2rem !important;
   padding: 0.55rem 1.11rem;
@@ -188,10 +180,6 @@ td {
 
   .detail-text {
     display: inline-block;
-  }
-
-  .mobile {
-    display: none;
   }
 
   .download-text {

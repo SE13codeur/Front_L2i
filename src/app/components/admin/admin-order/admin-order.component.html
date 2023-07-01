@@ -79,8 +79,15 @@
                   class="download-invoice-button"
                   (click)="downloadInvoice(order, $event)"
                 >
-                  <span>
-                    <mat-icon class="mobile">download</mat-icon>
+                  <span
+                    style="
+                      display: flex;
+                      flex-direction: row;
+                      align-items: center;
+                      justify-content: center;
+                    "
+                  >
+                    <mat-icon>download</mat-icon>
                     <span class="download-text">Télécharger la facture</span>
                   </span>
                 </button>
