@@ -3,6 +3,7 @@ import { AuthService } from '@auth-s/index';
 import { getStatusIcon, statusDescriptionToEnum } from '@libs/helpers/order';
 import { IOrder, IOrderLineDTO, IUser } from '@models/index';
 import { AdminAuthService, OrderService } from '@services/index';
+import { format } from 'date-fns';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { BehaviorSubject, map } from 'rxjs';
@@ -146,32 +147,92 @@ export class AdminOrderComponent implements OnInit {
     });
   }
 
-  downloadInvoice(order: any, event: Event) {
+  async downloadInvoice(order: IOrder, event: Event) {
     event.stopPropagation();
+    await this.getOrderlinesByOrderId(order.id);
 
     const doc = new jsPDF();
 
+    const logoUrl = '../../../../../assets/L2i.png';
+    const logo = new Image();
+    logo.src = logoUrl;
+    await new Promise((resolve) => {
+      logo.onload = resolve;
+    });
+    const canvas = document.createElement('canvas');
+    canvas.width = logo.width;
+    canvas.height = logo.height;
+    const context = canvas.getContext('2d');
+    context?.drawImage(logo, 0, 0, logo.width, logo.height);
+    const logoDataUrl = canvas.toDataURL('image/png');
+    doc.addImage(logoDataUrl, 'PNG', 10, 10, 30, 30);
+
     doc.setFontSize(18);
-    doc.text('Invoice', 11, 8);
+    doc.text('FACTURE', 89, 17);
     doc.setFontSize(11);
     doc.setTextColor(100);
 
-    doc.text(`Order Number : ${order.orderNumber}`, 10, 20);
-    doc.text(`Date : ${order.date}`, 10, 30);
-    doc.text(`Total TTC : ${order.totalPriceTTC} €`, 10, 40);
+    doc.text(`Order Number : ${order.orderNumber}`, 10, 60);
+    doc.text(
+      `Date : ${
+        order.date ? format(new Date(order.date), 'dd/MM/yyyy') : 'N/A'
+      }`,
+      10,
+      70
+    );
+    doc.text(`Total HT : ${order.totalPriceHT} €`, 10, 80);
+    doc.text(`Total TTC : ${order.totalPriceTTC} €`, 10, 90);
+    doc.text(
+      `Client : ${order.user?.firstname} ${order.user?.lastname}`,
+      10,
+      100
+    );
 
-    const orderDetails = order.items.map((item: any) => ({
-      Product: item.bookTitle,
-      'Unit Price TTC': `${item.unitPriceTTC} €`,
-      Quantity: item.orderedQuantity,
-      'Subtotal TTC': `${item.unitPriceTTC * item.orderedQuantity} €`,
-    }));
+    doc.text(
+      `Adresse de facturation : ${order.billingAddress?.street}, ${order.billingAddress?.city}, ${order.billingAddress?.zipCode}, ${order.billingAddress?.country}`,
+      10,
+      110
+    );
+    doc.text(
+      `Adresse d'expédition : ${order.shippingAddress?.street}, ${order.shippingAddress?.city}, ${order.shippingAddress?.zipCode}, ${order.shippingAddress?.country}`,
+      10,
+      120
+    );
 
     autoTable(doc, {
-      head: [['Product', 'Unit Price TTC', 'Quantity', 'Subtotal TTC']],
-      body: orderDetails,
-      startY: 50,
+      head: [
+        [
+          'Article',
+          'Prix Unitaire HT',
+          'TVA',
+          'Prix Unitaire TTC',
+          'Quantité',
+          'Sous Total TTC',
+        ],
+      ],
+      body: this.currentOrderlinesDTODetails.map((item: any) => [
+        item.bookTitle,
+        `${item.unitPriceHT.toFixed(2)} €`,
+        `${(item.tvaRate * 100).toFixed(2)}%`,
+        `${item.unitPriceTTC.toFixed(2)} €`,
+        `${item.orderedQuantity}`,
+        `${(item.orderedQuantity * item.unitPriceTTC).toFixed(2)} €`,
+      ]),
+      startY: 140,
     });
+
+    const finalY = (doc as any).lastAutoTable.finalY;
+
+    doc.setFontSize(16);
+    doc.text('Total HT :', 10, finalY + 20);
+    doc.text(`${order.totalPriceHT.toFixed(2)} €`, 50, finalY + 20);
+
+    const totalTVA = order.totalPriceTTC - order.totalPriceHT;
+    doc.text('TVA :', 10, finalY + 30);
+    doc.text(`${totalTVA.toFixed(2)} €`, 50, finalY + 30);
+
+    doc.text('Total TTC :', 10, finalY + 40);
+    doc.text(`${order.totalPriceTTC.toFixed(2)} €`, 50, finalY + 40);
 
     doc.save(`invoice_${order.orderNumber}.pdf`);
   }
