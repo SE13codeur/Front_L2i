@@ -1,6 +1,7 @@
 <div class="container">
   <div class="status-selector">
     <select
+      class="select-status"
       #statusSelectRefFilter
       (change)="filterOrdersByStatus(statusSelectRefFilter.value)"
     >
@@ -49,7 +50,10 @@
                 <span class="detail-text">Détails</span>
               </td>
               <td>
-                <button (click)="downloadInvoice(order, $event)">
+                <button
+                  class="download-invoice-button"
+                  (click)="downloadInvoice(order, $event)"
+                >
                   <span
                     style="
                       display: flex;
@@ -64,8 +68,8 @@
               </td>
             </tr>
             <tr *ngIf="isOrderExpanded(order)">
-              <td colspan="5">
-                <table class="order-list">
+              <td class="order-details" colspan="5">
+                <table>
                   <thead>
                     <tr>
                       <th>Article</th>

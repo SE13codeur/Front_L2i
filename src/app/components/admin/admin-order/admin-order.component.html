@@ -1,6 +1,7 @@
 <div class="container">
   <div class="status-selector">
     <select
+      class="select-status"
       #statusSelectRefFilter
       (change)="filterOrdersByStatus(statusSelectRefFilter.value)"
     >
@@ -21,7 +22,7 @@
             <th>Date</th>
             <th>Total TTC</th>
             <th>Statut</th>
-            <th colspan="2">Actions</th>
+            <th style="text-align: left" colspan="2">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -37,6 +38,7 @@
               <td>
                 <select
                   #statusSelectRefAdmin
+                  class="select-status-button"
                   (change)="
                     updateOrderStatus(order.id, statusSelectRefAdmin.value)
                   "
@@ -69,13 +71,14 @@
                 </select>
               </td>
               <td class="td-details" (click)="getOrderlinesByOrderId(order.id)">
-                <span>
-                  <mat-icon class="mobile">visibility</mat-icon>
-                  <span class="detail-text">Voir les détails</span>
-                </span>
+                <mat-icon>visibility</mat-icon>
+                <span class="detail-text">Détails</span>
               </td>
               <td>
-                <button (click)="downloadInvoice(order, $event)">
+                <button
+                  class="download-invoice-button"
+                  (click)="downloadInvoice(order, $event)"
+                >
                   <span>
                     <mat-icon class="mobile">download</mat-icon>
                     <span class="download-text">Télécharger la facture</span>
@@ -84,8 +87,8 @@
               </td>
             </tr>
             <tr *ngIf="isOrderExpanded(order)">
-              <td colspan="6">
-                <table class="order-list">
+              <td colspan="5" class="order-details">
+                <table>
                   <thead>
                     <tr>
                       <th>Article</th>
@@ -97,9 +100,14 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let item of order.orderLines">
-                      <td>{{ item.book?.title }}</td>
+                    <tr *ngFor="let item of currentOrderlinesDTODetails">
+                      <td>
+                        <img [src]="item.bookImageUrl" alt="Book image" />{{
+                          item.bookTitle
+                        }}
+                      </td>
                       <td>{{ item.unitPriceHT | number : "1.2-2" }} €</td>
+                      <td>{{ item.tvaRate * 100 }} %</td>
                       <td>{{ item.unitPriceTTC | number : "1.2-2" }} €</td>
                       <td>{{ item.orderedQuantity }}</td>
                       <td>
