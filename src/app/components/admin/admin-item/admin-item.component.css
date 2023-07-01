@@ -19,8 +19,9 @@ body {
 }
 
 h2 {
+  color: #0BB9F0;
   text-decoration: underline;
-  text-decoration-color: rgba(11, 185, 240, 0.44);
+  text-decoration-color: rgba(255, 64, 128, 0.44);;
 }
 
 .mat-form-field {

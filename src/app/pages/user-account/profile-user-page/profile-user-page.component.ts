@@ -10,7 +10,11 @@ import { Router } from '@angular/router';
 import { AuthService } from '@auth-s/index';
 import { IAddress, IUser } from '@models/user';
 import { AddressService, AdminAuthService } from '@services/index';
-import { AccountUserDrawerService, UserService } from '@services/user';
+import {
+  AccountUserDrawerService,
+  UserService,
+  UserStoreService,
+} from '@services/user';
 import { of, switchMap, tap } from 'rxjs';
 @Component({
   selector: 'app-profile-user-page',
@@ -60,6 +64,7 @@ export class ProfileUserPageComponent implements OnInit {
     private router: Router,
     private snackBar: MatSnackBar,
     private userService: UserService,
+    private userStoreService: UserStoreService,
     private authService: AuthService,
     private accountUserDrawerService: AccountUserDrawerService,
     private addressService: AddressService,
@@ -68,7 +73,9 @@ export class ProfileUserPageComponent implements OnInit {
     if (this.adminAuthService.isAdminAuthenticated$) {
       this.isAdmin = true;
     }
-
+    // this.subscription =
+    // this.userStoreService.user$.subscribe((user) => (this.user = user));
+    // this.user = this.userStoreService.getUser();
     this.createForm();
   }
 
@@ -168,13 +175,15 @@ export class ProfileUserPageComponent implements OnInit {
     if (this.user) {
       userData.id = this.user.id;
 
-      const saveOperation = this.userService.updateUser(this.user);
+      const saveOperation = this.userService.updateUser(userData);
 
       saveOperation.subscribe({
-        next: () => {
+        next: (user) => {
+          this.userStoreService.setUser(user);
           this.snackBar.open('Données sauvegardées avec succès!', 'Fermer', {
             duration: 5005,
           });
+          this.accountUserDrawerService.openDrawer();
         },
         error: (error: any) => {
           this.snackBar.open(
@@ -214,4 +223,8 @@ export class ProfileUserPageComponent implements OnInit {
       this.router.navigate(['/auth/login']);
     }
   }
+
+  // ngOnDestroy() {
+  //   this.subscription.unsubscribe();
+  // }
 }

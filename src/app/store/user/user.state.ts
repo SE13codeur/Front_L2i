@@ -6,6 +6,7 @@ import {
   AddToFavoriteItems,
   InitUser,
   RemoveFromFavoriteItems,
+  SetUser,
 } from './user.action';
 import { take } from 'rxjs';
 
@@ -34,6 +35,13 @@ export class UserState {
           user,
         });
       }
+    });
+  }
+
+  @Action(SetUser)
+  setUser({ patchState }: StateContext<UserStateModel>, { payload }: SetUser) {
+    patchState({
+      user: payload,
     });
   }
 

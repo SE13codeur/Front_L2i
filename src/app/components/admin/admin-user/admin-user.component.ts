@@ -9,7 +9,11 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AuthService } from '@auth-s/index';
 import { Role, IUser } from '@models/index';
-import { AdminAuthService, AdminUserService } from '@services/index';
+import {
+  AccountUserDrawerService,
+  AdminAuthService,
+  AdminUserService,
+} from '@services/index';
 import { switchMap, tap } from 'rxjs';
 
 @Component({
@@ -54,7 +58,8 @@ export class AdminUserComponent implements OnInit {
     private router: Router,
     private snackBar: MatSnackBar,
     private authService: AuthService,
-    private adminAuthService: AdminAuthService
+    private adminAuthService: AdminAuthService,
+    private accountUserDrawerService: AccountUserDrawerService
   ) {
     if (this.adminAuthService.isAdminAuthenticated$) {
       this.isAdmin = true;
@@ -107,7 +112,7 @@ export class AdminUserComponent implements OnInit {
         this.snackBar.open('Utilisateur sauvegardé avec succès!', 'Fermer', {
           duration: 4004,
         });
-        this.router.navigate(['/users']);
+        this.accountUserDrawerService.openDrawer();
       },
       error: (error: any) => {
         this.snackBar.open(

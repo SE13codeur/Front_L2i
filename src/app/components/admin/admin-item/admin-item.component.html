@@ -1,5 +1,5 @@
 <mat-card class="mat-elevation-z8" *ngIf="itemId || isAddRouting">
-  <h2>Nouveau livre</h2>
+  <h2>Détails livre</h2>
   <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
     <mat-card-content>
       <mat-form-field>
@@ -208,7 +208,7 @@
         type="submit"
         [disabled]="itemForm.invalid || isSubmitting"
       >
-        Ajouter
+        Soumettre
       </button>
       <button mat-raised-button color="warn" (click)="onReset()">
         Réinitialiser

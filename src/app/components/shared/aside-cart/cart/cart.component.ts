@@ -4,7 +4,12 @@ import { Router } from '@angular/router';
 import { CheckAuthService } from '@auth-s/check-auth.service';
 import { AuthService } from '@auth-s/index';
 import { ICartItem } from '@models/cart';
-import { CartDrawerService, CartService } from '@services/index';
+import { IUser } from '@models/index';
+import {
+  CartDrawerService,
+  CartService,
+  UserStoreService,
+} from '@services/index';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -20,6 +25,7 @@ export class CartComponent {
   cartItems$: Observable<ICartItem[]>;
   totalItems$: Observable<number>;
   totalTTC$: Observable<number>;
+  user$!: Observable<IUser>;
 
   isAuthenticated$: Observable<boolean> | undefined;
   username$: Observable<string | null> | undefined;
@@ -30,13 +36,18 @@ export class CartComponent {
     private cartService: CartService,
     private cartDrawerService: CartDrawerService,
     private checkAuthService: CheckAuthService,
-    private authService: AuthService
+    private authService: AuthService,
+    private userStoreService: UserStoreService
   ) {
     this.cartItems$ = this.cartService.getCartItems();
     this.totalItems$ = this.cartService.getTotalItems();
     this.totalTTC$ = this.cartService.getTotalTTC();
     this.username$ = this.authService.getUsername();
     this.isAuthenticated$ = this.checkAuthService.isAuthenticated$;
+  }
+
+  ngOnInit() {
+    this.user$ = this.userStoreService.getUser();
   }
 
   removeItemFromCart(itemId: number): void {

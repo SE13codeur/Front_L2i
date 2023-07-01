@@ -9,6 +9,7 @@ export class SetUser {
   static readonly type = '[User] Set';
   constructor(public payload: IUser) {}
 }
+
 export class AddToFavoriteItems {
   static readonly type = '[User] Add To Favorite Items';
   constructor(public payload: IItem) {}
