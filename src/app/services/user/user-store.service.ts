@@ -38,32 +38,33 @@ export class UserStoreService {
     return of(undefined);
   }
 
-  removeFromFavorites(item: IItem): Observable<void> {
+  removeFromFavorites(itemId: number): Observable<void> {
     if (this.checkAuthService.checkAuthenticationAndRedirect()) {
-      return of(item).pipe(
+      return of(itemId).pipe(
         tap((item) => this.store.dispatch(new RemoveFromFavoriteItems(item))),
         ignoreElements()
       );
     }
-    return of(undefined);
+    return of();
   }
 
   getFavoriteItems(): Observable<number[]> {
     return this.store.select((state) => state.user.favoriteItems);
   }
 
-  isItemFavorite(item: IItem): Observable<boolean> {
-    if (item == null) {
-      return of(false);
-    }
-    return this.user$.pipe(
-      map((user) => {
-        if (user && user.favoriteItems) {
-          return user.favoriteItems.includes(item);
-        } else {
-          return false;
-        }
-      })
-    );
+  isFavoriteItem(item: IItem): Observable<boolean> {
+    return this.store
+      .select((state) => state.user.favoriteItems)
+      .pipe(map((favoriteItems) => favoriteItems.includes(item)));
+  }
+
+  toggleFavorite(item: IItem) {
+    this.isFavoriteItem(item).subscribe((isFavorite) => {
+      if (isFavorite) {
+        this.store.dispatch(new RemoveFromFavoriteItems(item.id));
+      } else {
+        this.store.dispatch(new AddToFavoriteItems(item));
+      }
+    });
   }
 }

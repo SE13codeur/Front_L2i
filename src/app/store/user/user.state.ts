@@ -7,6 +7,7 @@ import {
   InitUser,
   RemoveFromFavoriteItems,
 } from './user.action';
+import { take } from 'rxjs';
 
 export interface UserStateModel {
   user: IUser | undefined;
@@ -26,7 +27,7 @@ export class UserState {
 
   @Action(InitUser)
   initUser(ctx: StateContext<UserStateModel>) {
-    this.authService.user$.subscribe((user) => {
+    this.authService.user$.pipe(take(1)).subscribe((user) => {
       if (user) {
         ctx.setState({
           ...ctx.getState(),
@@ -62,7 +63,9 @@ export class UserState {
     { payload }: RemoveFromFavoriteItems
   ) {
     patchState({
-      favoriteItems: getState().favoriteItems.filter((id) => id !== payload),
+      favoriteItems: getState().favoriteItems.filter(
+        (item) => item.id !== payload
+      ),
     });
   }
 }

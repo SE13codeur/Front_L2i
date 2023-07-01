@@ -25,7 +25,7 @@ export class FavoriteButtonComponent implements OnInit {
     if (id != null) {
       this.itemService.getItemById(+id).subscribe((item) => {
         this.item = item;
-        this.isFavoriteItem$ = this.userStoreService.isItemFavorite(this.item);
+        this.isFavoriteItem$ = this.userStoreService.isFavoriteItem(this.item);
       });
     }
   }
@@ -33,11 +33,20 @@ export class FavoriteButtonComponent implements OnInit {
   toggleFavorite() {
     this.isFavoriteItem$?.pipe(take(1)).subscribe((isFavorite) => {
       if (isFavorite) {
-        this.userStoreService.removeFromFavorites(this.item).subscribe();
+        this.userStoreService
+          .removeFromFavorites(this.item.id)
+          .subscribe(() => {
+            this.isFavoriteItem$ = this.userStoreService.isFavoriteItem(
+              this.item
+            );
+          });
       } else {
-        this.userStoreService.addToFavorites(this.item).subscribe();
+        this.userStoreService.addToFavorites(this.item).subscribe(() => {
+          this.isFavoriteItem$ = this.userStoreService.isFavoriteItem(
+            this.item
+          );
+        });
       }
-      this.isFavoriteItem$ = this.userStoreService.isItemFavorite(this.item);
     });
   }
 }

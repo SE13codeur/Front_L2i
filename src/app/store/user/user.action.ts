@@ -16,5 +16,5 @@ export class AddToFavoriteItems {
 
 export class RemoveFromFavoriteItems {
   static readonly type = '[User] Remove From Favorite Items';
-  constructor(public payload: IItem) {}
+  constructor(public payload: number) {}
 }
