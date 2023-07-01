@@ -1,3 +1,4 @@
+import { IItem } from '..';
 import { IAddress } from './IAddress';
 import { Role } from './Role';
 
@@ -10,5 +11,5 @@ export interface IUser {
   email: string;
   password: string;
   addresses?: IAddress[];
-  favoriteItems?: number[];
+  favoriteItems?: IItem[];
 }

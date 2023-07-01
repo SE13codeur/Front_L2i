@@ -5,6 +5,7 @@ import { AuthState } from '@auth/store/auth.state';
 import { environmentDev as environment } from '@env/environment.dev';
 import { IUser } from '@models/index';
 import { Store } from '@ngxs/store';
+import { InitUser } from '@store/user';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 
 @Injectable({
@@ -25,6 +26,7 @@ export class AuthService {
     return this.http.post<IUser>(`${this.itemsUrl}/login`, credentials).pipe(
       map((user) => {
         this.userStore.next(user);
+        this.store.dispatch(new InitUser(user));
         return user;
       })
     );

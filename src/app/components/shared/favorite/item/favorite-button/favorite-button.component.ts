@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IItem } from '@models/index';
-import { UserStoreService } from '@services/index';
+import { UserStoreService, ItemService } from '@services/index';
 import { Observable } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { take, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-favorite-button',
@@ -16,24 +16,28 @@ export class FavoriteButtonComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private userStoreService: UserStoreService
+    private userStoreService: UserStoreService,
+    private itemService: ItemService
   ) {}
 
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
-    if (this.item != null && id != null) {
-      this.item.id = +id;
-      this.isFavoriteItem$ = this.userStoreService.isItemFavorite(this.item.id);
+    if (id != null) {
+      this.itemService.getItemById(+id).subscribe((item) => {
+        this.item = item;
+        this.isFavoriteItem$ = this.userStoreService.isItemFavorite(this.item);
+      });
     }
   }
 
   toggleFavorite() {
     this.isFavoriteItem$?.pipe(take(1)).subscribe((isFavorite) => {
       if (isFavorite) {
-        this.userStoreService.removeFromFavorites(this.item);
+        this.userStoreService.removeFromFavorites(this.item).subscribe();
       } else {
-        this.userStoreService.addToFavorites(this.item);
+        this.userStoreService.addToFavorites(this.item).subscribe();
       }
+      this.isFavoriteItem$ = this.userStoreService.isItemFavorite(this.item);
     });
   }
 }

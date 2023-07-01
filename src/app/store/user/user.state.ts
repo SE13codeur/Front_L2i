@@ -37,8 +37,8 @@ export class UserState {
   }
 
   @Selector()
-  static getUser(state: IUser): IUser {
-    return state;
+  static getUser(state: UserStateModel): IUser | undefined {
+    return state.user;
   }
 
   @Selector()

@@ -8,7 +8,7 @@ import {
   SetUser,
   UserState,
 } from '@store/user';
-import { Observable, map } from 'rxjs';
+import { Observable, ignoreElements, map, of, tap } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class UserStoreService {
@@ -17,7 +17,7 @@ export class UserStoreService {
 
   constructor(
     private store: Store,
-    private checkAuthhService: CheckAuthService
+    private checkAuthService: CheckAuthService
   ) {}
 
   getUser(): Observable<IUser> {
@@ -28,27 +28,38 @@ export class UserStoreService {
     this.store.dispatch(new SetUser(user));
   }
 
-  addToFavorites(item: IItem) {
-    if (this.checkAuthhService.checkAuthenticationAndRedirect()) {
-      this.store.dispatch(new AddToFavoriteItems(item));
+  addToFavorites(item: IItem): Observable<void> {
+    if (this.checkAuthService.checkAuthenticationAndRedirect()) {
+      return of(item).pipe(
+        tap((item) => this.store.dispatch(new AddToFavoriteItems(item))),
+        ignoreElements()
+      );
     }
+    return of(undefined);
+  }
+
+  removeFromFavorites(item: IItem): Observable<void> {
+    if (this.checkAuthService.checkAuthenticationAndRedirect()) {
+      return of(item).pipe(
+        tap((item) => this.store.dispatch(new RemoveFromFavoriteItems(item))),
+        ignoreElements()
+      );
+    }
+    return of(undefined);
   }
 
   getFavoriteItems(): Observable<number[]> {
     return this.store.select((state) => state.user.favoriteItems);
   }
 
-  removeFromFavorites(item: IItem) {
-    if (this.checkAuthhService.checkAuthenticationAndRedirect()) {
-      this.store.dispatch(new RemoveFromFavoriteItems(item));
+  isItemFavorite(item: IItem): Observable<boolean> {
+    if (item == null) {
+      return of(false);
     }
-  }
-
-  isItemFavorite(itemId: number): Observable<boolean> {
     return this.user$.pipe(
       map((user) => {
         if (user && user.favoriteItems) {
-          return user.favoriteItems.includes(itemId);
+          return user.favoriteItems.includes(item);
         } else {
           return false;
         }
