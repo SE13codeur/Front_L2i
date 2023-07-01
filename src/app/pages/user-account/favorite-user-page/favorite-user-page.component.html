@@ -1,8 +1,8 @@
 <div *ngIf="!isAdmin">
-  <span>
-    <h2>Bienvenue dans vos favoris</h2>
-  </span>
   <div class="container">
+    <span>
+      <h2>Bienvenue dans vos favoris</h2>
+    </span>
     <div *ngFor="let item of favoriteItems$ | async">
       <mat-card class="custom-card" (click)="openItemDetails(item)">
         <img

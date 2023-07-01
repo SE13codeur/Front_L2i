@@ -1,10 +1,8 @@
 .container {
   height: 100vh !important;
-  top: 14rem;
-  height: calc(100% - 14rem);
   position: relative;
   display: grid !important;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)) !important;
+  grid-template-columns: repeat(auto-fill, minmax(1fr)) !important;
   align-items: center;
   justify-content: center;
   grid-gap: 3.03rem;
