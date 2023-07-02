@@ -178,13 +178,16 @@ td {
 
 @media (max-width: 777px) {
   .container {
-    margin-top: 22rem;
-    top: 22rem;
-    height: calc(100% - 22rem);
+    top: 11.1rem;
+    height: calc(100% - 11.1rem);
     margin-bottom: 100vh !important;
   }
 
   .status-text {
+    display: none;
+  }
+
+  .download-invoice-button .download-text {
     display: none;
   }
 
@@ -194,12 +197,16 @@ td {
 }
 
 @media (max-width: 404px) {
+  .container {
+    margin: 0;
+    margin-bottom: 100vh !important;
+  }
 
   .status-text {
     display: none;
   }
 
-  .status-icon{
+  .status-icon {
     display: block;
   }
 
