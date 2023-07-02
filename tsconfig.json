@@ -19,7 +19,11 @@
     "module": "es2020",
     "lib": ["es2020", "dom"],
     "paths": {
-      "@guards/*": ["src/app/guards/*"],
+      "@auth-m/*": ["src/app/modules/auth/models/*"],
+      "@auth-s/*": ["src/app/modules/auth/services/*"],
+      "@auth-c/*": ["src/app/modules/auth/components/*"],
+      "@auth/*": ["src/app/modules/auth/*"],
+      "@core/*": ["src/app/core/*"],
       "@libs/*": ["src/app/libs/*"],
       "@store/*": ["src/app/store/*"],
       "@components/*": ["src/app/components/*"],

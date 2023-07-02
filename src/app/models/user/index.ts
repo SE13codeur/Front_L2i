@@ -1,2 +1,4 @@
 export * from './IUser';
-export * from './ICustomer';
+export * from './IUser';
+export * from './Role';
+export * from './IAddress';

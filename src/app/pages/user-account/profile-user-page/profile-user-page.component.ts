@@ -1,9 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ICustomer, IUser } from '@models/user';
-import { UserService } from '@services/user';
+import { Router } from '@angular/router';
+import { AuthService } from '@auth-s/index';
+import { IAddress, IUser } from '@models/user';
+import { AddressService, AdminAuthService } from '@services/index';
+import {
+  AccountUserDrawerService,
+  UserService,
+  UserStoreService,
+} from '@services/user';
+import { of, switchMap, tap } from 'rxjs';
 @Component({
   selector: 'app-profile-user-page',
   templateUrl: './profile-user-page.component.html',
@@ -11,18 +23,55 @@ import { UserService } from '@services/user';
 })
 export class ProfileUserPageComponent implements OnInit {
   userForm!: FormGroup;
-  user: IUser | ICustomer | undefined;
-  userId: number | null = null;
+
+  get username(): FormControl {
+    return this.userForm.get('username') as FormControl;
+  }
+
+  get firstname(): FormControl {
+    return this.userForm.get('firstname') as FormControl;
+  }
+
+  get lastname(): FormControl {
+    return this.userForm.get('lastname') as FormControl;
+  }
+
+  get email(): FormControl {
+    return this.userForm.get('email') as FormControl;
+  }
+
+  get password(): FormControl {
+    return this.userForm.get('password') as FormControl;
+  }
+
+  user: IUser | null = null;
   isSubmitting = false;
-  isCustomer: boolean = false;
+  addresses!: IAddress[];
+  selectedAddress!: IAddress | null;
+
+  displayedColumns: string[] = [
+    'title',
+    'street',
+    'city',
+    'state',
+    'zipCode',
+    'country',
+  ];
+  isAdmin = false;
 
   constructor(
     private fb: FormBuilder,
-    private userService: UserService,
     private router: Router,
-    private route: ActivatedRoute,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private userService: UserService,
+    private userStoreService: UserStoreService,
+    private accountUserDrawerService: AccountUserDrawerService,
+    private addressService: AddressService,
+    private adminAuthService: AdminAuthService
   ) {
+    if (this.adminAuthService.isAdminAuthenticated$) {
+      this.isAdmin = true;
+    }
     this.createForm();
   }
 
@@ -32,62 +81,74 @@ export class ProfileUserPageComponent implements OnInit {
       lastname: [''],
       username: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
-      phoneNumber: [''],
-      shippingAddress: this.fb.group({
-        street: [''],
-        city: [''],
-        state: [''],
-        postalCode: [''],
-        country: [''],
-      }),
+      password: ['', [Validators.required, Validators.minLength(8)]],
     });
   }
 
   ngOnInit(): void {
-    let tempId = this.route.snapshot.paramMap.get('id');
-    this.userId = tempId && !isNaN(parseInt(tempId)) ? parseInt(tempId) : null;
+    this.userStoreService.user$
+      .pipe(
+        tap((user) => {
+          this.user = user;
+          this.userForm.patchValue({
+            firstname: user?.firstname,
+            lastname: user?.lastname,
+            username: user?.username,
+            email: user?.email,
+            password: user?.password,
+          });
+        }),
+        switchMap((user) => {
+          if (user) {
+            this.addressService.getAddressesByUserId(user.id);
+            return this.addressService.addresses$;
+          } else {
+            return of([]);
+          }
+        })
+      )
+      .subscribe((addresses) => {
+        this.addresses = addresses;
+        if (this.user) {
+          this.user.addresses = addresses;
+        }
+      });
+  }
 
-    if (this.userId) {
-      this.populateForm();
-    }
+  displayAddressDetails(id: number): void {
+    const address = this.addresses.find((address) => address.id === id);
+    this.selectedAddress = address || null;
   }
 
   populateForm(): void {
-    if (this.userId) {
-      this.userService.getUserById(this.userId).subscribe({
-        next: (user: IUser | ICustomer) => {
+    if (this.user) {
+      this.userService.getUserById(this.user.id).subscribe({
+        next: (user: IUser) => {
           this.user = user;
-          this.isCustomer = 'phoneNumber' in user;
-
           // Update form controls
           this.userForm.patchValue({
+            username: user.username,
             firstname: user.firstname,
             lastname: user.lastname,
-            username: user.username,
             email: user.email,
             password: user.password,
-            phoneNumber: this.isCustomer ? (user as ICustomer).phoneNumber : '',
-            shippingAddress: this.isCustomer
-              ? (user as ICustomer).shippingAddress
-              : '',
           });
 
           this.snackBar.open('Données chargées avec succès!', 'Fermer', {
-            duration: 4004,
+            duration: 5005,
           });
         },
         error: (error: any) => {
           this.snackBar.open(
             'Erreur lors du chargement des données!',
             'Fermer',
-            { duration: 4004 }
+            { duration: 5005 }
           );
         },
       });
     } else {
-      this.snackBar.open("Aucun ID d'utilisateur fourni!", 'Fermer', {
-        duration: 4004,
+      this.snackBar.open("Aucun ID d'utilisateur fourni !", 'Fermer', {
+        duration: 5005,
       });
     }
   }
@@ -95,51 +156,66 @@ export class ProfileUserPageComponent implements OnInit {
   onSubmit(): void {
     if (this.userForm.valid) {
       this.isSubmitting = true;
-      this.snackBar.open('Envoi des données...', 'Fermer', { duration: 4004 });
+      this.snackBar.open('Envoi des données...', 'Fermer', { duration: 5005 });
 
       const userData = this.userForm.value;
       this.saveUser(userData);
     } else {
       this.snackBar.open('Formulaire non valide!', 'Fermer', {
-        duration: 4004,
+        duration: 5005,
       });
     }
   }
 
-  saveUser(userData: IUser | ICustomer): void {
-    const saveOperation = this.userId
-      ? this.userService.editUser(this.userId, userData)
-      : this.userService.addUser(userData);
+  saveUser(userData: IUser): void {
+    if (this.user) {
+      userData.id = this.user.id;
 
-    saveOperation.subscribe({
-      next: () => {
-        this.snackBar.open('Utilisateur sauvegardé avec succès!', 'Fermer', {
-          duration: 4004,
-        });
-        this.router.navigate(['/users']);
-      },
-      error: (error: any) => {
-        this.snackBar.open(
-          "Erreur lors de la sauvegarde de l'utilisateur!",
-          'Fermer',
-          { duration: 4004 }
-        );
-      },
-    });
+      const saveOperation = this.userService.updateUser(userData);
+
+      saveOperation.subscribe({
+        next: (user) => {
+          this.snackBar.open('Données sauvegardées avec succès!', 'Fermer', {
+            duration: 5005,
+          });
+          this.accountUserDrawerService.openDrawer();
+        },
+        error: (error: any) => {
+          this.snackBar.open(
+            "Erreur lors de la sauvegarde de l'utilisateur!",
+            'Fermer',
+            { duration: 5005 }
+          );
+        },
+      });
+    } else {
+      this.snackBar.open('Veuillez vous reconnecter !', 'Fermer', {
+        duration: 5005,
+      });
+      this.router.navigate(['/auth/login']);
+    }
   }
 
   onReset(): void {
     this.userForm.reset();
-    this.snackBar.open('Formulaire réinitialisé!', 'Fermer', {
-      duration: 4004,
+    this.snackBar.open('Formulaire réinitialisé !', 'Fermer', {
+      duration: 5005,
     });
   }
 
+  goToAddressForm(): void {
+    if (this.user) {
+      this.router.navigate(['/account/user/profile/address']);
+      this.accountUserDrawerService.closeDrawer();
+    }
+  }
+
   goBack(): void {
-    if (this.userId) {
-      this.router.navigate(['/users', this.userId]);
+    if (this.user) {
+      this.router.navigate(['/items/books']);
+      this.accountUserDrawerService.toggleDrawer();
     } else {
-      this.router.navigate(['/users']);
+      this.router.navigate(['/auth/login']);
     }
   }
 }

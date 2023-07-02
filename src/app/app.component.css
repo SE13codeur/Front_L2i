@@ -1,6 +1,11 @@
 .mat-sidenav {
   width: 36%;
   transition: transform 1..11s ease-in, transform 3.33s ease-out;
+  background-color: aliceblue;
+}
+
+mat-drawer-content mat-sidenav-content {
+  margin: 0;
 }
 
 app-nav {

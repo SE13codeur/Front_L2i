@@ -1,0 +1,9 @@
+<button mat-icon-button color="primary" (click)="toggleFavorite()">
+  <mat-icon
+    [ngClass]="{
+      'card-icon-favorite': (isFavoriteItem$ | async),
+      'card-icon-not-favorite': !(isFavoriteItem$ | async)
+    }"
+    >favorite</mat-icon
+  >
+</button>

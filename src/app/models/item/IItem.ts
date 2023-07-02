@@ -22,4 +22,5 @@ export interface IItem {
   tva: ITVAItem;
   isNewCollection?: boolean;
   onSale?: number;
+  isFavorite?: number;
 }

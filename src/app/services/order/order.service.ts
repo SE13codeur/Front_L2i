@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environmentDev as environment } from '@env/environment.dev';
-import { ICart, ICustomer, IOrder } from '@models/index';
+import { ICart, IOrder, IOrderLineDTO } from '@models/index';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -9,6 +9,8 @@ import { Observable } from 'rxjs';
 })
 export class OrderService {
   private ordersUrl = `${environment.apiUrl}/items/orders`;
+  private ordersAdminUrl = `${environment.apiUrl}/admin/orders`;
+  private orderlinesUrl = `${environment.apiUrl}/items/orderlines`;
 
   constructor(private http: HttpClient) {}
 
@@ -16,16 +18,23 @@ export class OrderService {
     return this.http.post(this.ordersUrl, order);
   }
 
-  getOrdersByUser(user: ICustomer): Observable<IOrder[]> {
-    return this.http.get<IOrder[]>(`${this.ordersUrl}/${user.username}`);
+  getOrdersByUserId(userId: number): Observable<IOrder[]> {
+    return this.http.get<IOrder[]>(`${this.ordersUrl}/${userId}`);
   }
 
-  updateOrderStatusFromUser(
-    username: string,
-    orderNumber: string,
+  getAllOrders(): Observable<IOrder[]> {
+    return this.http.get<IOrder[]>(`${this.ordersAdminUrl}`);
+  }
+
+  updateOrderStatusByOrderId(
+    orderId: number,
     newStatus: string
-  ) {
-    const url = `${this.ordersUrl}/${username}`;
-    return this.http.put(url, { orderNumber: orderNumber, status: newStatus });
+  ): Observable<any> {
+    const url = `${this.ordersAdminUrl}/${orderId}`;
+    return this.http.put(url, { status: newStatus });
+  }
+
+  getOrderlinesByOrderId(orderId: number): Observable<IOrderLineDTO[]> {
+    return this.http.get<IOrderLineDTO[]>(`${this.orderlinesUrl}/${orderId}`);
   }
 }

@@ -1,17 +1,26 @@
 <div class="container">
+  <h1 *ngIf="isAuthenticated$ | async">Bienvenue {{ username$ | async }}</h1>
   <div class="drawer-item" (click)="openProfilePage()">
     <mat-icon>person</mat-icon>
     <span class="drawer-item-text">Mon profil</span>
   </div>
-  <div class="drawer-item" (click)="openOrdersPage()">
+  <div *ngIf="!isAdmin" class="drawer-item" (click)="openOrdersPage()">
     <mat-icon>shopping_cart</mat-icon>
     <span class="drawer-item-text">Mes commandes</span>
   </div>
-  <div class="drawer-item" (click)="openFavoritesPage()">
+  <div *ngIf="isAdmin" class="drawer-item" (click)="openAdminOrdersPage()">
+    <mat-icon>shopping_cart</mat-icon>
+    <span class="drawer-item-text">Toutes les commandes</span>
+  </div>
+  <div *ngIf="!isAdmin" class="drawer-item" (click)="openFavoritesPage()">
     <mat-icon>favorite</mat-icon>
     <span class="drawer-item-text">Mes favoris</span>
   </div>
-  <button class="logout-button">
+  <div *ngIf="isAdmin" class="drawer-item" (click)="openUsersPage()">
+    <mat-icon>group</mat-icon>
+    <span class="drawer-item-text">Tous les utilisateurs</span>
+  </div>
+  <button (click)="onLogout()" class="logout-button">
     <mat-icon>exit_to_app</mat-icon>
     <span class="drawer-item-text">Déconnexion</span>
   </button>

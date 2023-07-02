@@ -1,3 +1,21 @@
-<aside (click)="openDrawer($event)">
-  <mat-icon>account_circle</mat-icon>
+<aside>
+  <!-- Button for account user -->
+  <ng-container *ngIf="isAuthenticated$ | async; else notLoggedIn">
+    <button
+      mat-icon-button
+      (click)="openDrawer($event)"
+      [ngClass]="{
+        'logged-in': (isAuthenticated$ | async)
+      }"
+    >
+      <mat-icon class="button-account_circle-logged">account_circle</mat-icon>
+    </button>
+  </ng-container>
+
+  <!-- Button for login -->
+  <ng-template #notLoggedIn>
+    <button mat-icon-button routerLink="/auth/login">
+      <mat-icon class="button-account_circle-loggout">account_circle</mat-icon>
+    </button>
+  </ng-template>
 </aside>

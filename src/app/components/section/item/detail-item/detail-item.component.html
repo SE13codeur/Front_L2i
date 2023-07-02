@@ -3,18 +3,20 @@
     <div class="detail-image">
       <div class="image-wrapper">
         <img [src]="item.imageUrl" alt="{{ item.title }} cover image" />
-      </div>
-      <div class="rating">
-        <mat-icon
-          *ngFor="let star of getRatingStars(item.rating); let i = index"
-          [ngClass]="{ 'yellow-star': star === 1, 'gray-star': star === 0 }"
-          (click)="setRating(i + 1)"
-        >
-          star
-        </mat-icon>
+
+        <div class="rating">
+          <mat-icon
+            *ngFor="let star of getRatingStars(item.rating); let i = index"
+            [ngClass]="{ 'yellow-star': star === 1, 'gray-star': star === 0 }"
+            (click)="setRating(i + 1)"
+          >
+            star
+          </mat-icon>
+        </div>
       </div>
       <!-- CART BUTTON-->
       <div class="adminActions" *ngIf="!isAdmin">
+        <app-favorite-button></app-favorite-button>
         <app-cart-item-quantity [item]="item"></app-cart-item-quantity>
       </div>
       <div class="adminActions" *ngIf="isAdmin">
@@ -46,7 +48,7 @@
         mat-raised-button
         (click)="goBackToPreviousPage()"
       >
-        Retour aux articles
+        Retour
       </button>
     </div>
   </div>

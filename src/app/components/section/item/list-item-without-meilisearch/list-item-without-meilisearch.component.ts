@@ -2,16 +2,13 @@ import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { IItem } from '@models/index';
-import { Store } from '@ngxs/store';
 import {
-  AuthService,
-  CartItemQuantityService,
+  AdminAuthService,
   FiltersService,
   ItemService,
   PaginationService,
 } from '@services/index';
-import { CartState } from '@store/index';
-import { BehaviorSubject, Observable, Subject, map, take } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, take } from 'rxjs';
 
 @Component({
   selector: 'app-list-item-without-meilisearch',
@@ -38,13 +35,17 @@ export class ListItemWithoutMeilisearchComponent implements OnInit, OnDestroy {
     private itemService: ItemService,
     private filtersService: FiltersService,
     private paginationService: PaginationService,
-    private authService: AuthService,
+    private adminAuthService: AdminAuthService,
     private router: Router
-  ) {
-    this.isAdmin = this.authService.isAdminAuthenticated();
-  }
+  ) {}
 
   ngOnInit(): void {
+    if (this.adminAuthService.isAdminAuthenticated$) {
+      this.adminAuthService.isAdminAuthenticated$.subscribe((isAdmin) => {
+        this.isAdmin = isAdmin;
+      });
+    }
+
     this.itemService.getItems().subscribe((items) => {
       this.originalItemList$.next(items);
       this.itemList$.next(items);
@@ -145,11 +146,5 @@ export class ListItemWithoutMeilisearchComponent implements OnInit, OnDestroy {
 
   openItemDetails(item: IItem) {
     this.router.navigate(['/items/books', item.id]);
-  }
-
-  addToFavorites(itemId: number, event: Event) {
-    this.isFavorite[itemId] = !this.isFavorite[itemId];
-    event.stopPropagation();
-    console.log('Item added to favorites:', itemId);
   }
 }

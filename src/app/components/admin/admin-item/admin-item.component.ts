@@ -215,7 +215,7 @@ export class AdminItemComponent implements OnInit {
 
   onReset(): void {
     this.itemForm.reset();
-    this.snackBar.open('Formulaire réinitialisé!', 'Fermer', {
+    this.snackBar.open('Formulaire réinitialisé !', 'Fermer', {
       duration: 4004,
     });
   }

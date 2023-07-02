@@ -10,6 +10,40 @@ aside {
 }
 
 aside:hover {
-  color: #0BB9F0;
-  background-color: rgba(32, 150, 243, 0.11);
+  background-color: #EBEBEB;
 }
+
+.logged-in {
+  color: #0BB9F0;
+}
+
+.logged-in:hover {
+  background-color: rgba(32, 150, 243, 0.11);
+  transition: transform 1..11s ease-in, transform 3.33s ease-out;
+  transform: scale(1.51);
+}
+
+.button-account_circle-logged{
+  transition: transform 1..11s ease-in, transform 3.33s ease-out;
+  transform: scale(1.51);
+  color: #0BB9F0
+}
+
+.button-account_circle-logged:hover{
+  transition: transform 1..11s ease-in, transform 3.33s ease-out;
+  transform: scale(1.51);
+  color: #0BB9F0
+}
+
+.button-account_circle-loggout{
+  color: #C5E1FC;
+  transition: transform 1..11s ease-in, transform 3.33s ease-out;
+  transform: scale(1.51);
+}
+
+.button-account_circle-loggout:hover{
+  color: #0BB9F0;
+  transition: transform 1..11s ease-in, transform 3.33s ease-out;
+  transform: scale(1.51);
+}
+

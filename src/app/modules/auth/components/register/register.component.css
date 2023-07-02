@@ -1,0 +1,137 @@
+.register-container {
+  position:relative;
+  height: 100vh !important;
+  top: 4.4rem;
+  height: calc(100% - 4.4rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to right, #e0eafc, #cfdef3);
+}
+
+.register-card {
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 0.89rem;
+  border-radius: 0.77rem;
+  box-shadow: 0 0.33rem 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 27rem;
+  max-width: 1001px;
+}
+
+.input-field {
+  margin: 0.89rem 0;
+  flex: 1;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 44%;
+}
+
+.account-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.11rem;
+}
+
+
+.input-error {
+  width: 100%;
+  text-align: center;
+  color: #e2004b;
+}
+
+
+.input-field input {
+  width: 100%;
+  padding: 0.89rem;
+  border: 1px solid #ccc;
+  border-radius: 0.77rem;
+}
+
+.register-button {
+  width: 66%;
+  padding: 1.11rem;
+  background-color: #0BB9F0;
+  color: white;
+  border: none;
+  border-radius: 0.77rem;
+  cursor: pointer;
+  margin-top: 1.11rem;
+}
+
+.register-button:hover {
+  background-color: #2196F3;
+}
+
+.error {
+  color: #FF4080;
+  font-size: 1.11rem;
+  margin-top: 0.44rem;
+}
+
+.register-card h2 {
+  margin-bottom: 1.11rem;
+  font-size: 1.77rem;
+}
+
+.options {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.register-link {
+  color: #FF4080;
+  text-decoration: none;
+}
+
+.register-link:hover {
+  color: #e2004b;
+  text-decoration: none;
+}
+
+.back-button {
+  background-color: transparent;
+  border: none;
+  color: rgba(0, 0, 0, 0.44);
+  cursor: pointer;
+}
+
+.back-button:hover {
+  background-color: transparent;
+  border: none;
+  color: rgba(0, 0, 0, 0.77);
+  cursor: pointer;
+}
+
+@media screen and (max-width: 777px) {
+  .register-container {
+    height: 100vh !important;
+    position: relative;
+    top: 11.1rem;
+    height: calc(100% - 11.1rem);
+  }
+
+  .input-field {
+    margin: 0.44rem 0;
+  }
+  .account-info, .personal-info, .address-grid {
+    gap: 0;
+  }
+
+  .register-card {
+    width: 77%;
+  }
+}
+
+@media screen and (max-width: 202px) {
+  .register-card {
+    width: 89%;
+  }
+}

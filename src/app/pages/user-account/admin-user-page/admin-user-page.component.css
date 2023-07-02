@@ -1,0 +1,280 @@
+.list-user-container {
+  height: 100vh !important;
+  margin-bottom: 89vh !important;
+  position: relative;
+  margin-left: 1.11rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column ;
+  align-items: center;
+  justify-content: center;
+}
+.add-user {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 2rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 55%;
+  color: #0BB9F0;
+  background-color: aliceblue;
+}
+
+h2 {
+  color: rgba(11, 185, 240, 0.77);
+  text-decoration: underline;
+  text-decoration-color: rgba(255, 64, 128, 0.44);
+}
+
+.user-card {
+  display: flex;
+  flex-direction: row ;
+  align-items: center;
+  justify-content: space-around;
+  margin-right: 5.5rem;
+}
+
+.user-card select {
+  margin: 0 5.5rem;
+}
+
+.add-user {
+  cursor: pointer;
+  margin: 2rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 55%;
+  color: #0BB9F0;
+  border: 2.2px solid rgba(255, 64, 128, 0.11);
+
+}
+
+.add-user:hover {
+  color: #FF4080;
+  border: 2.2px solid rgba(255, 64, 128, 0.44);
+}
+
+h3 {
+  text-decoration: underline;
+  text-decoration-color: rgba(255, 64, 128, 0.44);;
+}
+
+.selection-user {
+  flex-direction: column ;
+}
+
+select {
+  border-radius: 7.7rem;
+  height: 3.03rem;
+  padding: 0.55rem;
+}
+
+.user-table {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1.11rem;
+  width: 89%;
+  border: 0.111rem solid rgba(11, 185, 240, 0.44);
+  border-radius: 0.77rem;
+}
+
+.user-table-row {
+  font-weight: lighter !important;
+  display: flex;
+  justify-content: space-around;
+  padding: 1.11rem;
+}
+
+.user-table-row:last-child {
+  border-bottom: none;
+}
+
+.user-table-header {
+  font-weight: bold;
+  text-align: center;
+  flex: 1;
+  color: black;
+  background-color: azure;
+  padding: 0.77rem 0;
+}
+
+.user-table-cell {
+  text-align: center;
+  flex: 1;
+  padding: 0.77rem 0;
+}
+
+@media screen and (max-width: 777px) {
+  .user-table {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.show-on-mobile {
+  display: none;
+}
+
+.confirm-button,
+.modify-button {
+  border-radius: 7.7%;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-size: 1.11rem;
+  margin: 1.11rem;
+}
+
+.confirm-button {
+  background-color: #0BB9F0;
+  color: whitesmoke;
+}
+
+.confirm-button:hover {
+  background-color: #2196F3;
+}
+
+.modify-button {
+  background-color: #FF4080;
+  color: whitesmoke;
+}
+
+.modify-button:hover {
+  background-color: #e2004b;
+}
+
+.user-table {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1.11rem;
+  width: 89%;
+  border: 0.111rem solid rgba(11, 185, 240, 0.44);
+  border-radius: 0.77rem;
+}
+
+.user-table-header,
+.user-table-cell {
+  font-weight: bold;
+  flex-basis: 20%;
+  padding: 0.5em;
+  text-align: center;
+}
+
+.user-table-row:nth-child(odd) {
+  background-color: azure;
+}
+
+.hide-on-mobile {
+  display: none;
+}
+
+.show-on-mobile {
+  display: block;
+}
+
+.checkout-section {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1.11rem;
+  margin-top: 1.11rem;
+  padding-top: 1.11rem;
+}
+
+@media (min-width: 777px) {
+  .hide-on-mobile {
+    display: block;
+  }
+}
+
+@media screen and (max-width: 777px) {
+  .show-on-mobile {
+    display: none;
+  }
+
+  .container {
+    margin: 0rem;
+    top: 27rem;
+    height: calc(100% - 27rem);
+    margin-bottom: 100vh !important;
+  }
+
+  .user-card {
+    flex-direction: column ;
+    gap: 1.11rem;
+  }
+
+  .hide-on-mobile {
+    display: none;
+  }
+
+  .show-on-mobile {
+    display: inline;
+  }
+
+  .th-ht, .th-ttc, .th-qty, .th-sub-ttc {
+    font-size: smaller;
+    padding: 0.22rem;
+  }
+
+  h1 {
+    font-size: medium;
+    margin-bottom: 0.5rem;
+  }
+
+  .cart-table th,
+  .cart-table td {
+    padding: 0.3rem;
+  }
+
+  .product-image {
+    width: 40px;
+    height: 40px;
+  }
+
+  .confirm-button,
+  .modify-button {
+    font-size: 0.8rem;
+    padding: 0.3rem 0.6rem;
+    margin: 0.3rem;
+  }
+}
+
+@media screen and (max-width: 404px) {
+  .container {
+    top: 22rem;
+    height: calc(100% - 22rem);
+    margin-bottom: 100vh !important;
+  }
+
+  .user-table, .user-table {
+    overflow-x: auto;
+  }
+
+  .user-card {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    margin: 0;
+
+  }
+
+  .user-table-row {
+    flex-wrap: wrap;
+    margin: 0;
+    gap: 0;
+  }
+
+  .user-table-header,
+  .user-table-cell,
+  .user-table-header, .user-table-cell {
+    flex-basis: 100%;
+    padding: 0.5em;
+    text-align: center;
+  }
+}
+
+
+

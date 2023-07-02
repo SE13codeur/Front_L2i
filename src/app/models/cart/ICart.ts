@@ -1,6 +1,8 @@
-import { ICustomer, ICartItem } from '@models/index';
+import { IUser, ICartItem } from '@models/index';
 
 export interface ICart {
   cartItems: ICartItem[];
-  user: ICustomer;
+  user: IUser;
+  billingAddressId: number | undefined;
+  shippingAddressId: number | undefined;
 }

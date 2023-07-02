@@ -1,5 +1,17 @@
 <div class="container">
-  <h1>Votre panier</h1>
+  <h1>
+    <span *ngIf="isAuthenticated$ | async"
+      >Bienvenue {{ username$ | async }}</span
+    >
+    <span
+      class="login-link"
+      style="margin: 1.11rem"
+      *ngIf="!(isAuthenticated$ | async)"
+      (click)="goToLogin()"
+    >
+      Identifiez-vous <mat-icon>login</mat-icon>
+    </span>
+  </h1>
 
   <table class="cart-table">
     <thead>
@@ -86,3 +98,11 @@
     </button>
   </div>
 </div>
+
+<!-- Dialog content -->
+<ng-template #dialogContent>
+  <div class="dialog-content">
+    <span class="dialog-text">Veuillez commander un article payant</span>
+    <mat-icon>shopping_cart</mat-icon>
+  </div>
+</ng-template>

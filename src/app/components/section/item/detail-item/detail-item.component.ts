@@ -2,9 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IItem, IAuthor } from '@models/index';
-import { AdminItemService, AuthService, ItemService } from '@services/index';
+import {
+  AdminItemService,
+  AdminAuthService,
+  ItemService,
+} from '@services/index';
 import { Observable, of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
+import { NavigationHistoryService } from '@libs/navigation-history.service';
 
 @Component({
   selector: 'app-detail-item',
@@ -15,14 +20,15 @@ export class DetailItemComponent implements OnInit {
   item$: Observable<IItem | null>;
   item: IItem | null = null;
   showReviews = false;
-  isAdmin = true;
+  isAdmin = false;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private itemService: ItemService,
-    private authService: AuthService,
+    private adminAuthService: AdminAuthService,
     private itemAdminService: AdminItemService,
+    private navigationHistoryService: NavigationHistoryService,
     private location: Location
   ) {
     this.item$ = this.route.params.pipe(
@@ -34,12 +40,15 @@ export class DetailItemComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (this.adminAuthService.isAdminAuthenticated$) {
+      this.adminAuthService.isAdminAuthenticated$.subscribe((isAdmin) => {
+        this.isAdmin = isAdmin;
+      });
+    }
     this.item$.subscribe((item) => {
       console.log('🚀 ~ item:', item);
       this.item = item;
     });
-
-    this.isAdmin = this.authService.isAdminAuthenticated();
   }
 
   getAuthorNames(): string {
@@ -94,7 +103,10 @@ export class DetailItemComponent implements OnInit {
   }
 
   goBackToPreviousPage(): void {
-    if (this.item) {
+    const lastUrl = this.navigationHistoryService.getPreviousUrl();
+    if (lastUrl.includes('/auth/login')) {
+      this.router.navigate(['/items/books']);
+    } else {
       this.location.back();
     }
   }
