@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environmentDev } from '@env/environment.dev';
+import { environmentPreProd } from '@env/environment.pre-prod';
 import { IItem } from '@models/index';
 import { Observable } from 'rxjs';
 
@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class AdminItemService {
-  private adminItemsUrl = `${environmentDev.apiUrl}/admin/items/books`;
+  private adminItemsUrl = `${environmentPreProd.apiUrl}/admin/items/books`;
 
   constructor(private http: HttpClient) {}
 

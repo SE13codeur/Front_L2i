@@ -175,10 +175,16 @@ export class ProfileUserPageComponent implements OnInit {
 
       saveOperation.subscribe({
         next: (user) => {
-          this.snackBar.open('Données sauvegardées avec succès!', 'Fermer', {
-            duration: 5005,
+          this.snackBar.open('Données sauvegardées avec succès !', 'Fermer', {
+            duration: 4004,
           });
-          this.accountUserDrawerService.openDrawer();
+          setTimeout(() => {
+            this.snackBar.open('Veuillez vous reconnecter !', 'Fermer', {
+              duration: 7007,
+            });
+          }, 4004);
+
+          this.router.navigate(['/auth/login']);
         },
         error: (error: any) => {
           this.snackBar.open(

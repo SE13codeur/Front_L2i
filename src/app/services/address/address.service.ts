@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { environmentDev } from '@env/environment.dev';
+import { environmentPreProd } from '@env/environment.pre-prod';
 import { IAddress } from '@models/index';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AddressService {
-  private addressUrl = `${environmentDev.apiUrl}/account/user/profile/address`;
+  private addressUrl = `${environmentPreProd.apiUrl}/account/user/profile/address`;
   private addressesSubject: BehaviorSubject<IAddress[]> = new BehaviorSubject<
     IAddress[]
   >([]);

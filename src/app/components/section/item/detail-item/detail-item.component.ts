@@ -46,7 +46,6 @@ export class DetailItemComponent implements OnInit {
       });
     }
     this.item$.subscribe((item) => {
-      console.log('🚀 ~ item:', item);
       this.item = item;
     });
   }

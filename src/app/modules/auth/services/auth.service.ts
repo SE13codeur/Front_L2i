@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Login, Logout } from '@auth/store/auth.action';
 import { AuthState } from '@auth/store/auth.state';
-import { environmentDev as environment } from '@env/environment.dev';
+import { environmentPreProd as environment } from '@env/environment.pre-prod';
 import { IUser } from '@models/index';
 import { Store } from '@ngxs/store';
 import { InitUser } from '@store/user';

@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { AuthService } from '@auth-s/index';
 import { IItem, IUser } from '@models/index';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import {
@@ -10,6 +9,7 @@ import {
 } from './user.action';
 import { take, tap } from 'rxjs';
 import { UserStoreService } from '@services/index';
+import { AuthService } from '@auth-s/index';
 
 export interface UserStateModel {
   user: IUser | undefined;
@@ -25,11 +25,11 @@ export interface UserStateModel {
 })
 @Injectable()
 export class UserState {
-  constructor(private userStoreService: UserStoreService) {}
+  constructor(private authService: AuthService) {}
 
   @Action(InitUser)
   initUser(ctx: StateContext<UserStateModel>) {
-    this.userStoreService.user$
+    this.authService.user$
       .pipe(
         tap((user) => {
           if (user) {

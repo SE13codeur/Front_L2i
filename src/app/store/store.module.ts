@@ -5,7 +5,7 @@ import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { NgxsModule } from '@ngxs/store';
 import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 
-import { environmentDev as env } from '@env/environment.dev';
+import { environmentPreProd as env } from '@env/environment.pre-prod';
 import { AppState } from './app.state';
 import { CartState } from './cart';
 import { OrderState } from './order';

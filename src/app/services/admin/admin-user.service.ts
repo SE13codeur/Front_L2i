@@ -2,7 +2,7 @@ import { IUser } from '@models/index';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { AdminAuthService } from './admin-auth.service';
-import { environmentDev } from '@env/environment.dev';
+import { environmentPreProd } from '@env/environment.pre-prod';
 import { HttpClient } from '@angular/common/http';
 import { switchMap } from 'rxjs/operators';
 
@@ -10,7 +10,7 @@ import { switchMap } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class AdminUserService {
-  private adminUsersUrl = `${environmentDev.apiUrl}/admin/users`;
+  private adminUsersUrl = `${environmentPreProd.apiUrl}/admin/users`;
 
   constructor(
     private http: HttpClient,

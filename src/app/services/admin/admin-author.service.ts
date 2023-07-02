@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { IAuthor } from '@models/index';
-import { environmentDev } from '@env/environment.dev';
+import { environmentPreProd } from '@env/environment.pre-prod';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AdminAuthorService {
-  private adminAuthorsUrl = `${environmentDev.apiUrl}/admin/authors`;
+  private adminAuthorsUrl = `${environmentPreProd.apiUrl}/admin/authors`;
 
   constructor(private http: HttpClient) {}
 

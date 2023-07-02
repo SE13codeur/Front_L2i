@@ -28,7 +28,7 @@ yarn-error.log
 !.vscode/extensions.json
 
 # Angular
-/src/environments/environment.dev.ts
+/src/environments/environment.pre-prod.ts
 /src/environments/environment.pre-prod.ts
 
 # Miscellaneous

@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Location } from '@angular/common';
-import { AuthService } from '@auth-s/index';
-import { Router } from '@angular/router';
-import { IUser } from '@models/index';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { AccountUserDrawerService } from '@services/index';
+import { Router } from '@angular/router';
+import { AuthService } from '@auth-s/index';
 import { NavigationHistoryService } from '@libs/navigation-history.service';
+import { IUser } from '@models/index';
+import { AccountUserDrawerService } from '@services/index';
 
 @Component({
   selector: 'app-login',

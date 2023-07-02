@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environmentDev as environment } from '@env/environment.dev';
+import { environmentPreProd as environment } from '@env/environment.pre-prod';
 import { IItem } from '@models/index';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';

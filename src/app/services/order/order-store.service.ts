@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environmentDev as environment } from '@env/environment.dev';
+import { environmentPreProd as environment } from '@env/environment.pre-prod';
 import { IOrder, OrderStatus } from '@models/index';
 import { Store } from '@ngxs/store';
 import { OrderState, UpdateOrderStatus } from '@store/index';

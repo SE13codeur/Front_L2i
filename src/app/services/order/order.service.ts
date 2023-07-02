@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environmentDev as environment } from '@env/environment.dev';
+import { environmentPreProd as environment } from '@env/environment.pre-prod';
 import { ICart, IOrder, IOrderLineDTO } from '@models/index';
 import { Observable } from 'rxjs';
 
