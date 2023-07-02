@@ -155,6 +155,7 @@ td {
   align-items: center;
   justify-content: center;
   text-decoration: none;
+  cursor: pointer;
 }
 
 .download-invoice-button:focus {
@@ -178,8 +179,8 @@ td {
 
 @media (max-width: 777px) {
   .container {
-    top: 11.1rem;
-    height: calc(100% - 11.1rem);
+    top: 14rem;
+    height: calc(100% - 14rem);
     margin-bottom: 100vh !important;
   }
 

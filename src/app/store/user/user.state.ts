@@ -8,7 +8,8 @@ import {
   RemoveFromFavoriteItems,
   SetUser,
 } from './user.action';
-import { take } from 'rxjs';
+import { take, tap } from 'rxjs';
+import { UserStoreService } from '@services/index';
 
 export interface UserStateModel {
   user: IUser | undefined;
@@ -24,18 +25,23 @@ export interface UserStateModel {
 })
 @Injectable()
 export class UserState {
-  constructor(private authService: AuthService) {}
+  constructor(private userStoreService: UserStoreService) {}
 
   @Action(InitUser)
   initUser(ctx: StateContext<UserStateModel>) {
-    this.authService.user$.pipe(take(1)).subscribe((user) => {
-      if (user) {
-        ctx.setState({
-          ...ctx.getState(),
-          user,
-        });
-      }
-    });
+    this.userStoreService.user$
+      .pipe(
+        tap((user) => {
+          if (user) {
+            ctx.setState({
+              ...ctx.getState(),
+              user,
+            });
+          }
+        }),
+        take(1)
+      )
+      .subscribe();
   }
 
   @Action(SetUser)
@@ -48,6 +54,11 @@ export class UserState {
   @Selector()
   static getUser(state: UserStateModel): IUser | undefined {
     return state.user;
+  }
+
+  @Selector()
+  static getUsername(state: UserStateModel): string | undefined | null {
+    return state.user?.username;
   }
 
   @Selector()

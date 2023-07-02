@@ -28,7 +28,7 @@ export class CartComponent {
   user$!: Observable<IUser>;
 
   isAuthenticated$: Observable<boolean> | undefined;
-  username$: Observable<string | null> | undefined;
+  username$: Observable<string | null | undefined>;
 
   constructor(
     private dialog: MatDialog,
@@ -36,13 +36,12 @@ export class CartComponent {
     private cartService: CartService,
     private cartDrawerService: CartDrawerService,
     private checkAuthService: CheckAuthService,
-    private authService: AuthService,
     private userStoreService: UserStoreService
   ) {
     this.cartItems$ = this.cartService.getCartItems();
     this.totalItems$ = this.cartService.getTotalItems();
     this.totalTTC$ = this.cartService.getTotalTTC();
-    this.username$ = this.authService.getUsername();
+    this.username$ = this.userStoreService.getUsername();
     this.isAuthenticated$ = this.checkAuthService.isAuthenticated$;
   }
 

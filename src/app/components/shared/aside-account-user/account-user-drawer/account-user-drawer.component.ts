@@ -2,7 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService, CheckAuthService } from '@auth-s/index';
 import { IUser } from '@models/index';
-import { AccountUserDrawerService, AdminAuthService } from '@services/index';
+import {
+  AccountUserDrawerService,
+  AdminAuthService,
+  UserStoreService,
+} from '@services/index';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -12,7 +16,7 @@ import { Observable } from 'rxjs';
 })
 export class AccountUserDrawerComponent implements OnInit {
   user: IUser | null = null;
-  username$: Observable<string | null> | undefined;
+  username$: Observable<string | null | undefined>;
   isAuthenticated$: Observable<boolean> | undefined;
   isAdmin = false;
 
@@ -21,9 +25,10 @@ export class AccountUserDrawerComponent implements OnInit {
     private accountUserDrawerService: AccountUserDrawerService,
     private authService: AuthService,
     private checkAuthService: CheckAuthService,
-    private adminAuthService: AdminAuthService
+    private adminAuthService: AdminAuthService,
+    private userStoreService: UserStoreService
   ) {
-    this.username$ = this.authService.getUsername();
+    this.username$ = this.userStoreService.getUsername();
     this.isAuthenticated$ = this.checkAuthService.isAuthenticated$;
   }
 

@@ -1,3 +1,4 @@
+import { UserService } from './user.service';
 import { Injectable } from '@angular/core';
 import { CheckAuthService } from '@auth-s/index';
 import { IItem, IUser } from '@models/index';
@@ -17,15 +18,21 @@ export class UserStoreService {
 
   constructor(
     private store: Store,
-    private checkAuthService: CheckAuthService
+    private checkAuthService: CheckAuthService,
+    private userService: UserService
   ) {}
 
   getUser(): Observable<IUser> {
     return this.store.select((state) => state.user);
   }
 
+  getUsername(): Observable<string | undefined | null> {
+    return this.store.select(UserState.getUsername);
+  }
+
   setUser(user: IUser) {
     this.store.dispatch(new SetUser(user));
+    this.userService.updateUser(user);
   }
 
   addToFavorites(item: IItem): Observable<void> {
