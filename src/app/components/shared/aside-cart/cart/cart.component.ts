@@ -1,8 +1,8 @@
 import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { CheckAuthService } from '@auth-s/check-auth.service';
-import { AuthService } from '@auth-s/index';
 import { ICartItem } from '@models/cart';
 import { IUser } from '@models/index';
 import {
@@ -33,6 +33,7 @@ export class CartComponent {
   constructor(
     private dialog: MatDialog,
     private router: Router,
+    private snackBar: MatSnackBar,
     private cartService: CartService,
     private cartDrawerService: CartDrawerService,
     private checkAuthService: CheckAuthService,
@@ -93,23 +94,36 @@ export class CartComponent {
       return;
     }
     if (isAuthenticated) {
-      this.cartItems$?.subscribe((cartItems) => {
-        for (let cartItem of cartItems) {
-          if (cartItem.quantity > cartItem.quantityInStock) {
-            if (this.errorDialog) {
-              const dialogRef = this.dialog.open(this.errorDialog, {
-                data: {
-                  message: `La quantité commandée pour ${cartItem.title} est supérieure à celle en stock.`,
-                },
-              });
-              setTimeout(() => {
-                dialogRef.close();
-              }, 4004);
+      this.totalTTC$.subscribe((totalTTC) => {
+        if (totalTTC === 0) {
+          this.snackBar.open(
+            'Veuillez commander au moins un article payant !',
+            'Fermer',
+            {
+              duration: 4004,
             }
-            return;
-          }
+          );
+          this.router.navigate(['/items/books']);
+          return;
         }
-        this.router.navigate(['/items/orders']);
+        this.cartItems$?.subscribe((cartItems) => {
+          for (let cartItem of cartItems) {
+            if (cartItem.quantity > cartItem.quantityInStock) {
+              if (this.errorDialog) {
+                const dialogRef = this.dialog.open(this.errorDialog, {
+                  data: {
+                    message: `La quantité commandée pour ${cartItem.title} est supérieure à celle en stock.`,
+                  },
+                });
+                setTimeout(() => {
+                  dialogRef.close();
+                }, 4004);
+              }
+              return;
+            }
+          }
+          this.router.navigate(['/items/orders']);
+        });
       });
     }
   }
