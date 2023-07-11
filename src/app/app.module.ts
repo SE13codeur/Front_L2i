@@ -1,34 +1,47 @@
 import { registerLocaleData } from '@angular/common';
 import * as fr from '@angular/common/locales/fr';
 import { LOCALE_ID, NgModule } from '@angular/core';
-import { MatTableModule } from '@angular/material/table';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import {
+  AccountUserButtonComponent,
+  AccountUserDrawerComponent,
   AdminItemComponent,
   AsideComponent,
   CartComponent,
   CartItemQuantityComponent,
   DetailItemComponent,
+  EventBannerComponent,
   FiltersItemComponent,
+  FooterComponent,
   HeaderComponent,
   ListItemWithoutMeilisearchComponent,
   NavComponent,
+  OrderComponent,
+  OrderListComponent,
   SearchItemComponent,
   SectionComponent,
 } from '@components/index';
 import {
   DetailItemPageComponent,
+  FavoritesUserPageComponent,
   HomePageComponent,
   ItemPageComponent,
   NotFoundPageComponent,
+  OrderUserPageComponent,
   PaymentPageComponent,
-  SignPageComponent,
+  PromosPageComponent,
+  ReleaseLatestPageComponent,
 } from '@pages/index';
-import { AuthService, CartService, PaginatorFrService } from '@services/index';
+import {
+  AdminAuthService,
+  CartService,
+  PaginatorFrService,
+} from '@services/index';
+
 import { CartState, NgxsStoreModule, OrderState } from './store';
 
 import { HttpClientModule } from '@angular/common/http';
@@ -47,6 +60,9 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatTableModule } from '@angular/material/table';
 
 import {
   MatPaginatorIntl,
@@ -57,23 +73,30 @@ import { NgxSliderModule } from '@angular-slider/ngx-slider';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AuthState } from '@auth/index';
 import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 import { NgxsModule } from '@ngxs/store';
-import {} from '@store/order';
+import { UserState } from '@store/user/user.state';
+import { AdminOrderComponent } from './components/admin/admin-order/admin-order.component';
+import { ProfileUserPageComponent } from './pages/user-account/profile-user-page/profile-user-page.component';
+import { OrderStatusPipe } from '@libs/index';
+import { AddressComponent } from './components/shared/address/address.component';
+import { AdminUserComponent } from './components/admin/admin-user/admin-user.component';
+import { AdminUserPageComponent } from './pages/user-account/admin-user-page/admin-user-page.component';
+import { FavoriteButtonComponent } from './components/shared/favorite/item/favorite-button/favorite-button.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     HomePageComponent,
-    SignPageComponent,
     NavComponent,
     SectionComponent,
     DetailItemComponent,
     NotFoundPageComponent,
     ItemPageComponent,
-    CartComponent,
     AsideComponent,
+    CartComponent,
     SearchItemComponent,
     FiltersItemComponent,
     AdminItemComponent,
@@ -81,12 +104,31 @@ import {} from '@store/order';
     CartItemQuantityComponent,
     DetailItemPageComponent,
     PaymentPageComponent,
+    OrderComponent,
+    AccountUserButtonComponent,
+    ReleaseLatestPageComponent,
+    PromosPageComponent,
+    AccountUserDrawerComponent,
+    OrderUserPageComponent,
+    OrderListComponent,
+    FavoritesUserPageComponent,
+    ProfileUserPageComponent,
+    AdminOrderComponent,
+    OrderStatusPipe,
+    EventBannerComponent,
+    FooterComponent,
+    AddressComponent,
+    AdminUserComponent,
+    AdminUserPageComponent,
+    FavoriteButtonComponent,
   ],
   imports: [
     BrowserModule,
     NgxsStoreModule,
-    NgxsModule.forRoot([CartState, OrderState]),
-    NgxsStoragePluginModule.forRoot({ key: ['cart', 'orders'] }),
+    NgxsModule.forRoot([CartState, OrderState, AuthState, UserState]),
+    NgxsStoragePluginModule.forRoot({
+      key: ['cart', 'orders', 'orderStatuses', 'auth', 'user'],
+    }),
     MatTableModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -111,15 +153,23 @@ import {} from '@store/order';
     MatSelectModule,
     FormsModule,
     MatDialogModule,
+    MatMenuModule,
+    MatGridListModule,
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'fr-FR' },
     CartService,
-    AuthService,
+    AdminAuthService,
     {
       provide: MatPaginatorIntl,
       useClass: PaginatorFrService,
     },
+    // AuthGuard,
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: TokenInterceptor,
+    //   multi: true,
+    // },
   ],
   bootstrap: [AppComponent],
 })

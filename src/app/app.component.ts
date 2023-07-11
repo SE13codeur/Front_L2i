@@ -1,10 +1,14 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { filter, takeUntil } from 'rxjs/operators';
-import { CartDrawerService, SearchFocusService } from '@services/index';
-import { Observable, Subject } from 'rxjs';
-import { Select, Store } from '@ngxs/store';
+import { Select } from '@ngxs/store';
+import {
+  AccountUserDrawerService,
+  CartDrawerService,
+  SearchFocusService,
+} from '@services/index';
 import { CartState } from '@store/index';
+import { Observable, Subject } from 'rxjs';
+import { filter, takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +17,8 @@ import { CartState } from '@store/index';
 })
 export class AppComponent implements OnInit, OnDestroy {
   title = 'front_L2i';
-  isDrawerOpened$: Observable<boolean> | undefined;
+  isCartDrawerOpened$: Observable<boolean> | undefined;
+  isAccountUserDrawerOpened$: Observable<boolean> | undefined;
   @Select(CartState.getCartTotalItems) totalItems$:
     | Observable<number>
     | undefined;
@@ -24,11 +29,13 @@ export class AppComponent implements OnInit, OnDestroy {
     private router: Router,
     private searchFocusService: SearchFocusService,
     private cartDrawerService: CartDrawerService,
-    private store: Store
+    private accountUserDrawerService: AccountUserDrawerService
   ) {}
 
   ngOnInit(): void {
-    this.isDrawerOpened$ = this.cartDrawerService.isDrawerOpened$;
+    this.isCartDrawerOpened$ = this.cartDrawerService.isDrawerOpened$;
+    this.isAccountUserDrawerOpened$ =
+      this.accountUserDrawerService.isDrawerOpened$;
     this.router.events
       .pipe(
         filter((event) => event instanceof NavigationEnd),
@@ -47,12 +54,18 @@ export class AppComponent implements OnInit, OnDestroy {
       });
   }
 
-  toggleDrawer() {
-    this.cartDrawerService.toggleDrawer();
+  isAuthPage(): boolean {
+    return (
+      this.router.url === '/auth/login' || this.router.url === '/auth/register'
+    );
   }
 
-  closeDrawer() {
+  closeCartDrawer() {
     this.cartDrawerService.closeDrawer();
+  }
+
+  closeAccountUserDrawer() {
+    this.accountUserDrawerService.closeDrawer();
   }
 
   ngOnDestroy(): void {

@@ -1,27 +1,89 @@
-# FrontL2i
+# L2i E-Commerce Frontend
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.4.
+Welcome to the **FRONT_L2I** project! This project is a robust and scalable online book sales platform built using **Angular version 13.3.4**.
 
-## Development server
+## 📚 Table of Contents
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- [L2i E-Commerce Frontend](#l2i-e-commerce-frontend)
+  - [📚 Table of Contents](#-table-of-contents)
+  - [🎁 Features](#-features)
+  - [🚀 Getting Started](#-getting-started)
+  - [🛠 Development](#-development)
+    - [🏗 Serving the Application](#-serving-the-application)
+    - [🏭 Building the Application](#-building-the-application)
+    - [🧪 Running Tests](#-running-tests)
+      - [🧪 Unit Tests](#-unit-tests)
+      - [🔬 End-to-End Tests](#-end-to-end-tests)
+  - [👥 Contribution](#-contribution)
+  - [📖 Documentation](#-documentation)
+  - [⚖️ License](#️-license)
 
-## Code scaffolding
+## 🎁 Features
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+This project offers a variety of features, including:
 
-## Build
+1. A reactive and intuitive user interface.
+2. A resilient and scalable structure thanks to the microservices architecture.
+3. Integration with external services like AWS Lambda and Auth0, providing a secure user experience.
+4. Detailed diagrams for current and future implementations, giving a clear vision of the application's architecture.
+5. Unit and end-to-end testing, ensuring the quality and reliability of the application.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## 🚀 Getting Started
 
-## Running unit tests
+To get started with the project, follow these steps:
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+1. Clone the repository:
 
-## Running end-to-end tests
+   `git clone https://github.com/SEBattestis/Front_L2i`
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+2. Install the required dependencies:
 
-## Further help
+   `npm install`
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+3. Start the development server:
+
+   `npm start`
+
+After running these commands, navigate to `http://localhost:4200/` to view the application.
+
+## 🛠 Development
+
+### 🏗 Serving the Application
+
+Run `npm start` for a development server. The application will automatically reload if you change any source files.
+
+### 🏭 Building the Application
+
+Run `npm run build` to build the project. The build artifacts will be stored in the `dist/` directory.
+
+### 🧪 Running Tests
+
+#### 🧪 Unit Tests
+
+To execute the unit tests via [Karma](https://karma-runner.github.io), run:
+
+`npm test`
+
+#### 🔬 End-to-End Tests
+
+To execute the end-to-end tests, you need to first add a package that implements end-to-end testing capabilities, and then use `ng e2e` command.
+
+## 👥 Contribution
+
+To contribute to this project:
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/yourFeature`)
+3. Commit your changes (`git commit -m 'Add some feature'`)
+4. Push to the branch (`git push origin feature/yourFeature`)
+5. Open a Pull Request
+
+## 📖 Documentation
+
+To get more help on the Angular CLI, use `ng help` or check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+## ⚖️ License
+
+This project is licensed under the MIT License. See `LICENSE` for more details.
+
+We hope this README will serve as a comprehensive guide for those interested in this project, and we invite contributions and suggestions for improvements. Enjoy coding!

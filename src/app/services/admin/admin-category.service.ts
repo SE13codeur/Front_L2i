@@ -2,13 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ICategoryItem } from '@models/index';
-import { environmentDev } from '@env/environment.dev';
+import { environmentPreProd } from '@env/environment.pre-prod';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AdminCategoryService {
-  private adminCategoriesUrl = `${environmentDev.apiUrl}/admin/categories`;
+  private adminCategoriesUrl = `${environmentPreProd.apiUrl}/admin/categories`;
 
   constructor(private http: HttpClient) {}
 

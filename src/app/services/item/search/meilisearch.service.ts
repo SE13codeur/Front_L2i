@@ -2,7 +2,7 @@
 // import { Injectable } from '@angular/core';
 // import { BehaviorSubject, Observable, of } from 'rxjs';
 // import { map, tap } from 'rxjs/operators';
-// import { environmentDev as environment } from '@env/environment.dev';
+// import { environmentPreProd as environment } from '@env/environment.pre-prod';
 
 // import IMeilisearchItem from '@m/IItem';
 

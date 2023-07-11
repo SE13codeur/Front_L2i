@@ -1,0 +1,114 @@
+.address-container {
+  position:relative;
+  height: 100vh !important;
+  top: 4.4rem;
+  height: calc(100% - 4.4rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to right, #e0eafc, #cfdef3);
+}
+
+.address-card {
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 0.89rem;
+  border-radius: 0.77rem;
+  box-shadow: 0 0.33rem 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 33.3rem;
+  height: auto;
+  max-width: 1001px;
+}
+
+h2 {
+  color: #0BB9F0;
+}
+
+.input-field {
+  margin: 0.89rem 0;
+  flex: 1;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 55%;
+}
+
+.address-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.11rem;
+}
+
+.input-error {
+  width: 100%;
+  text-align: center;
+  color: #e2004b;
+}
+
+
+.input-field input {
+  width: 100%;
+  padding: 0.89rem;
+  border: 1px solid #ccc;
+  border-radius: 0.77rem;
+}
+
+.button-row {
+  margin: 1.11rem !important;
+}
+
+.button-row button {
+  margin: 0 0.55rem;
+}
+
+.goBack-button {
+  color: white;
+  background-color: #FF4080;
+}
+
+.goBack-button:hover {
+  color: white;
+  background-color: #e2004b;
+}
+
+.validate-button {
+  color: white;
+  background-color: #0BB9F0;
+}
+
+.validate-button:hover {
+  color: white;
+  background-color: #2196F3;
+}
+
+.reset-address-form {
+  color: white;
+  background-color: #e2004b;
+}
+
+.reset-address-form:hover {
+  color: white;
+  background-color: red;
+}
+
+@media screen and (max-width: 777px) {
+  .address-grid {
+    flex-direction: column;
+  }
+
+  .input-field {
+    margin: 0.44rem 0;
+    width: 70%;
+  }
+}
+
+@media screen and (max-width: 202px) {
+  .input-field {
+    width: 89%;
+  }
+}

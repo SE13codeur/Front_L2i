@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { ISlide } from '@models/index';
 
 interface BookMockModel {
   title: string;
@@ -15,6 +16,8 @@ interface BookMockModel {
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent {
+  @Input() slides: ISlide[] = [];
+
   currentSlide = 0;
   books: BookMockModel[] = [
     {
@@ -43,23 +46,60 @@ export class HeaderComponent {
     },
   ];
 
-  nextSlide() {
-    this.currentSlide = (this.currentSlide + 1) % this.books.length;
-    this.updateSlide();
+  private _currentIndex = 0;
+  timeoutId?: number;
+  backgroundImageUrl: string = this.books[0].image;
+
+  ngOnInit(): void {
+    this.resetTimer();
   }
 
-  prevSlide() {
-    this.currentSlide =
-      (this.currentSlide - 1 + this.books.length) % this.books.length;
-    this.updateSlide();
+  ngOnDestroy(): void {
+    window.clearTimeout(this.timeoutId);
   }
 
-  updateSlide() {
-    const radioButton = document.getElementById(
-      'carousel-' + (this.currentSlide + 1)
-    ) as HTMLInputElement;
-    if (radioButton) {
-      radioButton.checked = true;
+  get currentIndex(): number {
+    return this._currentIndex;
+  }
+
+  set currentIndex(index: number) {
+    this._currentIndex = index;
+    this.backgroundImageUrl = `url('${this.books[this._currentIndex].image}')`;
+  }
+
+  getCurrentSlideUrl(): string {
+    const imageUrl = `url('${this.books[this.currentIndex].image}')`;
+    this.backgroundImageUrl = imageUrl;
+    return imageUrl;
+  }
+
+  resetTimer(): void {
+    if (this.timeoutId) {
+      window.clearTimeout(this.timeoutId);
     }
+    this.timeoutId = window.setTimeout(() => this.goToNext(), 7007);
+  }
+
+  goToPrevious(): void {
+    const isFirstSlide = this.currentIndex === 0;
+    const newIndex = isFirstSlide
+      ? this.books.length - 1
+      : this.currentIndex - 1;
+
+    this.resetTimer();
+    this.currentIndex = newIndex;
+  }
+
+  goToNext(): void {
+    const isLastSlide = this.currentIndex === this.books.length - 1;
+    const newIndex = isLastSlide ? 0 : this.currentIndex + 1;
+
+    this.resetTimer();
+    this.currentIndex = newIndex;
+  }
+
+  goToSlide(slideIndex: number): void {
+    this.resetTimer();
+    this.currentIndex = slideIndex;
   }
 }

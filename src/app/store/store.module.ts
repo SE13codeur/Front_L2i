@@ -5,7 +5,7 @@ import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { NgxsModule } from '@ngxs/store';
 import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 
-import { environmentDev as env } from '@env/environment.dev';
+import { environmentProd as env } from '@env/environment.prod';
 import { AppState } from './app.state';
 import { CartState } from './cart';
 import { OrderState } from './order';
@@ -21,7 +21,9 @@ import { OrderState } from './order';
       collapsed: false,
     }),
     NgxsReduxDevtoolsPluginModule.forRoot(),
-    NgxsStoragePluginModule.forRoot({ key: ['cart', 'orders'] }),
+    NgxsStoragePluginModule.forRoot({
+      key: ['cart', 'orders', 'orderStatuses', 'auth', 'user'],
+    }),
   ],
 })
 export class NgxsStoreModule {}

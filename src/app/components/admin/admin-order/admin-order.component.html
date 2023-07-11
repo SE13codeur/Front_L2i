@@ -1,0 +1,137 @@
+<div class="container">
+  <div class="status-selector">
+    <select
+      class="select-status"
+      #statusSelectRefFilter
+      (change)="filterOrdersByStatus(statusSelectRefFilter.value)"
+    >
+      <option value="all">Toutes les commandes</option>
+      <option value="En attente de confirmation">
+        En attente de confirmation
+      </option>
+      <option value="Confirmé">Confirmé</option>
+      <option value="En cours de livraison">En cours de livraison</option>
+      <option value="Livré">Livré</option>
+    </select>
+
+    <ng-container *ngIf="filteredOrderList$ | async as orders">
+      <table class="order-list">
+        <thead>
+          <tr>
+            <th>N° de commande</th>
+            <th>Date</th>
+            <th>Total TTC</th>
+            <th>Statut</th>
+            <th style="text-align: left" colspan="2">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let order of orders">
+            <tr
+              *ngIf="order.totalPriceHT > 0 || order.totalPriceTTC > 0"
+              (click)="toggleOrderDetails(order)"
+              [ngClass]="{ 'order-item-expanded': isOrderExpanded(order) }"
+            >
+              <td>{{ order.orderNumber }}</td>
+              <td>{{ order.date | date : "dd/MM/yyyy" }}</td>
+              <td>{{ order.totalPriceTTC | number : "1.2-2" }} €</td>
+              <td>
+                <select
+                  #statusSelectRefAdmin
+                  class="select-status-button"
+                  (change)="
+                    updateOrderStatus(order.id, statusSelectRefAdmin.value)
+                  "
+                  *ngIf="isAdmin"
+                >
+                  <option
+                    [selected]="order.status === 'PENDING'"
+                    value="PENDING"
+                  >
+                    En attente de confirmation
+                  </option>
+                  <option
+                    [selected]="order.status === 'CONFIRMED'"
+                    value="CONFIRMED"
+                  >
+                    Confirmé
+                  </option>
+                  <option
+                    [selected]="order.status === 'SHIPPING'"
+                    value="SHIPPING"
+                  >
+                    En cours de livraison
+                  </option>
+                  <option
+                    [selected]="order.status === 'DELIVERED'"
+                    value="DELIVERED"
+                  >
+                    Livré
+                  </option>
+                </select>
+              </td>
+              <td class="td-details" (click)="getOrderlinesByOrderId(order.id)">
+                <mat-icon>visibility</mat-icon>
+                <span class="detail-text">Détails</span>
+              </td>
+              <td>
+                <button
+                  class="download-invoice-button"
+                  (click)="downloadInvoice(order, $event)"
+                >
+                  <span
+                    style="
+                      display: flex;
+                      flex-direction: row;
+                      align-items: center;
+                      justify-content: center;
+                    "
+                  >
+                    <mat-icon>download</mat-icon>
+                    <span class="download-text">Télécharger la facture</span>
+                  </span>
+                </button>
+              </td>
+            </tr>
+            <tr *ngIf="isOrderExpanded(order)">
+              <td colspan="5" class="order-details">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Article</th>
+                      <th>Prix Unitaire HT</th>
+                      <th>TVA</th>
+                      <th>Prix Unitaire TTC</th>
+                      <th>Quantité</th>
+                      <th>Sous-total TTC</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of currentOrderlinesDTODetails">
+                      <td>
+                        <img [src]="item.bookImageUrl" alt="Book image" />{{
+                          item.bookTitle
+                        }}
+                      </td>
+                      <td>{{ item.unitPriceHT | number : "1.2-2" }} €</td>
+                      <td>{{ item.tvaRate * 100 }} %</td>
+                      <td>{{ item.unitPriceTTC | number : "1.2-2" }} €</td>
+                      <td>{{ item.orderedQuantity }}</td>
+                      <td>
+                        {{
+                          item.unitPriceTTC * item.orderedQuantity
+                            | number : "1.2-2"
+                        }}
+                        €
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </ng-container>
+  </div>
+</div>

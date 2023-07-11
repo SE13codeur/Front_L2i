@@ -3,9 +3,14 @@ body {
 }
 
 .mat-card {
+  position:relative;
+  height: 100vh !important;
+  top: 7.7rem;
+  height: calc(100% - 7.7rem);
   max-width: 600px;
   margin: 0.44rem auto;
   text-align: center;
+  margin-bottom: 44vh !important;
 }
 
 .mat-card-actions.button-row {
@@ -13,9 +18,14 @@ body {
   padding: 0;
 }
 
+h2 {
+  color: #0BB9F0;
+  text-decoration: underline;
+  text-decoration-color: rgba(255, 64, 128, 0.44);;
+}
+
 .mat-form-field {
   width: 100%;
-  margin-top: 0.99rem;
 }
 
 .mat-raised-button {
@@ -47,4 +57,10 @@ form {
   display: flex;
   align-items: center;
   padding: 0.44em 0;
+}
+
+@media screen and (max-width: 888px) {
+  .mat-card {
+    top: 22rem;
+  }
 }

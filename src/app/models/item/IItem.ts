@@ -1,4 +1,4 @@
-import { IAuthor, IEditor } from '@models/index';
+import { IAuthor, IEditor, ITVAItem } from '@models/index';
 import { ICategoryItem } from './ICategory';
 
 export interface IItem {
@@ -19,5 +19,8 @@ export interface IItem {
   year: string;
   language?: string;
   version: number;
+  tva: ITVAItem;
   isNewCollection?: boolean;
+  onSale?: number;
+  isFavorite?: number;
 }

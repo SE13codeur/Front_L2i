@@ -1,0 +1,64 @@
+<div class="login-container">
+  <div class="login-card">
+    <h2>S'identifier</h2>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="input-field">
+        <input formControlName="username" type="text" placeholder="Pseudo" />
+        <div
+          *ngIf="username?.invalid && (username?.dirty || username?.touched)"
+          class="error"
+        >
+          <div *ngIf="username?.errors?.['required']">
+            Le pseudo est requis.
+          </div>
+        </div>
+      </div>
+      <div class="input-field">
+        <input
+          formControlName="email"
+          type="text"
+          placeholder="Email de l'utilisateur"
+        />
+        <div
+          *ngIf="email?.invalid && (username?.dirty || email?.touched)"
+          class="error"
+        >
+          <div *ngIf="email?.errors?.['required']">
+            L'adresse mail est requise.
+          </div>
+          <div class="input-error" *ngIf="email?.errors?.['email']">
+            L'adresse mail n'est pas valide.
+          </div>
+        </div>
+      </div>
+      <div class="input-field">
+        <input
+          formControlName="password"
+          type="password"
+          placeholder="Mot de passe"
+        />
+        <div
+          *ngIf="password?.invalid && (password?.dirty || password?.touched)"
+          class="error"
+        >
+          <div *ngIf="password?.errors?.['required']">
+            Mot de passe est requis.
+          </div>
+          <div *ngIf="password?.errors?.['minlength']">
+            Le mot de passe doit comporter au moins 8 caractères.
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" class="login-button" [disabled]="loginForm.invalid">
+        Identifiez-vous
+      </button>
+    </form>
+    <div class="options">
+      <button (click)="goBack()" class="back-button">Retour</button>
+      <a routerLink="/auth/register" class="register-link"
+        >Créer votre compte</a
+      >
+    </div>
+  </div>
+</div>

@@ -1,13 +1,38 @@
 <mat-sidenav-container>
-  <mat-sidenav mode="over" [opened]="isDrawerOpened$ | async" class="sidenav-cart">
-    <button mat-icon-button (click)="closeDrawer()">
+  <mat-sidenav
+    mode="over"
+    position="end"
+    [opened]="isCartDrawerOpened$ | async"
+    class="sidenav-cart"
+  >
+    <button mat-icon-button (click)="closeCartDrawer()">
       <mat-icon>close</mat-icon>
     </button>
     <app-cart></app-cart>
   </mat-sidenav>
 
+  <mat-sidenav
+    mode="over"
+    position="start"
+    [opened]="isAccountUserDrawerOpened$ | async"
+    class="sidenav-account-user"
+  >
+    <button mat-icon-button (click)="closeAccountUserDrawer()">
+      <mat-icon>close</mat-icon>
+    </button>
+    <app-account-user-drawer></app-account-user-drawer>
+  </mat-sidenav>
+
   <mat-sidenav-content>
     <app-nav></app-nav>
     <router-outlet></router-outlet>
+    <mat-accordion style="position: relative; z-index: -1">
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title><mat-icon>infos</mat-icon> </mat-panel-title>
+        </mat-expansion-panel-header>
+        <app-footer></app-footer>
+      </mat-expansion-panel>
+    </mat-accordion>
   </mat-sidenav-content>
 </mat-sidenav-container>

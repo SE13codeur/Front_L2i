@@ -12,8 +12,7 @@
   background-color: #ffffff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   flex-basis: calc(25% - 2rem);
-  height: 100%;
-  cursor: pointer;
+  height: 100vh !important;  cursor: pointer;
   margin: 0;
   margin-bottom: 1.11rem;
 }

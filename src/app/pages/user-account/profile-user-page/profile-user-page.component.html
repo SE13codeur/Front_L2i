@@ -1,0 +1,143 @@
+<div class="profile-container">
+  <div class="profile-card">
+    <h2 style="color: #0bb9f0">
+      {{ user?.username }}, bienvenue dans votre compte utilisateur !
+    </h2>
+    <!-- Account User Form -->
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+      <div class="account-info">
+        <div class="input-field">
+          <input formControlName="username" type="text" placeholder="Pseudo" />
+          <div *ngIf="username.errors && username.touched">
+            <div class="input-error" *ngIf="username.errors['required']">
+              Le pseudo est requis.
+            </div>
+          </div>
+        </div>
+
+        <div class="input-field">
+          <input
+            formControlName="email"
+            type="email"
+            placeholder="Adresse e-mail"
+          />
+          <div *ngIf="email.errors && email.touched">
+            <div class="input-error" *ngIf="email.errors['required']">
+              L'adresse e-mail est requise.
+            </div>
+            <div *ngIf="email.errors['email']">
+              L'adresse e-mail n'est pas valide.
+            </div>
+          </div>
+        </div>
+
+        <div class="input-field">
+          <input
+            formControlName="password"
+            type="password"
+            placeholder="Mot de passe"
+          />
+          <div *ngIf="password.errors && password.touched">
+            <div class="input-error" *ngIf="password.errors['required']">
+              Le mot de passe est requis.
+            </div>
+            <div class="input-error" *ngIf="password.errors['minlength']">
+              Le mot de passe doit comporter au moins 8 caractères.
+            </div>
+          </div>
+        </div>
+
+        <div class="input-field">
+          <input formControlName="firstname" type="text" placeholder="Prénom" />
+          <div *ngIf="firstname.errors && firstname.touched">
+            <div class="input-error" *ngIf="firstname.errors['required']">
+              Le prénom est requis.
+            </div>
+          </div>
+        </div>
+
+        <div class="input-field">
+          <input formControlName="lastname" type="text" placeholder="Nom" />
+          <div *ngIf="lastname.errors && lastname.touched">
+            <div class="input-error" *ngIf="lastname.errors['required']">
+              Le Nom est requis.
+            </div>
+          </div>
+        </div>
+
+        <div class="button-row">
+          <button mat-raised-button class="goBack-button" (click)="goBack()">
+            Retour
+          </button>
+          <button
+            mat-raised-button
+            type="submit"
+            class="validate-button"
+            [disabled]="userForm.invalid"
+          >
+            Valider
+          </button>
+          <button
+            mat-raised-button
+            class="reset-profil-form"
+            (click)="onReset()"
+          >
+            Réinitialiser
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <!-- Address -->
+  <span *ngIf="!isAdmin">
+    <span
+      style="
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+      "
+    >
+      <h3>Vos adresses enregistrées</h3>
+      <button class="add-address" (click)="goToAddressForm()">
+        <mat-icon>add</mat-icon>
+      </button>
+    </span>
+    <select
+      #addressSelectRef
+      (change)="displayAddressDetails(+addressSelectRef.value)"
+    >
+      <option [disabled]="true" [selected]="true">
+        Veuillez sélectioner une adresse
+      </option>
+      <option *ngFor="let address of addresses" [value]="address.id">
+        {{ address.title ?? address.city }}
+      </option>
+    </select>
+    <div *ngIf="selectedAddress" class="address-table">
+      <div class="address-table-row">
+        <div class="address-table-header">Titre</div>
+        <div class="address-table-header">Rue</div>
+        <div class="address-table-header">Ville</div>
+        <div class="address-table-header">Code postal</div>
+        <div class="mobile-mode address-table-header">Région</div>
+        <div class="address-table-header">Pays</div>
+      </div>
+      <div class="address-table-row">
+        <div class="address-table-cell">{{ selectedAddress.title }}</div>
+        <div class="address-table-cell">{{ selectedAddress.street }}</div>
+        <div class="address-table-cell">{{ selectedAddress.city }}</div>
+        <div class="address-table-cell">{{ selectedAddress.zipCode }}</div>
+        <div class="mobile-mode address-table-cell">
+          {{ selectedAddress.state }}
+        </div>
+        <div class="address-table-cell">{{ selectedAddress.country }}</div>
+      </div>
+    </div>
+
+    <h3 *ngIf="addresses.length < 1">
+      Veuillez ajouter une adresse à votre profil !
+    </h3>
+  </span>
+</div>

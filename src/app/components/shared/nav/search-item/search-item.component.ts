@@ -1,6 +1,7 @@
 import {
   Component,
   ElementRef,
+  Input,
   OnDestroy,
   OnInit,
   ViewChild,
@@ -20,6 +21,7 @@ import { ItemService, SearchFocusService } from '@services/index';
 export class SearchItemComponent implements OnDestroy, OnInit {
   searchInput = new FormControl('');
   @ViewChild('searchInputElement') searchInputElement!: ElementRef;
+  @Input() placeholder!: string;
 
   private readonly destroy$ = new Subject<void>();
 
@@ -59,7 +61,8 @@ export class SearchItemComponent implements OnDestroy, OnInit {
     this.itemService.updatedSearch(query).subscribe(() => {
       this.itemService.setSearchValue(query);
       this.router
-        .navigate(['/items'], { queryParams: { q: query } })
+        // .navigate(['/items'], { queryParams: { q: query } })
+        .navigate(['/items/books'])
         .then(() => {
           this.searchFocusService.triggerFocus();
         });

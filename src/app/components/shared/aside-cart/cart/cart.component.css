@@ -1,0 +1,149 @@
+
+h1 {
+  font-weight: bold;
+  text-decoration: underline;
+  font-size: larger;
+  margin-bottom: 1.11rem;
+  color: #333;
+}
+
+.cart-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+.cart-table th,
+.cart-table td {
+  padding: 1rem;
+  border-bottom: 1px solid #F5F5F5;
+}
+
+.product-image {
+  width: 77px;
+  height: 77px;
+  object-fit: cover;
+  margin-bottom: 1.11rem;
+}
+
+.image-icon-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.image-icon-container mat-icon {
+  margin-right: 3.33rem;
+  cursor: pointer;
+  padding: 1.11rem;
+  margin-bottom: 1.11rem;
+}
+
+.cart-order-button {
+  background-color: #0BB9F0;
+  color: whitesmoke;
+  border-radius: 7.7%;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-size: 1.11rem;
+  margin: 1.11rem;
+}
+
+.cart-order-button:hover {
+  background-color: #2196F3;
+}
+
+.cart-clear-button {
+  background-color: #FF4080;
+  color: whitesmoke;
+  border-radius: 7.7%;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-size: 1.11rem;
+  margin: 1.11rem;
+}
+
+.cart-clear-button:hover {
+  background-color: #e2004b;
+}
+
+.checkout-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-top: 1.11rem;
+  padding-top: 1.11rem;
+}
+
+.cart-container {
+  height: auto;
+  overflow: auto;
+}
+
+.login-link {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+
+@media screen and (max-width: 555px) {
+  .mobile-hide {
+    display: none;
+  }
+
+  .desktop {
+    display: none;
+  }
+
+  button.mobile {
+    display: inline-block;
+    color: black;
+    background-color: #FF4080;
+  }
+
+  .mobile:hover {
+    display: inline-block;
+    background-color: #e2004b;
+  }
+}
+
+@media screen and (min-width: 556px) {
+  .mobile {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 333px) {
+  .mobile-hide {
+    display: none;
+  }
+}
+
+.dialog-text {
+  font-size: 2.02rem;
+  padding-left: 0.111rem;
+  display: inline-block;
+  animation: scalePulse 1.11s ease-in-out infinite;
+}
+
+.dialog-content {
+  font-size: large;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  width: auto;
+  height: auto;
+  padding: 3.33rem;
+  border-radius: 77%;
+  background-color: rgba(33, 150, 243, 0.11);
+  animation:  scaleAndFadeOut 4.004s ease-in-out forwards;
+}
+
+.dialog-content, .dialog-text {
+  animation:  scaleAndFadeOut 4.004s ease-in-out forwards;
+}

@@ -1,16 +1,18 @@
 .container {
-  max-width: 75rem;
-  margin: 0 auto;
-  padding: 1.11rem;
-  padding-top: 9.99rem;
-  padding-left: 7.07%;
+  position: relative;
+  height: 100vh !important;
+  max-width: 77rem;
+  margin: 0;
   padding-right: 7.07%;
-  align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-end;
 }
 
 .detail-container {
   display: flex;
-  gap: 1.5rem;
+  gap: 1.11rem;
 }
 
 .image-wrapper {
@@ -32,7 +34,11 @@
 }
 
 .adminActions {
-  padding-top: 3.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3.3rem;
+  gap: 1.11rem;
 }
 
 .new-banner {
@@ -88,11 +94,77 @@ button {
 
 .reviews-title {
   margin-top: 3.3rem;
+  cursor: pointer;
 }
 
-@media (max-width: 770px) {
-  .container  {
-    margin-top: 17rem;
+
+@media (max-width: 555px) {
+  .container {
+    top: 0;
+    margin-top: 33rem;
+    padding: 0;
+    flex-direction: column;
+  }
+
+  .detail-container {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .detail-image {
+    max-width: 44%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .detail-info {
+    max-width: 100%;
   }
 }
 
+/* Update for small screens */
+@media (max-width: 404px) {
+  .container {
+    top: 0;
+    padding: 0;
+    flex-direction: column;
+  }
+
+  .detail-container {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .detail-image {
+    max-width: 44%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .detail-info {
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .detail-info h1,
+  .detail-info h2 {
+    font-size: 1.11rem;
+  }
+
+  .detail-info p {
+    font-size: 0.77rem;
+  }
+
+  .adminActions {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  button {
+    margin-top: 0.5rem;
+  }
+}

@@ -1,0 +1,84 @@
+.container {
+  position: relative;
+  top: 7.7rem;
+  height: calc(100% - 7.7rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h1 {
+  font-family: 'Arial', sans-serif;
+  font-size: 2.5em;
+  color: #0BB9F0;
+  margin: 0.5em 0;
+  text-align: center;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+h1:hover {
+  color: #FF4080;
+  cursor: pointer;
+}
+
+
+.drawer-item {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  width: 200px;
+  color: #333;
+  border-radius: 7.7%;
+  margin: 1.11rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.drawer-item:hover {
+  background-color: #f0f0f0;
+}
+
+.drawer-item mat-icon {
+  margin-right: 1.11rem;
+  color: #0BB9F0;
+  filter: drop-shadow(3px 3px 3px rgba(255, 64, 127, 0.44));
+}
+
+.drawer-item mat-icon:hover {
+  color: #FF4080;
+  filter: drop-shadow(3px 3px 3px rgba(32, 150, 243, 0.44));
+}
+
+.logout-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #FF4080;
+  color: white;
+  border: none;
+  border-radius: 7.7%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 4.4rem;
+  margin-right: 1.1%;
+  padding: 1.11rem;
+  gap: 1.11rem;
+}
+
+.logout-button:hover {
+  background-color: #e2004b;
+}
+
+@media screen and (max-width: 888px) {
+  .drawer-item {
+    justify-content: center;
+  }
+
+  .drawer-item-text{
+    display: none;
+  }
+
+  h1 {
+    display: none;
+  }
+}

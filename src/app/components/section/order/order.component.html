@@ -1,0 +1,176 @@
+<div class="container">
+  <h2>Récapitulatif de la commande</h2>
+  <span class="address-card">
+    <button class="add-address" (click)="goToAddressForm()">
+      <mat-icon>add</mat-icon>
+    </button>
+    <h3>Adresses</h3>
+  </span>
+  <div class="address-card">
+    <div class="selection-address">
+      <select
+        #billingAddressSelectRef
+        (change)="displayBillingAddressDetails(+billingAddressSelectRef.value)"
+      >
+        <option [disabled]="true" [selected]="true">
+          Veuillez sélectioner une adresse de facturation
+        </option>
+        <option *ngFor="let address of addresses" [value]="address.id">
+          {{ address.title ?? address.city }}
+        </option>
+      </select>
+      <div *ngIf="selectedBillingAddress" class="address-table">
+        <div class="address-table-row">
+          <div class="address-table-header">Titre</div>
+          <div class="address-table-header">Rue</div>
+          <div class="address-table-header">Ville</div>
+          <div class="address-table-header">Code postal</div>
+          <div class="mobile-mode address-table-header">Région</div>
+          <div class="address-table-header">Pays</div>
+        </div>
+        <div class="address-table-row">
+          <div class="address-table-cell">
+            {{ selectedBillingAddress.title }}
+          </div>
+          <div class="address-table-cell">
+            {{ selectedBillingAddress.street }}
+          </div>
+          <div class="address-table-cell">
+            {{ selectedBillingAddress.city }}
+          </div>
+          <div class="address-table-cell">
+            {{ selectedBillingAddress.zipCode }}
+          </div>
+          <div class="mobile-mode address-table-cell">
+            {{ selectedBillingAddress.state }}
+          </div>
+          <div class="address-table-cell">
+            {{ selectedBillingAddress.country }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="selection-address">
+      <select
+        #shippingAddressSelectRef
+        (change)="
+          displayShippingAddressDetails(+shippingAddressSelectRef.value)
+        "
+      >
+        <option [disabled]="true" [selected]="true">
+          Veuillez sélectioner une adresse de livraison
+        </option>
+        <option *ngFor="let address of addresses" [value]="address.id">
+          {{ address.title ?? address.city }}
+        </option>
+      </select>
+      <div *ngIf="selectedShippingAddress" class="address-table">
+        <div class="address-table-row">
+          <div class="address-table-header">Titre</div>
+          <div class="address-table-header">Rue</div>
+          <div class="address-table-header">Ville</div>
+          <div class="address-table-header">Code postal</div>
+          <div class="mobile-mode address-table-header">Région</div>
+          <div class="address-table-header">Pays</div>
+        </div>
+        <div class="address-table-row">
+          <div class="address-table-cell">
+            {{ selectedShippingAddress.title }}
+          </div>
+          <div class="address-table-cell">
+            {{ selectedShippingAddress.street }}
+          </div>
+          <div class="address-table-cell">
+            {{ selectedShippingAddress.city }}
+          </div>
+          <div class="address-table-cell">
+            {{ selectedShippingAddress.zipCode }}
+          </div>
+          <div class="mobile-mode address-table-cell">
+            {{ selectedShippingAddress.state }}
+          </div>
+          <div class="address-table-cell">
+            {{ selectedShippingAddress.country }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h3 style="color: #ff4080; margin-top: 3.33rem" *ngIf="addresses.length < 1">
+    Veuillez ajouter une adresse à votre profil !
+  </h3>
+
+  <div class="order-table">
+    <div class="order-table-row">
+      <div class="order-table-header hide-on-mobile">ARTICLE</div>
+      <div class="order-table-header show-on-mobile"></div>
+      <div class="order-table-header">
+        <span class="hide-on-mobile">PRIX UNITAIRE HT</span>
+        <span class="show-on-mobile">HT</span>
+      </div>
+      <div class="order-table-header">TVA</div>
+      <div class="order-table-header">
+        <span class="hide-on-mobile">PRIX UNITAIRE TTC</span>
+        <span class="show-on-mobile">TTC</span>
+      </div>
+      <div class="order-table-header">
+        <span class="hide-on-mobile">QUANTITÉ</span>
+        <span class="show-on-mobile">QTÉ</span>
+      </div>
+      <div class="order-table-header">
+        <span class="hide-on-mobile">SOUS-TOTAL TTC</span>
+        <span class="show-on-mobile">SOUS-TTC</span>
+      </div>
+    </div>
+
+    <div class="order-table-row" *ngFor="let item of cartItems$ | async">
+      <div class="order-table-cell">
+        <div class="image-icon-container">
+          <img
+            [src]="item.imageUrl"
+            alt="{{ item.title }}"
+            class="product-image"
+          />
+        </div>
+        <span>{{ item.title }}</span>
+      </div>
+      <div class="order-table-cell">
+        {{ item.regularPrice * (1 - item.tva.tvaRate) | number : "1.2-2" }} €
+      </div>
+      <div class="order-table-cell">{{ item.tva.tvaRate * 100 }} %</div>
+      <div class="order-table-cell">
+        {{ item.regularPrice | number : "1.2-2" }} €
+      </div>
+      <div class="order-table-cell">{{ item.quantity }}</div>
+      <div class="order-table-cell">
+        {{ item.regularPrice * item.quantity | number : "1.2-2" }} €
+      </div>
+    </div>
+
+    <div class="order-table-row">
+      <div class="order-table-cell" colspan="5">&nbsp;</div>
+      <div class="order-table-cell" style="text-align: center">
+        <span style="text-decoration: underline">Total TTC</span> :
+      </div>
+    </div>
+    <div class="order-table-row">
+      <div class="order-table-cell" colspan="5">&nbsp;</div>
+      <div class="order-table-cell" style="text-align: center">
+        <span style="font-weight: bolder">
+          {{ totalTTC$ | async | number : "1.2-2" }} €
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="checkout-section">
+    <button class="confirm-button" (click)="onConfirmOrder()">
+      Passer au paiement
+    </button>
+    <button class="modify-button" (click)="openCartDrawer()">
+      Modifier le panier
+    </button>
+  </div>
+</div>

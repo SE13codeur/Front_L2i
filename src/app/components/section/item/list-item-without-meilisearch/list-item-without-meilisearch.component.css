@@ -1,21 +1,26 @@
 .container {
-  margin: 1.11rem;
+  position: static;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-gap: 3.03rem;
+  margin-left: 3.33%;
+  margin-right: 3.33%;
+  margin-top: 3.33rem;
 }
-
 
 .custom-card {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  transition: box-shadow 0.3s, transform 0.3s;
-  border-radius: 9px;
+  align-items: center;
+  justify-content: space-around;
+  border-radius: 7.7%;
   overflow: scroll;
   background-color: #ffffff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  flex-basis: calc(25% - 2rem);
-  height: 100%;
+  transition: box-shadow 0.3s, transform 0.3s;
   cursor: pointer;
-  margin: 0;
+  height: 404px;
+  width: 240px;
   margin-bottom: 1.11rem;
 }
 
@@ -27,26 +32,23 @@
 
 .custom-card-actions {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
 }
 
-.card-icon-favorite {
-  color: #FF4080;
-}
-
 mat-card-image {
-  width: 100%;
+  align-items: center;
   height: auto;
   object-fit: cover;
+  width: 100%;
 }
 
 .item-description {
   cursor: pointer;
   color: #333;
-  font-size: 0.9rem;
+  font-size: 0.89rem;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-around;
   align-items: center;
 }
 
@@ -57,7 +59,7 @@ mat-card-image {
 }
 
 mat-icon {
-  font-size: 1.2rem;
+  font-size: 1.11rem;
   color: rgba(0, 0, 0, 0.4);
 }
 
@@ -71,12 +73,75 @@ mat-card-title {
   font-weight: bold;
 }
 
-.mat-paginator {
-  margin-top: 1.77rem;
-  margin-right: 1.11rem;
-  font-size: 1.11rem;
+.paginator-container {
+  display: flex;
+  flex-direction: row !important;
+  align-items: flex-end;
+  justify-content: flex-end;
 }
+
+.mat-paginator {
+  margin-left: auto;
+  border-radius: 7.7%;
+  margin-bottom: 11.1vh !important;
+}
+
+.mat-paginator .mat-paginator-navigation-previous,
+.mat-paginator .mat-paginator-navigation-next {
+  color: #333;
+}
+
+.mat-paginator .mat-paginator-range-label {
+  color: #666;
+}
+
+.mat-select-trigger {
+  font-size: 0.89rem;
+  color: #333;
+}
+
+::ng-deep .mat-select-panel {
+  font-size: 0.89rem;
+}
+
 
 ::ng-deep .mat-select-min-line {
   font-size: 1.11rem;
+}
+
+@media screen and (max-width: 1036px) {
+  .container {
+    margin-left: 7.7%;
+  }
+}
+
+@media screen and (max-width: 888px) {
+  .container {
+    margin-left: 4.4%;
+  }
+}
+
+@media screen and (max-width: 777px) {
+  .container {
+    margin-left: 17%;
+    margin-top: 7.77rem;
+  }
+}
+
+@media screen and (max-width: 606px) {
+  .container {
+    margin-left: 3.33%
+  }
+}
+
+@media screen and (max-width: 505px) {
+  .container {
+    margin-left: 0%
+  }
+}
+
+@media screen and (max-width: 468px) {
+  .container {
+    margin-left: 17%
+  }
 }

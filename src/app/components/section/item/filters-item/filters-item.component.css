@@ -1,11 +1,11 @@
 .sidenav-container {
-  height: 100%;
+  height: 100vh !important;
+
 }
 
 mat-sidenav {
-  width: 250px;
-  margin-top: 7.7rem;
-  margin-right: 36%;
+  margin-top: 7.77rem;
+  width: 233px;
   position: fixed;
   left: 0;
   right: 0;
@@ -73,18 +73,18 @@ p {
 /* Configs: */
 
 .list-identation {
-  padding-left: 1.2em;
+  padding-left: 1.11em;
 }
 
 .list-between-spacing {
-  margin: 0.2em 0;
+  margin: 0.22em 0;
 }
 
 .list-carret-character {
   content: "\f0da";
   font-family: "FontAwesome";
   visibility: visible;
-  font-size: 14px;
+  font-size: 1.11rem;
   position: absolute;
   left: 0;
   top: -1.45em;
@@ -94,23 +94,23 @@ p {
 
 /* CATEGORIES' TREE: */
 
-/* Styles pour mat-expansion-panel */
+/* Styles for mat-expansion-panel */
 .mat-expansion-panel {
-  background-color: #F7F7F7; /* Couleur de fond plus foncée */
+  background-color: #F7F7F7;
 }
 
 .mat-expansion-panel:hover {
-  background-color: #eaeaea; /* Couleur de fond plus foncée */
+  background-color: #eaeaea;
 }
 
-/* Styles pour les div */
+/* Styles for div */
 .filter-section {
-  background-color: #F7F7F7; /* Couleur de fond grise */
-  transition: background-color 0.3s; /* Animation de transition pour le hover */
+  background-color: #F7F7F7;
+  transition: background-color 0.3s;
 }
 
 .category-section:hover {
-  background-color: #E1E1E1; /* Couleur de fond blanche au hover */
+  background-color: #E1E1E1;
 }
 
 ::ng-deep .mat-expansion-panel-header:not([aria-expanded="true"]) .mat-expansion-indicator::after,
@@ -118,19 +118,25 @@ p {
   border-color: #808080 !important;
 }
 
-@media (max-width: 770px) {
-  mat-sidenav-content  {
-    margin-top: 22rem;
-  }
-}
-
-@media (max-width: 770px) {
+@media (max-width: 777px) {
   mat-sidenav  {
-    margin-top: 24rem;
+    width: 355px;
+    margin-top: 14rem;
   }
 }
 
-@media (max-width: 465px) {
+@media (max-width: 707px) {
+  mat-sidenav  {
+    width: 255px;
+  }
+}
+
+@media (max-width: 555px) {
+  mat-sidenav  {
+    width: 202px;  }
+}
+
+@media (max-width: 468px) {
   mat-sidenav  {
     display: none;
   }

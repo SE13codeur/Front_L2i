@@ -54,7 +54,6 @@ export class AdminItemComponent implements OnInit {
       subtitle: ['', Validators.required],
       description: ['', Validators.required],
       regularPrice: ['', [Validators.required, Validators.min(0)]],
-      inStock: [true],
       quantityInStock: ['', [Validators.required, Validators.min(1)]],
       rating: [
         this.isAddRouting ? 5 : this.item?.rating,
@@ -74,7 +73,7 @@ export class AdminItemComponent implements OnInit {
       ],
       language: [this.isAddRouting ? 'french' : this.item?.language],
       version: ['', Validators.required],
-      newCollection: [false],
+      onSale: [0, Validators.required],
     });
   }
 
@@ -121,6 +120,7 @@ export class AdminItemComponent implements OnInit {
             year: item.year,
             language: item.language,
             version: item.version,
+            onSale: item.onSale,
           });
 
           this.snackBar.open('Données chargées avec succès!', 'Fermer', {
@@ -219,7 +219,7 @@ export class AdminItemComponent implements OnInit {
 
   onReset(): void {
     this.itemForm.reset();
-    this.snackBar.open('Formulaire réinitialisé!', 'Fermer', {
+    this.snackBar.open('Formulaire réinitialisé !', 'Fermer', {
       duration: 4004,
     });
   }

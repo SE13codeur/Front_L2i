@@ -1,0 +1,214 @@
+.container {
+  height: 100vh !important;
+  position: relative;
+  padding: 2.2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 60vh;
+}
+
+.status-selector select {
+  margin-bottom: 3.03rem;
+}
+
+.select-status {
+  height: 3.03rem !important;
+  padding: 0.55rem;
+  border-radius: 0.55rem;
+  border: none;
+  background: #ffffff;
+  box-shadow: 0px 0.22rem 1.11rem #F5F5F5;
+  font-size: 1.11rem;
+  color: #555555;
+  transition: all 0.3s ease;
+}
+
+.select-status-button:focus {
+  outline: none;
+  box-shadow: 0px 0px 0px 2px #0BB9F0;
+}
+
+.select-status-button:hover {
+  box-shadow: 0px 0.22rem 2.22rem rgba(0, 0, 0, 0.11);
+}
+
+
+.select-status-button {
+  height: 3.03rem !important;
+  padding: 0.55rem;
+  border-radius: 0.55rem;
+  border: none;
+  background: #ffffff;
+  box-shadow: 0px 0.22rem 1.11rem #F5F5F5;
+  font-size: 1.11rem;
+  color: #555555;
+  transition: all 0.3s ease;
+}
+
+.select-status-button:focus {
+  outline: none;
+  box-shadow: 0px 0px 0px 2px #0BB9F0;
+}
+
+.select-status-button:hover {
+  box-shadow: 0px 0.22rem 2.22rem rgba(0, 0, 0, 0.11);
+}
+
+select .status-selector {
+  margin-top: 1.11rem;
+}
+
+.status-selector {
+  text-align: center;
+  width: 100%;
+  margin-bottom: 1.11rem;
+}
+
+.status-icon{
+  display: none;
+}
+
+td {
+  text-align: center;
+}
+
+.td-details {
+  text-decoration: underline;
+}
+
+.td-details:hover {
+  cursor: pointer;
+  text-decoration-color: #2096F3;
+}
+
+.order-list {
+  width: 100%;
+  margin: 3.33rem 0;
+  margin: 1.11rem 0;
+  border-collapse: collapse;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.order-list th,
+.order-list td {
+  padding: 1.11rem;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+
+.order-list tr {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.22);
+  margin: 10px 0;
+  transition: box-shadow 0.3s ease;
+}
+
+.order-list tr:hover {
+  box-shadow: 0 2px 6px rgba(0,0,0,0.33);
+}
+
+
+.order-list th {
+  background-color: #f5f5f5;
+}
+
+.order-details {
+  width: 100%;
+  margin: 1.11rem;
+  border-collapse: collapse;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.order-details table {
+  width: 100%;
+  margin: 1.11rem 0;
+  border-collapse: collapse;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.order-item-expanded {
+  background-color: #f9f9f9;
+}
+
+.no-orders-title {
+  text-align: center;
+  font-size: 2em;
+  color: red;
+  margin-top: 2rem;
+}
+
+.download-invoice-button {
+  height: 2.2rem !important;
+  padding: 0.55rem 1.11rem;
+  border-radius: 0.55rem;
+  border: none;
+  background: #ffffff;
+  box-shadow: 0px 0.22rem 1.01rem rgba(0, 0, 0, 0.04);
+  font-size: 1.11rem;
+  color: #555555;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.download-invoice-button:focus {
+  outline: none;
+  box-shadow: 0px 0px 0px 2px #0BB9F0;
+}
+
+.download-invoice-button:hover {
+  box-shadow: 0px 0.22rem 2.2rem rgba(0, 0, 0, 0.1);
+}
+
+.download-invoice-button:active {
+  box-shadow: none;
+}
+
+.download-invoice-button span {
+  display: inline-block;
+  margin-left: 0.5rem;
+}
+
+
+@media (max-width: 777px) {
+  .container {
+    top: 14rem;
+    height: calc(100% - 14rem);
+    margin-bottom: 100vh !important;
+  }
+
+  .status-text {
+    display: none;
+  }
+
+  .download-invoice-button .download-text {
+    display: none;
+  }
+
+  .status-icon{
+    display: block;
+  }
+}
+
+@media (max-width: 404px) {
+  .container {
+    margin: 0;
+    margin-bottom: 100vh !important;
+  }
+
+  .status-text {
+    display: none;
+  }
+
+  .status-icon {
+    display: block;
+  }
+
+}

@@ -1,35 +1,71 @@
 <mat-toolbar class="nav-container">
   <div class="nav-wrapper">
-    <a class="nav-logo" routerLink="/">
-      <img src="../../../assets/L2i.ico">
-    </a>
+    <!-- Logo and Menu -->
+    <div class="logo-menu-container">
+      <a class="nav-logo" routerLink="/">
+        <img src="../../../assets/L2i.ico" />
+      </a>
 
       <!-- Desktop menu -->
-    <div class="menu">
-      <button mat-button routerLink="/items/books">Articles</button>
-      <button mat-button routerLink="/promos">Promos</button>
-      <button mat-button routerLink="/favorites">Favoris</button>
-      <button mat-button routerLink="/comments">Avis</button>
+      <div class="menu">
+        <button mat-button routerLink="/items/books">Articles</button>
+        <button mat-button routerLink="/items/books/new">Nouveautés</button>
+        <button mat-button routerLink="/items/books/promos">Soldes</button>
+        <button mat-button routerLink="/items/books/comments">Avis</button>
+      </div>
+
+      <!-- Mobile menu -->
+      <div class="mobile-menu">
+        <button
+          mat-icon-button
+          [matMenuTriggerFor]="menu"
+          aria-label="Example icon-button with a menu"
+        >
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item routerLink="/items/books">
+            <mat-icon>menu_book</mat-icon>
+            <span>Articles</span>
+          </button>
+          <button mat-menu-item routerLink="/items/books/new">
+            <mat-icon>trending_up</mat-icon>
+            <span>Nouveautés</span>
+          </button>
+          <button mat-menu-item routerLink="/items/books/promos">
+            <mat-icon>euro</mat-icon>
+            <span>Soldes</span>
+          </button>
+          <button mat-menu-item routerLink="/items/books/comments">
+            <mat-icon>speaker_notes</mat-icon>
+            <span>Avis</span>
+          </button>
+        </mat-menu>
+      </div>
     </div>
 
     <!-- Search bar -->
-    <div class="logo-search-container">
-      <app-search-item class="search-bar-large"></app-search-item>
+    <div class="search-container">
+      <app-search-item
+        class="search-bar-large"
+        [placeholder]="searchPlaceholder"
+      ></app-search-item>
     </div>
 
-    <!-- ADD item for admin -->
-    <button *ngIf="isAdmin" (click)="goToAddItem()">
-      <mat-icon>add</mat-icon>
-    </button>
-
+    <!-- Actions -->
     <div class="nav-actions">
-      <!-- User button for connection -->
-      <button mat-icon-button routerLink="/">
-        <mat-icon>account_circle</mat-icon>
-      </button>
+      <!-- User account drawer -->
+      <app-account-user-button
+        (click)="toggleAccountUserDrawer()"
+      ></app-account-user-button>
 
       <!-- Cart drawer for shopping -->
-      <app-aside (click)="toggleDrawer()"></app-aside>
+      <app-aside *ngIf="!isAdmin" (click)="toggleCartDrawer()"></app-aside>
+
+      <!-- ADD item for admin -->
+      <button *ngIf="isAdmin" class="admin-add-item" (click)="goToAddItem()">
+        <mat-icon>add</mat-icon>
+      </button>
     </div>
   </div>
 </mat-toolbar>

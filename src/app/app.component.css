@@ -1,6 +1,11 @@
 .mat-sidenav {
   width: 36%;
   transition: transform 1..11s ease-in, transform 3.33s ease-out;
+  background-color: aliceblue;
+}
+
+mat-drawer-content mat-sidenav-content {
+  margin: 0;
 }
 
 app-nav {
@@ -11,17 +16,34 @@ app-nav {
 }
 
 .sidenav-cart {
-  width: 36%;
+  width: 44%;
   position: fixed;
-  left: 0;
   right: 0;
   z-index: 1000;
 }
 
-@media (max-width: 1101px) {
+.sidenav-account-user {
+  width: 17rem;
+  position: fixed;
+  left: 0;
+  z-index: 1000;
+}
+
+@media (max-width: 1111px) {
   .sidenav-cart  {
-    width: 100%;
+    width: 55%;
   }
 }
 
+@media (max-width: 888px) {
+  .sidenav-cart  {
+    width: 100%;
+  }
 
+  .sidenav-account-user {
+    width: 7rem;
+    position: fixed;
+    left: 0;
+    z-index: 1000;
+  }
+}

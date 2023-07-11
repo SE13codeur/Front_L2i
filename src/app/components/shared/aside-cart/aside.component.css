@@ -1,0 +1,128 @@
+aside {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1.11rem;
+}
+
+aside:hover {
+  color: #7b7070;
+}
+
+.animation-cart-empty {
+  color: #C5E1FC;
+  transition: transform 1.11s;
+  transform: scale(1.31)
+}
+
+.animation-cart-empty:hover {
+  transform: rotate(1080deg);
+  color: #0BB9F0
+}
+
+.ping {
+  animation: blink 3.33s linear infinite;
+  transform: scale(1.31);
+  margin-right: 0.777rem;
+  border-radius: 77%;
+}
+
+.ping:hover {
+  transition: transform 1..11s ease-in, transform 3.33s ease-out;
+  transform: scale(1.51);
+}
+
+.ping-hidden {
+  display: none;
+}
+
+.ping:hidden {
+  animation: blink 3.33s linear infinite;
+  transform: scale(1.11);
+  margin-right: 0.777rem;
+  border-radius: 77%;
+}
+
+@keyframes blink {
+  0% {background-color: transparent;}
+  50% {background-color: #FF4080;}
+  100% {background-color: transparent;}
+}
+
+span {
+  padding-left: 0.111rem;
+  display: inline-block;
+  animation: scalePulse 1.11s ease-in-out infinite;
+}
+
+span:hover {
+  color: #FF4080;
+}
+
+@keyframes scalePulse {
+  0% { transform: scale(1.01); }
+  50% { transform: scale(1.11); }
+  100% { transform: scale(1.21); }
+}
+
+.dialog-text {
+  font-size: 2.02rem;
+  padding-left: 0.111rem;
+  display: inline-block;
+  animation: scalePulse 1.11s ease-in-out infinite;
+}
+
+.dialog-content {
+  font-size: large;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  width: auto;
+  height: auto;
+  padding: 3.33rem;
+  border-radius: 77%;
+  background-color: rgba(33, 150, 243, 0.11);
+  animation:  scaleAndFadeOut 4.004s ease-in-out forwards;
+}
+
+.dialog-content span {
+  animation: none;
+}
+
+.dialog-content, .dialog-text {
+  animation:  scaleAndFadeOut 4.004s ease-in-out forwards;
+}
+
+@keyframes scaleAndFadeOut {
+  0% {
+    transform: scale(1.11);
+    opacity: 1;
+    background-color: rgba(33, 150, 243, 0.11);
+  }
+  33% {
+    transform: scale(1.21);
+    opacity: 0.77;
+    background-color: rgba(33, 150, 243, 0.33);
+  }
+  66% {
+    transform: scale(1.31);
+    opacity: 0.33;
+    background-color: rgba(33, 150, 243, 0.77);
+  }
+  100% {
+    transform: scale(1.41);
+    opacity: 0;
+  }
+}
+
+.dialog-content mat-icon {
+  margin: 3.33rem;
+}
+
+.blur-background *:not(.dialog-content) {
+  opacity: 0.33;
+}
