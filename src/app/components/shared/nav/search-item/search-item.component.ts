@@ -61,7 +61,8 @@ export class SearchItemComponent implements OnDestroy, OnInit {
     this.itemService.updatedSearch(query).subscribe(() => {
       this.itemService.setSearchValue(query);
       this.router
-        .navigate(['/items'], { queryParams: { q: query } })
+        // .navigate(['/items'], { queryParams: { q: query } })
+        .navigate(['/items/books'])
         .then(() => {
           this.searchFocusService.triggerFocus();
         });

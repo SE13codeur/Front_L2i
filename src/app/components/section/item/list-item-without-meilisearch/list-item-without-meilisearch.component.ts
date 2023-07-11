@@ -76,8 +76,8 @@ export class ListItemWithoutMeilisearchComponent implements OnInit, OnDestroy {
     // Apply categories filter
     const categories = this.filtersService.categoriesSource.getValue();
     if (categories.length > 0) {
-      filteredItems = filteredItems.filter((item: any) => {
-        return categories.includes(item.category.id);
+      filteredItems = filteredItems.filter((item: IItem) => {
+        return categories.includes(item.category.id.toString());
       });
     }
 
